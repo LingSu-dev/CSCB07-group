@@ -75,5 +75,23 @@ public class StoreHelpers {
     return null;
   }
   
+  /**
+   * This method presents the user with a list of choices and returns the user's choice as a int
+   * @param choices an array of choices as strings that will be printed for the user
+   * @param reader a reader to get the user's input from
+   * @return the user's choice
+   */
+  public static int choiceDialog(String[] choices, BufferedReader reader) {
+    for(String string: choices) {
+      System.out.println(string);
+    }
+    int response = -1;
+    try {
+      response = Integer.parseInt(reader.readLine());
+    } catch (NumberFormatException e) {
+      System.out.println("Please choose a number.")
+    }
+    return response;
+  }
 
 }
