@@ -145,7 +145,7 @@ public class ShoppingCart {
         }
 
         // Calculate and submit price after tax
-        BigDecimal totalPrice = total.multiply(taxRate);
+        BigDecimal totalPrice = total.multiply(TAXRATE);
         DatabaseInsertHelper.insertSale(customer.getId(), totalPrice);
 
         // Update inventory

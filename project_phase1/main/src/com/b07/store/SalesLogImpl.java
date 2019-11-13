@@ -41,7 +41,7 @@ public class SalesLogImpl implements SalesLog {
    * Get total value of sales in sale log.
    */
   @Override
-  public BigDecimal totalSales() {
+  public BigDecimal getTotalValueOfSales() {
 
     BigDecimal value = null;
 
