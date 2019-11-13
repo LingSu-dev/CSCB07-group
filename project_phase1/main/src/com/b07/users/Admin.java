@@ -15,7 +15,6 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
- */
 public class Admin extends User {
   
   /**
