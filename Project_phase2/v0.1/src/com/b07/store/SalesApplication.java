@@ -79,14 +79,7 @@ public class SalesApplication {
             System.out.println("One of the provided values is invalid.");
           } catch (DatabaseInsertException e) {
             e.printStackTrace();
-          } catch (DataNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DatabaseContainsInvalidDataException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-        } else if (input == 4) {
+          } 
           System.out.println("Creating a new Employee");
           System.out.println("Input a name");
           String name = reader.readLine();
@@ -98,18 +91,7 @@ public class SalesApplication {
           String password = reader.readLine();
           try {
             employeeInterface.createEmployee(name, age, address, password);
-          } catch (InvalidUserParameterException e) {
-            System.out.println("One of the provided values is invalid.");
           } catch (DatabaseInsertException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (BadValueException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DataNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DatabaseContainsInvalidDataException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
           }
