@@ -46,7 +46,6 @@ public class Admin extends User {
     setName(name);
     setAge(age);
     setAddress(address);
-    setAuthenticated(authenticated);
   }
   
   /**

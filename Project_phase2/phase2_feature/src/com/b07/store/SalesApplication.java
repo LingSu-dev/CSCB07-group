@@ -315,7 +315,6 @@ public class SalesApplication {
             "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
     int input = StoreHelpers.choicePrompt(employeeOptions, reader);
     while (input != 6) {
-      //////////////
       if (input == 1) {
         employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
         if (employee != null) {
