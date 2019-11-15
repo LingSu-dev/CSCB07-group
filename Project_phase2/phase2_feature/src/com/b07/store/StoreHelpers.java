@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import com.b07.database.helper.DatabaseSelectHelper;
-import com.b07.exceptions.DataNotFoundException;
-import com.b07.exceptions.DatabaseContainsInvalidDataException;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.exceptions.UserNotFoundException;
 import com.b07.users.Roles;
 import com.b07.users.User;
 
@@ -40,7 +37,7 @@ public class StoreHelpers {
     if (user == null) {
       return null;
     }
-    int roleId = user.getRoleId();
+    // int roleId = user.getRoleId();
     // if (!Roles.valueOf(DatabaseSelectHelper.getRoleName(roleId)).equals(role)) {
     // throw new DatabaseInsertException();
     // }
@@ -55,7 +52,7 @@ public class StoreHelpers {
    * 
    * @param reader to read the input
    * @param role: the role to log in as
-   * @return the User if login is succesful, null otherwise
+   * @return the User if login is successful, null otherwise
    * @throws IOException
    * @throws SQLException
    */
@@ -88,8 +85,9 @@ public class StoreHelpers {
    * @param choices an array of choices as strings that will be printed for the user
    * @param reader a reader to get the user's input from
    * @return the user's choice, -1 if the user did not make a valid choice
+   * @throws IOException 
    */
-  public static int choiceDialog(String[] choices, BufferedReader reader) {
+  public static int choicePrompt(String[] choices, BufferedReader reader) throws IOException {
     for(String string: choices) {
       System.out.println(string);
     }
@@ -97,7 +95,7 @@ public class StoreHelpers {
     try {
       response = Integer.parseInt(reader.readLine());
     } catch (NumberFormatException e) {
-      System.out.println("Please choose a number.")
+      System.out.println("Please choose a number.");
     }
     return response;
   }

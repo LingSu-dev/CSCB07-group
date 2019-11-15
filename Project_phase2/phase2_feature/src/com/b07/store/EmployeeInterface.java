@@ -101,7 +101,7 @@ public class EmployeeInterface {
    * @throws CreationFailedException if the customer cannot be created.
    */
   public int createCustomer(String name, int age, String address, String password)
-      throws SQLException{
+      throws SQLException {
 
     int userId = -1;
 
@@ -112,7 +112,6 @@ public class EmployeeInterface {
     } catch (Exception e) {
       return -1;
     }
-
     return userId;
   }
 
@@ -139,7 +138,7 @@ public class EmployeeInterface {
     } catch (Exception e) {
       return -1;
     }
-
     return userId;
   }
+
 }
