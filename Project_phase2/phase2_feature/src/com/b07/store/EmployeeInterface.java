@@ -98,20 +98,16 @@ public class EmployeeInterface {
    * @param password the customer's password.
    * @return the customer's user ID.
    * @throws SQLException if there is an issue communicating with the database.
+   * @throws DatabaseInsertException 
    * @throws CreationFailedException if the customer cannot be created.
    */
   public int createCustomer(String name, int age, String address, String password)
-      throws SQLException {
+      throws SQLException, DatabaseInsertException {
 
     int userId = -1;
-
-    try {
-      userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
-      int customerId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
-      DatabaseUpdateHelper.updateUserRole(customerId, userId);
-    } catch (Exception e) {
-      return -1;
-    }
+    userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
+    int customerId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
+    DatabaseUpdateHelper.updateUserRole(customerId, userId);
     return userId;
   }
 
@@ -124,20 +120,16 @@ public class EmployeeInterface {
    * @param password the employee's password.
    * @return the employee's user ID.
    * @throws SQLException if there is an issue communicating with the database.
+   * @throws DatabaseInsertException
    * @throws CreationFailedException if the employee cannot be created.
    */
   public int createEmployee(String name, int age, String address, String password)
-      throws SQLException {
+      throws SQLException, DatabaseInsertException {
 
     int userId = -1;
-
-    try {
-      userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
-      int employeeId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-      DatabaseUpdateHelper.updateUserRole(employeeId, userId);
-    } catch (Exception e) {
-      return -1;
-    }
+    userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
+    int employeeId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
+    DatabaseUpdateHelper.updateUserRole(employeeId, userId);
     return userId;
   }
 
