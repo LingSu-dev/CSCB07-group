@@ -10,6 +10,7 @@ import com.b07.inventory.Item;
 import com.b07.users.Admin;
 import com.b07.users.Customer;
 import com.b07.users.Employee;
+import com.b07.users.Roles;
 import com.b07.users.User;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,59 +46,29 @@ public class SalesApplication {
 
       } else if (selection.equals("1")) {
         // Admin mode
-        adminMode();
+        adminMode(new BufferedReader(new InputStreamReader(System.in)));
 
       } else {
-        
-        String[] loginOptions =
-            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        // input will contain the first line of input from the user
-        int input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
-        while (input != 0) {
-          if (input == 1) {
-            employeeMode();
-          } else if (input == 2) {
-            customerMode();
-          } else if (input == 0) {
-            System.out.println("Exiting");
-          }
-          else {
-            System.out.println("Invalid selection");
-          }
-          input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
-        }
-      
+
         // Customer/Employee mode
         System.out.println("Welcome to Sales Application");
         System.out.println("----------------------------");
-        boolean exit = false;
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String input = "";
-        while (!exit) {
-          System.out.println("what would you like to do?");
-          System.out.println("1 - Employee Login");
-          System.out.println("2 - Customer Login");
-          System.out.println("0 - Exit");
-          input = bufferedReader.readLine();
-          if (input.equals("1")) {
-            try {
-              // Enter employee mode
-              employeeMode();
-            } catch (NotAuthenticatedException e) {
-              System.out.println("Employee ID/Password Invalid!");
-            }
-          } else if (input.equals("2")) {
-            // Enter customer mode
-            customerMode();
-          } else if (input.equals("0")) {
-            // Terminate the program
-            System.out.println("Goodbye!");
-            exit = true;
+        String[] loginOptions =
+            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        // input will contain the first line of input from the user
+        int input = StoreHelpers.choicePrompt(loginOptions, reader);
+        while (input != 0) {
+          if (input == 1) {
+            employeeMode(reader);
+          } else if (input == 2) {
+            customerMode(reader);
+          } else if (input == 0) {
+            System.out.println("Exiting");
           } else {
-            System.out.println("Invalid Selection!");
+            System.out.println("Invalid selection");
           }
-
+          input = StoreHelpers.choicePrompt(loginOptions, reader);
         }
 
       }
@@ -228,18 +199,19 @@ public class SalesApplication {
 
     // Adding required items to database
     // Creating dummy stock
-
-    int itemId;
-    itemId = DatabaseInsertHelper.insertItem("FISHING_ROD", new BigDecimal("10.00"));
-    DatabaseInsertHelper.insertInventory(itemId, 100);
-    itemId = DatabaseInsertHelper.insertItem("HOCKEY_STICK", new BigDecimal("10.00"));
-    DatabaseInsertHelper.insertInventory(itemId, 100);
-    itemId = DatabaseInsertHelper.insertItem("SKATES", new BigDecimal("10.00"));
-    DatabaseInsertHelper.insertInventory(itemId, 100);
-    itemId = DatabaseInsertHelper.insertItem("RUNNING_SHOES", new BigDecimal("10.00"));
-    DatabaseInsertHelper.insertInventory(itemId, 100);
-    itemId = DatabaseInsertHelper.insertItem("PROTEIN_BAR", new BigDecimal("10.00"));
-    DatabaseInsertHelper.insertInventory(itemId, 100);
+    //
+    // int itemId;
+    // itemId = DatabaseInsertHelper.insertItem("FISHING_ROD", new BigDecimal("10.00"));
+    // DatabaseInsertHelper.insertInventory(itemId, 100);
+    // itemId = DatabaseInsertHelper.insertItem("HOCKEY_STICK", new BigDecimal("10.00"));
+    // DatabaseInsertHelper.insertInventory(itemId, 100);
+    // itemId = DatabaseInsertHelper.insertItem("SKATES", new BigDecimal("10.00"));
+    // DatabaseInsertHelper.insertInventory(itemId, 100);
+    // itemId = DatabaseInsertHelper.insertItem("RUNNING_SHOES", new BigDecimal("10.00"));
+    // DatabaseInsertHelper.insertInventory(itemId, 100);
+    // itemId = DatabaseInsertHelper.insertItem("PROTEIN_BAR", new BigDecimal("10.00"));
+    // DatabaseInsertHelper.insertInventory(itemId, 100);
+    // unnecessary because this is not expected default behaviour
 
 
     System.out.println("Database creation was successfull!");
@@ -252,9 +224,8 @@ public class SalesApplication {
    * @throws SQLException if there is an issue communicating with the database.
    * @throws IOException if there is an issue obtaining user input.
    */
-  public static void adminMode() throws SQLException, IOException {
+  public static void adminMode(BufferedReader bufferedReader) throws SQLException, IOException {
     boolean exit = false;
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     String input = "";
     Admin admin = null;
 
@@ -327,145 +298,90 @@ public class SalesApplication {
    * @throws NotAuthenticatedException if the employee cannot be authenticated.
    * @throws DatabaseInsertException if there is an issue inserting into the database.
    */
-  public static void employeeMode()
-      throws IOException, SQLException, NotAuthenticatedException, DatabaseInsertException {
+  public static void employeeMode(BufferedReader reader)
+      throws IOException, SQLException, DatabaseInsertException {
 
-    // Authenticate and get employeeInterface
-    EmployeeInterface inter = employeeModeAuthenticate();
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-    // Allow employee to perform operations
-    System.out.println("Welcome to the employee interface");
-    System.out.println("---------------------------------");
-    boolean exit = false;
-    while (!exit) {
-      System.out.println("What would you like to do?");
-      System.out.println("1. authenticate new employee");
-      System.out.println("2. Make new User");
-      System.out.println("3. Make new account");
-      System.out.println("4. Make new Employee");
-      System.out.println("5. Restock Inventory");
-      System.out.println("6. Exit");
-
-      String input = bufferedReader.readLine();
-
-      if (input.equals("1")) {
-        // Authenticate new employee
-        inter = employeeModeAuthenticate();
-
-      } else if (input.equals("2") || input.equals("3")) {
-        // Create new customer
-
-        // get customer data
-        System.out.println("Enter customer name:");
-        String name = bufferedReader.readLine();
-        System.out.println("Enter customer age:");
-        String age = bufferedReader.readLine();
-        System.out.println("Enter customer address:");
-        String address = bufferedReader.readLine();
-        System.out.println("Enter customer password:");
-        String password = bufferedReader.readLine();
-
-
-        int ageInt = Integer.parseInt(age);
-        int id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
-        int customerRoleId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
-        DatabaseInsertHelper.insertUserRole(id, customerRoleId);
-        System.out.println("New customer created, ID: " + id);
-
-
-      } else if (input.equals("4")) {
-        // Create new employee
-
-        // get employee data
-        System.out.println("Enter employee name:");
-        String name = bufferedReader.readLine();
-        System.out.println("Enter employee age:");
-        String age = bufferedReader.readLine();
-        System.out.println("Enter employee address:");
-        String address = bufferedReader.readLine();
-        System.out.println("Enter employee password:");
-        String password = bufferedReader.readLine();
-
-        // Create employee and set role
-        try {
-          int ageInt = Integer.parseInt(age);
-          int id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
-          int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-          DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
-          System.out.println("New Employee created, ID: " + id);
-        } catch (NumberFormatException e) {
-          System.out.println("Could not create new customer");
-          System.out.println("Invalid input:");
-          System.out.println("Age must be a valid number");
-        }
-      } else if (input.equals("5")) {
-        // Allow user to restock items
-        List<Item> items = DatabaseSelectHelper.getAllItems();
-        System.out.println("The following are the current items and their " + "IDs");
-        for (int i = 0; i < items.size(); i++) {
-          System.out.println(items.get(i).getName());
-          System.out.println("ID: " + items.get(i).getId());
-        }
-        System.out.println("Enter the ID of the item you would like to restock");
-        String toStock = bufferedReader.readLine();
-        System.out.println("Enter the qauntity of the item you would like to restock");
-        String quantity = bufferedReader.readLine();
-        try {
-          int itemId = Integer.parseInt(toStock);
-          int quantityInt = Integer.parseInt(quantity);
-          int current = DatabaseSelectHelper.getInventoryQuantity(itemId);
-          Item item = DatabaseSelectHelper.getItem(itemId);
-          inter.restockInventory(item, quantityInt + current);
-          System.out.println("Successfully restocked!");
-        } catch (NumberFormatException e) {
-          System.out.println("Must enter a valid number!");
-        }
-      } else if (input.equals("6")) {
-        // Exit
-        exit = true;
-      }
-    }
-
-  }
-
-  /**
-   * Attempt to authenticate a user for employee mode.
-   * 
-   * @return an EmployeeInterface for the authenticated user.
-   * @throws NotAuthenticatedException if the user cannot be authenticated.
-   * @throws SQLException if there is an issue communicating with the database.
-   * @throws IOException if there is an issue obtaining user input.
-   */
-  public static EmployeeInterface employeeModeAuthenticate()
-      throws NotAuthenticatedException, SQLException, IOException {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    Employee employee = null;
-
-
-    // Employee Login
-    System.out.println("Enter employee ID");
-    String employeeId = bufferedReader.readLine();
-    System.out.println("Enter password");
-    String password = bufferedReader.readLine();
-
-    // Validate and authenticate an employee
-    try {
-      int employeeIdInt = Integer.parseInt(employeeId);
-      User user = DatabaseSelectHelper.getUserDetails(employeeIdInt);
-      if (user instanceof Employee) {
-        employee = (Employee) user;
-        employee.authenticate(password);
-      }
-    } catch (NumberFormatException e) {
-      System.out.println("Invalid ID, must be a number!");
-    }
+    System.out.print("Employee Login:");
+    Employee employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
     if (employee == null) {
-      throw new NotAuthenticatedException();
+      return;
     }
     Inventory inventory = DatabaseSelectHelper.getInventory();
-    return new EmployeeInterface(employee, inventory);
+    EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
+    System.out.println("Welcome, employee");
+    
+    String[] employeeOptions =
+      {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
+          "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
+    int input = StoreHelpers.choicePrompt(employeeOptions, reader);
+    while (input != 6) {
+      //////////////
+      if (input == 1) {
+        employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
+        if (employee != null) {
+          employeeInterface.setCurrentEmployee(employee);
+        } else {
+          System.out.println("Failed to authenticate new employee");
+        }
+      } else if (input == 2 || input == 3) {
+        
+        System.out.println("Creating a new customer");
+        System.out.println("Input a name");
+        String name = reader.readLine();
+        System.out.println("Input an age");
+        int age = Integer.parseInt(reader.readLine());
+        System.out.println("Input an address");
+        String address = reader.readLine();
+        System.out.println("Input a password");
+        String password = reader.readLine();
+        try {
+          employeeInterface.createCustomer(name, age, address, password);
+        } catch (DatabaseInsertException e) {
+          System.out.println("Unable to create a customer with the given parameters");
+          // e.printStackTrace();
+        }
+      } else if (input == 4) {
+        System.out.println("Creating a new Employee");
+        System.out.println("Input a name");
+        String name = reader.readLine();
+        System.out.println("Input an age");
+        int age = Integer.parseInt(reader.readLine());
+        System.out.println("Input an address");
+        String address = reader.readLine();
+        System.out.println("Input a password");
+        String password = reader.readLine();
+        insertUser: try {
+          int userId = employeeInterface.createEmployee(name, age, address, password);
+          if(userId == -1) {
+            System.out.println("Unable to create an employee with the given parameters.");
+            break insertUser;
+          }
+          int roleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
+          if(userId == -1) {
+            System.out.println("Unable to retrieve the role ID.");
+            break insertUser;
+          }
+          DatabaseInsertHelper.insertUserRole(userId, roleId);
+        } catch (DatabaseInsertException e) {
+          System.out.println("Unable to assign a role to the customer");
+        }
+      } else if (input == 5) {
+
+        try {
+          System.out.println("Input the ID of the item to restock");
+          int id = Integer.parseInt(reader.readLine());
+          Item item = DatabaseSelectHelper.getItem(id);
+          System.out.println("Input a quantity of the item to restock");
+          int quantity = Integer.parseInt(reader.readLine());
+          employeeInterface.restockInventory(item, quantity);
+        } catch (NumberFormatException e) {
+          System.out.println("Please input a number");
+        }
+      }
+      input = StoreHelpers.choicePrompt(employeeOptions, reader);
+    }
   }
+
 
   /**
    * Allows customers to use a cart and make purchases.
@@ -473,8 +389,7 @@ public class SalesApplication {
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public static void customerMode() throws IOException, SQLException {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+  public static void customerMode(BufferedReader bufferedReader) throws IOException, SQLException {
     Customer customer = null;
     ShoppingCart cart = null;
 
