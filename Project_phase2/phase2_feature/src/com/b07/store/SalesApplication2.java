@@ -1,5 +1,6 @@
 package com.b07.store;
 
+import java.awt.peer.ChoicePeer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -55,19 +56,14 @@ public class SalesApplication {
       Inventory inventory = DatabaseSelectHelper.getInventory();
       EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
       System.out.println("Welcome, employee");
-      System.out.println("1 - authenticate new employee");
-      System.out.println("2 - Make new User");
-      System.out.println("3 - Make new account");
-      System.out.println("4 - Make new Employee");
-      System.out.println("5 - Restock Inventory");
-      System.out.println("6 - Exit");
-      System.out.println("Enter Selection:");
-      String input;
-      input = reader.readLine();
-      while (!input.equals("6")) {
-        if (input.equals("1")) {
+      String[] employeeOptions =
+          {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
+              "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
+      int input = StoreHelpers.choiceDialog(employeeOptions, reader);
+      while (input != 6) {
+        if (input == 1) {
           employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
-        } else if (input.equals("2") || input.equals("3")) {
+        } else if (input == 2 || input == 3) {
           System.out.println("Creating a new customer");
           System.out.println("Input a name");
           String name = reader.readLine();
@@ -83,14 +79,7 @@ public class SalesApplication {
             System.out.println("One of the provided values is invalid.");
           } catch (DatabaseInsertException e) {
             e.printStackTrace();
-          } catch (DataNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DatabaseContainsInvalidDataException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-        } else if (input.equals("4")) {
+          } 
           System.out.println("Creating a new Employee");
           System.out.println("Input a name");
           String name = reader.readLine();
@@ -102,22 +91,11 @@ public class SalesApplication {
           String password = reader.readLine();
           try {
             employeeInterface.createEmployee(name, age, address, password);
-          } catch (InvalidUserParameterException e) {
-            System.out.println("One of the provided values is invalid.");
           } catch (DatabaseInsertException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-          } catch (BadValueException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DataNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          } catch (DatabaseContainsInvalidDataException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
           }
-        } else if (input.equals("5")) {
+        } else if (input == 5) {
 
           try {
             System.out.println("Input an Item id");
@@ -132,14 +110,7 @@ public class SalesApplication {
           }
         }
 
-        System.out.println("1 - authenticate new employee");
-        System.out.println("2 - Make new User");
-        System.out.println("3 - Make new account");
-        System.out.println("4 - Make new Employee");
-        System.out.println("5 - Restock Inventory");
-        System.out.println("6 - Exit");
-        System.out.println("Enter Selection:");
-        input = reader.readLine();
+        input = StoreHelpers.choiceDialog(employeeOptions, reader);
       }
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -180,51 +151,45 @@ public class SalesApplication {
         return;
       }
       ShoppingCart shoppingCart = new ShoppingCart(customer);
-      System.out.println("Welcome, customer");
-      System.out.println("1 - authenticate new employee");
-      System.out.println("2 - Make new User");
-      System.out.println("3 - Make new account");
-      System.out.println("4 - Make new Employee");
-      System.out.println("5 - Restock Inventory");
-      System.out.println("6 - Exit");
-      System.out.println("Enter Selection:");
-      String input;
-      input = reader.readLine();
-      while (!input.equals("6")) {
-        if (input.equals("1")) {
+     System.out.println("Welcome, customer");
+     String[] customerOptions = {"1 - List items in cart",
+     "2 - Add item to cart",
+     "3 - Check price",
+     "4 - Remove item from cart",
+     "5 - Check out",
+     "6 - Exit",
+     "Enter Selection:"}
+     int input = StoreHelpers.choicePrompt(customerOptions, reader);
+      while (input != 6) {
+        if (input == 1) {
           System.out.println(shoppingCart.getItems());
-        } else if (input.equals("2")) {
+        } else if (input == 2) {
           System.out.println("Input a quantity");
           int quantity = Integer.parseInt(reader.readLine());
           System.out.println("Input an item id");
           int itemId = Integer.parseInt(reader.readLine());
           shoppingCart.addItem(DatabaseSelectHelper.getItem(itemId), quantity);
-        } else if (input.equals("3")) {
+        } else if (input == 3) {
           System.out.println(shoppingCart.getTotal());
-        } else if (input.equals("4")) {
+        } else if (input == 4) {
           System.out.println("Input a quantity");
           int quantity = Integer.parseInt(reader.readLine());
           System.out.println("Input an item id");
           int itemId = Integer.parseInt(reader.readLine());
           shoppingCart.removeItem(DatabaseSelectHelper.getItem(itemId), quantity);
-        } else if (input.equals("5")) {
+        } else if (input == 5) {
           if (shoppingCart.checkOut()) {
             System.out.println("Success");
           }else {
             System.out.println("an error occurred");
           }
-        }else if (input.equals("6")) {
+        } else if (input == 6) {
           return;
+        } else if (input == -1) {
+          System.out.println("Please make a valid choice");
         }
+        input = StoreHelpers.choicePrompt(customerOptions, reader);
 
-        System.out.println("1 - authenticate new employee");
-        System.out.println("2 - Make new User");
-        System.out.println("3 - Make new account");
-        System.out.println("4 - Make new Employee");
-        System.out.println("5 - Restock Inventory");
-        System.out.println("6 - Exit");
-        System.out.println("Enter Selection:");
-        input = reader.readLine();
       }
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -233,16 +198,13 @@ public class SalesApplication {
       // TODO Auto-generated catch block
       e1.printStackTrace();
     } catch (DatabaseInsertException e) {
-      // TODO Auto-generated catch block
+      System.out.println("There was an error inserting into the database");
       e.printStackTrace();
-    } catch (BadValueException e) {
-      // TODO Auto-generated catch block
+    } catch (ConnectionFailedException e) {
+       System.out.println("Failed to connect");
       e.printStackTrace();
-    } catch (DataNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (DatabaseContainsInvalidDataException e) {
-      // TODO Auto-generated catch block
+    } catch (NotAuthenticatedException e) {
+      System.out.println("User not authenticated");
       e.printStackTrace();
     }
 
@@ -277,8 +239,9 @@ public class SalesApplication {
           System.out.println("error connecting to the database");
           e.printStackTrace();
         }
-        int adminId = DatabaseInsertHelper.insertNewUser("name", 100, "address", "admin");
-        int employeeId = DatabaseInsertHelper.insertNewUser("employee name", 10, "employee address", "hunter2");
+        int adminId = DatabaseInsertHelper.insertNewUser("Admin", 100, "address of admin", "admin");
+        int employeeId =
+            DatabaseInsertHelper.insertNewUser("Employee Name", 10, "employee address", "hunter2");
         try {
           int adminRoleId = DatabaseInsertHelper.insertRole("ADMIN");
           int employeeRoleId = DatabaseInsertHelper.insertRole("EMPLOYEE");
@@ -307,33 +270,20 @@ public class SalesApplication {
        * Customer Login 0 - Exit Enter Selection:
        */
       else {
-        System.out.println("1 - Employee Login");
-        System.out.println("2 - Customer Login");
-        System.out.println("0 - Exit");
-        System.out.println("Enter Selection:");
+        String[] loginOptions =
+            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         // input will contain the first line of input from the user
-        String input = "";
-        input = bufferedReader.readLine();
-        while (!input.equals("0")) {
-
-          try {
-            if (input.equals("1")) {
-              employee(bufferedReader);
-            } else if (input.equals("2")) {
-              customer(bufferedReader);
-            } else {
-              System.out.println("Invalid selection");
-            }
-          } catch (UserNotFoundException e) {
-            System.out
-                .println("The user could not be found. Are you loggins in as the correct role?");
+        int input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
+        while (input != 0) {
+          if (input == 1) {
+            employee(bufferedReader);
+          } else if (input == 2) {
+            customer(bufferedReader);
+          } else {
+            System.out.println("Invalid selection");
           }
-          System.out.println("1 - Employee Login");
-          System.out.println("2 - Customer Login");
-          System.out.println("0 - Exit");
-          System.out.println("Enter Selection:");
-          input = bufferedReader.readLine();
+          input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
         }
       }
       // If the user entered 0
