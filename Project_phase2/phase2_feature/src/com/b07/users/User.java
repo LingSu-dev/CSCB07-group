@@ -112,12 +112,6 @@ public abstract class User {
     return result;
   }
 
-  /**
-   * Set the user's authentication status.
-   */
-  protected void setAuthenticated(boolean authenticated) {
-    this.authenticated = authenticated;
-  }
 
   /**
    * Returns true if user is authenticated, false otherwise

@@ -28,17 +28,10 @@ public class EmployeeInterface {
    * 
    * @param employee the associated employee.
    * @param inventory the associated inventory.
-   * @throws NotAuthenticatedException if the associated employee is not authenticated.
    */
-  public EmployeeInterface(Employee employee, Inventory inventory)
-      throws NotAuthenticatedException {
-
-    if (employee.getAuthenticated()) {
-      this.inventory = inventory;
-      currentEmployee = employee;
-    } else {
-      throw new NotAuthenticatedException();
-    }
+  public EmployeeInterface(Employee employee, Inventory inventory) {
+    this.inventory = inventory;
+    currentEmployee = employee;
   }
 
   /**
@@ -56,9 +49,7 @@ public class EmployeeInterface {
    * @param employee the employee to be set.
    */
   public void setCurrentEmployee(Employee employee) {
-    if (employee.getAuthenticated()) {
-      currentEmployee = employee;
-    }
+    currentEmployee = employee;
   }
 
   /**
@@ -98,7 +89,7 @@ public class EmployeeInterface {
    * @param password the customer's password.
    * @return the customer's user ID.
    * @throws SQLException if there is an issue communicating with the database.
-   * @throws DatabaseInsertException 
+   * @throws DatabaseInsertException
    * @throws CreationFailedException if the customer cannot be created.
    */
   public int createCustomer(String name, int age, String address, String password)

@@ -38,6 +38,5 @@ public class Customer extends User {
     setName(name);
     setAge(age);
     setAddress(address);
-    setAuthenticated(authenticated);
   }
 }
