@@ -31,7 +31,7 @@ public class SalesApplication {
 
     Connection connection = DatabaseDriverExtender.connectOrCreateDataBase();
     if (connection == null) {
-      System.out.print("Erorr establishing initial database connection");
+      System.out.print("Error establishing initial database connection");
     }
     try {
       String selection = "0";
@@ -43,11 +43,31 @@ public class SalesApplication {
         // Setup mode
         firstTimeSetup(connection);
 
-      } else if (selection.equals("-1")) {
+      } else if (selection.equals("1")) {
         // Admin mode
         adminMode();
 
       } else {
+        
+        String[] loginOptions =
+            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        // input will contain the first line of input from the user
+        int input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
+        while (input != 0) {
+          if (input == 1) {
+            employeeMode();
+          } else if (input == 2) {
+            customerMode();
+          } else if (input == 0) {
+            System.out.println("Exiting");
+          }
+          else {
+            System.out.println("Invalid selection");
+          }
+          input = StoreHelpers.choicePrompt(loginOptions, bufferedReader);
+        }
+      
         // Customer/Employee mode
         System.out.println("Welcome to Sales Application");
         System.out.println("----------------------------");
