@@ -309,10 +309,10 @@ public class SalesApplication {
     Inventory inventory = DatabaseSelectHelper.getInventory();
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
     System.out.println("Welcome, employee");
-    
+
     String[] employeeOptions =
-      {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
-          "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
+        {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
+            "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
     int input = StoreHelpers.choicePrompt(employeeOptions, reader);
     while (input != 6) {
       //////////////
@@ -323,8 +323,8 @@ public class SalesApplication {
         } else {
           System.out.println("Failed to authenticate new employee");
         }
-      } else if (input == 2 || input == 3) {
         
+      } else if (input == 2 || input == 3) {
         System.out.println("Creating a new customer");
         System.out.println("Input a name");
         String name = reader.readLine();
@@ -334,12 +334,22 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Input a password");
         String password = reader.readLine();
-        try {
-          employeeInterface.createCustomer(name, age, address, password);
+        insertUser: try {
+          int userId = employeeInterface.createEmployee(name, age, address, password);
+          if (userId == -1) {
+            break insertUser;
+          }
+          int roleId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
+          if (userId == -1) { 
+            //should never run: included here due to UML-unstable EmployeeInterface change
+            System.out.println("Unable to retrieve the role ID.");
+            break insertUser;
+          }
+          DatabaseInsertHelper.insertUserRole(userId, roleId);
         } catch (DatabaseInsertException e) {
-          System.out.println("Unable to create a customer with the given parameters");
-          // e.printStackTrace();
+          System.out.println("Unable to create an employee with the given parameters.");
         }
+
       } else if (input == 4) {
         System.out.println("Creating a new Employee");
         System.out.println("Input a name");
@@ -352,18 +362,18 @@ public class SalesApplication {
         String password = reader.readLine();
         insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
-          if(userId == -1) {
-            System.out.println("Unable to create an employee with the given parameters.");
+          if (userId == -1) {
+          //should never run: included here due to UML-unstable EmployeeInterface change
             break insertUser;
           }
           int roleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-          if(userId == -1) {
+          if (userId == -1) {
             System.out.println("Unable to retrieve the role ID.");
             break insertUser;
           }
           DatabaseInsertHelper.insertUserRole(userId, roleId);
         } catch (DatabaseInsertException e) {
-          System.out.println("Unable to assign a role to the customer");
+          System.out.println("Unable to create an employee with the given parameters.");
         }
       } else if (input == 5) {
 
