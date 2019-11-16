@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/admin_left_padding"
+    android:paddingTop="@dimen/admin_top_padding"
+    android:paddingRight="@dimen/admin_right_padding"
+    android:paddingBottom="@dimen/admin_bottom_padding"
+    tools:context=".admin"
+    tools:showIn="@layout/activity_admin">
+
+    <TextView
+        android:id="@+id/adminPromoteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/admin_promote"
+        android:textSize="@dimen/textViewTextSize" />
+
+    <EditText
+        android:id="@+id/employeeIdEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/adminPromoteText"
+        android:hint="@string/admin_promote_hint"
+        android:inputType="text"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/promoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/employeeIdEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-64dp"
+        android:text="@string/admin_promote_button"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/addItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/adminPromoteText"
+        android:layout_marginTop="90dp"
+        android:text="@string/admin_add_item"
+        android:textSize="@dimen/textViewTextSize" />
+
+    <EditText
+        android:id="@+id/addItemEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/admin_add_item_button_hint"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/addItemText"
+        android:layout_marginTop="115dp"
+        android:inputType="text"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/viewSalesData"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignTop="@id/viewSalesButton"
+        android:layout_marginTop="-296dp"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="vertical"
+        android:text="@string/admin_view_sales_default"
+        android:textSize="@dimen/textViewTextSize" />
+
+    <Button
+        android:id="@+id/viewSalesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/promoteButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-451dp"
+        android:text="@string/admin_view_sales"
+        android:textAllCaps="false" />
+
+</RelativeLayout>
