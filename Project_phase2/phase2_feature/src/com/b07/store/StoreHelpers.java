@@ -82,13 +82,14 @@ public class StoreHelpers {
   /**
    * This method presents the user with a list of choices and returns the user's choice as an int.
    * Prints an error message if the user did not make a valid choice.
+   * 
    * @param choices an array of choices as strings that will be printed for the user
    * @param reader a reader to get the user's input from
    * @return the user's choice, -1 if the user did not make a valid choice
-   * @throws IOException 
+   * @throws IOException
    */
   public static int choicePrompt(String[] choices, BufferedReader reader) throws IOException {
-    for(String string: choices) {
+    for (String string : choices) {
       System.out.println(string);
     }
     int response = -1;

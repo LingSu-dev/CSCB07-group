@@ -4,7 +4,6 @@ import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.users.Admin;
@@ -15,10 +14,8 @@ import com.b07.users.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 
 public class SalesApplication {
@@ -117,16 +114,20 @@ public class SalesApplication {
    * @throws IOException if there is an issue obtaining user input.
    */
   public static void firstTimeSetup(Connection connection)
-      throws DatabaseInsertException, SQLException, ConnectionFailedException, IOException {
+      throws SQLException, ConnectionFailedException, IOException {
 
     System.out.println("First run setup");
     System.out.println("---------------");
     DatabaseDriverExtender.initialize(connection);
     // Creating roles
 
-    DatabaseInsertHelper.insertRole("ADMIN");
-    DatabaseInsertHelper.insertRole("CUSTOMER");
-    DatabaseInsertHelper.insertRole("EMPLOYEE");
+    try {
+      DatabaseInsertHelper.insertRole("ADMIN");
+      DatabaseInsertHelper.insertRole("CUSTOMER");
+      DatabaseInsertHelper.insertRole("EMPLOYEE");
+    } catch (DatabaseInsertException e1) {
+      System.out.println("Unable to insert role into database");
+    }
 
 
     System.out.println("Creating administrator account");
@@ -152,16 +153,17 @@ public class SalesApplication {
         id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
         exit = true;
         System.out.println("Created new Admin, ID: " + id);
+        int adminRoleId = DatabaseSelectHelper.getRoleIdByName("ADMIN");
+        DatabaseInsertHelper.insertUserRole(id, adminRoleId);
 
       } catch (NumberFormatException e) {
-        System.out.println("Invalid input:");
-        System.out.println("A valid number must be entered for age");
+        System.out.println("Please enter a valid number");
+      } catch (DatabaseInsertException e1) {
+        System.out.println("Unable to insert user or user role into database");
       }
-
     }
 
-    int adminRoleId = DatabaseSelectHelper.getRoleIdByName("ADMIN");
-    DatabaseInsertHelper.insertUserRole(id, adminRoleId);
+
 
     System.out.println("Creating employee account");
 
@@ -185,37 +187,16 @@ public class SalesApplication {
         id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
         exit = true;
         System.out.println("Created new Empolyee, ID: " + id);
-
+        int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
+        DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
+        System.out.println("Database creation was successfull!");
       } catch (NumberFormatException e) {
-        System.out.println("Invalid input:");
-        System.out.println("A valid number must be entered for age");
+        System.out.println("Please enter a valid number");
+      } catch (DatabaseInsertException e1) {
+        System.out.println("Unable to insert user or user role into database");
       }
 
     }
-
-    int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-    DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
-
-
-    // Adding required items to database
-    // Creating dummy stock
-    //
-    // int itemId;
-    // itemId = DatabaseInsertHelper.insertItem("FISHING_ROD", new BigDecimal("10.00"));
-    // DatabaseInsertHelper.insertInventory(itemId, 100);
-    // itemId = DatabaseInsertHelper.insertItem("HOCKEY_STICK", new BigDecimal("10.00"));
-    // DatabaseInsertHelper.insertInventory(itemId, 100);
-    // itemId = DatabaseInsertHelper.insertItem("SKATES", new BigDecimal("10.00"));
-    // DatabaseInsertHelper.insertInventory(itemId, 100);
-    // itemId = DatabaseInsertHelper.insertItem("RUNNING_SHOES", new BigDecimal("10.00"));
-    // DatabaseInsertHelper.insertInventory(itemId, 100);
-    // itemId = DatabaseInsertHelper.insertItem("PROTEIN_BAR", new BigDecimal("10.00"));
-    // DatabaseInsertHelper.insertInventory(itemId, 100);
-    // unnecessary because this is not expected default behaviour
-
-
-    System.out.println("Database creation was successfull!");
-
   }
 
   /**
@@ -322,7 +303,7 @@ public class SalesApplication {
         } else {
           System.out.println("Failed to authenticate new employee");
         }
-        
+
       } else if (input == 2 || input == 3) {
         System.out.println("Creating a new customer");
         System.out.println("Input a name");
@@ -339,8 +320,8 @@ public class SalesApplication {
             break insertUser;
           }
           int roleId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
-          if (userId == -1) { 
-            //should never run: included here due to UML-unstable EmployeeInterface change
+          if (userId == -1) {
+            // should never run: included here due to UML-unstable EmployeeInterface change
             System.out.println("Unable to retrieve the role ID.");
             break insertUser;
           }
@@ -362,7 +343,7 @@ public class SalesApplication {
         insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
-          //should never run: included here due to UML-unstable EmployeeInterface change
+            // should never run: included here due to UML-unstable EmployeeInterface change
             break insertUser;
           }
           int roleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
@@ -398,134 +379,72 @@ public class SalesApplication {
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public static void customerMode(BufferedReader bufferedReader) throws IOException, SQLException {
-    Customer customer = null;
-    ShoppingCart cart = null;
+  public static void customerMode(BufferedReader reader) throws IOException, SQLException {
 
-    // Allow user to log in
-    boolean exit = false;
-    while (!exit) {
-      System.out.println("Enter customer ID");
-      String customerId = bufferedReader.readLine();
-      System.out.println("Enter password");
-      String password = bufferedReader.readLine();
-
-      // Validate and authenticate user
-      try {
-        int customerIdInt = Integer.parseInt(customerId);
-        User user = DatabaseSelectHelper.getUserDetails(customerIdInt);
-        if (user instanceof Customer) {
-          customer = (Customer) user;
-        } else {
-          System.out.println("Not a customer!");
-        }
-      } catch (NumberFormatException e) {
-        System.out.println("Invalid ID, must be a number!");
+    try {
+      System.out.print("Customer Login:");
+      Customer customer = (Customer) StoreHelpers.loginPrompt(reader, Roles.CUSTOMER);
+      if (customer == null) {
+        return;
       }
-      if (customer != null && customer.authenticate(password)) {
+      ShoppingCart shoppingCart = new ShoppingCart(customer);
+      System.out.println("Welcome, customer");
+      String[] customerOptions =
+          {"1 - List items in cart", "2 - Add item to cart", "3 - Check price",
+              "4 - Remove item from cart", "5 - Check out", "6 - Exit", "Enter Selection:"};
+      int input = StoreHelpers.choicePrompt(customerOptions, reader);
+      while (input != 6) {
+        if (input == 1) {
+          System.out.println(shoppingCart.getItems());
 
-        try {
-          cart = new ShoppingCart(customer);
-          exit = true;
-        } catch (NotAuthenticatedException e) {
-          System.out.println("Authentication failed, try again!");
-        }
-      } else {
-        System.out.println("Authentication failed, try again!");
-      }
-    }
+        } else if (input == 2) {
+          System.out.println("Input a quantity");
+          int quantity = Integer.parseInt(reader.readLine());
+          System.out.println("Input an item id");
+          int itemId = Integer.parseInt(reader.readLine());
+          shoppingCart.addItem(DatabaseSelectHelper.getItem(itemId), quantity);
 
-    // Allow user to interact with cart, database
-    exit = false;
-    while (!exit) {
-      System.out.println("Welcome to the customer interface");
-      System.out.println("---------------------------------");
-      System.out.println("What would you like to do?");
-      System.out.println("1. List current items in cart");
-      System.out.println("2. Add a quantity of an item to the cart");
-      System.out.println("3. Check total price of items in the cart");
-      System.out.println("4. Remove a quantity of an item from the cart");
-      System.out.println("5. check out ");
-      System.out.println("6. Exit");
+        } else if (input == 3) {
+          // Display cart total price
+          System.out.println("Your total is:");
+          System.out.println(shoppingCart.getTotal());
 
-      String input = bufferedReader.readLine();
-      if (input.equals("1")) {
-        // List items in cart
-        System.out.println("Current Cart:");
-        List<Item> items = cart.getItems();
-        for (int i = 0; i < items.size(); i++) {
-          System.out.println(items.get(i).getName());
-        }
-      } else if (input.equals("2")) {
-        // Allow user to add items to cart
-        List<Item> items = DatabaseSelectHelper.getAllItems();
-        System.out.println("The following are the current items and their " + "IDs");
-        for (int i = 0; i < items.size(); i++) {
-          System.out.println(items.get(i).getName());
-          System.out.println("ID: " + items.get(i).getId());
-        }
-        System.out.println("Enter the ID of the item you would like to add");
-        String toStock = bufferedReader.readLine();
-        System.out.println("Enter the qauntity of the item you would like to add");
-        String quantity = bufferedReader.readLine();
-        try {
-          int itemId = Integer.parseInt(toStock);
-          int quantityInt = Integer.parseInt(quantity);
-          Item item = DatabaseSelectHelper.getItem(itemId);
-          cart.addItem(item, quantityInt);
-          System.out.println("Successfully added!");
-        } catch (NumberFormatException e) {
-          System.out.println("Must enter a valid number!");
-        }
-      } else if (input.equals("3")) {
-        // Display cart total price
-        System.out.println("Your total is:");
-        System.out.println(cart.getTotal());
-      } else if (input.equals("4")) {
-        // Allow users to remove items from cart
-        List<Item> items = DatabaseSelectHelper.getAllItems();
-        System.out.println("The following are the current items and their " + "IDs");
-        for (int i = 0; i < items.size(); i++) {
-          System.out.println(items.get(i).getName());
-          System.out.println("ID: " + items.get(i).getId());
-        }
-        System.out.println("Enter the ID of the item you would like to remove");
-        String toStock = bufferedReader.readLine();
-        System.out.println("Enter the qauntity of the item you would like to remove");
-        String quantity = bufferedReader.readLine();
-        try {
-          int itemId = Integer.parseInt(toStock);
-          int quantityInt = Integer.parseInt(quantity);
-          Item item = DatabaseSelectHelper.getItem(itemId);
-          cart.removeItem(item, quantityInt);
-          System.out.println("Successfully removed!");
-        } catch (NumberFormatException e) {
-          System.out.println("Must enter a valid number!");
-        }
-      } else if (input.equals("5")) {
-        // Allow user to check out
-        System.out.println("Your total is:");
-        System.out.println("$" + cart.getTotal());
-        System.out.println("You will also pay taxes to the order of:");
-        System.out.println("$" + cart.getTotal().multiply(cart.getTaxRate()));
-        boolean checkedOut = cart.checkOutCart();
-        if (checkedOut) {
-          // Prompt user to continue shopping
-          System.out.println("Your order has been checked out!");
-          System.out.println("Enter 1 if you would like to continue shopping");
-          System.out.println("Enter any other value if you would like to exit");
-          input = bufferedReader.readLine();
-          if (!input.equals("1")) {
-            exit = true;
-            cart.clearCart();
+        } else if (input == 4) {
+          System.out.println("Input a quantity");
+          int quantity = Integer.parseInt(reader.readLine());
+          System.out.println("Input an item id");
+          int itemId = Integer.parseInt(reader.readLine());
+          shoppingCart.removeItem(DatabaseSelectHelper.getItem(itemId), quantity);
+
+        } else if (input == 5) {
+          // Allow user to check out
+          System.out.println("Your total is:");
+          System.out.println("$" + shoppingCart.getTotal());
+          System.out.println("You will also pay taxes to the order of:");
+          System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
+          boolean checkedOut = false;
+          try {
+            checkedOut = shoppingCart.checkOut();
+          } catch (DatabaseInsertException e) {
+            System.out.println("An error occurred while checking out");
           }
-        } else {
-          System.out.println("Sorry, your cart could not be checked out at this time");
+          if (checkedOut) {
+            System.out.println("Your order has been checked out!");
+          } else {
+            System.out.println("Sorry, your cart could not be checked out at this time");
+          }
+        } else if (input == -1) {
+          System.out.println("Please choose one of the options");
         }
-      } else if (input.equals("6")) {
-        // exit
-        exit = true;
+        input = StoreHelpers.choicePrompt(customerOptions, reader);
+
       }
+    } catch (IOException e) {
+      System.out.println("Unable to read input from console");
+      e.printStackTrace();
+    } catch (SQLException e) {
+      System.out.println("There was an error connecting to the database");
+      e.printStackTrace();
     }
   }
 }
