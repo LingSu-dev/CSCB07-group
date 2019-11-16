@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <dimen name="admin_left_padding">15dp</dimen>
+    <dimen name="admin_right_padding">15dp</dimen>
+    <dimen name="admin_top_padding">15dp</dimen>
+    <dimen name="admin_bottom_padding">15dp</dimen>
+    <dimen name="textViewTextSize">20dp</dimen>
+    <dimen name="loginTitleSize">35dp</dimen>
+    
 </resources>
