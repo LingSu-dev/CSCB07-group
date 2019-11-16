@@ -1,10 +1,9 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper;
+import com.b07.database.helper.DatabaseInsertHelper; 
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.users.Employee;
