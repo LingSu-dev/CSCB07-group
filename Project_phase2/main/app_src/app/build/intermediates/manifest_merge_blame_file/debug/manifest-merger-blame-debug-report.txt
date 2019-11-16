@@ -6,45 +6,78 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="25"
-8-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml
+8-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml
+9-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:5:5-20:19
+11-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:5:5-31:19
 12        android:allowBackup="true"
-12-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:6:9-35
+12-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-13-->[androidx.core:core:1.0.1] C:\Users\payam\.gradle\caches\transforms-2\files-2.1\c0a39027978b83a483a047f5c31d0c4e\core-1.0.1\AndroidManifest.xml:22:18-86
+13-->[androidx.core:core:1.0.1] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\c0a39027978b83a483a047f5c31d0c4e\core-1.0.1\AndroidManifest.xml:22:18-86
 14        android:debuggable="true"
 15        android:icon="@mipmap/ic_launcher"
-15-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:7:9-43
+15-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:7:9-43
 16        android:label="@string/app_name"
-16-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:8:9-41
+16-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:8:9-41
 17        android:roundIcon="@mipmap/ic_launcher_round"
-17-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:9:9-54
+17-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:9:9-54
 18        android:supportsRtl="true"
-18-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:10:9-35
-19        android:testOnly="true"
-20        android:theme="@style/AppTheme" >
-20-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:11:9-40
-21        <activity android:name="com.example.cscb07_app.admin" />
-21-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:12:9-52
-21-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:12:19-40
-22        <activity android:name="com.example.cscb07_app.MainActivity" >
-22-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:13:9-19:20
-22-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:13:19-47
-23            <intent-filter>
-23-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:14:13-18:29
-24                <action android:name="android.intent.action.MAIN" />
-24-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:15:17-69
-24-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:15:25-66
-25
-26                <category android:name="android.intent.category.LAUNCHER" />
-26-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:17:17-77
-26-->C:\Users\payam\Desktop\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:17:27-74
-27            </intent-filter>
-28        </activity>
-29    </application>
-30
-31</manifest>
+18-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:10:9-35
+19        android:theme="@style/AppTheme" >
+19-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:11:9-40
+20        <activity android:name="com.example.cscb07_app.Login" />
+20-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:12:9-52
+20-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:12:19-40
+21        <activity
+21-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:13:9-15:60
+22            android:name="com.example.cscb07_app.ui.login.Login"
+22-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:14:13-43
+23            android:label="@string/title_activity_login" />
+23-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:15:13-57
+24        <activity
+24-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:16:9-18:65
+25            android:name="com.example.cscb07_app.ui.login.testLogin"
+25-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:17:13-47
+26            android:label="@string/title_activity_test_login" />
+26-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:18:13-62
+27        <activity
+27-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:19:9-22:59
+28            android:name="com.example.cscb07_app.test"
+28-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:20:13-33
+29            android:label="@string/title_activity_test"
+29-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:21:13-56
+30            android:theme="@style/AppTheme.NoActionBar" />
+30-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:22:13-56
+31        <activity android:name="com.example.cscb07_app.admin" />
+31-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:23:9-43
+31-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:23:19-40
+32        <activity android:name="com.example.cscb07_app.MainActivity" >
+32-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:24:9-30:20
+32-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:24:19-47
+33            <intent-filter>
+33-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:25:13-29:29
+34                <action android:name="android.intent.action.MAIN" />
+34-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:26:17-69
+34-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:26:25-66
+35
+36                <category android:name="android.intent.category.LAUNCHER" />
+36-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:28:17-77
+36-->C:\School\University\Year Two Fall\CSCB07\group_0817\Project_phase2\main\app_src\app\src\main\AndroidManifest.xml:28:27-74
+37            </intent-filter>
+38        </activity>
+39
+40        <provider
+40-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+41            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+41-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+42            android:authorities="com.example.cscb07_app.lifecycle-process"
+42-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+43            android:exported="false"
+43-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+44            android:multiprocess="true" />
+44-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\ajzor\.gradle\caches\transforms-2\files-2.1\b3c088406576b03c69a90621925ddf75\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+45    </application>
+46
+47</manifest>
