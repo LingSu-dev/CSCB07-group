@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/employeeIdEditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-64dp"
+        android:layout_marginBottom="-54dp"
         android:text="@string/admin_promote_button"
         android:textAllCaps="false" />
 
@@ -57,21 +57,33 @@
         android:id="@+id/addItemEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/admin_add_item_button_hint"
+        android:hint="@string/admin_add_item_hint"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/addItemText"
-        android:layout_marginTop="115dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="116dp"
         android:inputType="text"
         android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/addItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addItemText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/admin_add_item_button"
+        android:textAllCaps="false"/>
 
     <TextView
         android:id="@+id/viewSalesData"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_alignTop="@id/viewSalesButton"
-        android:layout_marginTop="-296dp"
+        android:layout_marginTop="-270dp"
         android:layout_centerHorizontal="true"
         android:scrollbars="vertical"
+        android:layout_below="@id/addItemButton"
         android:text="@string/admin_view_sales_default"
         android:textSize="@dimen/textViewTextSize" />
 
