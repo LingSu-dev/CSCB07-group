@@ -196,15 +196,21 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     return itemizedId;
   }
 
-
   /**
    * Insert a new account into the database.
    * 
    * @param userId the userId for the user of the account.
    * @return the id of the account,
    * @throws DatabaseInsertException if something goes wrong.
+   * @throws SQLException on failure.
    */
-  public static int insertAccount(int userId) throws DatabaseInsertException {
+  public static int insertAccount(int userId) throws DatabaseInsertException, SQLException {
+    
+    List<Integer> validUserIds = DatabaseSelectHelper.getUserIds();
+    if (!validUserIds.contains(userId)) {
+      throw new DatabaseInsertException();
+    }
+    
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int accountId = DatabaseInserter.insertAccount(userId, connection);
     return accountId;
@@ -216,10 +222,18 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * @param accountId the id of the account.
    * @param itemId the item to be inserted.
    * @param quantity the quantity of that item.
-   * @return the id of the inserted record.
+   * @return the id of the inserted record, else -1
    * @throws DatabaseInsertException if something goes wrong.
    */
   public static int insertAccountLine(int accountId, int itemId, int quantity) throws DatabaseInsertException {
+    
+    //TODO: Check if accountId, is valid.
+    
+    if (quantity < 0)
+    {
+      return -1;
+    }
+    
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int id = DatabaseInserter.insertAccountLine(accountId, itemId, quantity, connection);
     return id;
