@@ -29,7 +29,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
@@ -78,7 +81,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
@@ -108,7 +114,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
@@ -138,7 +147,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
       
@@ -170,7 +182,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
@@ -203,7 +218,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
@@ -211,6 +229,85 @@ public class DatabaseInserter {
     }
     throw new DatabaseInsertException();
   }
+  
+  /*
+   * 
+   * PHASE 2 NEW METHODS START
+   * 
+   */
+  
+  /**
+   * Insert a new account into the database.
+   * @param userId the userId for the user of the account.
+   * @param connection the connection to the database.
+   * @return the id of the account.
+   * @throws DatabaseInsertException if something goes wrong.
+   */
+  protected static int insertAccount(int userId, Connection connection) 
+      throws DatabaseInsertException {
+    String sql = "INSERT INTO ACCOUNT(USERID) VALUES(?);";
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql,
+                                              Statement.RETURN_GENERATED_KEYS);
+      preparedStatement.setInt(1, userId);
+      
+      int id = preparedStatement.executeUpdate();
+      if (id > 0) {
+        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
+        if (uniqueKey.next()) {
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    throw new DatabaseInsertException();
+  }
+  
+  /**
+   * insert a single item into a given account for recovery next login.
+   * @param accountId the id of the account.
+   * @param itemId the item to be inserted.
+   * @param quantity the quantity of that item.
+   * @param connection connection to the database.
+   * @return the id of the inserted record.
+   * @throws DatabaseInsertException if something goes wrong.
+   */
+  protected static int insertAccountLine(int accountId, int itemId, int quantity, 
+      Connection connection) throws DatabaseInsertException {
+    String sql = "INSERT INTO ACCOUNTSUMMARY(ACCTID, ITEMID, QUANTITY) VALUES(?,?,?);";
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql,
+                                              Statement.RETURN_GENERATED_KEYS);
+      preparedStatement.setInt(1, accountId);
+      preparedStatement.setInt(2, itemId);
+      preparedStatement.setInt(3, quantity);
+      
+      int id = preparedStatement.executeUpdate();
+      if (id > 0) {
+        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
+        if (uniqueKey.next()) {
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    throw new DatabaseInsertException();
+  }
+  
+  /*
+   * 
+   * END PHASE 2 NEW METHODS
+   * 
+   */
+  
   
   private static boolean insertPassword(String password, int userId, Connection connection) {
     String sql = "INSERT INTO USERPW(USERID, PASSWORD) VALUES(?,?);";
@@ -220,6 +317,7 @@ public class DatabaseInserter {
       preparedStatement.setInt(1, userId);
       preparedStatement.setString(2, password);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -239,7 +337,10 @@ public class DatabaseInserter {
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
         if (uniqueKey.next()) {
-          return uniqueKey.getInt(1);
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
         }
       }
     } catch (Exception e) {
