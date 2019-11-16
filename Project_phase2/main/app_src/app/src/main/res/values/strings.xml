@@ -6,4 +6,6 @@
     <string name="admin_promote_button">Promote</string>
     <string name="admin_view_sales">View Sales</string>
     <string name="admin_view_sales_default">Click view sales to see history of sales</string>
+    <string name="admin_add_item">Add Item:</string>
+    <string name="admin_add_item_button_hint">Item Name</string>
 </resources>
