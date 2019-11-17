@@ -1,6 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper;
+import com.b07.database.helper.DatabaseInsertHelper; 
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 
 
 public class SalesApplication {
@@ -206,67 +207,31 @@ public class SalesApplication {
    * @throws IOException if there is an issue obtaining user input.
    */
   public static void adminMode(BufferedReader bufferedReader) throws SQLException, IOException {
-    boolean exit = false;
-    String input = "";
-    Admin admin = null;
-
     System.out.println("Admin Mode: Log in");
     System.out.println("---------------");
-
-    // Obtain a valid admin ID
-    while (!exit) {
-      System.out.println("Enter admin ID");
-      String adminId = bufferedReader.readLine();
-      try {
-        int adminIdInt = Integer.parseInt(adminId);
-
-        User user = DatabaseSelectHelper.getUserDetails(adminIdInt);
-        if (user instanceof Admin) {
-          admin = (Admin) user;
-          exit = true;
-        } else {
-          System.out.println("Not an admin!");
-        }
-      } catch (NumberFormatException e) {
-        System.out.println("A valid number must be entered");
-      }
+    Admin admin = (Admin) StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+    if (admin == null) {
+      System.out.println("Incorrect login!");
+      return;
     }
-
-    // Get password in order to authenticate admin
-    exit = false;
-    while (!exit) {
-      System.out.println("Enter password");
-      String password = bufferedReader.readLine();
-      if (admin.authenticate(password) == true) {
-        exit = true;
-      } else {
-        System.out.println("Invalid password!");
-      }
-    }
-
-    System.out.println("Admin validated!");
 
     // Allow admin to promote employees
-    exit = false;
-    while (!exit) {
-      System.out.println("Type '1' to promote an employee to admin");
-      System.out.println("Type anything else to exit");
-      input = bufferedReader.readLine();
-      if (input.equals("1")) {
-        System.out.println("Enter the id of the user you would like to promote:");
-        input = bufferedReader.readLine();
-
-        int employeeId = Integer.parseInt(input);
+    String[] adminOptions =
+      {"Type '1' to promote an employee to admin", "Type anything else to exit"};
+    int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
+    if (input == 1) {
+      System.out.println("Enter the id of the user you would like to promote:");
+      try {
+        int employeeId = Integer.parseInt(bufferedReader.readLine());
         User toPromote = DatabaseSelectHelper.getUserDetails(employeeId);
         if (toPromote instanceof Employee) {
           admin.promoteEmployee((Employee) toPromote);
-          System.out.println("Employee promoted succesfully!");
+          System.out.println("Employee promoted successfully!");
         } else {
-          System.out.println("Not an employee!");
+          System.out.println("Only employees may be promoted!");
         }
-
-      } else {
-        exit = true;
+      } catch (NumberFormatException e) {
+        System.out.println("Please enter an ID number.");
       }
     }
   }
@@ -285,6 +250,7 @@ public class SalesApplication {
     System.out.print("Employee Login:");
     Employee employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
     if (employee == null) {
+      System.out.println("Incorrect login!");
       return;
     }
     Inventory inventory = DatabaseSelectHelper.getInventory();

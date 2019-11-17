@@ -3,6 +3,9 @@ package com.b07.store;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import com.b07.inventory.Item;
+import com.b07.users.Customer;
+import com.b07.users.User;
 
 /**
  * A simple implementation of the salesLog interface.
@@ -60,5 +63,23 @@ public class SalesLogImpl implements SalesLog {
   @Override
   public int getTotalSalesCount() {
     return sales.size();
+  }
+
+  @Override
+  public List<Sale> getSalesOfItem(Item item) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Sale> getSalesToCustomer(User user) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Customer> getCustomers() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

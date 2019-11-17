@@ -2,6 +2,9 @@ package com.b07.store;
 
 import java.math.BigDecimal;
 import java.util.List;
+import com.b07.inventory.Item;
+import com.b07.users.Customer;
+import com.b07.users.User;
 
 /**
  * A log to keep track of all transactions.
@@ -42,5 +45,24 @@ public interface SalesLog {
    * @return total sales
    */
   public BigDecimal getTotalValueOfSales();
+  
+  /**
+   * Get a list of sales for a given item in the log.
+   * @return the sales of the item
+   */
+  public List<Sale> getSalesOfItem(Item item);
+
+  /**
+   * Get a list of sales for to a given customer in the log.
+   * @return the sales to the customer
+   */
+  public List<Sale> getSalesToCustomer(User user);
+
+  /**
+   * Get a list of customers who have purchased items
+   * @return a list of customers
+   */
+  public List<Customer> getCustomers();
+
 
 }
