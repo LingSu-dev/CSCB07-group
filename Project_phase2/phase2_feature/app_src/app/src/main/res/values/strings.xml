@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">CSCB07 App</string>
+    <string name="admin_view_title">Admin</string>
+    <string name="admin_promote">Promote Employee: </string>
+    <string name="admin_promote_hint">Employee ID</string>
+    <string name="admin_promote_button">Promote</string>
+    <string name="admin_view_sales">View Sales</string>
+    <string name="admin_view_sales_default">Click view sales to see history of sales</string>
+    <string name="admin_add_item">Add Item:</string>
+    <string name="admin_add_item_hint">Item Name</string>
+    <string name="admin_add_item_button">Add Item</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="login_id_prompt">ID</string>
+    <string name="login_password_prompt">Password</string>
+    <string name="login_sign_in_button">Sign in</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_test_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="employee_options">Please Choose an Option</string>
+    <string name="employee_menu_first_button">Authenticate New Employee</string>
+    <string name="employee_menu_second_button">Make New User</string>
+    <string name="employee_menu_third_button">Make New Account</string>
+    <string name="employee_menu_fourth_button">Make New Employee</string>
+    <string name="employee_menu_fifth_button">Restock Inventory</string>
+    <string name="exit_button">Exit</string>
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/admin_left_padding"
+    android:paddingTop="@dimen/employeeMenuTopPadding"
+    android:paddingRight="@dimen/admin_right_padding"
+    android:paddingBottom="@dimen/admin_bottom_padding"
+    tools:context=".employee"
+    tools:showIn="@layout/activity_employee">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/employee_options"
+        android:textSize="@dimen/employeeMenuTitle"
+        android:id="@+id/employee_menu_title" />
+
+    <Button
+        android:id="@+id/first_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_menu_first_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/employee_menu_title" />
+
+    <Button
+        android:id="@+id/second_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_menu_second_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/first_button" />
+
+    <Button
+        android:id="@+id/third_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_menu_third_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/second_button" />
+
+    <Button
+        android:id="@+id/fourth_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_menu_fourth_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/third_button" />
+
+    <Button
+        android:id="@+id/fifth_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_menu_fifth_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/fourth_button" />
+
+    <Button
+        android:id="@+id/sixth_button"
+        android:layout_width="@dimen/employeeMenuButtonWidth"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/fifth_button" />
+
+</RelativeLayout>
