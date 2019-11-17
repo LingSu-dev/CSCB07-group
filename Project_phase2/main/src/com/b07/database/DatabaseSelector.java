@@ -17,7 +17,6 @@ public class DatabaseSelector {
   protected static ResultSet getRoles(Connection connection) throws SQLException {
     Statement statement = connection.createStatement();
     ResultSet results = statement.executeQuery("SELECT * FROM ROLES;");
-    statement.close();
     return results;
   }
   
@@ -54,6 +53,8 @@ public class DatabaseSelector {
     results.close();
     return userRole;
   }
+  
+  //Original documentation here is incorrect, should be "Get users with the given role"
   
   /**
    * get the role of the given user.
@@ -233,47 +234,5 @@ public class DatabaseSelector {
     preparedStatement.setInt(1, salesId);
     return preparedStatement.executeQuery();
   }
-  
-  /*
-   * 
-   * PHASE 2 ADDED METHODS START
-   * 
-   */
-  
-  /**
-   * Get the accounts assigned to a given user.
-   * @param userId the id of the user.
-   * @param connection the connection to the database.
-   * @return a result set containing the id's of the accounts.
-   * @throws SQLException if something goes wrong.
-   */
-  protected static ResultSet getUserAccounts(int userId, Connection connection) 
-      throws SQLException {
-    String sql = "SELECT ID FROM ACCOUNT WHERE USERID = ?;";
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    preparedStatement.setInt(1, userId);
-    return preparedStatement.executeQuery();
-  }
-  
-  /**
-   * Get the details of a given account.
-   * @param accountId the ID of the account.
-   * @param connection the connection to the database. 
-   * @return the details associated to the given account.
-   * @throws SQLException if something goes wrong.
-   */
-  protected static ResultSet getAccountDetails(int accountId, Connection connection) 
-      throws SQLException {
-    String sql = "SELECT * FROM ACCOUNTSUMMARY WHERE ACCTID = ?;";
-    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    preparedStatement.setInt(1, accountId);
-    return preparedStatement.executeQuery();
-  }
-  
-  /*
-   * 
-   * PHASE 2 ADDED METHODS END
-   * 
-   */
   
 }
