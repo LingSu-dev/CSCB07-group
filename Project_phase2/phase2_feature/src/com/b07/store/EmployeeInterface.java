@@ -67,7 +67,6 @@ public class EmployeeInterface {
    * @param quantity the quantity to re-stock.
    * @return true if the operation succeeds.
    * @throws SQLException if there is an issue communicating with the database.
-   * @throws DatabaseInsertException on failure with insertion.
    */
   public boolean restockInventory(Item item, int quantity) throws SQLException {
     try {
