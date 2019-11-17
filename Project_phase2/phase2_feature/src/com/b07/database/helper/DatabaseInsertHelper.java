@@ -191,7 +191,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     return itemizedId;
   }
 
-/**
+  /**
    * Insert a new account into the database.
    * 
    * @param userId the userId for the user of the account.
@@ -220,13 +220,13 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * @return the id of the inserted record
    * @throws DatabaseInsertException if something goes wrong.
    */
-  public static int insertAccountLine(int accountId, int itemId, int quantity) throws DatabaseInsertException {
+  public static int insertAccountLine(int accountId, int itemId, int quantity) 
+      throws DatabaseInsertException {
     
     //TODO: No way to check if accountId is valid.
     //TODO: Check if itemId is valid
     
-    if (quantity < 0)
-    {
+    if (quantity < 0) {
       throw new DatabaseInsertException();
     }
     
