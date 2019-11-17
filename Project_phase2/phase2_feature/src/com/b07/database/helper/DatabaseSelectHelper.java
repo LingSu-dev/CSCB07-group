@@ -513,4 +513,89 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
     return results.next();
   }
+
+/**
+   * Get the accounts assigned to a given user.
+   * 
+   * @param userId the id of the user.
+   * @return a list containing the id's of the user's accounts, null if userId doesn't exist
+   * @throws SQLException if something goes wrong.
+   */
+  public static List<Integer> getUserAccounts(int userId) throws SQLException {
+
+    if (!userIdExists(userId)) {
+      return null;
+    }
+
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    ResultSet results = DatabaseSelector.getUserAccounts(userId, connection);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.next()) {
+      accounts.add(results.getInt("id"));
+    }
+    results.close();
+    connection.close();
+
+    return accounts;
+  }
+
+  /**
+   * Get the details of a given account.
+   * 
+   * @param accountId the ID of the account.
+   * @return an array where the first element is the acctId, second is itemId, and third is
+   *         quantity, else null.
+   * @throws SQLException if something goes wrong.
+   */
+  public static int[] getAccountDetails(int accountId) throws SQLException {
+
+    //Check for valid accountId
+    if (!getAllAccountIds().contains(accountId))
+    {
+      return null;
+    }
+    
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection);
+    int[] accountDetails = new int[3];
+
+    while (results.next()) {
+      accountDetails[0] = results.getInt("acctId");
+      accountDetails[1] = results.getInt("itemId");
+      accountDetails[2] = results.getInt("quantity");
+    }
+    results.close();
+    connection.close();
+
+    return accountDetails;
+  }
+  
+  /**
+   * THIS IS A CUSTOM METHOD ADDED BY PAYAM TO CHECK IF ACCOUNTID IS VALID
+   * 
+   * Get all the id's of the accounts in ACCOUNT table.
+   * 
+   * @return list of all the account ids
+   * @throws SQLException if something goes wrong
+   */
+  public static List<Integer> getAllAccountIds() throws SQLException
+  {
+    List<Integer> allUserIds = DatabaseSelectHelper.getUserIds();
+    List<Integer> allAccountIds = new ArrayList<>();
+    
+    for (Integer userId: allUserIds)
+    {
+      for (Integer userAccount: getUserAccounts(userId))
+      {
+        if(!allAccountIds.contains(userAccount))
+        {
+          allAccountIds.add(userAccount);
+        }
+      }
+    }
+    
+    return allAccountIds;
+  }
+
 }
