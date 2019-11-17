@@ -22,4 +22,11 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="employee_options">Please Choose an Option</string>
+    <string name="employee_menu_first_button">Authenticate New Employee</string>
+    <string name="employee_menu_second_button">Make New User</string>
+    <string name="employee_menu_third_button">Make New Account</string>
+    <string name="employee_menu_fourth_button">Make New Employee</string>
+    <string name="employee_menu_fifth_button">Restock Inventory</string>
+    <string name="exit_button">Exit</string>
 </resources>

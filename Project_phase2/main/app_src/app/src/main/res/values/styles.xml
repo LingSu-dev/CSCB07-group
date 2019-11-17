@@ -15,6 +15,9 @@
     <dimen name="textViewTextSize">20dp</dimen>
     <dimen name="loginTitleSize">35dp</dimen>
     <dimen name="topMarginBetweenView">60dp</dimen>
+    <dimen name="employeeMenuTitle">25dp</dimen>
+    <dimen name="employeeMenuTopPadding">50dp</dimen>
+    <dimen name="employeeMenuButtonWidth">235dp</dimen>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
