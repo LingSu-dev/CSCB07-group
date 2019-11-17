@@ -114,7 +114,7 @@ public abstract class User {
 
 
   /**
-   * Returns true if user is authenticated, false otherwise
+   * Returns true if user is authenticated, false otherwise.
    */
   public boolean getAuthenticated() {
     return authenticated;

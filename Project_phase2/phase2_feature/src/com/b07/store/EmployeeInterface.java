@@ -88,8 +88,7 @@ public class EmployeeInterface {
    * @param password the customer's password.
    * @return the customer's user ID.
    * @throws SQLException if there is an issue communicating with the database.
-   * @throws DatabaseInsertException
-   * @throws CreationFailedException if the customer cannot be created.
+   * @throws DatabaseInsertException if the customer cannot be inserted into the database.
    */
   public int createCustomer(String name, int age, String address, String password)
       throws SQLException, DatabaseInsertException {
@@ -110,8 +109,7 @@ public class EmployeeInterface {
    * @param password the employee's password.
    * @return the employee's user ID.
    * @throws SQLException if there is an issue communicating with the database.
-   * @throws DatabaseInsertException
-   * @throws CreationFailedException if the employee cannot be created.
+   * @throws DatabaseInsertException if the employee cannot be inserted into the database.
    */
   public int createEmployee(String name, int age, String address, String password)
       throws SQLException, DatabaseInsertException {

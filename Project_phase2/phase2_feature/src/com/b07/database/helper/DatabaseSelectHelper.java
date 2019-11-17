@@ -514,7 +514,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return results.next();
   }
 
-/**
+  /**
    * Get the accounts assigned to a given user.
    * 
    * @param userId the id of the user.
@@ -551,8 +551,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   public static int[] getAccountDetails(int accountId) throws SQLException {
 
     //Check for valid accountId
-    if (!getAllAccountIds().contains(accountId))
-    {
+    if (!getAllAccountIds().contains(accountId)) {
       return null;
     }
     
@@ -572,24 +571,19 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   }
   
   /**
-   * THIS IS A CUSTOM METHOD ADDED BY PAYAM TO CHECK IF ACCOUNTID IS VALID
-   * 
+   * THIS IS A CUSTOM METHOD ADDED BY PAYAM TO CHECK IF ACCOUNTID IS VALID.
    * Get all the id's of the accounts in ACCOUNT table.
    * 
    * @return list of all the account ids
    * @throws SQLException if something goes wrong
    */
-  public static List<Integer> getAllAccountIds() throws SQLException
-  {
+  public static List<Integer> getAllAccountIds() throws SQLException {
     List<Integer> allUserIds = DatabaseSelectHelper.getUserIds();
     List<Integer> allAccountIds = new ArrayList<>();
     
-    for (Integer userId: allUserIds)
-    {
-      for (Integer userAccount: getUserAccounts(userId))
-      {
-        if(!allAccountIds.contains(userAccount))
-        {
+    for (Integer userId: allUserIds) {
+      for (Integer userAccount: getUserAccounts(userId))  {
+        if (!allAccountIds.contains(userAccount)) {
           allAccountIds.add(userAccount);
         }
       }
