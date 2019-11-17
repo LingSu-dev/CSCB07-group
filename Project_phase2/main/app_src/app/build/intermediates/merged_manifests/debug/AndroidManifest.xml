@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.cscb07_app.employee" />
         <activity android:name="com.example.cscb07_app.Login" />
         <activity
             android:name="com.example.cscb07_app.ui.login.Login"
