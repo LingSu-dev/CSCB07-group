@@ -222,16 +222,17 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * @param accountId the id of the account.
    * @param itemId the item to be inserted.
    * @param quantity the quantity of that item.
-   * @return the id of the inserted record, else -1
+   * @return the id of the inserted record
    * @throws DatabaseInsertException if something goes wrong.
    */
   public static int insertAccountLine(int accountId, int itemId, int quantity) throws DatabaseInsertException {
     
-    //TODO: Check if accountId, is valid.
+    //TODO: No way to check if accountId is valid.
+    //TODO: Check if itemId is valid
     
     if (quantity < 0)
     {
-      return -1;
+      throw new DatabaseInsertException();
     }
     
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
