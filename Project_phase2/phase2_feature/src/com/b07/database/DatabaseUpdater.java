@@ -25,6 +25,7 @@ public class DatabaseUpdater {
       preparedStatement.setString(1, name);
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
         
     } catch (Exception e) {
@@ -47,6 +48,7 @@ public class DatabaseUpdater {
       preparedStatement.setString(1, name);
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -68,6 +70,7 @@ public class DatabaseUpdater {
       preparedStatement.setInt(1, age);
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -89,6 +92,7 @@ public class DatabaseUpdater {
       preparedStatement.setString(1, address);
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -110,6 +114,7 @@ public class DatabaseUpdater {
       preparedStatement.setInt(1, roleId);
       preparedStatement.setInt(2, userId);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -131,6 +136,7 @@ public class DatabaseUpdater {
       preparedStatement.setString(1, name);
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -152,6 +158,7 @@ public class DatabaseUpdater {
       preparedStatement.setString(1, price.toPlainString());
       preparedStatement.setInt(2, id);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -174,6 +181,7 @@ public class DatabaseUpdater {
       preparedStatement.setInt(1,quantity);
       preparedStatement.setInt(2, itemId);
       preparedStatement.executeUpdate();
+      preparedStatement.close();
       return true;
     } catch (Exception e) {
       e.printStackTrace();
