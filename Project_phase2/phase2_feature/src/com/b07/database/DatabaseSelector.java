@@ -17,7 +17,6 @@ public class DatabaseSelector {
   protected static ResultSet getRoles(Connection connection) throws SQLException {
     Statement statement = connection.createStatement();
     ResultSet results = statement.executeQuery("SELECT * FROM ROLES;");
-    statement.close();
     return results;
   }
   

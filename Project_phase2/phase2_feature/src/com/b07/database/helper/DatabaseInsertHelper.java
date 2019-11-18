@@ -87,6 +87,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     
     List<Integer> validRoleIds = DatabaseSelectHelper.getRoleIds();
     List<Integer> validUserIds = DatabaseSelectHelper.getUserIds();
+   
     if (!validRoleIds.contains(roleId) || !validUserIds.contains(userId)) {
       throw new DatabaseInsertException();
     }
