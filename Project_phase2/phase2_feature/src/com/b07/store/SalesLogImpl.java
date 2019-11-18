@@ -2,7 +2,10 @@ package com.b07.store;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import com.b07.users.User;
@@ -34,8 +37,7 @@ public class SalesLogImpl implements SalesLog {
    */
   @Override
   public void addSale(Sale sale) {
-    // TODO: there might be a bug with contains
-    if (!sales.contains(sale)) {
+    if (sale != null && !sales.contains(sale)) {
       sales.add(sale);
     }
   }
@@ -45,9 +47,7 @@ public class SalesLogImpl implements SalesLog {
    */
   @Override
   public BigDecimal getTotalValueOfSales() {
-
     BigDecimal value = null;
-
     for (Sale sale : sales) {
       value = value.add(sale.getTotalPrice());
     }
@@ -65,21 +65,40 @@ public class SalesLogImpl implements SalesLog {
     return sales.size();
   }
 
-  @Override
-  public List<Sale> getSalesOfItem(Item item) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+
 
   @Override
   public List<Sale> getSalesToCustomer(User user) {
-    // TODO Auto-generated method stub
-    return null;
+    if (user == null) {
+      return null;
+    }
+    List<Sale> customerSales = new ArrayList<Sale>();
+    for (Sale sale : sales) {
+      if (sale.getUser() == user) {
+        customerSales.add(sale);
+      }
+    }
+    return customerSales;
   }
 
   @Override
-  public List<Customer> getCustomers() {
-    // TODO Auto-generated method stub
-    return null;
+  public List<User> getCustomers() {
+    Set<User> customers = new HashSet<User>();
+    for (Sale sale : sales) {
+      customers.add(sale.getUser());
+    }
+    return new ArrayList<User>(customers);
+  }
+
+  @Override
+  public int getItemSaleQuantity(Item item) {
+    if (item == null) {
+      return 0;
+    }
+    int itemCount = 0;
+    for (Sale sale : sales) {
+      itemCount += sale.getItemMap().getOrDefault(item, 0);
+    }
+    return itemCount;
   }
 }

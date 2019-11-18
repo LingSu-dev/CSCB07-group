@@ -1,6 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper; 
+import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
@@ -216,22 +216,30 @@ public class SalesApplication {
     }
 
     // Allow admin to promote employees
-    String[] adminOptions =
-      {"Type '1' to promote an employee to admin", "Type anything else to exit"};
+    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
-    if (input == 1) {
-      System.out.println("Enter the id of the user you would like to promote:");
-      try {
-        int employeeId = Integer.parseInt(bufferedReader.readLine());
-        User toPromote = DatabaseSelectHelper.getUserDetails(employeeId);
-        if (toPromote instanceof Employee) {
-          admin.promoteEmployee((Employee) toPromote);
-          System.out.println("Employee promoted successfully!");
-        } else {
-          System.out.println("Only employees may be promoted!");
+    while (input != 3) {
+      if (input == 1) {
+        System.out.println("Enter the id of the user you would like to promote:");
+        try {
+          int employeeId = Integer.parseInt(bufferedReader.readLine());
+          User toPromote = DatabaseSelectHelper.getUserDetails(employeeId);
+          if (toPromote instanceof Employee) {
+            admin.promoteEmployee((Employee) toPromote);
+            System.out.println("Employee promoted successfully!");
+          } else {
+            System.out.println("Only employees may be promoted!");
+          }
+        } catch (NumberFormatException e) {
+          System.out.println("Please enter an ID number.");
         }
-      } catch (NumberFormatException e) {
-        System.out.println("Please enter an ID number.");
+        
+      } else if (input == 2) {
+        
+        
+      } else if (input == 3) {
+        System.out.println("Exiting");
+        return;
       }
     }
   }

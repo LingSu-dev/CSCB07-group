@@ -47,13 +47,13 @@ public interface SalesLog {
   public BigDecimal getTotalValueOfSales();
   
   /**
-   * Get a list of sales for a given item in the log.
+   * Get the number of item sold
    * @return the sales of the item
    */
-  public List<Sale> getSalesOfItem(Item item);
+  public int getItemSaleQuantity(Item item);
 
   /**
-   * Get a list of sales for to a given customer in the log.
+   * Get a list of sales to a given customer in the log.
    * @return the sales to the customer
    */
   public List<Sale> getSalesToCustomer(User user);
@@ -62,7 +62,13 @@ public interface SalesLog {
    * Get a list of customers who have purchased items
    * @return a list of customers
    */
-  public List<Customer> getCustomers();
+  public List<User> getCustomers();
+
+  /**
+   * Get a list of customers who have purchased items
+   * @return a list of customers
+   */
+  public String viewBooks();
 
 
 }
