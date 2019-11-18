@@ -101,4 +101,10 @@ public class SalesLogImpl implements SalesLog {
     }
     return itemCount;
   }
+
+  @Override
+  public String viewBooks() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
