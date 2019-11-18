@@ -156,7 +156,6 @@ public class SalesApplication {
         System.out.println("Created new Admin, ID: " + id);
         int adminRoleId = DatabaseSelectHelper.getRoleIdByName("ADMIN");
         DatabaseInsertHelper.insertUserRole(id, adminRoleId);
-
       } catch (NumberFormatException e) {
         System.out.println("Please enter a valid number");
       } catch (DatabaseInsertException e1) {
