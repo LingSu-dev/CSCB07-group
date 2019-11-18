@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmployeeMakeNewUser"
+    android:paddingLeft="@dimen/admin_left_padding"
+    android:paddingTop="@dimen/admin_top_padding"
+    android:paddingRight="@dimen/admin_right_padding"
+    android:paddingBottom="@dimen/admin_bottom_padding">
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_button"
+        android:layout_alignParentLeft="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/name_prompt"
+        android:layout_marginTop="40dp"
+        android:id="@+id/name_entry"
+        android:layout_below="@+id/goBackButton"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/age_prompt"
+        android:layout_marginTop="20dp"
+        android:id="@+id/age_entry"
+        android:layout_below="@+id/name_entry"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/address_prompt"
+        android:layout_marginTop="20dp"
+        android:id="@+id/address_entry"
+        android:layout_below="@+id/age_entry"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/password_prompt"
+        android:layout_marginTop="20dp"
+        android:id="@+id/password_entry"
+        android:layout_below="@+id/address_entry"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_user"
+        android:layout_below="@id/password_entry"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
