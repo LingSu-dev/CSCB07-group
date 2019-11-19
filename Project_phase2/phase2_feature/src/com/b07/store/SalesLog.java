@@ -74,9 +74,15 @@ public interface SalesLog {
 
   /**
    *  Get a map of items sold to the quantity of each item sold
-   * @return a list of customers
+   * @return a map of items to quantity
    */
   public HashMap<Item, Integer> getItemsSaleQuantity();
+
+  /**
+   *  Get the sales and quantities of items sold
+   * @return a string with the books
+   */
+  public String viewBooks();
 
 
 }
