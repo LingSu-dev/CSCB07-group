@@ -3,11 +3,9 @@ package com.b07.store;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
-import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +126,9 @@ public class ShoppingCart {
         }
         //Insert Itemized sales
         for (Item item : items.keySet()) {
+          // System.out.println("SaleId: " + saleId);
+          // System.out.println("item ID: " + item.getId());
+          // System.out.println("Item quantity " + items.get(item));
           DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
         }
         clearCart();

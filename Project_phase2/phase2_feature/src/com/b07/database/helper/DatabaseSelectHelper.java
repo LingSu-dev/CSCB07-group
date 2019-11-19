@@ -507,7 +507,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getSaleById(saleId, connection);
 
-    return results.next();
+    boolean exists = results.next();
+    results.close();
+    connection.close();
+    return exists;
   }
 
   /**

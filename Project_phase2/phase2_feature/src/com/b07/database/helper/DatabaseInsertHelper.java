@@ -181,9 +181,8 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    */
   public static int insertItemizedSale(int saleId, int itemId, int quantity) 
       throws SQLException, DatabaseInsertException {
-    
     if (!DatabaseSelectHelper.itemExists(itemId) 
-        || DatabaseSelectHelper.saleExists(saleId) || quantity < 0) {
+        || !DatabaseSelectHelper.saleExists(saleId) || quantity < 0) {
       throw new DatabaseInsertException();
     }
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
