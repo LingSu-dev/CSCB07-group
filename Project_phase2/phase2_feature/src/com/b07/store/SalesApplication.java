@@ -4,7 +4,6 @@ import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
@@ -425,6 +424,12 @@ public class SalesApplication {
           System.out.println(shoppingCart.getTotal());
 
         } else if (input == 4) {
+          System.out.println("Note, your current cart is as follows:");
+          HashMap<Item, Integer> items = shoppingCart.getItemsWithQuantity();
+          for (Item item : items.keySet()) {
+            System.out.println(item.getName() + " Quantity: " + items.get(item));
+          }
+          System.out.println("Remove an Item:");
           System.out.println("Input a quantity");
           int quantity = Integer.parseInt(reader.readLine());
           System.out.println("Input an item id");
