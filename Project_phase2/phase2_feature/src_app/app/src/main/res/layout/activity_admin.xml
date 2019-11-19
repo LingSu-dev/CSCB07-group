@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Admin"
+    android:padding="@dimen/activityPadding">
+
+    <TextView
+        android:id="@+id/employeeIdPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/admin_promote_prompt"
+        android:textSize="@dimen/textViewTextSize" />
+
+    <EditText
+        android:id="@+id/employeeIdEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/employeeIdPrompt"
+        android:hint="@string/admin_promote_hint"
+        android:inputType="text"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/promoteEmployeeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/employeeIdEntry"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-54dp"
+        android:text="@string/admin_promote_btn" />
+
+    <TextView
+        android:id="@+id/viewSalesData"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:layout_below="@id/promoteEmployeeButton"
+        android:layout_marginTop="75dp"
+        android:scrollbars="vertical"
+        android:textSize="@dimen/textViewTextSize" />
+
+    <Button
+        android:id="@+id/viewSalesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-451dp"
+        android:layout_below="@id/viewSalesData"
+        android:text="@string/admin_view_sales_btn"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
