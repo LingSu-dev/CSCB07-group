@@ -1,6 +1,7 @@
 package com.b07.store;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
@@ -70,5 +71,12 @@ public interface SalesLog {
    * @return list of items.
    */
   public List<Item> getItems();
+
+  /**
+   *  Get a map of items sold to the quantity of each item sold
+   * @return a list of customers
+   */
+  public HashMap<Item, Integer> getItemsSaleQuantity();
+
 
 }

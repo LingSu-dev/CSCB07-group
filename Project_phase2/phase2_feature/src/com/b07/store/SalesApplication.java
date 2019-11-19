@@ -252,7 +252,12 @@ public class SalesApplication {
         }
         
       } else if (input == 2) {
-        System.out.println(admin.viewBooks());
+        SalesLog salesLog = DatabaseSelectHelper.getSales();
+        System.out.println(salesLog.viewBooks());
+        
+      } else if (input == 3) {
+        System.out.println("Exiting");
+        return;
       }
       input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     }
