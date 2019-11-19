@@ -71,51 +71,6 @@ public class Admin extends User {
       return false;
     }
   }
-
-
-  /**
-   * View historic sales records.
-   * 
-   * @return the historic sales records.
-   * @throws SQLException on failure.
-   */
-  public String viewBooks() throws SQLException {
-    StringBuilder books = new StringBuilder("");
-    SalesLog log = DatabaseSelectHelper.getSales();
-
-    String newLine = System.getProperty("line.separator");
-    String seperator = "----------------------------------------------------------------";
-    String itemizedSpace = "                    ";
-    boolean firstItemizedSale = true;
-
-    for (Sale customerSale : log.getSales()) {
-      books.append("Customer: " + customerSale.getUser().getName() + newLine);
-      books.append("Purchase Number: " + customerSale.getId() + newLine);
-      books.append("Purchase Price: " + customerSale.getTotalPrice());
-      books.append("Itemized Breakdown: ");
-
-      for (HashMap.Entry<Item, Integer> itemizedSale : customerSale.getItemMap().entrySet()) {
-        Item item = itemizedSale.getKey();
-        Integer quantity = itemizedSale.getValue();
-
-        if (firstItemizedSale) {
-          books.append(item.getName() + ":" + quantity + newLine);
-          firstItemizedSale = false;
-        } else {
-          books.append(itemizedSpace + item.getName() + ":" + quantity + newLine);
-        }
-      }
-      books.append(seperator);
-    }
-
-    for (Item summaryEntry : log.getItems()) {
-      books.append("Number " + summaryEntry.getName() + " Sold:"
-          + log.getItemSaleQuantity(summaryEntry) + newLine);
-    }
-    
-    books.append("TOTAL SALES: " + log.getTotalValueOfSales());
-    return books.toString();
-  }
 }
 
 
