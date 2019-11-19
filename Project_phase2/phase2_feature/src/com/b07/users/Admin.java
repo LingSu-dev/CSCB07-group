@@ -3,12 +3,16 @@ package com.b07.users;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.inventory.Item;
+import com.b07.store.Sale;
+import com.b07.store.SalesLog;
+import com.b07.store.SalesLogImpl;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 
 /**
- * A class allowing administrators to perform operations on the
- * application, database, and users.
+ * A class allowing administrators to perform operations on the application, database, and users.
  * 
  * @author Aidan Zorbas
  * @author Alex Efimov
@@ -16,7 +20,7 @@ import java.sql.SQLException;
  * @author Payam Yektamaram
  */
 public class Admin extends User {
-  
+
   /**
    * Create a new admin, without setting their authentication value.
    * 
@@ -31,7 +35,7 @@ public class Admin extends User {
     setAge(age);
     setAddress(address);
   }
-  
+
   /**
    * Create a new admin, and set their authentication value.
    * 
@@ -47,7 +51,7 @@ public class Admin extends User {
     setAge(age);
     setAddress(address);
   }
-  
+
   /**
    * Changes an employee's role in the database to Admin.
    * 
@@ -62,10 +66,56 @@ public class Admin extends User {
       if (adminId == -1) {
         return false;
       }
-      return DatabaseUpdateHelper.updateUserRole(adminId,id);
+      return DatabaseUpdateHelper.updateUserRole(adminId, id);
     } catch (DatabaseInsertException e) {
       return false;
     }
+  }
+
+
+  /**
+   * View historic sales records.
+   * 
+   * @return the historic sales records.
+   * @throws SQLException on failure.
+   */
+  public String viewBooks() throws SQLException {
+    StringBuilder books = new StringBuilder("");
+    SalesLog log = DatabaseSelectHelper.getSales();
+
+    String newLine = System.getProperty("line.separator");
+    String seperator = "----------------------------------------------------------------";
+    String itemizedSpace = "                    ";
+    boolean firstItemizedSale = true;
+
+    for (Sale customerSale : log.getSales()) {
+      books.append("Customer: " + customerSale.getUser().getName() + newLine);
+      books.append("Purchase Number: " + customerSale.getId() + newLine);
+      books.append("Purchase Price: " + customerSale.getTotalPrice());
+      books.append("Itemized Breakdown: ");
+
+      for (HashMap.Entry<Item, Integer> itemizedSale : customerSale.getItemMap().entrySet()) {
+        Item item = itemizedSale.getKey();
+        Integer quantity = itemizedSale.getValue();
+
+        if (firstItemizedSale) {
+          books.append(item.getName() + ":" + quantity + newLine);
+          firstItemizedSale = false;
+        } else {
+          books.append(itemizedSpace + item.getName() + ":" + quantity + newLine);
+        }
+      }
+      books.append(seperator);
+    }
+
+    for (Item summaryEntry : log.getItems()) {
+      books.append("Number " + summaryEntry.getName() + " Sold:"
+          + log.getItemSaleQuantity(summaryEntry) + newLine);
+    }
     
+    books.append("TOTAL SALES: " + log.getTotalValueOfSales());
+    return books.toString();
   }
 }
+
+

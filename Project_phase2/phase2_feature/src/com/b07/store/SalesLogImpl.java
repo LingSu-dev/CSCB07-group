@@ -2,12 +2,10 @@ package com.b07.store;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.b07.inventory.Item;
-import com.b07.users.Customer;
 import com.b07.users.User;
 
 /**
@@ -51,7 +49,6 @@ public class SalesLogImpl implements SalesLog {
     for (Sale sale : sales) {
       value = value.add(sale.getTotalPrice());
     }
-
     return value;
   }
 
@@ -64,8 +61,6 @@ public class SalesLogImpl implements SalesLog {
   public int getTotalSalesCount() {
     return sales.size();
   }
-
-
 
   @Override
   public List<Sale> getSalesToCustomer(User user) {
@@ -89,6 +84,29 @@ public class SalesLogImpl implements SalesLog {
     }
     return new ArrayList<User>(customers);
   }
+  
+  
+  /**
+   * Get all the items in the sales log.
+   * 
+   * @return list of items.
+   */
+  public List<Item> getItems()
+  {
+    List<Item> items = new ArrayList<>();
+   
+    for (Sale singleSale: sales)
+    {
+      for (Item item: singleSale.getItemMap().keySet())
+      {
+        if (!items.contains(item))
+        {
+          items.add(item);
+        }
+      }
+    }
+    return items;
+  }
 
   @Override
   public int getItemSaleQuantity(Item item) {
@@ -100,11 +118,5 @@ public class SalesLogImpl implements SalesLog {
       itemCount += sale.getItemMap().getOrDefault(item, 0);
     }
     return itemCount;
-  }
-
-  @Override
-  public String viewBooks() {
-    // TODO Auto-generated method stub
-    return null;
   }
 }

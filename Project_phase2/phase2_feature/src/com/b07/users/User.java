@@ -112,7 +112,6 @@ public abstract class User {
     return result;
   }
 
-
   /**
    * Returns true if user is authenticated, false otherwise.
    */
