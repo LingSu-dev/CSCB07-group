@@ -4,6 +4,7 @@ import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
@@ -18,6 +19,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 
 
 
@@ -383,15 +386,39 @@ public class SalesApplication {
       int input = StoreHelpers.choicePrompt(customerOptions, reader);
       while (input != 6) {
         if (input == 1) {
-          System.out.println(shoppingCart.getItems());
+          System.out.println("Current Cart:");
+          HashMap<Item, Integer> items = shoppingCart.getItems();
+          for (Item item : items.keySet()) {
+            System.out.println(item.getName() + " Quantity: " + items.get(item));
+          }
 
         } else if (input == 2) {
-          System.out.println("Input a quantity");
-          int quantity = Integer.parseInt(reader.readLine());
-          System.out.println("Input an item id");
-          int itemId = Integer.parseInt(reader.readLine());
-          shoppingCart.addItem(DatabaseSelectHelper.getItem(itemId), quantity);
-
+          //Allow user to add items to cart
+          List<Item> items = DatabaseSelectHelper.getAllItems();
+          System.out.println("The following are the current items and their "
+              + "IDs");
+          for (int i = 0; i < items.size(); i++) {
+            System.out.println(items.get(i).getName());
+            System.out.println("ID: " + items.get(i).getId());
+          }
+          System.out.println("Enter the ID of the item you would like to add");
+          String toStock = reader.readLine();
+          System.out.println("Enter the qua1ntity of the item you would like to add");
+          String quantity = reader.readLine();
+          try {
+            int itemId = Integer.parseInt(toStock);
+            int quantityInt = Integer.parseInt(quantity);
+            Item item = DatabaseSelectHelper.getItem(itemId);
+            if (item != null) {
+              shoppingCart.addItem(item, quantityInt);
+              System.out.println("Successfully added!");
+            } else {
+              System.out.println("No Such Item!");
+            }
+            
+          } catch (NumberFormatException e) {
+            System.out.println("Must enter a valid number!");
+          }
         } else if (input == 3) {
           // Display cart total price
           System.out.println("Your total is:");
@@ -412,7 +439,7 @@ public class SalesApplication {
           System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
           boolean checkedOut = false;
           try {
-            checkedOut = shoppingCart.checkOut();
+            checkedOut = shoppingCart.checkOutCart();
           } catch (DatabaseInsertException e) {
             System.out.println("An error occurred while checking out");
           }
