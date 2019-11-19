@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmployeeAuthenticateEmployee"></activity>
+        <activity android:name=".InitializationPopUp"></activity>
+        <activity android:name=".InitializationCreateFirstAdmin" />
+        <activity android:name=".InitializationCreateFirstEmployee" />
+        <activity android:name=".EmployeeAuthenticateEmployee" />
         <activity android:name=".EmployeeMakeEmployee" />
         <activity android:name=".EmployeeMakeAccount" />
         <activity android:name=".EmployeeRestockInventory" />

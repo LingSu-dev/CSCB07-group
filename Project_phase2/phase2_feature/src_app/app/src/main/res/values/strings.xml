@@ -34,4 +34,5 @@
     <string name="make_account_btn">Make Account</string>
     <string name="login_role_name_prompt">Role Name</string>
     <string name="authenticate_btn">Authenticate Employee</string>
+    <string name="create_admin_btn">Create Admin</string>
 </resources>
