@@ -536,7 +536,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return accounts;
   }
 
-
   /**
    * Return the associated user id of an account.
    * 
@@ -545,7 +544,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @throws SQLException on failure
    */
   private static int getUserIdByAccountId(int accountId) throws SQLException {
-
     for (Integer userId : getUserIds()) {
       for (Integer acctId : getUserAccounts(userId)) {
         if (acctId == accountId) {
@@ -601,7 +599,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   }
 
   /**
-   * Gets all the all account ids.
+   * Gets all the account ids.
    * 
    * @return list of all the account ids
    * @throws SQLException if something goes wrong

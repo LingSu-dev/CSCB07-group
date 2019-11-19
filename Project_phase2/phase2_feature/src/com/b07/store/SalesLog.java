@@ -63,12 +63,12 @@ public interface SalesLog {
    * @return a list of customers
    */
   public List<User> getCustomers();
-
+  
   /**
-   * Get a list of customers who have purchased items
-   * @return a list of customers
+   * Get a list of all the items in sales log.
+   * 
+   * @return list of items.
    */
-  public String viewBooks();
-
+  public List<Item> getItems();
 
 }
