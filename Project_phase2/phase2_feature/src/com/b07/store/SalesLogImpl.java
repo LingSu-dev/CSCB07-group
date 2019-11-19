@@ -150,19 +150,19 @@ public class SalesLogImpl implements SalesLog {
         for (Map.Entry<Item, Integer> entry : sale.getItemMap().entrySet()) {
             Item item = entry.getKey();
             int quantity = entry.getValue();
-            outString.append(String.format("%s: %d%n", item.getName(), quantity));
+            outString.append(String.format("                    %s: %d%n", item.getName(), quantity));
         }
+        outString.append(String.format("-------------------------------------", ""));
       }
     } catch (Exception e1) {
       System.out.println("An error occurred while getting the list of sales");
       e1.printStackTrace();
     }
     try {
-      for (Map.Entry<Item, Integer> entry : getItemsSaleQuantity().entrySet()) {
-        Item item = entry.getKey();
-        int quantity = entry.getValue();
-        outString.append(String.format("Number %s sold: %d%n", item.getName(), quantity));
+      for (Item item : getItems()) {
+        outString.append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
       }
+      
     } catch (Exception e) {
       System.out.println("An error occurred while getting item sale quantities");
       e.printStackTrace();
