@@ -437,7 +437,7 @@ public class SalesApplication {
             int itemId = Integer.parseInt(toStock);
             int quantityInt = Integer.parseInt(quantity);
             Item item = DatabaseSelectHelper.getItem(itemId);
-            if(item != null) {
+            if (item != null) {
               shoppingCart.removeItem(item, quantityInt);
             } else {
               System.out.println("No such item!");
@@ -454,11 +454,7 @@ public class SalesApplication {
           System.out.println("You will also pay taxes to the order of:");
           System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
           boolean checkedOut = false;
-          try {
-            checkedOut = shoppingCart.checkOutCart();
-          } catch (DatabaseInsertException e) {
-            System.out.println("An error occurred while checking out");
-          }
+          checkedOut = shoppingCart.checkOutCart();
           if (checkedOut) {
             System.out.println("Your order has been checked out!");
           } else {
