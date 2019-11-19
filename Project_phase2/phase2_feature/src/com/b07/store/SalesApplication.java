@@ -200,7 +200,7 @@ public class SalesApplication {
       }
 
     }
-    
+
     try {
       int itemId;
       for (ItemTypes itemType : ItemTypes.values()) {
@@ -213,7 +213,7 @@ public class SalesApplication {
       e.printStackTrace();
       exitOnFailure(connection);
     }
-    
+
     System.out.println("Database creation was successfull!");
   }
 
@@ -250,11 +250,9 @@ public class SalesApplication {
         } catch (NumberFormatException e) {
           System.out.println("Please enter an ID number.");
         }
-        
       } else if (input == 2) {
         SalesLog salesLog = DatabaseSelectHelper.getSales();
         System.out.println(salesLog.viewBooks());
-        
       } else if (input == 3) {
         System.out.println("Exiting");
         return;
@@ -307,8 +305,8 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Input a password");
         String password = reader.readLine();
-        //Here, an employee is being created and then having it's role changed
-        //to a a customer. this is bad, it must be changed.
+        // Here, an employee is being created and then having it's role changed
+        // to a a customer. this is bad, it must be changed.
         insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
@@ -399,10 +397,9 @@ public class SalesApplication {
           }
 
         } else if (input == 2) {
-          //Allow user to add items to cart
+          // Allow user to add items to cart
           List<Item> items = DatabaseSelectHelper.getAllItems();
-          System.out.println("The following are the current items and their "
-              + "IDs");
+          System.out.println("The following are the current items and their " + "IDs");
           for (int i = 0; i < items.size(); i++) {
             System.out.println(items.get(i).getName());
             System.out.println("ID: " + items.get(i).getId());
@@ -421,7 +418,7 @@ public class SalesApplication {
             } else {
               System.out.println("No Such Item!");
             }
-            
+
           } catch (NumberFormatException e) {
             System.out.println("Must enter a valid number!");
           }
