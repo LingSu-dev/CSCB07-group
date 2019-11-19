@@ -53,5 +53,11 @@ public interface Item {
    * @param price the price to be set to.
    */
   public void setPrice(BigDecimal price);
+  
+  @Override
+  public boolean equals(Object o);
+  
+  @Override
+  public int hashCode();
 
 }
