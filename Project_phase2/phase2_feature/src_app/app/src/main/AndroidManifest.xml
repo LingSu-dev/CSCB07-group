@@ -9,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmployeeMakeAccount"></activity>
+        <activity android:name=".EmployeeAuthenticateEmployee"></activity>
+        <activity android:name=".EmployeeMakeEmployee" />
+        <activity android:name=".EmployeeMakeAccount" />
         <activity android:name=".EmployeeRestockInventory" />
-        <activity android:name=".EmployeeMakeCustomer" />
         <activity android:name=".EmployeeMakeUser" />
-        <activity android:name=".employee_authenticate" />
         <activity android:name=".EmployeeMenu" />
         <activity android:name=".Admin" />
-
-        <activity android:name=".LoginMenu" >
+        <activity android:name=".LoginMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
