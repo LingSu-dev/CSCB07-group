@@ -254,6 +254,7 @@ public class SalesApplication {
       } else if (input == 2) {
         System.out.println(admin.viewBooks());
       }
+      input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     }
     System.out.println("Exiting");
   }
@@ -263,7 +264,6 @@ public class SalesApplication {
    * 
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
-   * @throws NotAuthenticatedException if the employee cannot be authenticated.
    * @throws DatabaseInsertException if there is an issue inserting into the database.
    */
   public static void employeeMode(BufferedReader reader)
@@ -429,12 +429,23 @@ public class SalesApplication {
           for (Item item : items.keySet()) {
             System.out.println(item.getName() + " Quantity: " + items.get(item));
           }
-          System.out.println("Remove an Item:");
-          System.out.println("Input a quantity");
-          int quantity = Integer.parseInt(reader.readLine());
-          System.out.println("Input an item id");
-          int itemId = Integer.parseInt(reader.readLine());
-          shoppingCart.removeItem(DatabaseSelectHelper.getItem(itemId), quantity);
+          System.out.println("Enter the ID of the item you would like to remove");
+          String toStock = reader.readLine();
+          System.out.println("Enter the qauntity of the item you would like to remove");
+          String quantity = reader.readLine();
+          try {
+            int itemId = Integer.parseInt(toStock);
+            int quantityInt = Integer.parseInt(quantity);
+            Item item = DatabaseSelectHelper.getItem(itemId);
+            if(item != null) {
+              shoppingCart.removeItem(item, quantityInt);
+            } else {
+              System.out.println("No such item!");
+            }
+            System.out.println("Successfully removed!");
+          } catch (NumberFormatException e) {
+            System.out.println("Must enter a valid number!");
+          }
 
         } else if (input == 5) {
           // Allow user to check out
