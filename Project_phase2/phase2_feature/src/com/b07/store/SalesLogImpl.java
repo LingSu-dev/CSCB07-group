@@ -132,7 +132,7 @@ public class SalesLogImpl implements SalesLog {
     HashMap<Item, Integer> quantitiesSold = new HashMap<Item, Integer>();
     for (Sale sale : sales) {
       for (Item item : sale.getItemMap().keySet()) {
-        quantitiesSold.replace(item, quantitiesSold.get(item) + getItemSaleQuantity(item));
+        quantitiesSold.replace(item, quantitiesSold.getOrDefault(item, 0) + getItemSaleQuantity(item));
       }
     }
     return quantitiesSold;
@@ -154,7 +154,7 @@ public class SalesLogImpl implements SalesLog {
         }
       }
     } catch (Exception e1) {
-      System.out.println("An error occurred while getting list of sales");
+      System.out.println("An error occurred while getting the list of sales");
       e1.printStackTrace();
     }
     try {
