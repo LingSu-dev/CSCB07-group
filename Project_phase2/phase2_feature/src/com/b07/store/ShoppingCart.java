@@ -74,7 +74,7 @@ public class ShoppingCart {
     return allItems;
   }
   
-  public HashMap<Item, Integer> getItemsWithQuantity(){
+  public HashMap<Item, Integer> getItemsWithQuantity() {
     return items;
   }
   

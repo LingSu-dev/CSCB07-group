@@ -79,5 +79,20 @@ public class ItemImpl implements Item {
       this.price = price;
     }
   }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Item)) {
+      return false;
+    }
+    
+    Item toCompare = (Item)o;
+    return (toCompare.getId() == id);
+  }
+  
+  @Override
+  public int hashCode() {
+    return id;
+  }
 
 }
