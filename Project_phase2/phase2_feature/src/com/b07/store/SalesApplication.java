@@ -6,6 +6,7 @@ import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
+import com.b07.inventory.ItemTypes;
 import com.b07.users.Admin;
 import com.b07.users.Customer;
 import com.b07.users.Employee;
@@ -14,6 +15,7 @@ import com.b07.users.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -61,13 +63,12 @@ public class SalesApplication {
             employeeMode(reader);
           } else if (input == 2) {
             customerMode(reader);
-          } else if (input == 0) {
-            System.out.println("Exiting");
           } else {
             System.out.println("Invalid selection");
           }
           input = StoreHelpers.choicePrompt(loginOptions, reader);
         }
+        System.out.println("Exiting");
 
       }
     } catch (SQLException e) {
@@ -128,6 +129,7 @@ public class SalesApplication {
       DatabaseInsertHelper.insertRole("EMPLOYEE");
     } catch (DatabaseInsertException e1) {
       System.out.println("Unable to insert role into database");
+      exitOnFailure(connection);
     }
 
 
@@ -186,10 +188,9 @@ public class SalesApplication {
         int ageInt = Integer.parseInt(age);
         id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
         exit = true;
-        System.out.println("Created new Empolyee, ID: " + id);
         int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
         DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
-        System.out.println("Database creation was successfull!");
+        System.out.println("Created new Empolyee, ID: " + id);
       } catch (NumberFormatException e) {
         System.out.println("Please enter a valid number");
       } catch (DatabaseInsertException e1) {
@@ -197,6 +198,21 @@ public class SalesApplication {
       }
 
     }
+    
+    try {
+      int itemId;
+      for (ItemTypes itemType : ItemTypes.values()) {
+        itemId = DatabaseInsertHelper.insertItem(itemType.toString(), new BigDecimal("10.00"));
+        DatabaseInsertHelper.insertInventory(itemId, 0);
+      }
+    } catch (DatabaseInsertException e) {
+      System.out.println("An issue occured while populating database Items!");
+      System.out.println("Creation could not be completed, program will now exit");
+      e.printStackTrace();
+      exitOnFailure(connection);
+    }
+    
+    System.out.println("Database creation was successfull!");
   }
 
   /**
@@ -235,12 +251,9 @@ public class SalesApplication {
         
       } else if (input == 2) {
         
-        
-      } else if (input == 3) {
-        System.out.println("Exiting");
-        return;
       }
     }
+    System.out.println("Exiting");
   }
 
   /**
@@ -287,6 +300,8 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Input a password");
         String password = reader.readLine();
+        //Here, an employee is being created and then having it's role changed
+        //to a a customer. this is bad, it must be changed.
         insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {

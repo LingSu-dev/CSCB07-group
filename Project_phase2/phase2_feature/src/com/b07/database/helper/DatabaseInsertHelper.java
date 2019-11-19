@@ -139,7 +139,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
   public static int insertInventory(int itemId, int quantity) 
       throws SQLException, DatabaseInsertException {
     
-    if (!DatabaseSelectHelper.itemExists(itemId) || quantity <= 0) {
+    if (!DatabaseSelectHelper.itemExists(itemId) || quantity < 0) {
       throw new DatabaseInsertException();
     }
     

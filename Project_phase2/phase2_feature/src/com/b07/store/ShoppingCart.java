@@ -124,11 +124,23 @@ public class ShoppingCart {
         return false;
       }
     }
-    DatabaseInsertHelper.insertSale(customer.getId(), total);
-    for (Item item : items.keySet()) {
-      DatabaseUpdateHelper.updateInventoryQuantity(item.getId(),
-          DatabaseSelectHelper.getInventoryQuantity(item.getId()) - items.get(item));
+    int saleId;
+    try {
+      saleId = DatabaseInsertHelper.insertSale(customer.getId(), total);
+    
+      for (Item item : items.keySet()) {
+        DatabaseUpdateHelper.updateInventoryQuantity(item.getId(),
+            DatabaseSelectHelper.getInventoryQuantity(item.getId()) - items.get(item));
+      }
+      
+      
+      for (Item item : items.keySet()) {
+        DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
+      }
+    } catch (DatabaseInsertException e) {
+      return false;
     }
+    
     clearCart();
     return true;
   }
