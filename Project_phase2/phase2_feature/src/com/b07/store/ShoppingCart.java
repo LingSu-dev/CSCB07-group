@@ -4,7 +4,6 @@ import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
@@ -73,6 +72,10 @@ public class ShoppingCart {
   public List<Item> getItems() {
     List<Item> allItems = new ArrayList<Item>(items.keySet()); 
     return allItems;
+  }
+  
+  public HashMap<Item, Integer> getItemsWithQuantity(){
+    return items;
   }
   
   public Customer getCustomer() {

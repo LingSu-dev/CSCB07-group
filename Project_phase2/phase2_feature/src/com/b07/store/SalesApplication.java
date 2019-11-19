@@ -253,7 +253,7 @@ public class SalesApplication {
         }
         
       } else if (input == 2) {
-        
+        System.out.println(admin.viewBooks());
       }
     }
     System.out.println("Exiting");
@@ -387,7 +387,7 @@ public class SalesApplication {
       while (input != 6) {
         if (input == 1) {
           System.out.println("Current Cart:");
-          HashMap<Item, Integer> items = shoppingCart.getItems();
+          HashMap<Item, Integer> items = shoppingCart.getItemsWithQuantity();
           for (Item item : items.keySet()) {
             System.out.println(item.getName() + " Quantity: " + items.get(item));
           }
