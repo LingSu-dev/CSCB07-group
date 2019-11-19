@@ -321,6 +321,7 @@ public class SalesApplication {
             break insertUser;
           }
           DatabaseInsertHelper.insertUserRole(userId, roleId);
+          System.out.println("New Customer created with ID: " + userId);
         } catch (DatabaseInsertException e) {
           System.out.println("Unable to create an employee with the given parameters.");
         }
@@ -347,6 +348,7 @@ public class SalesApplication {
             break insertUser;
           }
           DatabaseInsertHelper.insertUserRole(userId, roleId);
+          System.out.println("New Employee created with ID: " + userId);
         } catch (DatabaseInsertException e) {
           System.out.println("Unable to create an employee with the given parameters.");
         }
