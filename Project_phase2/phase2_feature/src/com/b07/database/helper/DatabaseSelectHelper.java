@@ -9,9 +9,8 @@ import com.b07.store.Sale;
 import com.b07.store.SaleImpl;
 import com.b07.store.SalesLog;
 import com.b07.store.SalesLogImpl;
-import com.b07.users.Admin;
+import com.b07.store.ShoppingCart;
 import com.b07.users.Customer;
-import com.b07.users.Employee;
 import com.b07.users.User;
 import com.b07.users.UserFactory;
 import java.math.BigDecimal;
@@ -537,19 +536,26 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return accounts;
   }
 
-  
+
   /**
    * Return the associated user id of an account.
    * 
    * @param accountId
-   * @return
+   * @return the user id of the account's owner, -1 if not found.
+   * @throws SQLException on failure
    */
-  private int getUserIdByAccountId(int accountId)
-  {
-    
-    
+  private static int getUserIdByAccountId(int accountId) throws SQLException {
+
+    for (Integer userId : getUserIds()) {
+      for (Integer acctId : getUserAccounts(userId)) {
+        if (acctId == accountId) {
+          return userId;
+        }
+      }
+    }
+    return -1;
   }
-  
+
   /**
    * Get the details of a given account given acctId.
    * 
@@ -557,45 +563,46 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return a shopping cart with all their items.
    * @throws SQLException if something goes wrong.
    */
-  public static int[] getAccountDetails(int accountId) throws SQLException {
+  public static ShoppingCart getAccountDetails(int accountId) throws SQLException {
 
-    
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection);
-    
+    int userId = getUserIdByAccountId(accountId);
 
-    Customer customer = getUserDetails();
-    
-    if (customer ==null)
-    {
+    if (userId == -1) {
       return null;
     }
-    
-    
-    ShoppingCart cart = new ShoppingCart();
-    
-    
+
+    Customer customer = (Customer) getUserDetails(userId);
+
+    if (customer == null) {
+      return null;
+    }
+
+    ShoppingCart cart = new ShoppingCart(customer);
+
+    int itemId;
+    int quantity;
 
     while (results.next()) {
-      accountDetails[0] = results.getInt("acctId");
-      accountDetails[1] = results.getInt("itemId");
-      accountDetails[2] = results.getInt("quantity");
+      itemId = results.getInt("itemId");
+      quantity = results.getInt("quantity");
+      cart.addItem(getItem(itemId), quantity);
     }
     results.close();
     connection.close();
 
-    return accountDetails;
+    return cart;
   }
 
   /**
-   * THIS IS A CUSTOM METHOD ADDED BY PAYAM TO CHECK IF ACCOUNTID IS VALID. Get all the id's of the
-   * accounts in ACCOUNT table.
+   * Gets all the all account ids.
    * 
    * @return list of all the account ids
    * @throws SQLException if something goes wrong
    */
   public static List<Integer> getAllAccountIds() throws SQLException {
-    List<Integer> allUserIds = DatabaseSelectHelper.getUserIds();
+    List<Integer> allUserIds = getUserIds();
     List<Integer> allAccountIds = new ArrayList<>();
 
     for (Integer userId : allUserIds) {
