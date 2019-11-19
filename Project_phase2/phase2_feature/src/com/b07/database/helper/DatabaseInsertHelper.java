@@ -208,6 +208,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int accountId = DatabaseInserter.insertAccount(userId, connection);
+    connection.close();
     return accountId;
   }
 
@@ -219,9 +220,10 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * @param quantity the quantity of that item.
    * @return the id of the inserted record
    * @throws DatabaseInsertException if something goes wrong.
+   * @throws SQLException on failure.
    */
   public static int insertAccountLine(int accountId, int itemId, int quantity) 
-      throws DatabaseInsertException {
+      throws DatabaseInsertException, SQLException {
     
     //TODO: No way to check if accountId is valid.
     //TODO: Check if itemId is valid
@@ -232,6 +234,8 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int id = DatabaseInserter.insertAccountLine(accountId, itemId, quantity, connection);
+    connection.close();
+    
     return id;
   }  
 }
