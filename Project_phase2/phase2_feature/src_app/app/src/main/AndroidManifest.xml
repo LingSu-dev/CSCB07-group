@@ -16,7 +16,13 @@
         <activity android:name=".employee_authenticate" />
         <activity android:name=".EmployeeMenu" />
         <activity android:name=".Admin" />
-        <activity android:name=".LoginMenu" />
+
+        <activity android:name=".LoginMenu" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
