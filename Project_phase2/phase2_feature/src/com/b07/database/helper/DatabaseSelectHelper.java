@@ -560,13 +560,18 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * Get the details of a given account given acctId.
    * 
    * @param userId of the account owner.
-   * @return a shopping cart with all their items.
+   * @return a shopping cart with all their items, null if not found.
    * @throws SQLException if something goes wrong.
    */
   public static ShoppingCart getAccountDetails(int accountId) throws SQLException {
-
+    
+    if (!getAllAccountIds().contains(accountId))
+    {
+      return null;
+    }
+    
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection);
+    ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection); 
     int userId = getUserIdByAccountId(accountId);
 
     if (userId == -1) {
@@ -613,6 +618,5 @@ public class DatabaseSelectHelper extends DatabaseSelector {
       }
     }
     return allAccountIds;
-
   }
 }
