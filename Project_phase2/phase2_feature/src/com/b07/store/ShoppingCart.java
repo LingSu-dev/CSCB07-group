@@ -4,11 +4,14 @@ import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.exceptions.NotAuthenticatedException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * A class allowing authenticated users to make purchase from the inventory.
@@ -19,147 +22,117 @@ import java.util.HashMap;
  * @author Payam Yektamaram
  */
 public class ShoppingCart {
-
-  private HashMap<Item, Integer> items;
-  private Customer customer;
-  private BigDecimal total;
-  private final BigDecimal TAXRATE = new BigDecimal("1.13");
-
-
+  private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
+  private Customer customer = null;
+  private BigDecimal total = new BigDecimal("0.00");
+  private static final BigDecimal taxRate = new BigDecimal("1.13");
+  
   /**
-   * Construct a shopping cart for a customer
+   * Create a new shopping cart with associated customer.
+   * @param customer the customer to whom the cart belongs.
    */
   public ShoppingCart(Customer customer) {
+    //This method used to require user to be logged in
+    //A design decision was made to change this behaviour
     this.customer = customer;
-    total = BigDecimal.ZERO;
-    items = new HashMap<Item, Integer>();
   }
-
+  
   /**
-   * Add the desired quantity of an item to the cart, as long as the item is not null.
-   * 
-   * @param item
-   * @param quantity
+   * Add some quantity of an item to the cart.
+   * @param item the item to add.
+   * @param quantity the number of that item to add.
    */
   public void addItem(Item item, int quantity) {
-    if (item == null) {
-      return;
-    }
     if (items.containsKey(item)) {
-      items.put(item, quantity + items.get(item));
+      int count = items.get(item);
+      items.put(item, count + quantity);
     } else {
       items.put(item, quantity);
     }
-    total = calculateCost();
+    total = total.add(item.getPrice().multiply(new BigDecimal(quantity)));
   }
-
+  
   /**
-   * Remove quantity of item from the shopping cart. Quantity must be positive, and removing more
-   * than the quantity of item in the cart sets the cart quantity to 0
-   * 
-   * @param item
-   * @param quantity
+   * Remove some quantity of an item from the cart.
+   * @param item the item to remove.
+   * @param quantity the number of that item to remove.
    */
   public void removeItem(Item item, int quantity) {
-    if (quantity < 0) {
-      return;
+    if (items.containsKey(item)) {
+      int count = items.get(item);
+      if (count - quantity <= 0) {
+        items.remove(item);
+        total = total.subtract(item.getPrice().multiply(new BigDecimal(count)));
+      } else {
+        items.put(item, count - quantity);
+        total = total.subtract(item.getPrice().multiply(new BigDecimal(quantity)));
+      }
     }
-    items.put(item, Math.max(items.getOrDefault(item, 0) - quantity, 0));
-    total = calculateCost();
   }
-
-  /**
-   * 
-   * @return the items in the cart
-   */
-  public HashMap<Item, Integer> getItems() {
-    return items;
+  
+  public List<Item> getItems() {
+    List<Item> allItems = new ArrayList<Item>(items.keySet()); 
+    return allItems;
   }
-
-  /**
-   * @return the taxrate, 1.13
-   */
-  public BigDecimal getTaxRate() {
-    return TAXRATE;
-  }
-
-  /**
-   * @return the total as a BigDecimal
-   */
-  public BigDecimal getTotal() {
-    return total;
-  }
-
-  /**
-   * remove all items from the cart
-   */
-  public void clearCart() {
-    total = BigDecimal.ZERO;
-    items.clear();
-  }
-
-  /**
-   * @return the customer whose cart this is
-   */
+  
   public Customer getCustomer() {
     return customer;
   }
-
+  
+  public BigDecimal getTotal() {
+    return total;
+  }
+  
+  public BigDecimal getTaxRate() {
+    return taxRate;
+  }
+  
+  public void clearCart() {
+    items = new HashMap<Item,Integer>();
+    total = new BigDecimal("0.00");
+  }
+  
   /**
-   * Check out and @return whether or not the checkout was successful
-   * 
-   * @throws SQLException
-   * @throws DatabaseContainsInvalidDataException
-   * @throws DataNotFoundException
-   * @throws BadValueException
-   * @throws DatabaseInsertException
+   * Attempt to check the user's cart out.
+   * @return true if succesful, false otherwise.
    */
-  public boolean checkOut() throws SQLException, DatabaseInsertException {
-    if (this.customer == null) {
+  public boolean checkOutCart() {
+    if (customer == null) {
       return false;
-    }
-    BigDecimal total = getTotal().multiply(getTaxRate());
-    for (Item item : items.keySet()) {
-      if (DatabaseSelectHelper.getInventoryQuantity(item.getId()) < items.get(item)) {
+    } else {
+      try {
+        List<Item> allItems = getItems();
+        int itemId;
+        //Checking if inventory contains required amount of all items
+        for (int i = 0; i < allItems.size(); i++) {
+          itemId = allItems.get(i).getId();
+          if (DatabaseSelectHelper.getInventoryQuantity(itemId) < items.get(allItems.get(i))) {
+            return false;
+          }
+        }
+        //Calculate and submit price after tax
+        BigDecimal totalPrice = total.multiply(taxRate);
+        int saleId;
+        saleId = DatabaseInsertHelper.insertSale(customer.getId(), totalPrice);
+        //Update inventory
+        int quantity;
+        int toRemove;
+        for (int i = 0; i < allItems.size(); i++) {
+          itemId = allItems.get(i).getId();
+          quantity = DatabaseSelectHelper.getInventoryQuantity(itemId);
+          toRemove = items.get(allItems.get(i));
+          DatabaseUpdateHelper.updateInventoryQuantity(quantity - toRemove, itemId);
+        }
+        //Insert Itemized sales
+        for (Item item : items.keySet()) {
+          DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
+        }
+        clearCart();
+      } catch (Exception e) {
         return false;
       }
+      return true;
     }
-    int saleId;
-    try {
-      saleId = DatabaseInsertHelper.insertSale(customer.getId(), total);
-    
-      for (Item item : items.keySet()) {
-        DatabaseUpdateHelper.updateInventoryQuantity(item.getId(),
-            DatabaseSelectHelper.getInventoryQuantity(item.getId()) - items.get(item));
-      }
-      
-      
-      for (Item item : items.keySet()) {
-        DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
-      }
-    } catch (DatabaseInsertException e) {
-      return false;
-    }
-    
-    clearCart();
-    return true;
   }
 
-  /**
-   * @return the total cost of all the items in the cart
-   */
-  private BigDecimal calculateCost() {
-    if (items == null) {
-      return BigDecimal.ZERO;
-    }
-    BigDecimal cost = BigDecimal.ZERO;
-    for (java.util.Map.Entry<Item, Integer> entry : items.entrySet()) {
-      if (entry.getKey() == null) {
-        continue;
-      }
-      BigDecimal quantity = new BigDecimal(entry.getValue().toString());
-      cost.add(entry.getKey().getPrice().multiply(quantity));
-    }
-    return cost;
-  }
 }
