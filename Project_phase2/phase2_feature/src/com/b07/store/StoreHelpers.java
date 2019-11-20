@@ -15,8 +15,6 @@ import java.sql.SQLException;
 
 public class StoreHelpers {
 
-
-
   /**
    * check whether password matches a user's password.
    * 
