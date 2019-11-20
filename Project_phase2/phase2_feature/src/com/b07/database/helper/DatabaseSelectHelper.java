@@ -525,7 +525,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return a list containing the id's of the user's accounts, null if userId doesn't exist
    * @throws SQLException if something goes wrong.
    */
-  public static List<Integer> getUserAccounts(int userId) throws SQLException {
+  public static List<Integer> getUserAccountsById(int userId) throws SQLException {
 
     if (!userIdExists(userId)) {
       return null;
@@ -553,7 +553,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    */
   private static int getUserIdByAccountId(int accountId) throws SQLException {
     for (Integer userId : getUserIds()) {
-      for (Integer acctId : getUserAccounts(userId)) {
+      for (Integer acctId : getUserAccountsById(userId)) {
         if (acctId == accountId) {
           return userId;
         }
@@ -615,7 +615,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     List<Integer> allAccountIds = new ArrayList<>();
 
     for (Integer userId : allUserIds) {
-      for (Integer userAccount : getUserAccounts(userId)) {
+      for (Integer userAccount : getUserAccountsById(userId)) {
         if (!allAccountIds.contains(userAccount)) {
           allAccountIds.add(userAccount);
         }
