@@ -9,23 +9,21 @@ import java.sql.SQLException;
 
 /**
  * A series of helper methods for use by the store application.
- * 
+ *
  * @author Alex Efimov
  */
-
 public class StoreHelpers {
 
   /**
    * check whether password matches a user's password.
-   * 
+   *
    * @param role the user's role
    * @param id the user's id
    * @param password the password
    * @return whether the login was successful
    * @throws SQLException if there was an issue communicating with the database.
    */
-  public static final User login(Roles role, int id, String password)
-      throws SQLException {
+  public static final User login(Roles role, int id, String password) throws SQLException {
     User user = DatabaseSelectHelper.getUserDetails(id);
     if (user == null) {
       return null;
@@ -42,7 +40,7 @@ public class StoreHelpers {
 
   /**
    * Creates a prompt for a user to login with their ID and password, to the given role.
-   * 
+   *
    * @param reader to read the input
    * @param role the role to log in as
    * @return the User if login is successful, null otherwise
@@ -73,7 +71,7 @@ public class StoreHelpers {
   /**
    * This method presents the user with a list of choices and returns the user's choice as an int.
    * Prints an error message if the user did not make a valid choice.
-   * 
+   *
    * @param choices an array of choices as strings that will be printed for the user
    * @param reader a reader to get the user's input from
    * @return the user's choice, -1 if the user did not make a valid choice
@@ -91,5 +89,4 @@ public class StoreHelpers {
     }
     return response;
   }
-
 }

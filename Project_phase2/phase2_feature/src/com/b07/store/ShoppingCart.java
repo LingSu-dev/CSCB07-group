@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * A class allowing authenticated users to make purchase from the inventory.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -24,19 +24,21 @@ public class ShoppingCart {
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
   private static final BigDecimal taxRate = new BigDecimal("1.13");
-  
+
   /**
    * Create a new shopping cart with associated customer.
+   *
    * @param customer the customer to whom the cart belongs.
    */
   public ShoppingCart(Customer customer) {
-    //This method used to require user to be logged in
-    //A design decision was made to change this behaviour
+    // This method used to require user to be logged in
+    // A design decision was made to change this behaviour
     this.customer = customer;
   }
-  
+
   /**
    * Add some quantity of an item to the cart.
+   *
    * @param item the item to add.
    * @param quantity the number of that item to add.
    */
@@ -49,9 +51,10 @@ public class ShoppingCart {
     }
     total = total.add(item.getPrice().multiply(new BigDecimal(quantity)));
   }
-  
+
   /**
    * Remove some quantity of an item from the cart.
+   *
    * @param item the item to remove.
    * @param quantity the number of that item to remove.
    */
@@ -67,63 +70,62 @@ public class ShoppingCart {
       }
     }
   }
-  
+
   /**
    * Get a list of all items in shopping cart.
-   * 
+   *
    * @return list of items
    */
   public List<Item> getItems() {
-    List<Item> allItems = new ArrayList<Item>(items.keySet()); 
+    List<Item> allItems = new ArrayList<Item>(items.keySet());
     return allItems;
   }
-  
+
   /**
    * Get a hashmap of items mapped to its amount in cart.
-   * 
+   *
    * @return a hashmap of item, amount in cart
    */
   public HashMap<Item, Integer> getItemsWithQuantity() {
     return items;
   }
-  
+
   /**
    * Get the customer.
-   * 
+   *
    * @return the customer
    */
   public Customer getCustomer() {
     return customer;
   }
-  
+
   /**
    * Get the combined price of all the items in the shopping cart.
-   * 
+   *
    * @return the combined price
    */
   public BigDecimal getTotal() {
     return total;
   }
-  
+
   /**
    * Get the tax rate.
-   * 
+   *
    * @return the tax rate
    */
   public BigDecimal getTaxRate() {
     return taxRate;
   }
-  
-  /**
-   * clear the shopping cart.
-   */
+
+  /** clear the shopping cart. */
   public void clearCart() {
-    items = new HashMap<Item,Integer>();
+    items = new HashMap<Item, Integer>();
     total = new BigDecimal("0.00");
   }
-  
+
   /**
    * Attempt to check the user's cart out.
+   *
    * @return true if succesful, false otherwise.
    */
   public boolean checkOutCart() {
@@ -133,18 +135,18 @@ public class ShoppingCart {
       try {
         List<Item> allItems = getItems();
         int itemId;
-        //Checking if inventory contains required amount of all items
+        // Checking if inventory contains required amount of all items
         for (int i = 0; i < allItems.size(); i++) {
           itemId = allItems.get(i).getId();
           if (DatabaseSelectHelper.getInventoryQuantity(itemId) < items.get(allItems.get(i))) {
             return false;
           }
         }
-        //Calculate and submit price after tax
+        // Calculate and submit price after tax
         BigDecimal totalPrice = total.multiply(taxRate).setScale(2, RoundingMode.CEILING);
         int saleId;
         saleId = DatabaseInsertHelper.insertSale(customer.getId(), totalPrice);
-        //Update inventory
+        // Update inventory
         int quantity;
         int toRemove;
         for (int i = 0; i < allItems.size(); i++) {
@@ -153,7 +155,7 @@ public class ShoppingCart {
           toRemove = items.get(allItems.get(i));
           DatabaseUpdateHelper.updateInventoryQuantity(quantity - toRemove, itemId);
         }
-        //Insert Itemized sales
+        // Insert Itemized sales
         for (Item item : items.keySet()) {
           // System.out.println("SaleId: " + saleId);
           // System.out.println("item ID: " + item.getId());
@@ -167,5 +169,4 @@ public class ShoppingCart {
       return true;
     }
   }
-
 }

@@ -5,17 +5,17 @@ import java.sql.SQLException;
 
 /**
  * Object factory for users.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
 public class UserFactory {
-  
+
   /**
    * Creates a new user of the correct type based on their ID.
-   * 
+   *
    * @param id the user's ID.
    * @param name the user's name.
    * @param age the user's age.
@@ -26,7 +26,7 @@ public class UserFactory {
   public static User createUser(int id, String name, int age, String address) throws SQLException {
     int roleId = DatabaseSelectHelper.getUserRoleId(id);
     String roleName = DatabaseSelectHelper.getRoleName(roleId);
-    
+
     if (roleName.equals(Roles.ADMIN.name())) {
       return new Admin(id, name, age, address);
     } else if (roleName.equals(Roles.EMPLOYEE.name())) {
@@ -34,6 +34,6 @@ public class UserFactory {
     } else if (roleName.equals(Roles.CUSTOMER.name())) {
       return new Customer(id, name, age, address);
     }
-    return null;   
+    return null;
   }
 }

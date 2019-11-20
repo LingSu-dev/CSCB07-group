@@ -1,6 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper; 
+import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 /**
  * Class allowing authenticated employees to perform operations on the database.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -25,7 +25,7 @@ public class EmployeeInterface {
 
   /**
    * Constructor for EmployeeInterface.
-   * 
+   *
    * @param employee the associated employee.
    * @param inventory the associated inventory.
    */
@@ -36,7 +36,7 @@ public class EmployeeInterface {
 
   /**
    * Constructor for EmployeeInterface.
-   * 
+   *
    * @param inventory the inventory to be set to
    */
   public EmployeeInterface(Inventory inventory) {
@@ -45,7 +45,7 @@ public class EmployeeInterface {
 
   /**
    * Sets the current employee.
-   * 
+   *
    * @param employee the employee to be set.
    */
   public void setCurrentEmployee(Employee employee) {
@@ -54,7 +54,7 @@ public class EmployeeInterface {
 
   /**
    * Checks if the interface is currently associated with some employee.
-   * 
+   *
    * @return true if the interface is associated with an employee, false otherwise.
    */
   public boolean hasCurrentEmployee() {
@@ -63,7 +63,7 @@ public class EmployeeInterface {
 
   /**
    * Re-stock an item in the local inventory and database.
-   * 
+   *
    * @param item the item to be re-stocked.
    * @param quantity the quantity to re-stock.
    * @return true if the operation succeeds.
@@ -81,7 +81,7 @@ public class EmployeeInterface {
 
   /**
    * Create a new customer and add it to the database.
-   * 
+   *
    * @param name the customer's name
    * @param age the customer's name.
    * @param address the customer's address.
@@ -102,7 +102,7 @@ public class EmployeeInterface {
 
   /**
    * Create a new employee and add it to the database.
-   * 
+   *
    * @param name the employee's name.
    * @param age the employee's age.
    * @param address the employee's address.
@@ -123,22 +123,23 @@ public class EmployeeInterface {
 
   /**
    * Create an account for a customer.
+   *
    * @param customerId the customer for which to make the account.
    * @return the account id if successful, -1 otherwise.
    * @throws SQLException if there is an issue communicating with the database.
    */
   public int createAccount(int customerId) throws SQLException {
-    
+
     try {
-      if (DatabaseSelectHelper.getUserRoleId(customerId) != -1 
+      if (DatabaseSelectHelper.getUserRoleId(customerId) != -1
           && DatabaseSelectHelper.getUserRoleId(customerId)
-          == DatabaseSelectHelper.getRoleIdByName(Roles.CUSTOMER.name())) {
+              == DatabaseSelectHelper.getRoleIdByName(Roles.CUSTOMER.name())) {
         return DatabaseInsertHelper.insertAccount(customerId);
       }
     } catch (DatabaseInsertException e) {
       return -1;
     }
-    
+
     return -1;
   }
 }

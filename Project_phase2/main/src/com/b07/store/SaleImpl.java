@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
  * Simple Implementation of sale interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -22,7 +22,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Constructor for SaleImpl, without an itemMap.
-   * 
+   *
    * @param id the sale ID.
    * @param user the user to whom the sale is assigned.
    * @param totalPrice the total price of the sale.
@@ -35,7 +35,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Constructor for SaleImpl, with an itemMap.
-   * 
+   *
    * @param id the sale ID.
    * @param user the user to whom the sale is assigned.
    * @param totalPrice the total price of the sale.
@@ -50,7 +50,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Return the sale's id.
-   * 
+   *
    * @return id
    */
   @Override
@@ -60,7 +60,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Set the sale's id.
-   * 
+   *
    * @param id the id to be set to.
    */
   @Override
@@ -70,7 +70,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Return the sale's user.
-   * 
+   *
    * @return user
    */
   @Override
@@ -80,7 +80,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Set the sale's user.
-   * 
+   *
    * @param user the user to be set to.
    */
   @Override
@@ -90,7 +90,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Return total price.
-   * 
+   *
    * @return total price
    */
   @Override
@@ -100,7 +100,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Set total price.
-   * 
+   *
    * @param price the price to be set to
    */
   @Override
@@ -110,7 +110,7 @@ public class SaleImpl implements Sale {
 
   /**
    * Return hash-map that maps each item to an integer.
-   * 
+   *
    * @return itemMap
    */
   @Override
@@ -120,12 +120,11 @@ public class SaleImpl implements Sale {
 
   /**
    * Set's the itemMap.
-   * 
+   *
    * @param itemMap the itemMap to be set to.
    */
   @Override
   public void setItemMap(HashMap<Item, Integer> itemMap) {
     this.itemMap = itemMap;
   }
-
 }

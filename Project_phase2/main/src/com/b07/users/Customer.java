@@ -2,7 +2,7 @@ package com.b07.users;
 
 /**
  * A class representing a customer within the sales application system.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -11,7 +11,7 @@ package com.b07.users;
 public class Customer extends User {
   /**
    * Create a new customer, without setting their authentication value.
-   * 
+   *
    * @param id the id of the customer to be created.
    * @param name the name of the customer to be created.
    * @param age the age of the customer to be created.
@@ -26,7 +26,7 @@ public class Customer extends User {
 
   /**
    * Create a new customer, and set their authentication value.
-   * 
+   *
    * @param id id the id of the customer to be created.
    * @param name the name of the customer to be created.
    * @param age the age of the customer to be created.

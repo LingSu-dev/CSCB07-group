@@ -2,7 +2,7 @@ package com.b07.users;
 
 /**
  * A class representing an employee within the sales application system.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -11,7 +11,7 @@ package com.b07.users;
 public class Employee extends User {
   /**
    * Create a new employee, without setting their authentication value.
-   * 
+   *
    * @param id the id of the employee to be created.
    * @param name the name of the employee to be created.
    * @param age the age of the employee to be created.
@@ -26,7 +26,7 @@ public class Employee extends User {
 
   /**
    * Create a new employee, and set their authentication value.
-   * 
+   *
    * @param id id the id of the employee to be created.
    * @param name the name of the employee to be created.
    * @param age the age of the employee to be created.

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * Implementation of the item interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -18,7 +18,7 @@ public class ItemImpl implements Item {
 
   /**
    * Constructor for ItemImpl.
-   * 
+   *
    * @param id the item's ID.
    * @param name the item's name.
    * @param price the item's price.
@@ -31,7 +31,7 @@ public class ItemImpl implements Item {
 
   /**
    * Return the item's price.
-   * 
+   *
    * @return the price of item
    */
   @Override
@@ -41,18 +41,17 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's id.
-   * 
+   *
    * @param id the new item id
    */
   @Override
   public void setId(int id) {
     this.id = id;
-
   }
 
   /**
    * Return the item's name.
-   * 
+   *
    * @return the name of the item
    */
   @Override
@@ -62,7 +61,7 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's name.
-   * 
+   *
    * @param name the new name
    */
   @Override
@@ -72,7 +71,7 @@ public class ItemImpl implements Item {
 
   /**
    * Get the item's price.
-   * 
+   *
    * @return the price of the item
    */
   @Override
@@ -82,7 +81,7 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's price.
-   * 
+   *
    * @param price the new price
    */
   @Override
@@ -91,10 +90,10 @@ public class ItemImpl implements Item {
       this.price = price;
     }
   }
-  
+
   /**
    * Overrides equals to compare the Id of two items.
-   * 
+   *
    * @param o the object to compare to
    * @return true if this item had the same ID as the parameter;false otherwise
    */
@@ -103,17 +102,14 @@ public class ItemImpl implements Item {
     if (!(o instanceof Item)) {
       return false;
     }
-    
-    Item toCompare = (Item)o;
+
+    Item toCompare = (Item) o;
     return (toCompare.getId() == id);
   }
-  
-  /**
-   * Generate a hashcode for an item.
-   */
+
+  /** Generate a hashcode for an item. */
   @Override
   public int hashCode() {
     return id;
   }
-
 }

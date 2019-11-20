@@ -1,7 +1,6 @@
 package com.b07.database.helper;
 
 import com.b07.database.DatabaseInserter;
-import com.b07.database.helper.DatabaseDriverHelper;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.ItemTypes;
 import com.b07.users.Roles;
@@ -12,18 +11,17 @@ import java.util.List;
 
 /**
  * A series of helper methods for inserting information into the database.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Si
  * @author Payam Yektamaram
- * 
  */
 public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Add a role to the database.
-   * 
+   *
    * @param name the name of the role.
    * @return the roleID of the role in the database.
    * @throws DatabaseInsertException if the role cannot be inserted into the database.
@@ -51,7 +49,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Add a new user to the database.
-   * 
+   *
    * @param name the user's name.
    * @param age the user's age.
    * @param address the user's address.
@@ -75,13 +73,13 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Set a user's role in the database.
-   * 
+   *
    * @param userId the user who's role will be set.
    * @param roleId the role to set.
    * @return the unique user role relationship id.
    * @throws SQLException if there is an issue communicating with the database.
    * @throws DatabaseInsertException if the user/role combination cannot be inserted into the
-   *         database.
+   *     database.
    */
   public static int insertUserRole(int userId, int roleId)
       throws SQLException, DatabaseInsertException {
@@ -100,7 +98,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Insert a new item into the database.
-   * 
+   *
    * @param name the name of the item.
    * @param price the item's price.
    * @return the itemID of the item.
@@ -118,7 +116,10 @@ public class DatabaseInsertHelper extends DatabaseInserter {
       }
     }
 
-    if (!valid || name == null || name.length() > 64 || Math.max(0, price.scale()) != 2
+    if (!valid
+        || name == null
+        || name.length() > 64
+        || Math.max(0, price.scale()) != 2
         || price.compareTo(BigDecimal.ZERO) < 0) {
       throw new DatabaseInsertException();
     }
@@ -131,7 +132,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Insert a quantity of item into the inventory of the database.
-   * 
+   *
    * @param itemId the item to be inserted.
    * @param quantity the quantity to insert.
    * @return The id of the inserted record.
@@ -153,7 +154,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Insert a sale into the database.
-   * 
+   *
    * @param userId the user with which the sale is associated.
    * @param totalPrice the total price of the sale.
    * @return the sale ID of the sale;
@@ -175,7 +176,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
 
   /**
    * Insert an itemized record for a specific item in a sale into the database.
-   * 
+   *
    * @param saleId the ID of the sale.
    * @param itemId the ID of the item.
    * @param quantity the quantity of the item sold in this sale.
@@ -186,7 +187,8 @@ public class DatabaseInsertHelper extends DatabaseInserter {
   public static int insertItemizedSale(int saleId, int itemId, int quantity)
       throws SQLException, DatabaseInsertException {
 
-    if (!DatabaseSelectHelper.itemExists(itemId) || DatabaseSelectHelper.saleExists(saleId)
+    if (!DatabaseSelectHelper.itemExists(itemId)
+        || DatabaseSelectHelper.saleExists(saleId)
         || quantity < 0) {
       throw new DatabaseInsertException();
     }

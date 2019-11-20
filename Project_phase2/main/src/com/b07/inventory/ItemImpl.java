@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * Implementation of the item interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -18,7 +18,7 @@ public class ItemImpl implements Item {
 
   /**
    * Constructor for ItemImpl.
-   * 
+   *
    * @param id the item's ID.
    * @param name the item's name.
    * @param price the item's price.
@@ -29,55 +29,41 @@ public class ItemImpl implements Item {
     this.price = price;
   }
 
-  /**
-   * Return the item's price.
-   */
+  /** Return the item's price. */
   @Override
   public int getId() {
     return id;
   }
 
-  /**
-   * Set the item's id.
-   */
+  /** Set the item's id. */
   @Override
   public void setId(int id) {
     this.id = id;
-
   }
 
-  /**
-   * Return the item's name.
-   */
+  /** Return the item's name. */
   @Override
   public String getName() {
     return name;
   }
 
-  /**
-   * Set the item's name.
-   */
+  /** Set the item's name. */
   @Override
   public void setName(String name) {
     this.name = name;
   }
 
-  /**
-   * Get the item's price.
-   */
+  /** Get the item's price. */
   @Override
   public BigDecimal getPrice() {
     return price;
   }
 
-  /**
-   * Set the item's price.
-   */
+  /** Set the item's price. */
   @Override
   public void setPrice(BigDecimal price) {
     if (price.compareTo(BigDecimal.ZERO) >= 0) {
       this.price = price;
     }
   }
-
 }

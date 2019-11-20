@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 /**
  * Class representing users within the sales application and database.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -21,30 +21,24 @@ public abstract class User {
   protected int roleId;
   private boolean authenticated = false;
 
-  /**
-   * Return user's id.
-   */
+  /** Return user's id. */
   public int getId() {
     return id;
   }
 
-  /**
-   * Set user's id.
-   */
+  /** Set user's id. */
   public void setId(int id) {
     this.id = id;
   }
 
-  /**
-   * Get user's name.
-   */
+  /** Get user's name. */
   public String getName() {
     return name;
   }
 
   /**
    * Sets the user's name.
-   * 
+   *
    * @param name The name to be set
    */
   public void setName(String name) {
@@ -55,30 +49,24 @@ public abstract class User {
     this.name = name;
   }
 
-  /**
-   * Get user's age.
-   */
+  /** Get user's age. */
   public int getAge() {
     return age;
   }
 
-  /**
-   * Set user's age.
-   */
+  /** Set user's age. */
   public void setAge(int age) {
     this.age = age;
   }
 
-  /**
-   * Get user's address.
-   */
+  /** Get user's address. */
   public String getAddress() {
     return address;
   }
 
   /**
    * Sets the user's address.
-   * 
+   *
    * @param address the address to be set.
    */
   public void setAddress(String address) {
@@ -87,16 +75,14 @@ public abstract class User {
     }
   }
 
-  /**
-   * Get user's role id.
-   */
+  /** Get user's role id. */
   public int getRoleId() {
     return roleId;
   }
 
   /**
    * Attempts to validate that a user's given password is correct.
-   * 
+   *
    * @param password The password to be checked, in plaintext.
    * @return true if the user is authenticated, false otherwise.
    * @throws SQLException if there is an issue communicating with the database.
@@ -112,9 +98,7 @@ public abstract class User {
     return result;
   }
 
-  /**
-   * Returns true if user is authenticated, false otherwise.
-   */
+  /** Returns true if user is authenticated, false otherwise. */
   public boolean getAuthenticated() {
     return authenticated;
   }
