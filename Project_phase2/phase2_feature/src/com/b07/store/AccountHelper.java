@@ -22,8 +22,25 @@ public class AccountHelper {
     return !accounts.isEmpty();
   }
   
-  protected static boolean customerHasShoppingCarts(int userId) {
-    
+  protected static boolean customerHasShoppingCarts(int userId) throws SQLException {
+    List<ShoppingCart> carts = new ArrayList<ShoppingCart>();
+    List<Integer> ids = DatabaseSelectHelper.getUserAccountsById(userId);
+    User user = DatabaseSelectHelper.getUserDetails(userId);
+    if (ids == null || user == null || !(user instanceof Customer)) {
+      return false;
+    }
+    for (int i = 0; i < ids.size(); i++) {
+      carts.add(DatabaseSelectHelper.getAccountDetails(ids.get(i)));
+    }
+    for (int j = 0; j < carts.size(); j++) {
+      if (carts.get(j) != null) {
+        List<Item> items = carts.get(j).getItems();
+        if (!items.isEmpty()) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
   
   protected static ShoppingCart retrieveCustomerCart(int userId) throws SQLException {
