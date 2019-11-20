@@ -378,8 +378,14 @@ public class SalesApplication {
 
     try {
       System.out.print("Customer Login:");
-      Customer customer = (Customer) StoreHelpers.loginPrompt(reader, Roles.CUSTOMER);
+      User user = StoreHelpers.loginPrompt(reader, Roles.CUSTOMER);
+      
+      Customer customer = null;
+      if (user instanceof Customer) {
+        customer = (Customer) user;
+      }
       if (customer == null) {
+        System.out.println("Login Denied");
         return;
       }
       ShoppingCart shoppingCart = new ShoppingCart(customer);
