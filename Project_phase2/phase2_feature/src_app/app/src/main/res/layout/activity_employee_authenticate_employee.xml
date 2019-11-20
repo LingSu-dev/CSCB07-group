@@ -39,4 +39,3 @@
         android:layout_marginTop="50dp"
         android:text="@string/authenticateBtn" />
 </RelativeLayout>
-
