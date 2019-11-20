@@ -140,7 +140,7 @@ public class SalesLogImpl implements SalesLog {
   /**
    * Return a hashmap of item mapped to its amount sold
    * 
-   * @return hashmap of (item, amount sold)
+   * @return hashmap of <item, amount sold>
    */
   @Override
   public HashMap<Item, Integer> getItemsSaleQuantity() {

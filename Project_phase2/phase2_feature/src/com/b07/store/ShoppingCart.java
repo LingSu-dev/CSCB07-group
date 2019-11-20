@@ -67,27 +67,55 @@ public class ShoppingCart {
     }
   }
   
+  /**
+   * Get a list of all items in shopping cart
+   * 
+   * @return list of items
+   */
   public List<Item> getItems() {
     List<Item> allItems = new ArrayList<Item>(items.keySet()); 
     return allItems;
   }
   
+  /**
+   * Get a hashmap of items mapped to its amount in cart
+   * 
+   * @return a hashmap of <item, amount in cart>
+   */
   public HashMap<Item, Integer> getItemsWithQuantity() {
     return items;
   }
   
+  /**
+   * Get the customer
+   * 
+   * @return the customer
+   */
   public Customer getCustomer() {
     return customer;
   }
   
+  /**
+   * Get the combined price of all the items in the shopping cart
+   * 
+   * @return the combined price
+   */
   public BigDecimal getTotal() {
     return total;
   }
   
+  /**
+   * Get the tax rate
+   * 
+   * @return the tax rate
+   */
   public BigDecimal getTaxRate() {
     return taxRate;
   }
   
+  /**
+   * clear the shopping cart
+   */
   public void clearCart() {
     items = new HashMap<Item,Integer>();
     total = new BigDecimal("0.00");
