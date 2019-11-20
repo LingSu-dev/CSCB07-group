@@ -273,9 +273,13 @@ public class SalesApplication {
       throws IOException, SQLException, DatabaseInsertException {
 
     System.out.print("Employee Login:");
-    Employee employee = (Employee) StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
+    User user =  StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
+    Employee employee = null;
+    if (user instanceof Employee) {
+      employee = (Employee) user;
+    }
     if (employee == null) {
-      System.out.println("Incorrect login!");
+      System.out.println("Login Denied!");
       return;
     }
     Inventory inventory = DatabaseSelectHelper.getInventory();
