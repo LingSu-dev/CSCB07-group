@@ -1,7 +1,7 @@
 package com.b07.users;
 
-import java.sql.SQLException;
 import com.b07.database.helper.DatabaseSelectHelper;
+import java.sql.SQLException;
 
 /**
  * Object factory for users.
@@ -23,8 +23,7 @@ public class UserFactory {
    * @return a user of the correct type, based on their ID, null if no such user exists.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public static User createUser(int id, String name, int age, String address) throws SQLException
-  {
+  public static User createUser(int id, String name, int age, String address) throws SQLException {
     int roleId = DatabaseSelectHelper.getUserRoleId(id);
     String roleName = DatabaseSelectHelper.getRoleName(roleId);
     
