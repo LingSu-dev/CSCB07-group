@@ -1,5 +1,7 @@
 package com.b07.store;
 
+import com.b07.inventory.Item;
+import com.b07.users.User;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -8,8 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.b07.inventory.Item;
-import com.b07.users.User;
 
 /**
  * A simple implementation of the salesLog interface.
@@ -67,10 +67,10 @@ public class SalesLogImpl implements SalesLog {
   }
 
   /**
-   * Return a list of the customer's sales
+   * Return a list of the customer's sales.
    * 
-   * @param the customer
-   * @return a list of the customer's sales 
+   * @param user the user of interest
+   * @return a list of the customer's sales
    */
   @Override
   public List<Sale> getSalesToCustomer(User user) {
@@ -87,7 +87,7 @@ public class SalesLogImpl implements SalesLog {
   }
 
   /**
-   * Get an arraylist of the customer of each sale
+   * Get an arraylist of the customer of each sale.
    * 
    * @return arraylist of customers
    */
@@ -108,7 +108,7 @@ public class SalesLogImpl implements SalesLog {
    */
   public List<Item> getItems() {
     List<Item> items = new ArrayList<>();
-   
+
     for (Sale singleSale : sales) {
       for (Item item : singleSale.getItemMap().keySet()) {
         if (!items.contains(item)) {
@@ -120,9 +120,9 @@ public class SalesLogImpl implements SalesLog {
   }
 
   /**
-   * Return the total amount of times that a particular item has been sold
+   * Return the total amount of times that a particular item has been sold.
    * 
-   * @param the item
+   * @param item the item of interest
    * @return the total amount sold
    */
   @Override
@@ -138,9 +138,9 @@ public class SalesLogImpl implements SalesLog {
   }
 
   /**
-   * Return a hashmap of item mapped to its amount sold
+   * Return a hashmap of item mapped to its amount sold.
    * 
-   * @return hashmap of <item, amount sold>
+   * @return hashmap of items and their quantity.
    */
   @Override
   public HashMap<Item, Integer> getItemsSaleQuantity() {
@@ -155,7 +155,7 @@ public class SalesLogImpl implements SalesLog {
   }
 
   /**
-   * Return a string of the sales log containing each sale made
+   * Return a string of the sales log containing each sale made.
    * 
    * @return a string of the sales log
    */
@@ -172,25 +172,23 @@ public class SalesLogImpl implements SalesLog {
     for (Sale sale : getSales()) {
       outString.append(String.format("Customer: %s%n", sale.getUser().getName()));
       outString.append(String.format("Purchase Number: %d%n", sale.getId()));
-      outString.append(String.format("Total Purchase Price: $%s%n", sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
+      outString.append(String.format("Total Purchase Price: $%s%n",
+          sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
       outString.append(String.format("Itemized breakdown:", ""));
       firstItem = true;
-      
+
       for (Map.Entry<Item, Integer> entry : sale.getItemMap().entrySet()) {
         Item item = entry.getKey();
         int quantity = entry.getValue();
-        
-        if (firstItem)
-        {
+
+        if (firstItem) {
           outString.append(String.format("%s: %d%n", item.getName(), quantity));
           firstItem = false;
-        }
-        else
-        {
+        } else {
           outString.append(String.format("                   %s: %d%n", item.getName(), quantity));
         }
       }
-      
+
       outString.append(String.format("-------------------------------------%n", ""));
     }
 
@@ -199,8 +197,8 @@ public class SalesLogImpl implements SalesLog {
           .append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
     }
 
-    outString.append(String.format("TOTAL SALES: $%s%n", getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
+    outString.append(String.format("TOTAL SALES: $%s%n",
+        getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
     return outString.toString();
   }
-  
 }
