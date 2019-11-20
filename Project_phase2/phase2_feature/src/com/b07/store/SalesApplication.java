@@ -520,18 +520,22 @@ public class SalesApplication {
 
         } else if (input == 5) {
           // Allow user to check out
-          System.out.println("Your total is:");
-          System.out.println("$" + shoppingCart.getTotal());
-          System.out.println("You will also pay taxes to the order of:");
-          System.out.println("$" 
-              + shoppingCart.getTotal()
-              .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
-          boolean checkedOut = false;
-          checkedOut = shoppingCart.checkOutCart();
-          if (checkedOut) {
-            System.out.println("Your order has been checked out!");
+          if (!shoppingCart.getItems().isEmpty()) {
+            System.out.println("Your total is:");
+            System.out.println("$" + shoppingCart.getTotal());
+            System.out.println("You will also pay taxes to the order of:");
+            System.out.println("$" 
+                + shoppingCart.getTotal()
+                .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+            boolean checkedOut = false;
+            checkedOut = shoppingCart.checkOutCart();
+            if (checkedOut) {
+              System.out.println("Your order has been checked out!");
+            } else {
+              System.out.println("Sorry, your cart could not be checked out at this time");
+            }
           } else {
-            System.out.println("Sorry, your cart could not be checked out at this time");
+            System.out.println("Cannot checkout, cart is empty!");
           }
         } else if (input == -1) {
           System.out.println("Please choose one of the options");
