@@ -213,7 +213,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
   }
 
   /**
-   * insert a single item into a given account for recovery next login.
+   * Insert a single item into a given account for recovery next login.
    * 
    * @param accountId the id of the account.
    * @param itemId the item to be inserted.
@@ -226,16 +226,14 @@ public class DatabaseInsertHelper extends DatabaseInserter {
       throws DatabaseInsertException, SQLException {
     
     //TODO: No way to check if accountId is valid.
-    //TODO: Check if itemId is valid
     
-    if (quantity < 0) {
+    if (quantity < 0 || !DatabaseSelectHelper.itemExists(itemId)) {
       throw new DatabaseInsertException();
     }
     
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int id = DatabaseInserter.insertAccountLine(accountId, itemId, quantity, connection);
     connection.close();
-    
     return id;
   }  
 }

@@ -8,11 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.inventory.Item;
-import com.b07.users.User;
-import com.b07.inventory.ItemTypes;
-import com.b07.users.Customer;
 import com.b07.users.User;
 
 /**

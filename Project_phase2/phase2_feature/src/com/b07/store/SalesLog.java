@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import com.b07.inventory.Item;
-import com.b07.users.Customer;
 import com.b07.users.User;
 
 /**
