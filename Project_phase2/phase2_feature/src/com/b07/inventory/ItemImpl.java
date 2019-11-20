@@ -31,6 +31,8 @@ public class ItemImpl implements Item {
 
   /**
    * Return the item's price.
+   * 
+   * @return the price of item
    */
   @Override
   public int getId() {
@@ -39,6 +41,8 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's id.
+   * 
+   * @param the new item id
    */
   @Override
   public void setId(int id) {
@@ -48,6 +52,8 @@ public class ItemImpl implements Item {
 
   /**
    * Return the item's name.
+   * 
+   * @return the name of the item
    */
   @Override
   public String getName() {
@@ -56,6 +62,8 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's name.
+   * 
+   * @param the new name
    */
   @Override
   public void setName(String name) {
@@ -64,6 +72,8 @@ public class ItemImpl implements Item {
 
   /**
    * Get the item's price.
+   * 
+   * @return the price of the item
    */
   @Override
   public BigDecimal getPrice() {
@@ -72,6 +82,8 @@ public class ItemImpl implements Item {
 
   /**
    * Set the item's price.
+   * 
+   * @param the new price
    */
   @Override
   public void setPrice(BigDecimal price) {
@@ -80,6 +92,12 @@ public class ItemImpl implements Item {
     }
   }
   
+  /**
+   * Overrides equals to compare the Id of two items
+   * 
+   * @param the object to compare to
+   * @return true if this item had the same ID as the parameter;false otherwise
+   */
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Item)) {
