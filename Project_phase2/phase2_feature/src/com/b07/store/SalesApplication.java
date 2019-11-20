@@ -427,17 +427,21 @@ public class SalesApplication {
         String restore = reader.readLine();
         if (restore.equals("1")) {
           shoppingCart = AccountHelper.retrieveCustomerCart(customer.getId());
-          System.out.println("Your total is:");
-          System.out.println("$" + shoppingCart.getTotal());
-          System.out.println("You will also pay taxes to the order of:");
-          System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
-          boolean checkedOut = false;
-          checkedOut = shoppingCart.checkOutCart();
-          if (checkedOut) {
-            System.out.println("Your order has been checked out!");
+          if (shoppingCart != null) {
+            System.out.println("Your total is:");
+            System.out.println("$" + shoppingCart.getTotal());
+            System.out.println("You will also pay taxes to the order of:");
+            System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
+            boolean checkedOut = false;
+            checkedOut = shoppingCart.checkOutCart();
+            if (checkedOut) {
+              System.out.println("Your order has been checked out!");
+            } else {
+              System.out.println("Sorry, your cart could not be checked out at this time");
+              System.out.println("There may not be enough of certain items in your cart in stock");
+            }
           } else {
-            System.out.println("Sorry, your cart could not be checked out at this time");
-            System.out.println("There may not be enough of certain items in your cart in stock");
+            System.out.println("Your shopping car could not be recovered!");
           }
         }
       }

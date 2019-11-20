@@ -582,7 +582,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     if (userId == -1) {
       return null;
     }
-
+    
+    //TODO fix unchecked cast
     Customer customer = (Customer) getUserDetails(userId);
 
     if (customer == null) {
