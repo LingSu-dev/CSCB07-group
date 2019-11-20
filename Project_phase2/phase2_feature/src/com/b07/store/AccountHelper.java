@@ -1,6 +1,8 @@
 package com.b07.store;
 
+import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
+import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import com.b07.users.User;
@@ -72,7 +74,20 @@ public class AccountHelper {
     return combinedCart;
   }
   
-  protected static boolean saveCustomerCart(int userId, ShoppingCart cart) {
-    
+  protected static boolean saveCustomerCart(int userId, ShoppingCart cart) throws SQLException {
+    List<Integer> ids = DatabaseSelectHelper.getUserAccountsById(userId);
+    if (ids.isEmpty()) {
+      return false;
+    }
+    int account = ids.get(0);
+    HashMap<Item, Integer> items = cart.getItemsWithQuantity();
+    for (Item item : items.keySet()) {
+      try {
+        DatabaseInsertHelper.insertAccountLine(account, item.getId(), items.get(item));
+      } catch (DatabaseInsertException e) {
+        return false;
+      }
+    }
+    return true;
   }
 }
