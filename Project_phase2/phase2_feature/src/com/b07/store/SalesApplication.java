@@ -473,7 +473,7 @@ public class SalesApplication {
           }
           System.out.println("Enter the ID of the item you would like to add");
           String toStock = reader.readLine();
-          System.out.println("Enter the qua1ntity of the item you would like to add");
+          System.out.println("Enter the quantity of the item you would like to add");
           String quantity = reader.readLine();
           try {
             int itemId = Integer.parseInt(toStock);
