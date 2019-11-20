@@ -7,6 +7,7 @@ import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.users.Employee;
+import com.b07.users.Roles;
 import java.sql.SQLException;
 
 /**
@@ -131,7 +132,7 @@ public class EmployeeInterface {
     try {
       if (DatabaseSelectHelper.getUserRoleId(customerId) != -1 
           && DatabaseSelectHelper.getUserRoleId(customerId)
-          == DatabaseSelectHelper.getRoleIdByName("CUSTOMER")) {
+          == DatabaseSelectHelper.getRoleIdByName(Roles.CUSTOMER.name())) {
         return DatabaseInsertHelper.insertAccount(customerId);
       }
     } catch (DatabaseInsertException e) {
