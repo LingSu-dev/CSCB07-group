@@ -42,7 +42,7 @@ public class ItemImpl implements Item {
   /**
    * Set the item's id.
    * 
-   * @param the new item id
+   * @param id the new item id
    */
   @Override
   public void setId(int id) {
@@ -63,7 +63,7 @@ public class ItemImpl implements Item {
   /**
    * Set the item's name.
    * 
-   * @param the new name
+   * @param name the new name
    */
   @Override
   public void setName(String name) {
@@ -83,7 +83,7 @@ public class ItemImpl implements Item {
   /**
    * Set the item's price.
    * 
-   * @param the new price
+   * @param price the new price
    */
   @Override
   public void setPrice(BigDecimal price) {
@@ -93,9 +93,9 @@ public class ItemImpl implements Item {
   }
   
   /**
-   * Overrides equals to compare the Id of two items
+   * Overrides equals to compare the Id of two items.
    * 
-   * @param the object to compare to
+   * @param o the object to compare to
    * @return true if this item had the same ID as the parameter;false otherwise
    */
   @Override
@@ -108,6 +108,9 @@ public class ItemImpl implements Item {
     return (toCompare.getId() == id);
   }
   
+  /**
+   * Generate a hashcode for an item.
+   */
   @Override
   public int hashCode() {
     return id;
