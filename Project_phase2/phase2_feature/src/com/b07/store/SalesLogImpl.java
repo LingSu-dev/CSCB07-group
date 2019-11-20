@@ -162,7 +162,7 @@ public class SalesLogImpl implements SalesLog {
   @Override
   public String viewBooks() {
 
-    if (getTotalValueOfSales() == null) {
+    if (getTotalValueOfSales().compareTo(new BigDecimal("0.00")) == 0) {
       return "There is no data to display.";
     }
 
