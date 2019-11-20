@@ -13,14 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:prompt="@string/login_role_name_prompt"
-        android:entries="@array/role_arrays"
-        />
+        android:prompt="@string/loginRoleNamePrompt"
+        android:entries="@array/roleArrays" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/login_menu_id_hint"
+        android:hint="@string/loginMenuIdHint"
         android:layout_below="@id/rolePositionEntry"
         android:layout_marginTop="25dp"
         android:id="@+id/userIdEntry"/>
@@ -28,7 +27,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/login_menu_password_hint"
+        android:hint="@string/loginMenuPasswordHint"
         android:inputType="textPassword"
         android:id="@+id/passwordEntry"
         android:layout_below="@+id/userIdEntry"
@@ -37,7 +36,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_menu_login_prompt"
+        android:text="@string/loginMenuLoginPrompt"
         android:layout_below="@+id/passwordEntry"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"/>

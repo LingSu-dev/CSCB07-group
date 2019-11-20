@@ -12,7 +12,7 @@
         android:id="@+id/goBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back_btn"
+        android:text="@string/backBtn"
         android:layout_alignParentLeft="true"
         />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:hint="@string/make_account_user_id_hint"/>
+        android:hint="@string/userIdHint"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -30,5 +30,5 @@
         android:layout_below="@+id/customerIdEntry"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/make_account_btn"/>
+        android:text="@string/makeAccountBtn"/>
 </RelativeLayout>
