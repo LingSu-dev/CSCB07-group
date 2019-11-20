@@ -3,12 +3,7 @@ package com.b07.users;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
-import com.b07.inventory.Item;
-import com.b07.store.Sale;
-import com.b07.store.SalesLog;
-import com.b07.store.SalesLogImpl;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 
 /**

@@ -1,6 +1,7 @@
 package com.b07.store;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,7 +53,7 @@ public class SalesLogImpl implements SalesLog {
    */
   @Override
   public BigDecimal getTotalValueOfSales() {
-    BigDecimal value = null;
+    BigDecimal value = new BigDecimal("0.00");
     for (Sale sale : sales) {
       value = value.add(sale.getTotalPrice());
     }
@@ -91,23 +92,20 @@ public class SalesLogImpl implements SalesLog {
     }
     return new ArrayList<User>(customers);
   }
-  
-  
+
+
   /**
    * Get all the items in the sales log.
    * 
    * @return list of items.
    */
-  public List<Item> getItems()
-  {
+  public List<Item> getItems() {
     List<Item> items = new ArrayList<>();
    
-    for (Sale singleSale: sales)
-    {
-      for (Item item: singleSale.getItemMap().keySet())
-      {
-        if (!items.contains(item))
-        {
+    for (Sale singleSale : sales) {
+      for (Item item : singleSale.getItemMap().keySet()) {
+        System.out.println(item.getName());
+        if (!items.contains(item)) {
           items.add(item);
         }
       }
@@ -132,7 +130,8 @@ public class SalesLogImpl implements SalesLog {
     HashMap<Item, Integer> quantitiesSold = new HashMap<Item, Integer>();
     for (Sale sale : sales) {
       for (Item item : sale.getItemMap().keySet()) {
-        quantitiesSold.replace(item, quantitiesSold.getOrDefault(item, 0) + getItemSaleQuantity(item));
+        quantitiesSold.replace(item,
+            quantitiesSold.getOrDefault(item, 0) + getItemSaleQuantity(item));
       }
     }
     return quantitiesSold;
@@ -140,34 +139,46 @@ public class SalesLogImpl implements SalesLog {
 
   @Override
   public String viewBooks() {
-    StringBuilder outString = new StringBuilder();
-    try {
-      for (Sale sale : getSales()) {
-        outString.append(String.format("Customer: %s%n", sale.getUser().getName()));
-        outString.append(String.format("Purchase Number: %d%n", sale.getId()));
-        outString.append(String.format("Total Purchase Price: %s%n", sale.getTotalPrice()));
-        outString.append(String.format("Itemized breakdown:", ""));
-        for (Map.Entry<Item, Integer> entry : sale.getItemMap().entrySet()) {
-            Item item = entry.getKey();
-            int quantity = entry.getValue();
-            outString.append(String.format("                    %s: %d%n", item.getName(), quantity));
-        }
-        outString.append(String.format("-------------------------------------", ""));
-      }
-    } catch (Exception e1) {
-      System.out.println("An error occurred while getting the list of sales");
-      e1.printStackTrace();
+
+    if (getTotalValueOfSales() == null) {
+      return "There is no data to display.";
     }
-    try {
-      for (Item item : getItems()) {
-        outString.append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
+
+    StringBuilder outString = new StringBuilder();
+    boolean firstItem;
+
+    for (Sale sale : getSales()) {
+      outString.append(String.format("Customer: %s%n", sale.getUser().getName()));
+      outString.append(String.format("Purchase Number: %d%n", sale.getId()));
+      outString.append(String.format("Total Purchase Price: %s%n", sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
+      outString.append(String.format("Itemized breakdown:", ""));
+      firstItem = true;
+      
+      for (Map.Entry<Item, Integer> entry : sale.getItemMap().entrySet()) {
+        Item item = entry.getKey();
+        int quantity = entry.getValue();
+        
+        if (firstItem)
+        {
+          outString.append(String.format("%s: %d%n", item.getName(), quantity));
+          firstItem = false;
+        }
+        else
+        {
+          outString.append(String.format("                    %s: %d%n", item.getName(), quantity));
+        }
       }
       
-    } catch (Exception e) {
-      System.out.println("An error occurred while getting item sale quantities");
-      e.printStackTrace();
+      outString.append(String.format("-------------------------------------", ""));
     }
-    outString.append(String.format("TOTAL SALES: %s%n", getTotalValueOfSales()));
+
+    for (Item item : getItems()) {
+      outString
+          .append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
+    }
+
+    outString.append(String.format("TOTAL SALES: %s%n", getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
     return outString.toString();
   }
+  
 }
