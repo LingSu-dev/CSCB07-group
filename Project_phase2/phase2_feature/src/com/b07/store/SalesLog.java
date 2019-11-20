@@ -1,10 +1,10 @@
 package com.b07.store;
 
+import com.b07.inventory.Item;
+import com.b07.users.User;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
-import com.b07.inventory.Item;
-import com.b07.users.User;
 
 /**
  * A log to keep track of all transactions.
@@ -47,7 +47,8 @@ public interface SalesLog {
   public BigDecimal getTotalValueOfSales();
   
   /**
-   * Get the number of item sold
+   * Get the number of item sold.
+   * 
    * @return the sales of the item
    */
   public int getItemSaleQuantity(Item item);
@@ -59,7 +60,8 @@ public interface SalesLog {
   public List<Sale> getSalesToCustomer(User user);
 
   /**
-   * Get a list of customers who have purchased items
+   * Get a list of customers who have purchased items.
+   * 
    * @return a list of customers
    */
   public List<User> getCustomers();
@@ -72,16 +74,17 @@ public interface SalesLog {
   public List<Item> getItems();
 
   /**
-   *  Get a map of items sold to the quantity of each item sold
+   * Get a map of items sold to the quantity of each item sold.
+   *  
    * @return a map of items to quantity
    */
   public HashMap<Item, Integer> getItemsSaleQuantity();
 
   /**
-   *  Get the sales and quantities of items sold
+   * Get the sales and quantities of items sold.
+   * 
    * @return a string with the books
    */
   public String viewBooks();
-
 
 }
