@@ -227,16 +227,20 @@ public class SalesApplication {
     System.out.println("Admin Mode: Log in");
     System.out.println("---------------");
     
-    User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+    boolean logged = false;
     Admin admin = null;
-    if(user != null && user instanceof Admin) {
-      admin = (Admin) user;
+    while (!logged) {
+      User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+      admin = null;
+      if (user != null && user instanceof Admin) {
+        admin = (Admin) user;
+      }
+      if (admin == null) {
+        System.out.println("Login Denied!");
+      } else {
+        logged = true;
+      }
     }
-    if (admin == null) {
-      System.out.println("Login Denied!");
-      return;
-    }
-
     // Allow admin to promote employees
     String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
