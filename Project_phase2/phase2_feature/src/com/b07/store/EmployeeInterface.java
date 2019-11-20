@@ -120,4 +120,24 @@ public class EmployeeInterface {
     return userId;
   }
 
+  /**
+   * Create an account for a customer.
+   * @param customerId the customer for which to make the account.
+   * @return the account id if successful, -1 otherwise.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
+  public int createAccount(int customerId) throws SQLException {
+    
+    try {
+      if (DatabaseSelectHelper.getUserRoleId(customerId) != -1 
+          && DatabaseSelectHelper.getUserRoleId(customerId)
+          == DatabaseSelectHelper.getRoleIdByName("CUSTOMER")) {
+        return DatabaseInsertHelper.insertAccount(customerId);
+      }
+    } catch (DatabaseInsertException e) {
+      return -1;
+    }
+    
+    return -1;
+  }
 }

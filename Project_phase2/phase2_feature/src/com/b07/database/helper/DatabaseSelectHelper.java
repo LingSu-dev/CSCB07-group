@@ -571,8 +571,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    */
   public static ShoppingCart getAccountDetails(int accountId) throws SQLException {
     
-    if (!getAllAccountIds().contains(accountId))
-    {
+    if (!getAllAccountIds().contains(accountId)) {
       return null;
     }
     
