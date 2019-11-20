@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -431,7 +432,9 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
+            System.out.println("$" 
+                + shoppingCart.getTotal()
+                .multiply(shoppingCart.getTaxRate()).setScale(2, RoundingMode.CEILING));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -520,7 +523,9 @@ public class SalesApplication {
           System.out.println("Your total is:");
           System.out.println("$" + shoppingCart.getTotal());
           System.out.println("You will also pay taxes to the order of:");
-          System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
+          System.out.println("$" 
+              + shoppingCart.getTotal()
+              .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
           boolean checkedOut = false;
           checkedOut = shoppingCart.checkOutCart();
           if (checkedOut) {

@@ -6,6 +6,7 @@ import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,7 +141,7 @@ public class ShoppingCart {
           }
         }
         //Calculate and submit price after tax
-        BigDecimal totalPrice = total.multiply(taxRate);
+        BigDecimal totalPrice = total.multiply(taxRate).setScale(2, RoundingMode.CEILING);
         int saleId;
         saleId = DatabaseInsertHelper.insertSale(customer.getId(), totalPrice);
         //Update inventory
