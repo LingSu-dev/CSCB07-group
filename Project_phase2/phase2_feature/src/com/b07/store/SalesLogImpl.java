@@ -104,7 +104,6 @@ public class SalesLogImpl implements SalesLog {
    
     for (Sale singleSale : sales) {
       for (Item item : singleSale.getItemMap().keySet()) {
-        System.out.println(item.getName());
         if (!items.contains(item)) {
           items.add(item);
         }
@@ -165,11 +164,11 @@ public class SalesLogImpl implements SalesLog {
         }
         else
         {
-          outString.append(String.format("                    %s: %d%n", item.getName(), quantity));
+          outString.append(String.format("                   %s: %d%n", item.getName(), quantity));
         }
       }
       
-      outString.append(String.format("-------------------------------------", ""));
+      outString.append(String.format("-------------------------------------%n", ""));
     }
 
     for (Item item : getItems()) {
