@@ -226,9 +226,14 @@ public class SalesApplication {
   public static void adminMode(BufferedReader bufferedReader) throws SQLException, IOException {
     System.out.println("Admin Mode: Log in");
     System.out.println("---------------");
-    Admin admin = (Admin) StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+    
+    User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+    Admin admin = null;
+    if(user != null && user instanceof Admin) {
+      admin = (Admin) user;
+    }
     if (admin == null) {
-      System.out.println("Incorrect login!");
+      System.out.println("Login Denied!");
       return;
     }
 
@@ -275,7 +280,7 @@ public class SalesApplication {
     System.out.print("Employee Login:");
     User user =  StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
     Employee employee = null;
-    if (user instanceof Employee) {
+    if (user != null && user instanceof Employee) {
       employee = (Employee) user;
     }
     if (employee == null) {
@@ -385,7 +390,7 @@ public class SalesApplication {
       User user = StoreHelpers.loginPrompt(reader, Roles.CUSTOMER);
       
       Customer customer = null;
-      if (user instanceof Customer) {
+      if (user != null &&  user instanceof Customer) {
         customer = (Customer) user;
       }
       if (customer == null) {
