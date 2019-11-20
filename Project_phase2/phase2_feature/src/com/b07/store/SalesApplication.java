@@ -308,7 +308,7 @@ public class SalesApplication {
           System.out.println("Failed to authenticate new employee");
         }
 
-      } else if (input == 2 || input == 3) {
+      } else if (input == 2) {
         System.out.println("Creating a new customer");
         System.out.println("Input a name");
         String name = reader.readLine();
@@ -337,6 +337,22 @@ public class SalesApplication {
           System.out.println("Unable to create an employee with the given parameters.");
         }
 
+      } else if (input == 3) {
+        System.out.println("Creating a new account for a customer");
+        System.out.println("Enter the ID of the customer with which the account is associated");
+        String id = reader.readLine();
+        try {
+          int idInt = Integer.parseInt(id);
+          int result = employeeInterface.createAccount(idInt);
+          if (result == -1) {
+            System.out.println("Account could not be created.");
+          } else {
+            System.out.println("New account created for user: " + idInt);
+            System.out.println("Account ID is: " + result);
+          }
+        } catch (NumberFormatException e) {
+          System.out.println("Must enter a valid numeric ID!");
+        }
       } else if (input == 4) {
         System.out.println("Creating a new Employee");
         System.out.println("Input a name");
