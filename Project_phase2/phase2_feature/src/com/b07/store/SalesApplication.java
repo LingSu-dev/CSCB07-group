@@ -417,7 +417,32 @@ public class SalesApplication {
         System.out.println("Login Denied");
         return;
       }
-      ShoppingCart shoppingCart = new ShoppingCart(customer);
+      ShoppingCart shoppingCart;
+      
+      //Checking user accounts for existing items.
+      if (AccountHelper.customerHasShoppingCarts(customer.getId())) {
+        System.out.println("It appears you have an existing shopping cart!");
+        System.out.println("Would you like to restore and check out the existing shopping cart?");
+        System.out.println("Enter '1' to check out, anything else to create a new cart");
+        String restore = reader.readLine();
+        if (restore.equals("1")) {
+          shoppingCart = AccountHelper.retrieveCustomerCart(customer.getId());
+          System.out.println("Your total is:");
+          System.out.println("$" + shoppingCart.getTotal());
+          System.out.println("You will also pay taxes to the order of:");
+          System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()));
+          boolean checkedOut = false;
+          checkedOut = shoppingCart.checkOutCart();
+          if (checkedOut) {
+            System.out.println("Your order has been checked out!");
+          } else {
+            System.out.println("Sorry, your cart could not be checked out at this time");
+            System.out.println("There may not be enough of certain items in your cart in stock");
+          }
+        }
+      }
+      
+      shoppingCart = new ShoppingCart(customer);
       System.out.println("Welcome, customer");
       String[] customerOptions =
           {"1 - List items in cart", "2 - Add item to cart", "3 - Check price",
@@ -504,6 +529,16 @@ public class SalesApplication {
         }
         input = StoreHelpers.choicePrompt(customerOptions, reader);
 
+      }
+      
+      if (AccountHelper.customerHasAccount(customer.getId()) 
+          && !shoppingCart.getItems().isEmpty()) {
+        System.out.println("Would you like to save your cart to your account?");
+        System.out.println("Enter '1' to save, anything else to exit without saving");
+        String restore = reader.readLine();
+        if (restore.equals("1")) {
+          AccountHelper.saveCustomerCart(customer.getId(), shoppingCart);
+        }
       }
     } catch (IOException e) {
       System.out.println("Unable to read input from console");
