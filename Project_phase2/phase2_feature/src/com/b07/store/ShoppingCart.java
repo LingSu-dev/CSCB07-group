@@ -69,7 +69,7 @@ public class ShoppingCart {
   }
   
   /**
-   * Get a list of all items in shopping cart
+   * Get a list of all items in shopping cart.
    * 
    * @return list of items
    */
@@ -79,16 +79,16 @@ public class ShoppingCart {
   }
   
   /**
-   * Get a hashmap of items mapped to its amount in cart
+   * Get a hashmap of items mapped to its amount in cart.
    * 
-   * @return a hashmap of <item, amount in cart>
+   * @return a hashmap of item, amount in cart
    */
   public HashMap<Item, Integer> getItemsWithQuantity() {
     return items;
   }
   
   /**
-   * Get the customer
+   * Get the customer.
    * 
    * @return the customer
    */
@@ -97,7 +97,7 @@ public class ShoppingCart {
   }
   
   /**
-   * Get the combined price of all the items in the shopping cart
+   * Get the combined price of all the items in the shopping cart.
    * 
    * @return the combined price
    */
@@ -106,7 +106,7 @@ public class ShoppingCart {
   }
   
   /**
-   * Get the tax rate
+   * Get the tax rate.
    * 
    * @return the tax rate
    */
@@ -115,7 +115,7 @@ public class ShoppingCart {
   }
   
   /**
-   * clear the shopping cart
+   * clear the shopping cart.
    */
   public void clearCart() {
     items = new HashMap<Item,Integer>();
