@@ -1,38 +1,52 @@
 <resources>
 
-    <string-array name="role_arrays">
+    <string-array name="roleArrays">
         <item>Admin</item>
         <item>Employee</item>
         <item>Customer</item>
     </string-array>
 
-    <string name="app_name">CSCB07 App</string>
-    <string name="login_menu_id_hint">User Id</string>
-    <string name="login_menu_password_hint">Password</string>
-    <string name="login_menu_login_prompt">Login</string>
-    <string name="admin_promote_hint">Employee Id</string>
-    <string name="admin_promote_prompt">Promote Employee:</string>
-    <string name="admin_promote_btn">Promote Employee</string>
-    <string name="admin_view_sales_btn">View Sales</string>
-    <string name="employee_menu_authenticate_new_employee_btn">Authenticate New Employee</string>
-    <string name="employee_menu_make_new_user_btn">Make New User</string>
-    <string name="employee_menu_make_new_account_btn">Make New Account</string>
-    <string name="employee_menu_make_employee_btn">Make New Employee</string>
-    <string name="employee_menu_make_restock_inventory_btn">Restock Inventory</string>
-    <string name="exit_btn">Exit</string>
-    <string name="employee_menu_options">Please Choose An Option</string>
-    <string name="back_btn">Go Back</string>
-    <string name="create_user_name_hint">Full Name</string>
-    <string name="create_user_age_hint">Age</string>
-    <string name="create_user_address_hint">Address</string>
-    <string name="create_user_btn">Create User</string>
-    <string name="create_employee_btn">Create Employee</string>
-    <string name="restock_inventory_item_id_hint">Item Id</string>
-    <string name="restock_inventory_quantity_hint">Quantity</string>
-    <string name="restock_inventory_btn">Restock Inventory</string>
-    <string name="make_account_user_id_hint">Customer Id</string>
-    <string name="make_account_btn">Make Account</string>
-    <string name="login_role_name_prompt">Role Name</string>
-    <string name="authenticate_btn">Authenticate Employee</string>
-    <string name="create_admin_btn">Create Admin</string>
+    <string name="appName">CSCB07 App</string>
+    <string name="loginMenuIdHint">User Id</string>
+    <string name="loginMenuPasswordHint">Password</string>
+    <string name="loginMenuLoginPrompt">Login</string>
+    <string name="adminPromoteHint">Employee Id</string>
+    <string name="adminPromotePrompt">Promote Employee:</string>
+    <string name="adminPromoteBtn">Promote Employee</string>
+    <string name="adminViewSalesBtn">View Sales</string>
+    <string name="employeeMenuNewUserBtn">Make New User</string>
+    <string name="employeeMenuNewAccountBtn">Make New Account</string>
+    <string name="employeeMenuNewEmployeeBtn">Make New Employee</string>
+    <string name="restockInventoryBtn">Restock Inventory</string>
+    <string name="exitBtn">Exit</string>
+    <string name="employeeMenuOptions">Please Choose An Option</string>
+    <string name="backBtn">Go Back</string>
+    <string name="createUserNameHint">Full Name</string>
+    <string name="createUserAgeHint">Age</string>
+    <string name="createUserAddressHint">Address</string>
+    <string name="createUserBtn">Create User</string>
+    <string name="createEmployeeBtn">Create Employee</string>
+    <string name="itemIdHint">Item Id</string>
+    <string name="quantityHint">Quantity</string>
+    <string name="userIdHint">Customer Id</string>
+    <string name="makeAccountBtn">Make Account</string>
+    <string name="loginRoleNamePrompt">Role Name</string>
+    <string name="authenticateBtn">Authenticate Employee</string>
+    <string name="createAdminBtn">Create Admin</string>
+    <string name="printhello">Hello World</string>
+    <string name="inputAdminInfo">Please Input The Admin Account Information Below</string>
+    <string name="inputEmployeeInfo">Please Input The Employee Account Information Below</string>
+    <string name="inputName">please input your name</string>
+    <string name="inputAge">please input your age</string>
+    <string name="inputAddress">Please input your address</string>
+    <string name="inputPassword">Please input your password</string>
+    <string name="createAccountButton">Create Admin Account</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="inputID">Input ID of product</string>
+    <string name="inputAmount">Input amount</string>
+    <string name="addToCart">Add to cart</string>
+    <string name="viewCart">View Cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="logout">Logout</string>
 </resources>
