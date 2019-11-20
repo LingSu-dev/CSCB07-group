@@ -547,7 +547,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   /**
    * Return the associated user id of an account.
    * 
-   * @param accountId
+   * @param accountId the account to retrieve the associated user of.
    * @return the user id of the account's owner, -1 if not found.
    * @throws SQLException on failure
    */
@@ -565,7 +565,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   /**
    * Get the details of a given account given acctId.
    * 
-   * @param userId of the account owner.
+   * @param accountId the ID of the account to retrieve the details of
    * @return a shopping cart with all their items, null if not found.
    * @throws SQLException if something goes wrong.
    */
