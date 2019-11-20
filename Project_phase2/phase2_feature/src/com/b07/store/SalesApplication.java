@@ -541,7 +541,12 @@ public class SalesApplication {
         System.out.println("Enter '1' to save, anything else to exit without saving");
         String restore = reader.readLine();
         if (restore.equals("1")) {
-          AccountHelper.saveCustomerCart(customer.getId(), shoppingCart);
+          boolean saved = AccountHelper.saveCustomerCart(customer.getId(), shoppingCart);
+          if (saved) {
+            System.out.println("Saved to your lowest number account!");
+          } else {
+            System.out.println("Sorry, could not save your cart at this time!");
+          }
         }
       }
     } catch (IOException e) {
