@@ -72,7 +72,7 @@ public class SalesApplication {
           input = StoreHelpers.choicePrompt(loginOptions, reader);
         }
         System.out.println("Exiting");
-
+        
       }
     } catch (SQLException e) {
       System.out.println("An issue occured while communicating with the database");
@@ -313,8 +313,17 @@ public class SalesApplication {
         System.out.println("Creating a new customer");
         System.out.println("Input a name");
         String name = reader.readLine();
-        System.out.println("Input an age");
-        int age = Integer.parseInt(reader.readLine());
+        boolean validAge = false;
+        int age = 0;
+        while (!validAge) {
+          System.out.println("Input an age");
+          try {
+            age = Integer.parseInt(reader.readLine());
+            validAge = true;
+          } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number");
+          }
+        }
         System.out.println("Input an address");
         String address = reader.readLine();
         System.out.println("Input a password");
@@ -358,8 +367,17 @@ public class SalesApplication {
         System.out.println("Creating a new Employee");
         System.out.println("Input a name");
         String name = reader.readLine();
-        System.out.println("Input an age");
-        int age = Integer.parseInt(reader.readLine());
+        boolean validAge = false;
+        int age = 0;
+        while (!validAge) {
+          System.out.println("Input an age");
+          try {
+            age = Integer.parseInt(reader.readLine());
+            validAge = true;
+          } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number");
+          }
+        }
         System.out.println("Input an address");
         String address = reader.readLine();
         System.out.println("Input a password");
