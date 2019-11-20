@@ -66,6 +66,12 @@ public class SalesLogImpl implements SalesLog {
     return sales.size();
   }
 
+  /**
+   * Return a list of the customer's sales
+   * 
+   * @param the customer
+   * @return a list of the customer's sales 
+   */
   @Override
   public List<Sale> getSalesToCustomer(User user) {
     if (user == null) {
@@ -80,6 +86,11 @@ public class SalesLogImpl implements SalesLog {
     return customerSales;
   }
 
+  /**
+   * Get an arraylist of the customer of each sale
+   * 
+   * @return arraylist of customers
+   */
   @Override
   public List<User> getCustomers() {
     Set<User> customers = new HashSet<User>();
@@ -108,6 +119,12 @@ public class SalesLogImpl implements SalesLog {
     return items;
   }
 
+  /**
+   * Return the total amount of times that a particular item has been sold
+   * 
+   * @param the item
+   * @return the total amount sold
+   */
   @Override
   public int getItemSaleQuantity(Item item) {
     if (item == null) {
@@ -120,6 +137,11 @@ public class SalesLogImpl implements SalesLog {
     return itemCount;
   }
 
+  /**
+   * Return a hashmap of item mapped to its amount sold
+   * 
+   * @return hashmap of (item, amount sold)
+   */
   @Override
   public HashMap<Item, Integer> getItemsSaleQuantity() {
     HashMap<Item, Integer> quantitiesSold = new HashMap<Item, Integer>();
@@ -132,6 +154,11 @@ public class SalesLogImpl implements SalesLog {
     return quantitiesSold;
   }
 
+  /**
+   * Return a string of the sales log containing each sale made
+   * 
+   * @return a string of the sales log
+   */
   @Override
   public String viewBooks() {
 
