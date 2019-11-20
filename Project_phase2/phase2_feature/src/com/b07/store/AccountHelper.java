@@ -12,18 +12,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * A class used by the SalesApplication to verify certain account related information.
+ * @author Aidan Zorbas
+ *
+ */
 public class AccountHelper {
-
+  /**
+   * Check if there is an account associated with a customer.
+   * @param userId The id of the user to check the account of.
+   * @return true if the user has an account.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   protected static boolean customerHasAccount(int userId) throws SQLException {
     List<Integer> accounts = DatabaseSelectHelper.getUserAccountsById(userId);
     if (accounts == null) {
       return false;
     }
-    
     return !accounts.isEmpty();
   }
   
+  /**
+   * Check if there are any items stored in a customer's accounts.
+   * @param userId the id of the user to check the accounts of.
+   * @return true if the user has accounts, and has items in them, false otherwise.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   protected static boolean customerHasShoppingCarts(int userId) throws SQLException {
     List<ShoppingCart> carts = new ArrayList<ShoppingCart>();
     List<Integer> ids = DatabaseSelectHelper.getUserAccountsById(userId);
@@ -45,6 +59,12 @@ public class AccountHelper {
     return false;
   }
   
+  /**
+   * Retrieve a cart of the item's stored in ALL of the user's accounts.
+   * @param userId the user who's items will be retrieved.
+   * @return A shopping cart containing their stored items, null if no such cart can be made.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   protected static ShoppingCart retrieveCustomerCart(int userId) throws SQLException {
     List<ShoppingCart> carts = new ArrayList<ShoppingCart>();
     List<Integer> ids = DatabaseSelectHelper.getUserAccountsById(userId);
@@ -74,6 +94,13 @@ public class AccountHelper {
     return combinedCart;
   }
   
+  /**
+   * Saves a customer's cart to their lowest numbered account.
+   * @param userId the user to save the cart of.
+   * @param cart the cart of items to be saved.
+   * @return true if the operation succeeds, false otherwise.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   protected static boolean saveCustomerCart(int userId, ShoppingCart cart) throws SQLException {
     List<Integer> ids = DatabaseSelectHelper.getUserAccountsById(userId);
     if (ids.isEmpty()) {
