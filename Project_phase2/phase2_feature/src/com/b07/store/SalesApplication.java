@@ -22,13 +22,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-
-
 public class SalesApplication {
   /**
    * This is the main method to run your entire program! Follow the "Pulling it together"
    * instructions to finish this off.
-   * 
+   *
    * @param argv the mode the user would like to enter.
    */
   public static void main(String[] argv) {
@@ -56,8 +54,9 @@ public class SalesApplication {
         // Customer/Employee mode
         System.out.println("Welcome to Sales Application");
         System.out.println("----------------------------");
-        String[] loginOptions =
-            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
+        String[] loginOptions = {
+          "1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"
+        };
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // input will contain the first line of input from the user
         int input = StoreHelpers.choicePrompt(loginOptions, reader);
@@ -72,7 +71,6 @@ public class SalesApplication {
           input = StoreHelpers.choicePrompt(loginOptions, reader);
         }
         System.out.println("Exiting");
-        
       }
     } catch (SQLException e) {
       System.out.println("An issue occured while communicating with the database");
@@ -97,7 +95,7 @@ public class SalesApplication {
 
   /**
    * Exit the program and close the database, worst case scenario.
-   * 
+   *
    * @param connection the connection to be closed.
    */
   public static void exitOnFailure(Connection connection) {
@@ -111,7 +109,7 @@ public class SalesApplication {
 
   /**
    * Initialize the database.
-   * 
+   *
    * @param connection the connection to the database.
    * @throws DatabaseInsertException if there is an issue inserting into the database.
    * @throws SQLException if there is an issue communicating with the database.
@@ -134,7 +132,6 @@ public class SalesApplication {
       System.out.println("Unable to insert role into database");
       exitOnFailure(connection);
     }
-
 
     System.out.println("Creating administrator account");
 
@@ -168,8 +165,6 @@ public class SalesApplication {
       }
     }
 
-
-
     System.out.println("Creating employee account");
 
     exit = false;
@@ -199,7 +194,6 @@ public class SalesApplication {
       } catch (DatabaseInsertException e1) {
         System.out.println("Unable to insert user or user role into database");
       }
-
     }
 
     try {
@@ -220,14 +214,14 @@ public class SalesApplication {
 
   /**
    * Allow administrators to promote users to admin status.
-   * 
+   *
    * @throws SQLException if there is an issue communicating with the database.
    * @throws IOException if there is an issue obtaining user input.
    */
   public static void adminMode(BufferedReader bufferedReader) throws SQLException, IOException {
     System.out.println("Admin Mode: Log in");
     System.out.println("---------------");
-    
+
     boolean logged = false;
     Admin admin = null;
     while (!logged) {
@@ -274,7 +268,7 @@ public class SalesApplication {
 
   /**
    * Allows employees to perform operations on the database.
-   * 
+   *
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    * @throws DatabaseInsertException if there is an issue inserting into the database.
@@ -283,7 +277,7 @@ public class SalesApplication {
       throws IOException, SQLException, DatabaseInsertException {
 
     System.out.print("Employee Login:");
-    User user =  StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
+    User user = StoreHelpers.loginPrompt(reader, Roles.EMPLOYEE);
     Employee employee = null;
     if (user != null && user instanceof Employee) {
       employee = (Employee) user;
@@ -296,9 +290,15 @@ public class SalesApplication {
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
     System.out.println("Welcome, employee");
 
-    String[] employeeOptions =
-        {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
-            "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
+    String[] employeeOptions = {
+      "1 - authenticate new employee",
+      "2 - Make new User",
+      "3 - Make new account",
+      "4 - Make new Employee",
+      "5 - Restock Inventory",
+      "6 - Exit",
+      "Enter Selection:"
+    };
     int input = StoreHelpers.choicePrompt(employeeOptions, reader);
     while (input != 6) {
       if (input == 1) {
@@ -330,7 +330,8 @@ public class SalesApplication {
         String password = reader.readLine();
         // Here, an employee is being created and then having it's role changed
         // to a a customer. this is bad, it must be changed.
-        insertUser: try {
+        insertUser:
+        try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             break insertUser;
@@ -382,7 +383,8 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Input a password");
         String password = reader.readLine();
-        insertUser: try {
+        insertUser:
+        try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             // should never run: included here due to UML-unstable EmployeeInterface change
@@ -415,10 +417,9 @@ public class SalesApplication {
     }
   }
 
-
   /**
    * Allows customers to use a cart and make purchases.
-   * 
+   *
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -427,9 +428,9 @@ public class SalesApplication {
     try {
       System.out.print("Customer Login:");
       User user = StoreHelpers.loginPrompt(reader, Roles.CUSTOMER);
-      
+
       Customer customer = null;
-      if (user != null &&  user instanceof Customer) {
+      if (user != null && user instanceof Customer) {
         customer = (Customer) user;
       }
       if (customer == null) {
@@ -437,8 +438,8 @@ public class SalesApplication {
         return;
       }
       ShoppingCart shoppingCart;
-      
-      //Checking user accounts for existing items.
+
+      // Checking user accounts for existing items.
       if (AccountHelper.customerHasShoppingCarts(customer.getId())) {
         System.out.println("It appears you have an existing shopping cart!");
         System.out.println("Would you like to restore and check out the existing shopping cart?");
@@ -450,9 +451,12 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println("$" 
-                + shoppingCart.getTotal()
-                .multiply(shoppingCart.getTaxRate()).setScale(2, RoundingMode.CEILING));
+            System.out.println(
+                "$"
+                    + shoppingCart
+                        .getTotal()
+                        .multiply(shoppingCart.getTaxRate())
+                        .setScale(2, RoundingMode.CEILING));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -466,12 +470,18 @@ public class SalesApplication {
           }
         }
       }
-      
+
       shoppingCart = new ShoppingCart(customer);
       System.out.println("Welcome, customer");
-      String[] customerOptions =
-          {"1 - List items in cart", "2 - Add item to cart", "3 - Check price",
-              "4 - Remove item from cart", "5 - Check out", "6 - Exit", "Enter Selection:"};
+      String[] customerOptions = {
+        "1 - List items in cart",
+        "2 - Add item to cart",
+        "3 - Check price",
+        "4 - Remove item from cart",
+        "5 - Check out",
+        "6 - Exit",
+        "Enter Selection:"
+      };
       int input = StoreHelpers.choicePrompt(customerOptions, reader);
       while (input != 6) {
         if (input == 1) {
@@ -542,9 +552,11 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println("$" 
-                + shoppingCart.getTotal()
-                .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+            System.out.println(
+                "$"
+                    + shoppingCart
+                        .getTotal()
+                        .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -559,10 +571,9 @@ public class SalesApplication {
           System.out.println("Please choose one of the options");
         }
         input = StoreHelpers.choicePrompt(customerOptions, reader);
-
       }
-      
-      if (AccountHelper.customerHasAccount(customer.getId()) 
+
+      if (AccountHelper.customerHasAccount(customer.getId())
           && !shoppingCart.getItems().isEmpty()) {
         System.out.println("Would you like to save your cart to your account?");
         System.out.println("Enter '1' to save, anything else to exit without saving");

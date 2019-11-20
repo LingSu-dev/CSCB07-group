@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * A class allowing authenticated users to make purchase from the inventory.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -28,7 +28,7 @@ public class ShoppingCart {
 
   /**
    * Create a new shopping cart with associated customer.
-   * 
+   *
    * @param customer the customer to whom the cart belongs.
    * @throws NotAuthenticatedException if the customer is not authenticated.
    */
@@ -42,7 +42,7 @@ public class ShoppingCart {
 
   /**
    * Add some quantity of an item to the cart.
-   * 
+   *
    * @param item the item to add.
    * @param quantity the number of that item to add.
    */
@@ -63,7 +63,7 @@ public class ShoppingCart {
 
   /**
    * Remove some quantity of an item from the cart.
-   * 
+   *
    * @param item the item to remove.
    * @param quantity the number of that item to remove.
    */
@@ -82,7 +82,7 @@ public class ShoppingCart {
 
   /**
    * Get the items in the shopping cart.
-   * 
+   *
    * @return list of items in shopping cart
    */
   public List<Item> getItems() {
@@ -91,7 +91,7 @@ public class ShoppingCart {
 
   /**
    * Retrieve the current customer in the shopping cart.
-   * 
+   *
    * @return customer
    */
   public Customer getCustomer() {
@@ -100,23 +100,19 @@ public class ShoppingCart {
 
   /**
    * Get total price of shopping cart.
-   * 
+   *
    * @return total
    */
   public BigDecimal getTotal() {
     return total;
   }
 
-  /**
-   * Return tax rate.
-   */
+  /** Return tax rate. */
   public BigDecimal getTaxRate() {
     return TAXRATE;
   }
 
-  /**
-   * Clear shopping cart.
-   */
+  /** Clear shopping cart. */
   public void clearCart() {
     items.clear();
     total = new BigDecimal("0.00");
@@ -124,7 +120,7 @@ public class ShoppingCart {
 
   /**
    * Attempt to check the user's cart out.
-   * 
+   *
    * @return true if succesful, false otherwise.
    */
   public boolean checkOutCart() {
@@ -165,9 +161,7 @@ public class ShoppingCart {
     }
   }
 
-  /**
-   * String representation of cart.
-   */
+  /** String representation of cart. */
   @Override
   public String toString() {
     StringBuilder value = new StringBuilder();

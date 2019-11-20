@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseSelector {
-  
+
   /**
    * get all the roles.
+   *
    * @param connection the connection.
    * @return a ResultSet containing all rows of the roles table.
    * @throws SQLException thrown if an SQLException occurs.
@@ -19,9 +20,10 @@ public class DatabaseSelector {
     ResultSet results = statement.executeQuery("SELECT * FROM ROLES;");
     return results;
   }
-  
+
   /**
    * get the role with id id.
+   *
    * @param id the id of the role
    * @param connection the database connection
    * @return a String containing the role.
@@ -36,9 +38,10 @@ public class DatabaseSelector {
     results.close();
     return role;
   }
-  
+
   /**
    * get the role of the given user.
+   *
    * @param userId the id of the user.
    * @param connection the connection to the database.
    * @return the roleId for the user.
@@ -53,11 +56,12 @@ public class DatabaseSelector {
     results.close();
     return userRole;
   }
-  
-  //Original documentation here is incorrect, should be "Get users with the given role"
-  
+
+  // Original documentation here is incorrect, should be "Get users with the given role"
+
   /**
    * get the role of the given user.
+   *
    * @param userId the id of the user.
    * @param connection the connection to the database.
    * @return the roleId for the user.
@@ -67,11 +71,12 @@ public class DatabaseSelector {
     String sql = "SELECT USERID FROM USERROLE WHERE ROLEID = ?";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setInt(1, roleId);
-    return  preparedStatement.executeQuery();
+    return preparedStatement.executeQuery();
   }
-  
+
   /**
    * Return all users from the database.
+   *
    * @param connection the connection to the database.
    * @return a results set of all rows in the table.
    * @throws SQLException thrown if there is an issue.
@@ -81,9 +86,10 @@ public class DatabaseSelector {
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * find all the details about a given user.
+   *
    * @param userId the id of the user.
    * @param connection a connection to the database.
    * @return a result set with the details of the user.
@@ -95,13 +101,14 @@ public class DatabaseSelector {
     preparedStatement.setInt(1, userId);
     return preparedStatement.executeQuery();
   }
- 
+
   /**
    * get the hashed version of the password.
+   *
    * @param userId the user's id.
    * @param connection the database connection.
    * @return the hashed password to be checked against given password.
-   * @throws SQLException if a database issue occurs. 
+   * @throws SQLException if a database issue occurs.
    */
   protected static String getPassword(int userId, Connection connection) throws SQLException {
     String sql = "SELECT PASSWORD FROM USERPW WHERE USERID = ?";
@@ -112,9 +119,10 @@ public class DatabaseSelector {
     results.close();
     return hashPassword;
   }
-  
+
   /**
    * get all rows from the items table.
+   *
    * @param connection the connection to the database.
    * @return a result set of all items and associated values.
    * @throws SQLException if anything goes wrong.
@@ -124,12 +132,13 @@ public class DatabaseSelector {
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get a specific item and it's details from the database.
+   *
    * @param itemId the item of interest.
    * @param connection the database connection.
-   * @return result set containing the row in it. 
+   * @return result set containing the row in it.
    * @throws SQLException if something goes wrong.
    */
   protected static ResultSet getItem(int itemId, Connection connection) throws SQLException {
@@ -138,9 +147,10 @@ public class DatabaseSelector {
     preparedStatement.setInt(1, itemId);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get all rows from the inventory table.
+   *
    * @param connection the database connection.
    * @return result set containing all rows from the table inventory.
    * @throws SQLException if something goes wrong.
@@ -150,9 +160,10 @@ public class DatabaseSelector {
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get the quantity on hand of the given item.
+   *
    * @param itemId the id of the give item.
    * @param connection the connection to the database.
    * @return the quantity of the given item available.
@@ -167,9 +178,10 @@ public class DatabaseSelector {
     results.close();
     return quantity;
   }
-  
+
   /**
    * return all sales.
+   *
    * @param connection the database connection.
    * @return a result set of all sales.
    * @throws SQLException if something goes wrong.
@@ -179,9 +191,10 @@ public class DatabaseSelector {
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get the details of a given sale.
+   *
    * @param saleId the id of the given sale.
    * @param connection the database connection.
    * @return result set of the details of a given sale.
@@ -193,9 +206,10 @@ public class DatabaseSelector {
     preparedStatement.setInt(1, saleId);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get all sales for a given user.
+   *
    * @param userId the id of the user.
    * @param connection the database connection.
    * @return a result set of all sales made to the given user.
@@ -207,9 +221,10 @@ public class DatabaseSelector {
     preparedStatement.setInt(1, userId);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get all itemized sales from the itemizedsales table.
+   *
    * @param connection the database connection
    * @return all itemized sales.
    * @throws SQLException if something goes wrong.
@@ -219,20 +234,20 @@ public class DatabaseSelector {
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * get the items sold in the given sale and the quantity of each.
+   *
    * @param salesId the id of the sale of interest.
    * @param connection the database connection.
    * @return result set of all rows for the given sale.
    * @throws SQLException if something goes wrong.
    */
-  protected static ResultSet getItemizedSaleById(int salesId, Connection connection) 
+  protected static ResultSet getItemizedSaleById(int salesId, Connection connection)
       throws SQLException {
     String sql = "SELECT * FROM ITEMIZEDSALES WHERE SALEID = ?;";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setInt(1, salesId);
     return preparedStatement.executeQuery();
   }
-  
 }

@@ -19,12 +19,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class SalesApplication {
   /**
    * This is the main method to run your entire program! Follow the "Pulling it together"
    * instructions to finish this off.
-   * 
+   *
    * @param argv the mode the user would like to enter.
    */
   public static void main(String[] argv) {
@@ -77,9 +76,7 @@ public class SalesApplication {
           } else {
             System.out.println("Invalid Selection!");
           }
-
         }
-
       }
     } catch (SQLException e) {
       System.out.println("An issue occured while communicating with the database");
@@ -104,7 +101,7 @@ public class SalesApplication {
 
   /**
    * Exit the program and close the database, worst case scenario.
-   * 
+   *
    * @param connection the connection to be closed.
    */
   public static void exitOnFailure(Connection connection) {
@@ -118,7 +115,7 @@ public class SalesApplication {
 
   /**
    * Initialize the database.
-   * 
+   *
    * @param connection the connection to the database.
    * @throws DatabaseInsertException if there is an issue inserting into the database.
    * @throws SQLException if there is an issue communicating with the database.
@@ -136,7 +133,6 @@ public class SalesApplication {
     DatabaseInsertHelper.insertRole("ADMIN");
     DatabaseInsertHelper.insertRole("CUSTOMER");
     DatabaseInsertHelper.insertRole("EMPLOYEE");
-
 
     System.out.println("Creating administrator account");
 
@@ -166,7 +162,6 @@ public class SalesApplication {
         System.out.println("Invalid input:");
         System.out.println("A valid number must be entered for age");
       }
-
     }
 
     int adminRoleId = DatabaseSelectHelper.getRoleIdByName("ADMIN");
@@ -199,12 +194,10 @@ public class SalesApplication {
         System.out.println("Invalid input:");
         System.out.println("A valid number must be entered for age");
       }
-
     }
 
     int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
     DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
-
 
     // Adding required items to database
     // Creating dummy stock
@@ -221,14 +214,12 @@ public class SalesApplication {
     itemId = DatabaseInsertHelper.insertItem("PROTEIN_BAR", new BigDecimal("10.00"));
     DatabaseInsertHelper.insertInventory(itemId, 100);
 
-
     System.out.println("Database creation was successfull!");
-
   }
 
   /**
    * Allow administrators to promote users to admin status.
-   * 
+   *
    * @throws SQLException if there is an issue communicating with the database.
    * @throws IOException if there is an issue obtaining user input.
    */
@@ -301,7 +292,7 @@ public class SalesApplication {
 
   /**
    * Allows employees to perform operations on the database.
-   * 
+   *
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    * @throws NotAuthenticatedException if the employee cannot be authenticated.
@@ -346,13 +337,11 @@ public class SalesApplication {
         System.out.println("Enter customer password:");
         String password = bufferedReader.readLine();
 
-
         int ageInt = Integer.parseInt(age);
         int id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
         int customerRoleId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
         DatabaseInsertHelper.insertUserRole(id, customerRoleId);
         System.out.println("New customer created, ID: " + id);
-
 
       } else if (input.equals("4")) {
         // Create new employee
@@ -406,12 +395,11 @@ public class SalesApplication {
         exit = true;
       }
     }
-
   }
 
   /**
    * Attempt to authenticate a user for employee mode.
-   * 
+   *
    * @return an EmployeeInterface for the authenticated user.
    * @throws NotAuthenticatedException if the user cannot be authenticated.
    * @throws SQLException if there is an issue communicating with the database.
@@ -421,7 +409,6 @@ public class SalesApplication {
       throws NotAuthenticatedException, SQLException, IOException {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     Employee employee = null;
-
 
     // Employee Login
     System.out.println("Enter employee ID");
@@ -449,7 +436,7 @@ public class SalesApplication {
 
   /**
    * Allows customers to use a cart and make purchases.
-   * 
+   *
    * @throws IOException if there is an issue obtaining user input.
    * @throws SQLException if there is an issue communicating with the database.
    */

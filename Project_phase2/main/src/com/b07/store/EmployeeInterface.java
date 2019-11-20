@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 /**
  * Class allowing authenticated employees to perform operations on the database.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -25,7 +25,7 @@ public class EmployeeInterface {
 
   /**
    * Constructor for EmployeeInterface.
-   * 
+   *
    * @param employee the associated employee.
    * @param inventory the associated inventory.
    * @throws NotAuthenticatedException if the associated employee is not authenticated.
@@ -43,7 +43,7 @@ public class EmployeeInterface {
 
   /**
    * Constructor for EmployeeInterface.
-   * 
+   *
    * @param inventory the inventory to be set to
    */
   public EmployeeInterface(Inventory inventory) {
@@ -52,7 +52,7 @@ public class EmployeeInterface {
 
   /**
    * Sets the current employee.
-   * 
+   *
    * @param employee the employee to be set.
    */
   public void setCurrentEmployee(Employee employee) {
@@ -63,7 +63,7 @@ public class EmployeeInterface {
 
   /**
    * Checks if the interface is currently associated with some employee.
-   * 
+   *
    * @return true if the interface is associated with an employee, false otherwise.
    */
   public boolean hasCurrentEmployee() {
@@ -72,7 +72,7 @@ public class EmployeeInterface {
 
   /**
    * Re-stock an item in the local inventory and database.
-   * 
+   *
    * @param item the item to be re-stocked.
    * @param quantity the quantity to re-stock.
    * @return true if the operation succeeds.
@@ -91,7 +91,7 @@ public class EmployeeInterface {
 
   /**
    * Create a new customer and add it to the database.
-   * 
+   *
    * @param name the customer's name
    * @param age the customer's name.
    * @param address the customer's address.
@@ -118,7 +118,7 @@ public class EmployeeInterface {
 
   /**
    * Create a new employee and add it to the database.
-   * 
+   *
    * @param name the employee's name.
    * @param age the employee's age.
    * @param address the employee's address.

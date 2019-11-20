@@ -5,10 +5,9 @@ import com.b07.database.helper.DatabaseUpdateHelper;
 import com.b07.exceptions.DatabaseInsertException;
 import java.sql.SQLException;
 
-
 /**
  * A class allowing administrators to perform operations on the application, database, and users.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -18,7 +17,7 @@ public class Admin extends User {
 
   /**
    * Create a new admin, without setting their authentication value.
-   * 
+   *
    * @param id the id of the admin to be created.
    * @param name the name of the admin to be created.
    * @param age the age of the admin to be created.
@@ -33,7 +32,7 @@ public class Admin extends User {
 
   /**
    * Create a new admin, and set their authentication value.
-   * 
+   *
    * @param id id the id of the admin to be created.
    * @param name the name of the admin to be created.
    * @param age the age of the admin to be created.
@@ -49,7 +48,7 @@ public class Admin extends User {
 
   /**
    * Changes an employee's role in the database to Admin.
-   * 
+   *
    * @param employee the employee to be promoted.
    * @return true if the role change is successful, false otherwise.
    * @throws SQLException if there is an issue communicating with the database.

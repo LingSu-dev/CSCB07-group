@@ -13,7 +13,6 @@ import com.b07.users.Admin;
 import com.b07.users.Customer;
 import com.b07.users.Employee;
 import com.b07.users.User;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,6 +23,7 @@ import java.util.List;
 
 /**
  * A series of helper methods for obtaining information from the database.
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Si
@@ -32,6 +32,7 @@ import java.util.List;
 public class DatabaseSelectHelper extends DatabaseSelector {
   /**
    * Get a list of role IDs from the database.
+   *
    * @return a list of roleIDs
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -44,11 +45,12 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     results.close();
     connection.close();
-    return ids;    
+    return ids;
   }
-  
+
   /**
    * Get the name of a role by it's role ID from the database.
+   *
    * @param roleId the role ID.
    * @return the name of the role, null if no such role.
    * @throws SQLException if there is an issue communicating with the database.
@@ -62,9 +64,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return role;
   }
-  
+
   /**
    * Get the role ID of a user.
+   *
    * @param userId the user's ID.
    * @return the user's role ID, -1 if no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -78,33 +81,33 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return roleId;
   }
-  
+
   /**
    * Get a list of all users with specific role from the database.
+   *
    * @param roleId the role ID of the role.
    * @return a list of all users with this role.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public static List<Integer> getUsersByRole(int roleId) 
-      throws SQLException {
+  public static List<Integer> getUsersByRole(int roleId) throws SQLException {
     List<Integer> userIds = new ArrayList<Integer>();
     if (!roleIdExists(roleId)) {
       return userIds;
     }
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getUsersByRole(roleId, connection);
-    
+
     while (results.next()) {
       userIds.add(results.getInt("USERID"));
     }
     results.close();
     connection.close();
     return userIds;
-    
   }
-  
+
   /**
    * get a list of all users in the database.
+   *
    * @return a list of all users in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -116,7 +119,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     String name;
     int age;
     String address;
-    
+
     while (results.next()) {
       id = results.getInt("ID");
       name = results.getString("NAME");
@@ -131,9 +134,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return users;
   }
-  
+
   /**
    * get a user by their user ID.
+   *
    * @param userId the user's ID.
    * @return an object representing the user, null if no such user exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -154,15 +158,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
       name = results.getString("NAME");
       age = results.getInt("AGE");
       address = results.getString("ADDRESS");
-      newUser = userById(id, name, age, address);     
+      newUser = userById(id, name, age, address);
     }
     results.close();
     connection.close();
     return newUser;
   }
-  
+
   /**
    * Get a hashed version of a user's password.
+   *
    * @param userId the user's ID.
    * @return a hashed version of the user's password, null if no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -176,9 +181,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return password;
   }
-  
+
   /**
    * Get a list of all items in the database.
+   *
    * @return a list of all items in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -200,9 +206,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return items;
   }
-  
+
   /**
    * Get an item from the database by it's ID.
+   *
    * @param itemId the item's ID.
    * @return an object representing the item, null if no such item exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -223,11 +230,12 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     results.close();
     connection.close();
-    return new ItemImpl(id,name,price);
+    return new ItemImpl(id, name, price);
   }
-  
+
   /**
    * Get the entire inventory of the database.
+   *
    * @return the inventory of the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -243,16 +251,17 @@ public class DatabaseSelectHelper extends DatabaseSelector {
       quantity = results.getInt("QUANTITY");
       item = getItem(itemId);
       if (item != null) {
-        inventory.updateMap(item, quantity);  
+        inventory.updateMap(item, quantity);
       }
     }
     results.close();
     connection.close();
     return inventory;
   }
-  
+
   /**
    * Get the quantity of an item stored in the database.
+   *
    * @param itemId the item's ID.
    * @return the quantity of the item in the database, -1 if no such item exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -266,16 +275,17 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return quantity;
   }
-  
+
   /**
    * Get a log of all sales in the database.
+   *
    * @return an object containing information of all sales in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
   public static SalesLog getSales() throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getSales(connection);
-    
+
     SalesLog salesLog = new SalesLogImpl();
     Sale sale;
     int saleId;
@@ -296,15 +306,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return salesLog;
   }
-  
+
   /**
    * Get a sale from the database by it's ID.
+   *
    * @param saleId the ID of the sale.
    * @return an object representing the sale, null if no such sale exists.
    * @throws SQLException if there is an issue communicating with the database.
    */
   public static Sale getSaleById(int saleId) throws SQLException {
-    
+
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getSaleById(saleId, connection);
     int id;
@@ -324,9 +335,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return sale;
   }
-  
+
   /**
    * Get a list of all sales to a certain user.
+   *
    * @param userId the user's ID.
    * @return a list of all sales to the user, null if there is no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -352,9 +364,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return sales;
   }
-  
+
   /**
    * Return an itemized sale from the database.
+   *
    * @param saleId the sale's ID.
    * @return an itemized sale corresponding to the sale, null if there is no such sale.
    * @throws SQLException if there is an issue communicating with the database.
@@ -362,11 +375,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   public static Sale getItemizedSaleById(int saleId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getItemizedSaleById(saleId, connection);
-    
+
     if (!saleExists(saleId)) {
       return null;
     }
-    
+
     int id;
     int itemId;
     Item item;
@@ -385,15 +398,16 @@ public class DatabaseSelectHelper extends DatabaseSelector {
         itemMap.put(item, quantity);
       }
     }
-    
+
     results.close();
     connection.close();
     sale.setItemMap(itemMap);
     return sale;
   }
-  
+
   /**
    * Get a list of all itemized sales in the database.
+   *
    * @return a list of all itemized sales in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -405,18 +419,19 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     while (results.next()) {
       sale = getItemizedSaleById(results.getInt("SALEID"));
       if (sale != null) {
-        salesLog.addSale(sale);    
+        salesLog.addSale(sale);
       }
     }
     results.close();
     connection.close();
     return salesLog;
   }
-  
-  //Methods below this point are newly created and not part of the original class
-  
+
+  // Methods below this point are newly created and not part of the original class
+
   /**
    * Get a list of all user IDs in the database.
+   *
    * @return a list of user IDs.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -431,9 +446,10 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return ids;
   }
-  
+
   /**
    * Check if an item is in the database.
+   *
    * @param itemId the item's ID.
    * @return true if the item is in the database.
    * @throws SQLException if there is an issue communicating with the database.
@@ -447,19 +463,20 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     return false;
   }
-  
+
   public static boolean roleIdExists(int roleID) throws SQLException {
     List<Integer> validRoleIds = DatabaseSelectHelper.getRoleIds();
     return validRoleIds.contains(roleID);
   }
-  
+
   public static boolean userIdExists(int userID) throws SQLException {
     List<Integer> validUserIds = DatabaseSelectHelper.getUserIds();
     return validUserIds.contains(userID);
   }
-  
+
   /**
    * Creates a new user of the correct type based on their ID.
+   *
    * @param id the user's ID.
    * @param name the user's name.
    * @param age the user's age.
@@ -467,8 +484,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return a user of the correct type, based on their ID, null if no such user exists.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  private static User userById(int id, String name, int age, String address) 
-      throws SQLException {
+  private static User userById(int id, String name, int age, String address) throws SQLException {
     int roleId = getUserRoleId(id);
     String roleName = getRoleName(roleId);
     if (roleName.equals("ADMIN")) {
@@ -484,30 +500,32 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the Role ID of a role by it's associated name.
+   *
    * @param name the name of the role.
    * @return the role's ID, -1 if no such role.
    * @throws SQLException if there is an issue communicating with the database.
    */
   public static int getRoleIdByName(String name) throws SQLException {
     List<Integer> ids;
-    ids = getRoleIds();  
+    ids = getRoleIds();
     for (int i = 0; i < ids.size(); i++) {
       if (getRoleName(ids.get(i)) != null && getRoleName(ids.get(i)).equals(name)) {
         return ids.get(i);
       }
     }
-    
+
     return -1;
   }
- 
+
   /**
    * Checks if a sale exists within the database.
+   *
    * @param saleId the id of the sale to check.
    * @return true if the sale is in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
   public static boolean saleExists(int saleId) throws SQLException {
-    
+
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     ResultSet results = DatabaseSelector.getSaleById(saleId, connection);
 

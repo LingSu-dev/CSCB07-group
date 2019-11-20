@@ -6,7 +6,6 @@ import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import com.b07.users.User;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +13,13 @@ import java.util.List;
 
 /**
  * A class used by the SalesApplication to verify certain account related information.
- * @author Aidan Zorbas
  *
+ * @author Aidan Zorbas
  */
 public class AccountHelper {
   /**
    * Check if there is an account associated with a customer.
+   *
    * @param userId The id of the user to check the account of.
    * @return true if the user has an account.
    * @throws SQLException if there is an issue communicating with the database.
@@ -31,9 +31,10 @@ public class AccountHelper {
     }
     return !accounts.isEmpty();
   }
-  
+
   /**
    * Check if there are any items stored in a customer's accounts.
+   *
    * @param userId the id of the user to check the accounts of.
    * @return true if the user has accounts, and has items in them, false otherwise.
    * @throws SQLException if there is an issue communicating with the database.
@@ -58,9 +59,10 @@ public class AccountHelper {
     }
     return false;
   }
-  
+
   /**
    * Retrieve a cart of the item's stored in ALL of the user's accounts.
+   *
    * @param userId the user who's items will be retrieved.
    * @return A shopping cart containing their stored items, null if no such cart can be made.
    * @throws SQLException if there is an issue communicating with the database.
@@ -72,30 +74,31 @@ public class AccountHelper {
     if (ids == null || user == null || !(user instanceof Customer)) {
       return null;
     }
-    
-    //Populate list with the items stored in all of a user's accounts.
+
+    // Populate list with the items stored in all of a user's accounts.
     for (int i = 0; i < ids.size(); i++) {
       carts.add(DatabaseSelectHelper.getAccountDetails(ids.get(i)));
     }
-    //Combine all the items into one shopping cart to be returned.
+    // Combine all the items into one shopping cart to be returned.
     ShoppingCart combinedCart = new ShoppingCart((Customer) user);
-    //For each shopping cart
+    // For each shopping cart
     for (int j = 0; j < carts.size(); j++) {
-      //Get items contained within
+      // Get items contained within
       if (carts.get(j) != null) {
         HashMap<Item, Integer> items = carts.get(j).getItemsWithQuantity();
-        //Add each item to the combined cart.
+        // Add each item to the combined cart.
         for (Item item : items.keySet()) {
           combinedCart.addItem(item, items.get(item));
         }
       }
     }
-    
+
     return combinedCart;
   }
-  
+
   /**
    * Saves a customer's cart to their lowest numbered account.
+   *
    * @param userId the user to save the cart of.
    * @param cart the cart of items to be saved.
    * @return true if the operation succeeds, false otherwise.

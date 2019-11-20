@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * Implementation of the inventory interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -17,7 +17,7 @@ public class InventoryImpl implements Inventory {
 
   /**
    * Return hash-map where the keys are the items and values are the quantities.
-   * 
+   *
    * @return hash-map representing the inventory
    */
   @Override
@@ -27,7 +27,7 @@ public class InventoryImpl implements Inventory {
 
   /**
    * Set the hash-map that represents the inventory.
-   * 
+   *
    * @param itemMap the hash-map to be set to
    */
   @Override
@@ -41,10 +41,9 @@ public class InventoryImpl implements Inventory {
     }
   }
 
-
   /**
    * Update an item's quantity in inventory or add a new item.
-   * 
+   *
    * @param item the item to be updated.
    * @param value the value of the item to be updated.
    */
@@ -64,7 +63,7 @@ public class InventoryImpl implements Inventory {
 
   /**
    * Return the total number of items in the inventory.
-   * 
+   *
    * @return total number of items in hash-map
    */
   @Override
@@ -74,7 +73,7 @@ public class InventoryImpl implements Inventory {
 
   /**
    * Set the total number of items in the inventory.
-   * 
+   *
    * @param total the total number of items in inventory
    */
   @Override
@@ -89,5 +88,4 @@ public class InventoryImpl implements Inventory {
       totalItems = total;
     }
   }
-
 }

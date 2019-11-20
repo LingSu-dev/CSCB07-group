@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * A series of helper methods for obtaining information from the database.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Si
@@ -32,7 +32,7 @@ import java.util.List;
 public class DatabaseSelectHelper extends DatabaseSelector {
   /**
    * Get a list of role IDs from the database.
-   * 
+   *
    * @return a list of roleIDs
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -51,7 +51,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the name of a role by it's role ID from the database.
-   * 
+   *
    * @param roleId the role ID.
    * @return the name of the role, null if no such role.
    * @throws SQLException if there is an issue communicating with the database.
@@ -68,7 +68,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the role ID of a user.
-   * 
+   *
    * @param userId the user's ID.
    * @return the user's role ID, -1 if no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -85,7 +85,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of all users with specific role from the database.
-   * 
+   *
    * @param roleId the role ID of the role.
    * @return a list of all users with this role.
    * @throws SQLException if there is an issue communicating with the database.
@@ -104,12 +104,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     results.close();
     connection.close();
     return userIds;
-
   }
 
   /**
    * get a list of all users in the database.
-   * 
+   *
    * @return a list of all users in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -139,7 +138,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * get a user by their user ID.
-   * 
+   *
    * @param userId the user's ID.
    * @return an object representing the user, null if no such user exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -169,7 +168,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a hashed version of a user's password.
-   * 
+   *
    * @param userId the user's ID.
    * @return a hashed version of the user's password, null if no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -186,7 +185,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of all items in the database.
-   * 
+   *
    * @return a list of all items in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -211,7 +210,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get an item from the database by it's ID.
-   * 
+   *
    * @param itemId the item's ID.
    * @return an object representing the item, null if no such item exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -237,7 +236,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the entire inventory of the database.
-   * 
+   *
    * @return the inventory of the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -263,7 +262,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the quantity of an item stored in the database.
-   * 
+   *
    * @param itemId the item's ID.
    * @return the quantity of the item in the database, -1 if no such item exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -280,7 +279,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a log of all sales in the database.
-   * 
+   *
    * @return an object containing information of all sales in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -294,7 +293,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     int userId;
     User user;
     BigDecimal totalPrice;
-    
+
     while (results.next()) {
       saleId = results.getInt("ID");
       userId = results.getInt("USERID");
@@ -305,7 +304,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
         sale.setId(saleId);
         sale.setUser(user);
         sale.setTotalPrice(totalPrice);
-       
+
         salesLog.addSale(sale);
       }
     }
@@ -316,7 +315,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a sale from the database by it's ID.
-   * 
+   *
    * @param saleId the ID of the sale.
    * @return an object representing the sale, null if no such sale exists.
    * @throws SQLException if there is an issue communicating with the database.
@@ -345,7 +344,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of all sales to a certain user.
-   * 
+   *
    * @param userId the user's ID.
    * @return a list of all sales to the user, null if there is no such user.
    * @throws SQLException if there is an issue communicating with the database.
@@ -374,7 +373,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Return an itemized sale from the database.
-   * 
+   *
    * @param saleId the sale's ID.
    * @return an itemized sale corresponding to the sale, null if there is no such sale.
    * @throws SQLException if there is an issue communicating with the database.
@@ -414,7 +413,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of all itemized sales in the database.
-   * 
+   *
    * @return a list of all itemized sales in the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -438,7 +437,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of all user IDs in the database.
-   * 
+   *
    * @return a list of user IDs.
    * @throws SQLException if there is an issue communicating with the database.
    */
@@ -456,7 +455,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Check if an item is in the database.
-   * 
+   *
    * @param itemId the item's ID.
    * @return true if the item is in the database.
    * @throws SQLException if there is an issue communicating with the database.
@@ -483,7 +482,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the Role ID of a role by it's associated name.
-   * 
+   *
    * @param name the name of the role.
    * @return the role's ID, -1 if no such role.
    * @throws SQLException if there is an issue communicating with the database.
@@ -502,7 +501,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Checks if a sale exists within the database.
-   * 
+   *
    * @param saleId the id of the sale to check.
    * @return true if the sale is in the database.
    * @throws SQLException if there is an issue communicating with the database.
@@ -520,7 +519,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the accounts assigned to a given user.
-   * 
+   *
    * @param userId the id of the user.
    * @return a list containing the id's of the user's accounts, null if userId doesn't exist
    * @throws SQLException if something goes wrong.
@@ -546,7 +545,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Return the associated user id of an account.
-   * 
+   *
    * @param accountId the account to retrieve the associated user of.
    * @return the user id of the account's owner, -1 if not found.
    * @throws SQLException on failure
@@ -564,26 +563,26 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the details of a given account given acctId.
-   * 
+   *
    * @param accountId the ID of the account to retrieve the details of
    * @return a shopping cart with all their items, null if not found.
    * @throws SQLException if something goes wrong.
    */
   public static ShoppingCart getAccountDetails(int accountId) throws SQLException {
-    
+
     if (!getAllAccountIds().contains(accountId)) {
       return null;
     }
-    
+
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection); 
+    ResultSet results = DatabaseSelector.getAccountDetails(accountId, connection);
     int userId = getUserIdByAccountId(accountId);
 
     if (userId == -1) {
       return null;
     }
-    
-    //TODO fix unchecked cast
+
+    // TODO fix unchecked cast
     Customer customer = (Customer) getUserDetails(userId);
 
     if (customer == null) {
@@ -607,7 +606,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Gets all the account ids.
-   * 
+   *
    * @return list of all the account ids
    * @throws SQLException if something goes wrong
    */

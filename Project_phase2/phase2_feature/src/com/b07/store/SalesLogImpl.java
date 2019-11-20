@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * A simple implementation of the salesLog interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -21,12 +21,11 @@ import java.util.Set;
  */
 public class SalesLogImpl implements SalesLog {
 
-
   private ArrayList<Sale> sales = new ArrayList<Sale>();
 
   /**
    * Return the sales log.
-   * 
+   *
    * @return list of sales
    */
   @Override
@@ -34,9 +33,7 @@ public class SalesLogImpl implements SalesLog {
     return sales;
   }
 
-  /**
-   * Add a sale to the log.
-   */
+  /** Add a sale to the log. */
   @Override
   public void addSale(Sale sale) {
     if (sale != null && !sales.contains(sale)) {
@@ -44,9 +41,7 @@ public class SalesLogImpl implements SalesLog {
     }
   }
 
-  /**
-   * Get total value of sales in sale log.
-   */
+  /** Get total value of sales in sale log. */
   @Override
   public BigDecimal getTotalValueOfSales() {
     BigDecimal value = new BigDecimal("0.00");
@@ -58,7 +53,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Returns the total number of sales.
-   * 
+   *
    * @return total number of sales
    */
   @Override
@@ -68,7 +63,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Return a list of the customer's sales.
-   * 
+   *
    * @param user the user of interest
    * @return a list of the customer's sales
    */
@@ -88,7 +83,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Get an arraylist of the customer of each sale.
-   * 
+   *
    * @return arraylist of customers
    */
   @Override
@@ -100,10 +95,9 @@ public class SalesLogImpl implements SalesLog {
     return new ArrayList<User>(customers);
   }
 
-
   /**
    * Get all the items in the sales log.
-   * 
+   *
    * @return list of items.
    */
   public List<Item> getItems() {
@@ -121,7 +115,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Return the total amount of times that a particular item has been sold.
-   * 
+   *
    * @param item the item of interest
    * @return the total amount sold
    */
@@ -139,7 +133,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Return a hashmap of item mapped to its amount sold.
-   * 
+   *
    * @return hashmap of items and their quantity.
    */
   @Override
@@ -147,8 +141,8 @@ public class SalesLogImpl implements SalesLog {
     HashMap<Item, Integer> quantitiesSold = new HashMap<Item, Integer>();
     for (Sale sale : sales) {
       for (Item item : sale.getItemMap().keySet()) {
-        quantitiesSold.replace(item,
-            quantitiesSold.getOrDefault(item, 0) + getItemSaleQuantity(item));
+        quantitiesSold.replace(
+            item, quantitiesSold.getOrDefault(item, 0) + getItemSaleQuantity(item));
       }
     }
     return quantitiesSold;
@@ -156,7 +150,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Return a string of the sales log containing each sale made.
-   * 
+   *
    * @return a string of the sales log
    */
   @Override
@@ -172,8 +166,10 @@ public class SalesLogImpl implements SalesLog {
     for (Sale sale : getSales()) {
       outString.append(String.format("Customer: %s%n", sale.getUser().getName()));
       outString.append(String.format("Purchase Number: %d%n", sale.getId()));
-      outString.append(String.format("Total Purchase Price: $%s%n",
-          sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
+      outString.append(
+          String.format(
+              "Total Purchase Price: $%s%n",
+              sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
       outString.append(String.format("Itemized breakdown:", ""));
       firstItem = true;
 
@@ -193,12 +189,13 @@ public class SalesLogImpl implements SalesLog {
     }
 
     for (Item item : getItems()) {
-      outString
-          .append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
+      outString.append(
+          String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
     }
 
-    outString.append(String.format("TOTAL SALES: $%s%n",
-        getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
+    outString.append(
+        String.format(
+            "TOTAL SALES: $%s%n", getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
     return outString.toString();
   }
 }

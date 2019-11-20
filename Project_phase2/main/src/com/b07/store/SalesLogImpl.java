@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * A simple implementation of the salesLog interface.
- * 
+ *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
@@ -18,7 +18,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Return the sales log.
-   * 
+   *
    * @return list of sales
    */
   @Override
@@ -26,9 +26,7 @@ public class SalesLogImpl implements SalesLog {
     return sales;
   }
 
-  /**
-   * Add a sale to the log.
-   */
+  /** Add a sale to the log. */
   @Override
   public void addSale(Sale sale) {
     // TODO: there might be a bug with contains
@@ -37,9 +35,7 @@ public class SalesLogImpl implements SalesLog {
     }
   }
 
-  /**
-   * Get total value of sales in sale log.
-   */
+  /** Get total value of sales in sale log. */
   @Override
   public BigDecimal getTotalValueOfSales() {
 
@@ -54,7 +50,7 @@ public class SalesLogImpl implements SalesLog {
 
   /**
    * Returns the total number of sales.
-   * 
+   *
    * @return total number of sales
    */
   @Override
