@@ -149,7 +149,7 @@ public class SalesLogImpl implements SalesLog {
     for (Sale sale : getSales()) {
       outString.append(String.format("Customer: %s%n", sale.getUser().getName()));
       outString.append(String.format("Purchase Number: %d%n", sale.getId()));
-      outString.append(String.format("Total Purchase Price: %s%n", sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
+      outString.append(String.format("Total Purchase Price: $%s%n", sale.getTotalPrice().setScale(2, RoundingMode.CEILING)));
       outString.append(String.format("Itemized breakdown:", ""));
       firstItem = true;
       
@@ -176,7 +176,7 @@ public class SalesLogImpl implements SalesLog {
           .append(String.format("Number %s Sold: %d%n", item.getName(), getItemSaleQuantity(item)));
     }
 
-    outString.append(String.format("TOTAL SALES: %s%n", getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
+    outString.append(String.format("TOTAL SALES: $%s%n", getTotalValueOfSales().setScale(2, RoundingMode.CEILING)));
     return outString.toString();
   }
   
