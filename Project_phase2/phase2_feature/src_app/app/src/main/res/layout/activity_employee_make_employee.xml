@@ -11,14 +11,14 @@
         android:id="@+id/goBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back_btn"
+        android:text="@string/backBtn"
         android:layout_alignParentLeft="true"
         />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/create_user_name_hint"
+        android:hint="@string/createUserNameHint"
         android:layout_marginTop="40dp"
         android:id="@+id/nameEntry"
         android:layout_below="@+id/goBackButton"/>
@@ -26,7 +26,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/create_user_age_hint"
+        android:hint="@string/createUserAgeHint"
         android:layout_marginTop="20dp"
         android:id="@+id/ageEntry"
         android:layout_below="@+id/nameEntry"/>
@@ -34,7 +34,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/create_user_address_hint"
+        android:hint="@string/createUserAddressHint"
         android:layout_marginTop="20dp"
         android:id="@+id/addressEntry"
         android:layout_below="@+id/ageEntry"/>
@@ -42,7 +42,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/login_menu_password_hint"
+        android:hint="@string/loginMenuPasswordHint"
         android:layout_marginTop="20dp"
         android:inputType="textPassword"
         android:id="@+id/passwordEntry"
@@ -51,7 +51,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_employee_btn"
+        android:text="@string/createEmployeeBtn"
         android:layout_below="@id/passwordEntry"
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"/>

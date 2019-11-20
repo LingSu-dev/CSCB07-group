@@ -12,7 +12,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:text="@string/employee_menu_options"
+    android:text="@string/employeeMenuOptions"
     android:textSize="@dimen/employeeMenuOptionsTextSize"
     android:id="@+id/employee_menu_title" />
 
@@ -20,7 +20,7 @@
     android:id="@+id/first_button"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/employee_menu_authenticate_new_employee_btn"
+    android:text="@string/authenticateBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="40dp"
     android:layout_below="@id/employee_menu_title" />
@@ -29,7 +29,7 @@
     android:id="@+id/second_button"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/employee_menu_make_new_user_btn"
+    android:text="@string/employeeMenuNewUserBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:layout_below="@id/first_button" />
@@ -38,7 +38,7 @@
     android:id="@+id/third_button"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/employee_menu_make_new_account_btn"
+    android:text="@string/employeeMenuNewAccountBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:layout_below="@id/second_button" />
@@ -47,7 +47,7 @@
     android:id="@+id/fourth_button"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/employee_menu_make_employee_btn"
+    android:text="@string/employeeMenuNewEmployeeBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:layout_below="@id/third_button" />
@@ -56,7 +56,7 @@
     android:id="@+id/fifth_button"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/employee_menu_make_restock_inventory_btn"
+    android:text="@string/restockInventoryBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:layout_below="@id/fourth_button" />
@@ -64,9 +64,8 @@
 <Button
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
-    android:text="@string/exit_btn"
+    android:text="@string/exitBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:layout_below="@id/fifth_button" />
-
 </RelativeLayout>

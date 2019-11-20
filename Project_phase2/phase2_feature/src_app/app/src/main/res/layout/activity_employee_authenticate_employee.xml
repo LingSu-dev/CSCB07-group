@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="@string/back_btn" />
+        android:text="@string/backBtn" />
 
     <EditText
         android:id="@+id/employeeIdEditTextEntry"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/goBackButton"
         android:layout_marginTop="50dp"
-        android:hint="@string/admin_promote_hint" />
+        android:hint="@string/adminPromoteHint" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/employeeIdEditTextEntry"
         android:layout_marginTop="40dp"
-        android:hint="@string/login_menu_password_hint"
+        android:hint="@string/loginMenuPasswordHint"
         android:inputType="textVisiblePassword" />
 
     <Button
@@ -37,6 +37,6 @@
         android:layout_below="@id/passwordEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="@string/authenticate_btn" />
+        android:text="@string/authenticateBtn" />
 </RelativeLayout>
 
