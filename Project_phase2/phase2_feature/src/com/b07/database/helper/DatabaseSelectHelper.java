@@ -294,13 +294,18 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     int userId;
     User user;
     BigDecimal totalPrice;
+    
     while (results.next()) {
       saleId = results.getInt("ID");
       userId = results.getInt("USERID");
       user = getUserDetails(userId);
       totalPrice = new BigDecimal(results.getString("TOTALPRICE"));
       if (user != null) {
-        sale = new SaleImpl(saleId, user, totalPrice);
+        sale = getItemizedSaleById(saleId);
+        sale.setId(saleId);
+        sale.setUser(user);
+        sale.setTotalPrice(totalPrice);
+       
         salesLog.addSale(sale);
       }
     }
@@ -597,7 +602,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     results.close();
     connection.close();
-
     return cart;
   }
 
