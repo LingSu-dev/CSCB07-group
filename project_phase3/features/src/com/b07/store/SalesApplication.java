@@ -245,7 +245,7 @@ public class SalesApplication {
         return;
       }
     
-    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons, 0. Exit"};
+    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons", "0. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     while (input != 0) {
       if (input == 1) {
@@ -266,8 +266,31 @@ public class SalesApplication {
         SalesLog salesLog = DatabaseSelectHelper.getSales();
         System.out.println(salesLog.viewBooks());
       } else if (input == 3) {
-        System.out.println("Exiting");
-        return;
+        System.out.println("Enter an item ID to add a coupon for:");
+        String itemIdString = bufferedReader.readLine();
+        System.out.println("Enter number of uses");
+        String usesString = bufferedReader.readLine();
+        System.out.println("Enter discount type. "
+            + "Valid options are:");
+        for(DiscountTypes type : DiscountTypes.values()) {
+          System.out.println(type.name());
+        }
+        String type = bufferedReader.readLine();
+        System.out.println("Enter discount amount:");
+        String discountString = bufferedReader.readLine();
+        
+        try {
+          int itemId = Integer.parseInt(itemIdString);
+          int uses = Integer.parseInt(usesString);
+          BigDecimal discount = new BigDecimal(discountString);
+          int couponId = DatabaseInsertHelper.insertCoupon(itemId, uses, type, discount);
+          System.out.println("Created new coupon, ID: " + couponId);
+        } catch (NumberFormatException e) {
+          System.out.println("Please enter a valid number");
+        } catch (DatabaseInsertException e1) {
+          System.out.println("Unable to insert user or user role into database");
+        }
+        
       } else if (input == 0) {
         System.out.println("Exiting");
         return;
