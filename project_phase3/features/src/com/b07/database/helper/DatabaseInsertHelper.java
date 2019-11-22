@@ -3,6 +3,7 @@ package com.b07.database.helper;
 import com.b07.database.DatabaseInserter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.ItemTypes;
+import com.b07.store.DiscountTypes;
 import com.b07.users.Roles;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -45,7 +46,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     int roleId = DatabaseInserter.insertRole(name, connection);
     connection.close();
     return roleId;
-  }
+  }  
 
   /**
    * Add a new user to the database.
@@ -243,4 +244,51 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     connection.close();
     return id;
   }
+
+  /**
+   * Add a discount type to the database.
+   *
+   * @param name the name of the discount type.
+   * @return the ID of the discount type in the database.
+   * @throws DatabaseInsertException if the discount type cannot be inserted into the database.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
+  public static int insertDiscountType(String name) throws DatabaseInsertException, SQLException {
+
+    // Check that role name is DiscountTypes enum
+    boolean valid = false;
+    for (DiscountTypes type : DiscountTypes.values()) {
+      if (type.toString().equals(name)) {
+        valid = true;
+      }
+    }
+
+    if (!valid || name == null) {
+      throw new DatabaseInsertException();
+    }
+
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    int roleId = DatabaseInserter.insertDiscountType(name, connection);
+    connection.close();
+    return roleId;
+  }
+  
+  public static int insertCoupon(int itemId, int uses, String type)
+      throws SQLException, DatabaseInsertException {
+
+    if (!DatabaseSelectHelper.itemExists(itemId) || uses < 0) {
+      throw new DatabaseInsertException();
+    }
+    
+    int typeId = DatabaseSelectHelper.getDiscountTypeIdByName(type); 
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    int couponId = DatabaseInserter.insertCoupon(uses, typeId, itemId, connection);
+    connection.close();
+    return couponId;
+  }
+
+  
+  
+  
+  
 }

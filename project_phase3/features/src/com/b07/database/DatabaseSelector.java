@@ -287,9 +287,41 @@ public class DatabaseSelector {
     return preparedStatement.executeQuery();
   }
 
+
   /*
    *
    * PHASE 2 ADDED METHODS END
    *
    */
+
+
+  /**
+   * Get the discount type for a given ID.
+   * @param discountTypeId the discount type id.
+   * @param connection the connection to the database
+   * @return the name of the discount type
+   * @throws SQLException if something goes wrong
+   */
+  public static String getDiscountType(int discountTypeId, Connection connection)
+      throws SQLException {
+    String sql = "SELECT NAME FROM DISCOUNTTYPES WHERE ID = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, discountTypeId);
+    ResultSet results = preparedStatement.executeQuery();
+    String role = results.getString("NAME");
+    results.close();
+    return role;
+  }
+
+  /**
+   * Get every discount type ID. 
+   * @param connection the connection to the database.
+   * @return a resultset containing every discount type id in the database.
+   * @throws SQLException if something goes wrong
+   */
+  public static ResultSet getDiscountTypeIds(Connection connection) throws SQLException {
+    Statement statement = connection.createStatement();
+    ResultSet results = statement.executeQuery("SELECT * FROM DISCOUNTTYPES;");
+    return results;
+  }
 }
