@@ -120,4 +120,14 @@ public class AccountHelper {
     }
     return true;
   }
+  
+  /**
+   * Retrns a list of customer account ids 
+   * @param userId the id of the user
+   * @return the list of account ids
+   * @throws SQLException if there is an issue communicating with the database.
+   */
+  protected static List<Integer> getCustomerAccounts(int userId) throws SQLException {
+    return DatabaseSelectHelper.getUserAccountsById(userId);
+  }
 }
