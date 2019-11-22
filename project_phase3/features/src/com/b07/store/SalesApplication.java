@@ -1,5 +1,6 @@
 package com.b07.store;
-
+ 
+import com.b07.database.DatabaseDriver; 
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
@@ -122,6 +123,7 @@ public class SalesApplication {
     System.out.println("First run setup");
     System.out.println("---------------");
     DatabaseDriverExtender.initialize(connection);
+
     // Creating roles
 
     try {
@@ -130,6 +132,16 @@ public class SalesApplication {
       DatabaseInsertHelper.insertRole("EMPLOYEE");
     } catch (DatabaseInsertException e1) {
       System.out.println("Unable to insert role into database");
+      exitOnFailure(connection);
+    }
+    
+    // Creating discount types
+    try {
+      for( DiscountTypes type : DiscountTypes.values()) {
+        DatabaseInsertHelper.insertDiscountType(type.name());
+      }
+    } catch (DatabaseInsertException e1) {
+      System.out.println("Unable to insert discount type into database");
       exitOnFailure(connection);
     }
 
@@ -222,9 +234,7 @@ public class SalesApplication {
     System.out.println("Admin Mode: Log in");
     System.out.println("---------------");
 
-    boolean logged = false;
     Admin admin = null;
-    while (!logged) {
       User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
       admin = null;
       if (user != null && user instanceof Admin) {
@@ -232,14 +242,12 @@ public class SalesApplication {
       }
       if (admin == null) {
         System.out.println("Login Denied!");
-      } else {
-        logged = true;
+        return;
       }
-    }
-    // Allow admin to promote employees
-    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Exit"};
+    
+    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons, 0. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
-    while (input != 3) {
+    while (input != 0) {
       if (input == 1) {
         System.out.println("Enter the id of the user you would like to promote:");
         try {
@@ -258,6 +266,9 @@ public class SalesApplication {
         SalesLog salesLog = DatabaseSelectHelper.getSales();
         System.out.println(salesLog.viewBooks());
       } else if (input == 3) {
+        System.out.println("Exiting");
+        return;
+      } else if (input == 0) {
         System.out.println("Exiting");
         return;
       }
@@ -466,7 +477,7 @@ public class SalesApplication {
               System.out.println("There may not be enough of certain items in your cart in stock");
             }
           } else {
-            System.out.println("Your shopping car could not be recovered!");
+            System.out.println("Your shopping cart could not be recovered!");
           }
         }
       }

@@ -40,12 +40,42 @@ public class DatabaseDriver {
   }
 
   protected static Connection updateDb(Connection connection) throws ConnectionFailedException {
-    if (!updateDatabase(connection)) {
+    //both methods should run because bitwise or is greedy
+    if (!updateDatabase(connection) | !updateDatabaseCoupon(connection)) {
       throw new ConnectionFailedException();
     }
     return connection;
   }
 
+  /**
+   * Update the database to add coupon functionality
+   * @param connection the connection to the database
+   * @return whether or not the method encountered any errors
+   */
+  private static boolean updateDatabaseCoupon(Connection connection) {
+    Statement statement = null;
+    try {
+      statement = connection.createStatement();
+      String sql =
+          "CREATE TABLE DISCOUNTTYPES " + "(ID INTEGER PRIMARY KEY NOT NULL," + "NAME TEXT NOT NULL)";
+      statement.executeUpdate(sql);
+      
+      sql =     "CREATE TABLE COUPONS "
+              + "(ID INTEGER PRIMARY KEY NOT NULL, "
+              + "ITEMID INTEGER NOT NULL, "
+              + "USES INTEGER NOT NULL, "
+              + "TYPEID INTEGER NOT NULL , "
+              + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID), "
+              + "FOREIGN KEY(TYPEID) REFERENCES DISCOUNTTYPES(ID))";
+      statement.executeUpdate(sql);
+      statement.close();
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+  
   /*
    * BELOW THIS POINT ARE PRIVATE METHODS.
    * DO NOT TOUCH THESE METHODS OR YOUR DATABASE SETUP MAY NOT MATCH WHAT IS BEING GRADED
@@ -148,6 +178,7 @@ public class DatabaseDriver {
       statement.close();
 
       updateDatabase(connection);
+      updateDatabaseCoupon(connection);
 
       return true;
 

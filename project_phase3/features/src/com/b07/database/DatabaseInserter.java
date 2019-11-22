@@ -42,6 +42,37 @@ public class DatabaseInserter {
   }
 
   /**
+   * Use this to insert new discount types into the database.
+   *
+   * @param type the new discount type to be added.
+   * @param connection the database.
+   * @return the id of the discount type that was inserted.
+   * @throws DatabaseInsertException on failure.
+   */
+  protected static int insertDiscountType(String type, Connection connection)
+      throws DatabaseInsertException {
+    String sql = "INSERT INTO DISCOUNTTYPES(NAME) VALUES(?)";
+    try {
+      PreparedStatement preparedStatement =
+          connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      preparedStatement.setString(1, type);
+      int id = preparedStatement.executeUpdate();
+      if (id > 0) {
+        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
+        if (uniqueKey.next()) {
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    throw new DatabaseInsertException();
+  }
+
+  /**
    * Use this to insert a new user.
    *
    * @param name the user's name.
@@ -130,6 +161,41 @@ public class DatabaseInserter {
     throw new DatabaseInsertException();
   }
 
+  /**
+   * 
+   * @param uses the number of uses the coupon should have
+   * @param typeId the discount type of the coupon
+   * @param itemId the id of the item being discounted
+   * @param connection the connection to the database
+   * @return the id of the coupon
+   * @throws DatabaseInsertException if something goes wrong.
+   */
+  protected static int insertCoupon(int uses, int typeId, int itemId, Connection connection)
+      throws DatabaseInsertException {
+    String sql = "INSERT INTO COUPONS(USES, ITEMID, TYPEID) VALUES (?, ?, ?)";
+    try {
+      PreparedStatement preparedStatement =
+          connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      preparedStatement.setInt(1, uses);
+      preparedStatement.setInt(2, typeId);
+      preparedStatement.setInt(3, itemId);
+      int id = preparedStatement.executeUpdate();
+      if (id > 0) {
+        ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
+        if (uniqueKey.next()) {
+          int returnValue = uniqueKey.getInt(1);
+          uniqueKey.close();
+          preparedStatement.close();
+          return returnValue;
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    throw new DatabaseInsertException();
+  }
+
+  
   /**
    * insert inventory into the database.
    *

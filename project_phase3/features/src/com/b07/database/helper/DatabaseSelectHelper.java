@@ -623,4 +623,47 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     return allAccountIds;
   }
+
+  public static int getDiscountTypeIdByName(String type) throws SQLException {
+    List<Integer> ids;
+    ids = getDiscountTypeIds();
+    for (int i = 0; i < ids.size(); i++) {
+      if (getDiscountTypeName(ids.get(i)) != null && getDiscountTypeName(ids.get(i)).equals(type)) {
+        return ids.get(i);
+      }
+    }
+    return -1;
+  }
+
+  private static String getDiscountTypeName(int discountTypeId) throws SQLException {
+    if (!discountTypeIdExists(discountTypeId)) {
+      return null;
+    }
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    String role = DatabaseSelector.getDiscountType(discountTypeId, connection);
+    connection.close();
+    return role;
+  }
+
+  private static boolean discountTypeIdExists(int discountTypeId) throws SQLException {
+    List<Integer> validDisCountTypeIds = DatabaseSelectHelper.getDiscountTypeIds();
+    return validDisCountTypeIds.contains(discountTypeId);
+  }
+
+  private static List<Integer> getDiscountTypeIds() throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    List<Integer> ids = new ArrayList<Integer>();
+    ResultSet results = DatabaseSelector.getDiscountTypeIds(connection);
+
+    while (results.next()) {
+      ids.add(results.getInt("ID"));
+    }
+    results.close();
+    connection.close();
+    return ids;
+  }
+  
+  
+  
+  
 }
