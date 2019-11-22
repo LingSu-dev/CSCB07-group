@@ -65,6 +65,7 @@ public class DatabaseDriver {
               + "ITEMID INTEGER NOT NULL, "
               + "USES INTEGER NOT NULL, "
               + "TYPEID INTEGER NOT NULL , "
+              + "DISCOUNT TEXT NOT NULL , "
               + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID), "
               + "FOREIGN KEY(TYPEID) REFERENCES DISCOUNTTYPES(ID))";
       statement.executeUpdate(sql);

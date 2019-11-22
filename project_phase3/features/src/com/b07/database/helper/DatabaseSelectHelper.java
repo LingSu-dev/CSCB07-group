@@ -624,6 +624,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return allAccountIds;
   }
 
+  // code dumpus
   public static int getDiscountTypeIdByName(String type) throws SQLException {
     List<Integer> ids;
     ids = getDiscountTypeIds();
