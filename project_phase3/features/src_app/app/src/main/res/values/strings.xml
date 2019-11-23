@@ -30,7 +30,7 @@
   <string name="quantityHint">Quantity</string>
   <string name="userIdHint">Customer Id</string>
   <string name="makeAccountBtn">Make Account</string>
-  <string name="loginRoleNamePrompt">Role Name</string>
+  <string name="loginRoleNamePrompt">Select Your Role</string>
   <string name="authenticateBtn">Authenticate Employee</string>
   <string name="createAdminBtn">Create Admin</string>
   <string name="printhello">Hello World</string>
