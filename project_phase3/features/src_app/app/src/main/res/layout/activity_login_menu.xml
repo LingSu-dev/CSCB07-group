@@ -14,12 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:prompt="@string/loginRoleNamePrompt"
-        android:entries="@array/roleArrays" />
+        android:entries="@array/roleArrays"
+        android:spinnerMode="dialog"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/loginMenuIdHint"
+        android:inputType="number"
         android:layout_below="@id/rolePositionEntry"
         android:layout_marginTop="25dp"
         android:id="@+id/loginUserIdEntry"/>
