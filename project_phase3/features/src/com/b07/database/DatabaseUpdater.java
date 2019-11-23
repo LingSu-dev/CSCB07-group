@@ -196,4 +196,41 @@ public class DatabaseUpdater {
     }
     return false;
   }
+  
+  /*
+   * 
+   * PHASE 3 ADDED METHODS START
+   * 
+   */
+  
+  /**
+   * Update the status of an account.
+   * @param accountId the id of the account.
+   * @param active the status the account should receive.
+   * @param connection connection to the database.
+   * @return true if successful, false otherwise.
+   */
+  protected static boolean updateAccountStatus(int accountId, boolean active, 
+      Connection connection) {
+    String sql = "UPDATE ACCOUNT SET ACTIVE = ? WHERE ID = ?;";
+    try {
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      
+      preparedStatement.setInt(1, active ? 1 : 0);
+      preparedStatement.setInt(2, accountId);
+      preparedStatement.executeUpdate();
+    preparedStatement.close();
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+  
+  /*
+   * 
+   * PHASE 3 METHODS END
+   * 
+   */
+  
 }
