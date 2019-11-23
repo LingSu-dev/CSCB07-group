@@ -294,6 +294,49 @@ public class DatabaseSelector {
    *
    */
 
+  /*
+   * 
+   * PHASE 3 ADDED METHODS START
+   * 
+   */
+  
+  /**
+   * Return a result set containing the active accounts for a given user.
+   * @param userId the user.
+   * @param connection connection to the database.
+   * @return result set of the id's of the given user's active accounts.
+   * @throws SQLException if something goes wrong.
+   */
+  protected static ResultSet getUserActiveAccounts(int userId, Connection connection) 
+        throws SQLException {
+    String sql = "SELECT ID FROM ACCOUNT WHERE USERID = ? AND ACTIVE = ?;";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, userId);
+    preparedStatement.setInt(2, 1);
+    return preparedStatement.executeQuery();
+  }
+  
+  /**
+   * Get a list of the inactive accounts for a given user.
+   * @param userId the id of the user.
+   * @param connection connection to the database.
+   * @return result set containing the ID's of inactive accounts for the user.
+   * @throws SQLException if something goes wrong.
+   */
+  protected static ResultSet getUserInactiveAccounts(int userId, Connection connection) 
+        throws SQLException {
+    String sql = "SELECT ID FROM ACCOUNT WHERE USERID = ? AND ACTIVE = ?;";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, userId);
+    preparedStatement.setInt(2, 0);
+    return preparedStatement.executeQuery(); 
+  }
+  
+  /*
+   * 
+   * PHASE 3 ADDED METHODS END
+   * 
+   */
 
   /**
    * Get the discount type for a given ID.
