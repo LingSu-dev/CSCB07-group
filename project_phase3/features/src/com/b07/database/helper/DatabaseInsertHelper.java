@@ -273,7 +273,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     return roleId;
   }
   
-  public static int insertCoupon(int itemId, int uses, String type, BigDecimal discount)
+  public static int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.itemExists(itemId) || uses < 0) {
@@ -282,7 +282,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     
     int typeId = DatabaseSelectHelper.getDiscountTypeIdByName(type); 
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    int couponId = DatabaseInserter.insertCoupon(uses, typeId, itemId, discount, connection);
+    int couponId = DatabaseInserter.insertCoupon(uses, typeId, itemId, discount, code, connection);
     connection.close();
     return couponId;
   }

@@ -49,18 +49,19 @@ public class StoreHelpers {
    */
   public static final User loginPrompt(BufferedReader reader, Roles role)
       throws IOException, SQLException {
-    System.out.println("Input your ID");
+    System.out.println("Enter your ID");
     int id;
     String password;
     try {
       id = Integer.parseInt(reader.readLine());
-      System.out.println("Input your password");
+      System.out.println("Enter your password");
       password = reader.readLine();
       User user = login(role, id, password);
       if (user == null) {
         System.out.println("Incorrect password");
         return null;
       }
+      System.out.println("Login successful!");
       return user;
     } catch (NumberFormatException e) {
       System.out.println("Unable to read ID. Please input only the number.");

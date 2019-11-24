@@ -278,12 +278,14 @@ public class SalesApplication {
         String type = bufferedReader.readLine();
         System.out.println("Enter discount amount:");
         String discountString = bufferedReader.readLine();
+        System.out.println("Enter coupon code:");
+        String code = bufferedReader.readLine();
         
         try {
           int itemId = Integer.parseInt(itemIdString);
           int uses = Integer.parseInt(usesString);
           BigDecimal discount = new BigDecimal(discountString);
-          int couponId = DatabaseInsertHelper.insertCoupon(itemId, uses, type, discount);
+          int couponId = DatabaseInsertHelper.insertCoupon(itemId, uses, type, discount, code);
           System.out.println("Created new coupon, ID: " + couponId);
         } catch (NumberFormatException e) {
           System.out.println("Please enter a valid number");
