@@ -1,6 +1,6 @@
 package com.b07.store;
- 
-import com.b07.database.DatabaseDriver; 
+
+import com.b07.database.DatabaseDriver;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
@@ -55,9 +55,8 @@ public class SalesApplication {
         // Customer/Employee mode
         System.out.println("Welcome to Sales Application");
         System.out.println("----------------------------");
-        String[] loginOptions = {
-          "1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"
-        };
+        String[] loginOptions =
+            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // input will contain the first line of input from the user
         int input = StoreHelpers.choicePrompt(loginOptions, reader);
@@ -134,10 +133,10 @@ public class SalesApplication {
       System.out.println("Unable to insert role into database");
       exitOnFailure(connection);
     }
-    
+
     // Creating discount types
     try {
-      for( DiscountTypes type : DiscountTypes.values()) {
+      for (DiscountTypes type : DiscountTypes.values()) {
         DatabaseInsertHelper.insertDiscountType(type.name());
       }
     } catch (DatabaseInsertException e1) {
@@ -235,17 +234,18 @@ public class SalesApplication {
     System.out.println("---------------");
 
     Admin admin = null;
-      User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
-      admin = null;
-      if (user != null && user instanceof Admin) {
-        admin = (Admin) user;
-      }
-      if (admin == null) {
-        System.out.println("Login Denied!");
-        return;
-      }
-    
-    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons", "0. Exit"};
+    User user = StoreHelpers.loginPrompt(bufferedReader, Roles.ADMIN);
+    admin = null;
+    if (user != null && user instanceof Admin) {
+      admin = (Admin) user;
+    }
+    if (admin == null) {
+      System.out.println("Login Denied!");
+      return;
+    }
+
+    String[] adminOptions =
+        {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons", "0. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     while (input != 0) {
       if (input == 1) {
@@ -270,17 +270,19 @@ public class SalesApplication {
         String itemIdString = bufferedReader.readLine();
         System.out.println("Enter number of uses");
         String usesString = bufferedReader.readLine();
-        System.out.println("Enter discount type. "
-            + "Valid options are:");
-        for(DiscountTypes type : DiscountTypes.values()) {
+        System.out.println("Enter discount type. " + "Valid options are:");
+        for (DiscountTypes type : DiscountTypes.values()) {
           System.out.println(type.name());
         }
         String type = bufferedReader.readLine();
         System.out.println("Enter discount amount:");
         String discountString = bufferedReader.readLine();
+        System.out.println("Please ensure that the coupon code has not been used before");
+        // if the coupon code is not unique, the first coupon with the given code is retrieved upon
+        // using the code, which may be the incorrect coupon
         System.out.println("Enter coupon code:");
         String code = bufferedReader.readLine();
-        
+
         try {
           int itemId = Integer.parseInt(itemIdString);
           int uses = Integer.parseInt(usesString);
@@ -292,7 +294,7 @@ public class SalesApplication {
         } catch (DatabaseInsertException e1) {
           System.out.println("The item doesn't exist or the number of uses is invalid.");
         }
-        
+
       } else if (input == 0) {
         System.out.println("Exiting");
         return;
@@ -326,15 +328,9 @@ public class SalesApplication {
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
     System.out.println("Employee options:");
 
-    String[] employeeOptions = {
-      "1 - authenticate new employee",
-      "2 - Make new User",
-      "3 - Make new account",
-      "4 - Make new Employee",
-      "5 - Restock Inventory",
-      "6 - Exit",
-      "Enter Selection:"
-    };
+    String[] employeeOptions =
+        {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
+            "4 - Make new Employee", "5 - Restock Inventory", "6 - Exit", "Enter Selection:"};
     int input = StoreHelpers.choicePrompt(employeeOptions, reader);
     while (input != 6) {
       if (input == 1) {
@@ -366,8 +362,7 @@ public class SalesApplication {
         String password = reader.readLine();
         // Here, an employee is being created and then having it's role changed
         // to a a customer. this is bad, it must be changed.
-        insertUser:
-        try {
+        insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             break insertUser;
@@ -419,8 +414,7 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Enter a password");
         String password = reader.readLine();
-        insertUser:
-        try {
+        insertUser: try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             // should never run: included here due to UML-unstable EmployeeInterface change
@@ -487,12 +481,8 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println(
-                "$"
-                    + shoppingCart
-                        .getTotal()
-                        .multiply(shoppingCart.getTaxRate())
-                        .setScale(2, RoundingMode.CEILING));
+            System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate())
+                .setScale(2, RoundingMode.CEILING));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -509,17 +499,11 @@ public class SalesApplication {
 
       shoppingCart = new ShoppingCart(customer);
       System.out.println("Customer options:");
-      String[] customerOptions = {
-        "1 - List items in cart",
-        "2 - Add item to cart",
-        "3 - Check price",
-        "4 - Remove item from cart",
-        "5 - Check out",
-        "6 - Exit",
-        "Enter Selection:"
-      };
+      String[] customerOptions = {"1 - List items in cart", "2 - Add item to cart",
+          "3 - Check price", "4 - Remove item from cart", "5 - Check out", "6 - Apply coupon",
+          "0 - Exit", "Enter Selection:"};
       int input = StoreHelpers.choicePrompt(customerOptions, reader);
-      while (input != 6) {
+      while (input != 0) {
         if (input == 1) {
           System.out.println("Current Cart:");
           HashMap<Item, Integer> items = shoppingCart.getItemsWithQuantity();
@@ -588,11 +572,8 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println(
-                "$"
-                    + shoppingCart
-                        .getTotal()
-                        .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+            System.out.println("$" + shoppingCart.getTotal()
+                .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -603,6 +584,19 @@ public class SalesApplication {
           } else {
             System.out.println("Cannot checkout, cart is empty!");
           }
+          
+        } else if (input == 6) {
+          // apply coupon
+          System.out.println("Note, your current cart is as follows:");
+          HashMap<Item, Integer> items = shoppingCart.getItemsWithQuantity();
+          for (Item item : items.keySet()) {
+            System.out.println(item.getName() + " Quantity: " + items.get(item));
+          }
+          System.out.println("Enter the ID of the item to discount");
+          String itemIdString = reader.readLine();
+          System.out.println("Enter the coupon code");
+          String code = reader.readLine();
+          
         } else if (input == -1) {
           System.out.println("Please choose one of the options");
         }

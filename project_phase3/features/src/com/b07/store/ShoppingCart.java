@@ -1,5 +1,6 @@
 package com.b07.store;
 
+import com.b07.database.DatabaseSelector;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
@@ -7,12 +8,13 @@ import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * A class allowing authenticated users to make purchase from the inventory.
+ * A class allowing authenticated users to make purchases from the inventory.
  *
  * @author Aidan Zorbas
  * @author Alex Efimov
@@ -23,7 +25,7 @@ public class ShoppingCart {
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
-  private static final BigDecimal taxRate = new BigDecimal("1.13");
+  private static BigDecimal taxRate = new BigDecimal("1.13");
 
   /**
    * Create a new shopping cart with associated customer.
@@ -119,8 +121,41 @@ public class ShoppingCart {
 
   /** clear the shopping cart. */
   public void clearCart() {
-    items = new HashMap<Item, Integer>();
-    total = new BigDecimal("0.00");
+    items.clear();
+    total = BigDecimal.ZERO;
+  }
+
+  /**
+   * Apply a coupon code to an item and recalculate its price
+   * 
+   * @param item the item to apply the coupon to
+   * @param code the coupon code
+   */
+  public void applyCoupon(Item item, String code) {
+    try {
+      int couponId = DatabaseSelectHelper.getCouponId(code);
+      BigDecimal price = item.getPrice();
+      DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
+      if (type == null) {
+        System.out.println("Unable to get discount type for this coupon");
+        return;
+      }
+      BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
+      if (discount == null) {
+        System.out.println("Unable to get discount amount for this coupon");
+        return;
+      }
+      if(type.equals(DiscountTypes.FLAT_RATE)) {
+        price = price.subtract(discount);
+      } else if (type.equals(DiscountTypes.PERCENTAGE)) {
+        price = price.multiply(new BigDecimal("100").subtract(discount));
+      }
+      System.out.println(String.format("Original price: %s%nNew Price: %s", item.getPrice(), price.toPlainString()));
+      total = total.subtract(item.getPrice()).add(price);
+      System.out.println(String.format("Your new total is %s", total.toPlainString()));
+    } catch (SQLException e) {
+      System.out.println("Unable to find a coupon with this code");
+    }
   }
 
   /**
