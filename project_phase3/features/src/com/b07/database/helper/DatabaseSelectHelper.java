@@ -626,7 +626,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   }
 
   /**
-   *  Get the discount type ID from its name
+   * Get the discount type ID from its name
+   * 
    * @param type the name of the discount type
    * @return the id of the discount type, or -1 if it is not found
    * @throws SQLException if soemthing goes wrong retrieving the ID from the database
@@ -644,6 +645,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the name of the discount type from its ID
+   * 
    * @param discountTypeId the discount type ID
    * @return the name of the discount type
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
@@ -660,6 +662,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Check whether the discount type ID exists in the database
+   * 
    * @param discountTypeId the discount type ID
    * @return true if the discount type ID exists and false otherwise
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
@@ -671,6 +674,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of every discount type ID
+   * 
    * @return the list of discount type IDs
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
    */
@@ -686,44 +690,60 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     connection.close();
     return ids;
   }
-  
+
   /**
    * Get the coupon ID from the code
+   * 
    * @param code the coupon code
    * @return the coupon ID
-   * @throws SQLException  if somethig goes wrong retrieving the data from the database
+   * @throws SQLException if somethig goes wrong retrieving the data from the database
    */
   public static int getCouponId(String code) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int id = DatabaseSelector.getCouponId(code, connection);
     return id;
-   
+
   }
 
   /**
    * Get the discount type for a given coupon
+   * 
    * @param couponId the id of the coupon
    * @return the discount type
    * @throws SQLException if something goes wrong
    */
   public static DiscountTypes getDiscountType(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    String type =  DatabaseSelector.getDiscountType(couponId, connection);
+    String type = DatabaseSelector.getDiscountType(couponId, connection);
     DiscountTypes discountType = DiscountTypes.valueOf(type);
     return discountType;
   }
 
   /**
    * Get the discount amount for a given coupon
+   * 
    * @param couponId the id of the coupon
    * @return the discount amount
    * @throws SQLException if something goes wrong
    */
   public static BigDecimal getDiscountAmount(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    String discountString =  DatabaseSelector.getCouponDiscountAmount(couponId, connection);
+    String discountString = DatabaseSelector.getCouponDiscountAmount(couponId, connection);
     BigDecimal discount = new BigDecimal(discountString);
     return discount;
   }
-  
+
+  /**
+   * Get the item Id associated with a coupon
+   * 
+   * @param couponId the id of the coupon
+   * @return the item id
+   * @throws SQLException if something goes wrong
+   */
+  public static int getCouponItem(int couponId) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    return DatabaseSelector.getCouponItemId(couponId, connection);
+
+  }
+
 }

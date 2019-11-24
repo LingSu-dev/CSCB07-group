@@ -373,6 +373,7 @@ public class DatabaseSelector {
   }
 
   /**
+   * get the id of a coupon
    * 
    * @param code the coupon code
    * @param connection the connection to the database.
@@ -380,7 +381,7 @@ public class DatabaseSelector {
    * @throws SQLException if something goes wrong
    */
   public static int getCouponId(String code, Connection connection) throws SQLException {
-    String sql = "SELECT ID FROM COUPONS WHERE NAME = ?";
+    String sql = "SELECT ID FROM COUPONS WHERE CODE = ?";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setString(1, code);
     ResultSet results = preparedStatement.executeQuery();
@@ -390,10 +391,11 @@ public class DatabaseSelector {
   }
 
   /**
+   * get the discount amount for a coupon
    * 
    * @param code the coupon code
    * @param connection the connection to the database.
-   * @returnthe id of the coupon
+   * @return the id of the coupon
    * @throws SQLException if something goes wrong
    */
   public static String getCouponDiscountAmount(int id, Connection connection) throws SQLException {
@@ -404,5 +406,23 @@ public class DatabaseSelector {
     String discount = results.getString("DISCOUNT");
     results.close();
     return discount;
+  }
+
+  /**
+   * get the item id for a coupon
+   * 
+   * @param id the coupon id
+   * @param connection the connection to the database
+   * @returnthe id of the item
+   * @throws SQLException if something goes wrong
+   */
+  public static int getCouponItemId(int id, Connection connection) throws SQLException {
+    String sql = "SELECT ITEMID FROM COUPONS WHERE ID = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, id);
+    ResultSet results = preparedStatement.executeQuery();
+    int item = results.getInt("ITEMID");
+    results.close();
+    return item;
   }
 }

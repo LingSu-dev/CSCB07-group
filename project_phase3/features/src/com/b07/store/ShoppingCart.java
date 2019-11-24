@@ -1,6 +1,5 @@
 package com.b07.store;
 
-import com.b07.database.DatabaseSelector;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
@@ -131,9 +130,11 @@ public class ShoppingCart {
    * @param item the item to apply the coupon to
    * @param code the coupon code
    */
-  public void applyCoupon(Item item, String code) {
+  public void applyCoupon(String code) {
     try {
       int couponId = DatabaseSelectHelper.getCouponId(code);
+      int itemId = DatabaseSelectHelper.getCouponItem(couponId);
+      Item item = DatabaseSelectHelper.getItem(itemId);
       BigDecimal price = item.getPrice();
       DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
       if (type == null) {
@@ -145,13 +146,17 @@ public class ShoppingCart {
         System.out.println("Unable to get discount amount for this coupon");
         return;
       }
-      if(type.equals(DiscountTypes.FLAT_RATE)) {
+      if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
-        price = price.multiply(new BigDecimal("100").subtract(discount));
+        price =
+            price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
-      System.out.println(String.format("Original price: %s%nNew Price: %s", item.getPrice(), price.toPlainString()));
-      total = total.subtract(item.getPrice()).add(price);
+      System.out.println(String.format("Original price of item %s: %s%nNew Price: %s",
+          item.getName(), item.getPrice(), price.toPlainString()));
+      BigDecimal priceChange = item.getPrice().subtract(price)
+          .multiply(new BigDecimal(this.getItemsWithQuantity().get(item)));
+      total = total.subtract(priceChange);
       System.out.println(String.format("Your new total is %s", total.toPlainString()));
     } catch (SQLException e) {
       System.out.println("Unable to find a coupon with this code");
