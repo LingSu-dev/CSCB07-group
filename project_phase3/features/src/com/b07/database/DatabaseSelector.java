@@ -299,39 +299,41 @@ public class DatabaseSelector {
    * PHASE 3 ADDED METHODS START
    * 
    */
-  
+
   /**
    * Return a result set containing the active accounts for a given user.
+   * 
    * @param userId the user.
    * @param connection connection to the database.
    * @return result set of the id's of the given user's active accounts.
    * @throws SQLException if something goes wrong.
    */
-  protected static ResultSet getUserActiveAccounts(int userId, Connection connection) 
-        throws SQLException {
+  protected static ResultSet getUserActiveAccounts(int userId, Connection connection)
+      throws SQLException {
     String sql = "SELECT ID FROM ACCOUNT WHERE USERID = ? AND ACTIVE = ?;";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setInt(1, userId);
     preparedStatement.setInt(2, 1);
     return preparedStatement.executeQuery();
   }
-  
+
   /**
    * Get a list of the inactive accounts for a given user.
+   * 
    * @param userId the id of the user.
    * @param connection connection to the database.
    * @return result set containing the ID's of inactive accounts for the user.
    * @throws SQLException if something goes wrong.
    */
-  protected static ResultSet getUserInactiveAccounts(int userId, Connection connection) 
-        throws SQLException {
+  protected static ResultSet getUserInactiveAccounts(int userId, Connection connection)
+      throws SQLException {
     String sql = "SELECT ID FROM ACCOUNT WHERE USERID = ? AND ACTIVE = ?;";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setInt(1, userId);
     preparedStatement.setInt(2, 0);
-    return preparedStatement.executeQuery(); 
+    return preparedStatement.executeQuery();
   }
-  
+
   /*
    * 
    * PHASE 3 ADDED METHODS END
@@ -340,6 +342,7 @@ public class DatabaseSelector {
 
   /**
    * Get the discount type for a given ID.
+   * 
    * @param discountTypeId the discount type id.
    * @param connection the connection to the database
    * @return the name of the discount type
@@ -357,7 +360,8 @@ public class DatabaseSelector {
   }
 
   /**
-   * Get every discount type ID. 
+   * Get every discount type ID.
+   * 
    * @param connection the connection to the database.
    * @return a resultset containing every discount type id in the database.
    * @throws SQLException if something goes wrong
@@ -366,5 +370,39 @@ public class DatabaseSelector {
     Statement statement = connection.createStatement();
     ResultSet results = statement.executeQuery("SELECT * FROM DISCOUNTTYPES;");
     return results;
+  }
+
+  /**
+   * 
+   * @param code the coupon code
+   * @param connection the connection to the database.
+   * @returnthe id of the coupon
+   * @throws SQLException if something goes wrong
+   */
+  public static int getCouponId(String code, Connection connection) throws SQLException {
+    String sql = "SELECT ID FROM COUPONS WHERE NAME = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setString(1, code);
+    ResultSet results = preparedStatement.executeQuery();
+    int id = results.getInt("ID");
+    results.close();
+    return id;
+  }
+
+  /**
+   * 
+   * @param code the coupon code
+   * @param connection the connection to the database.
+   * @returnthe id of the coupon
+   * @throws SQLException if something goes wrong
+   */
+  public static String getCouponDiscountAmount(int id, Connection connection) throws SQLException {
+    String sql = "SELECT DISCOUNT FROM COUPONS WHERE ID = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, id);
+    ResultSet results = preparedStatement.executeQuery();
+    String discount = results.getString("DISCOUNT");
+    results.close();
+    return discount;
   }
 }

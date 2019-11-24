@@ -5,6 +5,7 @@ import com.b07.inventory.Inventory;
 import com.b07.inventory.InventoryImpl;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemImpl;
+import com.b07.store.DiscountTypes;
 import com.b07.store.Sale;
 import com.b07.store.SaleImpl;
 import com.b07.store.SalesLog;
@@ -624,7 +625,12 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return allAccountIds;
   }
 
-  // code dumpus
+  /**
+   *  Get the discount type ID from its name
+   * @param type the name of the discount type
+   * @return the id of the discount type, or -1 if it is not found
+   * @throws SQLException if soemthing goes wrong retrieving the ID from the database
+   */
   public static int getDiscountTypeIdByName(String type) throws SQLException {
     List<Integer> ids;
     ids = getDiscountTypeIds();
@@ -636,21 +642,38 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return -1;
   }
 
+  /**
+   * Get the name of the discount type from its ID
+   * @param discountTypeId the discount type ID
+   * @return the name of the discount type
+   * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
+   */
   private static String getDiscountTypeName(int discountTypeId) throws SQLException {
     if (!discountTypeIdExists(discountTypeId)) {
       return null;
     }
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    String role = DatabaseSelector.getDiscountType(discountTypeId, connection);
+    String type = DatabaseSelector.getDiscountType(discountTypeId, connection);
     connection.close();
-    return role;
+    return type;
   }
 
+  /**
+   * Check whether the discount type ID exists in the database
+   * @param discountTypeId the discount type ID
+   * @return true if the discount type ID exists and false otherwise
+   * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
+   */
   private static boolean discountTypeIdExists(int discountTypeId) throws SQLException {
     List<Integer> validDisCountTypeIds = DatabaseSelectHelper.getDiscountTypeIds();
     return validDisCountTypeIds.contains(discountTypeId);
   }
 
+  /**
+   * Get a list of every discount type ID
+   * @return the list of discount type IDs
+   * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
+   */
   private static List<Integer> getDiscountTypeIds() throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     List<Integer> ids = new ArrayList<Integer>();
@@ -664,7 +687,43 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return ids;
   }
   
-  
-  
+  /**
+   * Get the coupon ID from the code
+   * @param code the coupon code
+   * @return the coupon ID
+   * @throws SQLException  if somethig goes wrong retrieving the data from the database
+   */
+  public static int getCouponId(String code) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    int id = DatabaseSelector.getCouponId(code, connection);
+    return id;
+   
+  }
+
+  /**
+   * Get the discount type for a given coupon
+   * @param couponId the id of the coupon
+   * @return the discount type
+   * @throws SQLException if something goes wrong
+   */
+  public static DiscountTypes getDiscountType(int couponId) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    String type =  DatabaseSelector.getDiscountType(couponId, connection);
+    DiscountTypes discountType = DiscountTypes.valueOf(type);
+    return discountType;
+  }
+
+  /**
+   * Get the discount amount for a given coupon
+   * @param couponId the id of the coupon
+   * @return the discount amount
+   * @throws SQLException if something goes wrong
+   */
+  public static BigDecimal getDiscountAmount(int couponId) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    String discountString =  DatabaseSelector.getCouponDiscountAmount(couponId, connection);
+    BigDecimal discount = new BigDecimal(discountString);
+    return discount;
+  }
   
 }
