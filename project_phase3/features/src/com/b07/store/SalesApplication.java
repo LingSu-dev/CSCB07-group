@@ -592,10 +592,9 @@ public class SalesApplication {
           for (Item item : items.keySet()) {
             System.out.println(item.getName() + " Quantity: " + items.get(item));
           }
-          System.out.println("Enter the ID of the item to discount");
-          String itemIdString = reader.readLine();
           System.out.println("Enter the coupon code");
           String code = reader.readLine();
+          shoppingCart.applyCoupon(code);
           
         } else if (input == -1) {
           System.out.println("Please choose one of the options");
