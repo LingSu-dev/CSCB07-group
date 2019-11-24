@@ -290,7 +290,7 @@ public class SalesApplication {
         } catch (NumberFormatException e) {
           System.out.println("Please enter a valid number");
         } catch (DatabaseInsertException e1) {
-          System.out.println("Unable to insert user or user role into database");
+          System.out.println("The item doesn't exist or the number of uses is invalid.");
         }
         
       } else if (input == 0) {
@@ -324,7 +324,7 @@ public class SalesApplication {
     }
     Inventory inventory = DatabaseSelectHelper.getInventory();
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
-    System.out.println("Welcome, employee");
+    System.out.println("Employee options:");
 
     String[] employeeOptions = {
       "1 - authenticate new employee",
@@ -347,12 +347,12 @@ public class SalesApplication {
 
       } else if (input == 2) {
         System.out.println("Creating a new customer");
-        System.out.println("Input a name");
+        System.out.println("Enter a name");
         String name = reader.readLine();
         boolean validAge = false;
         int age = 0;
         while (!validAge) {
-          System.out.println("Input an age");
+          System.out.println("Enter an age");
           try {
             age = Integer.parseInt(reader.readLine());
             validAge = true;
@@ -360,9 +360,9 @@ public class SalesApplication {
             System.out.println("Please enter a valid number");
           }
         }
-        System.out.println("Input an address");
+        System.out.println("Enter an address");
         String address = reader.readLine();
-        System.out.println("Input a password");
+        System.out.println("Enter a password");
         String password = reader.readLine();
         // Here, an employee is being created and then having it's role changed
         // to a a customer. this is bad, it must be changed.
@@ -402,12 +402,12 @@ public class SalesApplication {
         }
       } else if (input == 4) {
         System.out.println("Creating a new Employee");
-        System.out.println("Input a name");
+        System.out.println("Enter a name");
         String name = reader.readLine();
         boolean validAge = false;
         int age = 0;
         while (!validAge) {
-          System.out.println("Input an age");
+          System.out.println("Enter an age");
           try {
             age = Integer.parseInt(reader.readLine());
             validAge = true;
@@ -415,9 +415,9 @@ public class SalesApplication {
             System.out.println("Please enter a valid number");
           }
         }
-        System.out.println("Input an address");
+        System.out.println("Enter an address");
         String address = reader.readLine();
-        System.out.println("Input a password");
+        System.out.println("Enter a password");
         String password = reader.readLine();
         insertUser:
         try {
@@ -439,10 +439,10 @@ public class SalesApplication {
       } else if (input == 5) {
 
         try {
-          System.out.println("Input the ID of the item to restock");
+          System.out.println("Enter the ID of the item to restock");
           int id = Integer.parseInt(reader.readLine());
           Item item = DatabaseSelectHelper.getItem(id);
-          System.out.println("Input a quantity of the item to restock");
+          System.out.println("Enter a quantity of the item to restock");
           int quantity = Integer.parseInt(reader.readLine());
           employeeInterface.restockInventory(item, quantity);
         } catch (NumberFormatException e) {
@@ -508,7 +508,7 @@ public class SalesApplication {
       }
 
       shoppingCart = new ShoppingCart(customer);
-      System.out.println("Welcome, customer");
+      System.out.println("Customer options:");
       String[] customerOptions = {
         "1 - List items in cart",
         "2 - Add item to cart",
