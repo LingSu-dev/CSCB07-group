@@ -49,4 +49,7 @@
   <string name="viewCart">View Cart</string>
   <string name="checkout">Checkout</string>
   <string name="logout">Logout</string>
+  <string name="couponNamePrompt">Coupon Name</string>
+  <string name="couponQuantityPrompt">Quantity</string>
+  <string name="couponDiscountPrompt">Discount (%)</string>
 </resources>
