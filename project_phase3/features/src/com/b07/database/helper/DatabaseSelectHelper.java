@@ -583,12 +583,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
       return null;
     }
 
-    // TODO fix unchecked cast
-    Customer customer = (Customer) getUserDetails(userId);
-
-    if (customer == null) {
+    User user = getUserDetails(userId);
+    if(user == null || !(user instanceof Customer)) {
       return null;
     }
+    Customer customer = (Customer) user;
 
     ShoppingCart cart = new ShoppingCart(customer);
 

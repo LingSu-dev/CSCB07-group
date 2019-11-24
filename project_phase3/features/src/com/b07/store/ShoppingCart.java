@@ -25,6 +25,7 @@ public class ShoppingCart {
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
   private static BigDecimal taxRate = new BigDecimal("1.13");
+  private ArrayList<String> discountCodes = new ArrayList();
 
   /**
    * Create a new shopping cart with associated customer.
@@ -131,6 +132,16 @@ public class ShoppingCart {
    * @param code the coupon code
    */
   public void applyCoupon(String code) {
+    // TODO: add used coupons to list
+    // TODO: fix cost calculation after coupon application
+    // TODO: add check for whether the coupon has been used already
+    // TODO: update uses of coupon in database
+    // TODO: add check for whether a given coupon code already exists when adding new code
+    
+    if(discountCodes.contains(code)) {
+      System.out.println("This coupon has already been applied");
+      return;
+    }
     try {
       int couponId = DatabaseSelectHelper.getCouponId(code);
       int itemId = DatabaseSelectHelper.getCouponItem(couponId);
