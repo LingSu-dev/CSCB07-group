@@ -428,9 +428,9 @@ public class DatabaseInserter {
     throw new DatabaseInsertException();
   }
   
-  protected static int insertCoupon(int uses, int typeId, int itemId, BigDecimal discount, Connection connection)
+  protected static int insertCoupon(int uses, int typeId, int itemId, BigDecimal discount, String code, Connection connection)
       throws DatabaseInsertException {
-    String sql = "INSERT INTO COUPONS(USES, ITEMID, TYPEID, DISCOUNT) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO COUPONS(USES, ITEMID, TYPEID, DISCOUNT, CODE) VALUES (?, ?, ?, ?, ?)";
     try {
       PreparedStatement preparedStatement =
           connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -438,6 +438,7 @@ public class DatabaseInserter {
       preparedStatement.setInt(2, typeId);
       preparedStatement.setInt(3, itemId);
       preparedStatement.setString(4, discount.toPlainString());
+      preparedStatement.setString(5, code);
       int id = preparedStatement.executeUpdate();
       if (id > 0) {
         ResultSet uniqueKey = preparedStatement.getGeneratedKeys();
