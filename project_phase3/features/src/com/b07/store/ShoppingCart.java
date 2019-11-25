@@ -26,6 +26,7 @@ public class ShoppingCart {
   private BigDecimal total = new BigDecimal("0.00");
   private static BigDecimal taxRate = new BigDecimal("1.13");
   private ArrayList<String> discountCodes = new ArrayList();
+  private HashMap<Item, BigDecimal> itemDiscounts = new HashMap<Item, BigDecimal>();
 
   /**
    * Create a new shopping cart with associated customer.
@@ -45,13 +46,15 @@ public class ShoppingCart {
    * @param quantity the number of that item to add.
    */
   public void addItem(Item item, int quantity) {
+    if (item == null) {
+      return;
+    }
     if (items.containsKey(item)) {
-      int count = items.get(item);
-      items.put(item, count + quantity);
+      items.put(item, quantity + items.get(item));
     } else {
       items.put(item, quantity);
     }
-    total = total.add(item.getPrice().multiply(new BigDecimal(quantity)));
+    total = calculateCost();
   }
 
   /**
@@ -61,15 +64,13 @@ public class ShoppingCart {
    * @param quantity the number of that item to remove.
    */
   public void removeItem(Item item, int quantity) {
-    if (items.containsKey(item)) {
-      int count = items.get(item);
-      if (count - quantity <= 0) {
-        items.remove(item);
-        total = total.subtract(item.getPrice().multiply(new BigDecimal(count)));
-      } else {
-        items.put(item, count - quantity);
-        total = total.subtract(item.getPrice().multiply(new BigDecimal(quantity)));
-      }
+    if (quantity < 0) {
+      return;
+    }
+    items.put(item, Math.max(items.getOrDefault(item, 0) - quantity, 0));
+    total = calculateCost();
+    if (items.get(item) == 0) {
+      items.remove(item);
     }
   }
 
@@ -123,6 +124,8 @@ public class ShoppingCart {
   public void clearCart() {
     items.clear();
     total = BigDecimal.ZERO;
+    itemDiscounts.clear();
+    discountCodes.clear();
   }
 
   /**
@@ -137,8 +140,8 @@ public class ShoppingCart {
     // TODO: add check for whether the coupon has been used already
     // TODO: update uses of coupon in database
     // TODO: add check for whether a given coupon code already exists when adding new code
-    
-    if(discountCodes.contains(code)) {
+
+    if (discountCodes.contains(code)) {
       System.out.println("This coupon has already been applied");
       return;
     }
@@ -165,9 +168,9 @@ public class ShoppingCart {
       }
       System.out.println(String.format("Original price of item %s: %s%nNew Price: %s",
           item.getName(), item.getPrice(), price.toPlainString()));
-      BigDecimal priceChange = item.getPrice().subtract(price)
-          .multiply(new BigDecimal(this.getItemsWithQuantity().get(item)));
-      total = total.subtract(priceChange);
+      BigDecimal priceChange = item.getPrice().subtract(price);
+      itemDiscounts.put(item, priceChange);
+      total = calculateCost();
       System.out.println(String.format("Your new total is %s", total.toPlainString()));
     } catch (SQLException e) {
       System.out.println("Unable to find a coupon with this code");
@@ -219,5 +222,25 @@ public class ShoppingCart {
       }
       return true;
     }
+  }
+
+  /**
+   * @return the total cost of all the items in the cart
+   */
+  private BigDecimal calculateCost() {
+    if (items == null) {
+      return BigDecimal.ZERO;
+    }
+    BigDecimal cost = BigDecimal.ZERO;
+    for (java.util.Map.Entry<Item, Integer> entry : items.entrySet()) {
+      if (entry.getKey() == null) {
+        continue;
+      }
+      BigDecimal quantity = new BigDecimal(entry.getValue().toString());
+      Item item = entry.getKey();
+      BigDecimal discount = itemDiscounts.getOrDefault(item, BigDecimal.ZERO);
+      cost = cost.add(item.getPrice().subtract(discount).multiply(quantity));
+    }
+    return cost;
   }
 }
