@@ -12,7 +12,9 @@ public class Admin extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin);
-    Button exitButton = findViewById(R.id.adminExitBtn);
+    Button exitButton = findViewById(R.id.adminLogoutBtn);
     exitButton.setOnClickListener(new AdminController(this));
+    Button viewBooksButton = findViewById(R.id.viewBooksBtn);
+    viewBooksButton.setOnClickListener(new AdminController(this));
   }
 }
