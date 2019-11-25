@@ -6,6 +6,11 @@
     <item>Customer</item>
   </string-array>
 
+  <string-array name="couponTypeArray">
+    <item>Percentage</item>
+    <item>Price</item>
+  </string-array>
+
   <string name="appName">CSCB07 App</string>
   <string name="loginMenuIdHint">User Id</string>
   <string name="loginMenuPasswordHint">Password</string>
@@ -49,7 +54,12 @@
   <string name="viewCart">View Cart</string>
   <string name="checkout">Checkout</string>
   <string name="logout">Logout</string>
-  <string name="couponNamePrompt">Coupon Name</string>
+
+  <string name="couponCodePrompt">Coupon Code</string>
+  <string name="couponDiscountPrompt">Discount</string>
+  <string name="couponItemIdPrompt">Item Id</string>
   <string name="couponQuantityPrompt">Quantity</string>
-  <string name="couponDiscountPrompt">Discount (%)</string>
+  <string name="viewBooksBtn">View Books</string>
+  <string name="couponTypePrompt">Select Coupon Type</string>
+  <string name="addCouponBtn">Add Coupon</string>
 </resources>
