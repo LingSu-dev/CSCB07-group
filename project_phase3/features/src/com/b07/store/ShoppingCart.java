@@ -135,9 +135,6 @@ public class ShoppingCart {
    * @param code the coupon code
    */
   public void applyCoupon(String code) {
-    // TODO: add used coupons to list
-    // TODO: fix cost calculation after coupon application
-    // TODO: add check for whether the coupon has been used already
     // TODO: update uses of coupon in database
     // TODO: add check for whether a given coupon code already exists when adding new code
 
@@ -165,7 +162,12 @@ public class ShoppingCart {
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
         price =
             price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
+      } else {
+        System.out.println("Could not apply discount: unknown discount type.");
+        return;
       }
+      discountCodes.add(code);
+      
       System.out.println(String.format("Original price of item %s: %s%nNew Price: %s",
           item.getName(), item.getPrice(), price.toPlainString()));
       BigDecimal priceChange = item.getPrice().subtract(price);
