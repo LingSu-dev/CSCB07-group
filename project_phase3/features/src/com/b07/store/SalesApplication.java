@@ -240,7 +240,7 @@ public class SalesApplication {
       admin = (Admin) user;
     }
     if (admin == null) {
-      System.out.println("Login Denied!");
+      System.out.println("Incorrect role. Please use the correct login for your role.");
       return;
     }
 
@@ -321,7 +321,7 @@ public class SalesApplication {
       employee = (Employee) user;
     }
     if (employee == null) {
-      System.out.println("Login Denied!");
+      System.out.println("Incorrect role. Please use the correct login for your role.");
       return;
     }
     Inventory inventory = DatabaseSelectHelper.getInventory();
@@ -464,7 +464,7 @@ public class SalesApplication {
         customer = (Customer) user;
       }
       if (customer == null) {
-        System.out.println("Login Denied");
+        System.out.println("Incorrect role. Please use the correct login for your role.");
         return;
       }
       ShoppingCart shoppingCart;
@@ -550,7 +550,7 @@ public class SalesApplication {
           }
           System.out.println("Enter the ID of the item you would like to remove");
           String toStock = reader.readLine();
-          System.out.println("Enter the qauntity of the item you would like to remove");
+          System.out.println("Enter the quantity of the item you would like to remove");
           String quantity = reader.readLine();
           try {
             int itemId = Integer.parseInt(toStock);
