@@ -36,70 +36,77 @@
     android:layout_marginBottom="-54dp"
     android:text="@string/adminPromoteBtn" />
 
-   <EditText
-     android:layout_width="180dp"
+  <EditText
+     android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:hint="@string/couponNamePrompt"
-     android:layout_alignLeft="@id/employeeIdPrompt"
-     android:layout_marginTop="120dp"
-     android:textSize="@dimen/textViewTextSize"
+     android:hint="@string/couponCodePrompt"
+     android:layout_below="@id/promoteEmployeeButton"
+     android:layout_marginTop="70dp"
      android:inputType="text"
-     android:id="@+id/couponNameEntry"/>
+     android:id="@+id/couponCodePrompt" />
 
-  <EditText
-    android:layout_width="wrap_content"
+  <Spinner
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/couponQuantityPrompt"
-    android:layout_toRightOf="@id/couponNameEntry"
-    android:layout_marginTop="120dp"
-    android:textSize="@dimen/textViewTextSize"
-    android:inputType="number"
-    android:id="@+id/couponQuantityEntry"/>
+    android:entries="@array/couponTypeArray"
+    android:prompt="@string/couponTypePrompt"
+    android:layout_below="@id/couponCodePrompt"
+    android:id="@+id/couponTypeEntry"
+    android:layout_marginTop="20dp"
+    android:spinnerMode="dialog"/>
 
   <EditText
-    android:layout_width="wrap_content"
+    android:inputType="numberDecimal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/couponDiscountPrompt"
-    android:layout_toRightOf="@id/couponQuantityEntry"
-    android:layout_marginTop="120dp"
-    android:textSize="@dimen/textViewTextSize"
+    android:layout_below="@id/couponTypeEntry"
+    android:layout_marginTop="20dp"
+    android:id="@+id/couponDiscountEntry"/>
+
+  <EditText
     android:inputType="number"
-    android:id="@+id/couponPercentageEntry"/>
-
-  <Button
-    android:id="@+id/addCouponBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_below="@id/couponQuantityEntry"
-    android:text="Add Coupon"/>
-
-  <TextView
-    android:id="@+id/viewSalesData"
     android:layout_width="match_parent"
-    android:layout_height="290dp"
+    android:layout_height="wrap_content"
+    android:hint="@string/couponItemIdPrompt"
+    android:layout_below="@id/couponDiscountEntry"
+    android:layout_marginTop="20dp"
+    android:id="@+id/couponItemIdEntry"/>
+
+  <EditText
+    android:inputType="number"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/couponQuantityPrompt"
+    android:layout_below="@id/couponItemIdEntry"
+    android:layout_marginTop="20dp"
+    android:id="@+id/couponQuantityEntry"/>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/addCouponBtn"
+    android:layout_below="@id/couponQuantityEntry"
+    android:layout_marginTop="20dp"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/addCouponBtn"/>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/viewBooksBtn"
     android:layout_below="@id/addCouponBtn"
-    android:layout_marginTop="15dp"
-    android:scrollbars="vertical"
-    android:textSize="@dimen/textViewTextSize" />
+    android:id="@+id/viewBooksBtn"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="88dp"/>
 
   <Button
-    android:id="@+id/viewSalesBtn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@id/viewSalesData"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="-451dp"
-    android:text="@string/adminViewSalesBtn"
-    android:layout_marginLeft="100dp"/>
-
-  <Button
-    android:id="@+id/adminExitBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@id/viewSalesBtn"
-    android:layout_below="@id/viewSalesData"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="-451dp"
-    android:text="@string/exitBtn" />
+    android:text="@string/logout"
+    android:layout_toRightOf="@id/viewBooksBtn"
+    android:layout_below="@id/addCouponBtn"
+    android:id="@+id/adminLogoutBtn"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="10dp"/>
 </RelativeLayout>
