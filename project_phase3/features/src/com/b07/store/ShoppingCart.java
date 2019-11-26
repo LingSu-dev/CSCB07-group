@@ -131,7 +131,9 @@ public class ShoppingCart {
 
   /** remove a coupon code */
   public boolean removeCoupon(String code) {
-    return discountCodes.remove(code);
+    boolean success = discountCodes.remove(code);
+    total = calculateCost();
+    return success;
   }
 
   /**
@@ -209,7 +211,7 @@ public class ShoppingCart {
             int couponId = DatabaseSelectHelper.getCouponId(code);
             int uses = DatabaseSelectHelper.getCouponUses(couponId);
             Item item = DatabaseSelectHelper.getItem(DatabaseSelectHelper.getCouponItem(couponId));
-            int itemQuantity = items.get(item);
+            int itemQuantity = items.getOrDefault(item, 0);
             if (!couponCanBeApplied(code, itemQuantity)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
               System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
@@ -260,6 +262,7 @@ public class ShoppingCart {
     int uses = DatabaseSelectHelper.getCouponUses(couponId);
     if (uses - quantity < 0) {
       System.out.println("This coupon has already been used the maximum number of times");
+      return false;
     }
 //    if (discountCodes.contains(code)) {
 //      System.out.println("This coupon has already been applied");
