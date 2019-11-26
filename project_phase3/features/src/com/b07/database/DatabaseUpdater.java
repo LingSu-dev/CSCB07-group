@@ -235,7 +235,7 @@ public class DatabaseUpdater {
    * @return true if successful, false otherwise.
    */
   protected static boolean updateCouponUses(int couponId, int uses, Connection connection) {
-    String sql = "UPDATE COUPON SET USES = ? WHERE ID = ?;";
+    String sql = "UPDATE COUPONS SET USES = ? WHERE ID = ?;";
     try {
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setInt(1, uses);
