@@ -3,6 +3,7 @@ package com.b07.store;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.database.helper.DatabaseUpdateHelper;
+import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ public class ShoppingCart {
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
   private static BigDecimal taxRate = new BigDecimal("1.13");
-  private ArrayList<String> discountCodes = new ArrayList();
+  private ArrayList<String> discountCodes = new ArrayList<String>();
   private HashMap<Item, BigDecimal> itemDiscounts = new HashMap<Item, BigDecimal>();
 
   /**
@@ -42,7 +43,7 @@ public class ShoppingCart {
   /**
    * Add some quantity of an item to the cart.
    *
-   * @param item the item to add.
+   * @param item     the item to add.
    * @param quantity the number of that item to add.
    */
   public void addItem(Item item, int quantity) {
@@ -60,7 +61,7 @@ public class ShoppingCart {
   /**
    * Remove some quantity of an item from the cart.
    *
-   * @param item the item to remove.
+   * @param item     the item to remove.
    * @param quantity the number of that item to remove.
    */
   public void removeItem(Item item, int quantity) {
@@ -135,41 +136,27 @@ public class ShoppingCart {
    * @param code the coupon code
    */
   public void applyCoupon(String code) {
-    // TODO: update uses of coupon in database
-    // TODO: add check for whether a given coupon code already exists when adding new code
-
-    if (discountCodes.contains(code)) {
-      System.out.println("This coupon has already been applied");
-      return;
-    }
+    // TODO: add check for whether a given coupon code already exists when adding
+    // new code
     try {
       int couponId = DatabaseSelectHelper.getCouponId(code);
       int itemId = DatabaseSelectHelper.getCouponItem(couponId);
       Item item = DatabaseSelectHelper.getItem(itemId);
       BigDecimal price = item.getPrice();
       DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
-      if (type == null) {
-        System.out.println("Unable to get discount type for this coupon");
-        return;
-      }
       BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
-      if (discount == null) {
-        System.out.println("Unable to get discount amount for this coupon");
+      if (!couponCanBeApplied(code)) {
         return;
       }
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
-        price =
-            price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
-      } else {
-        System.out.println("Could not apply discount: unknown discount type.");
-        return;
+        price = price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
       discountCodes.add(code);
-      
-      System.out.println(String.format("Original price of item %s: %s%nNew Price: %s",
-          item.getName(), item.getPrice(), price.toPlainString()));
+
+      System.out.println(String.format("Original price of item %s: %s%nNew Price: %s", item.getName(), item.getPrice(),
+          price.toPlainString()));
       BigDecimal priceChange = item.getPrice().subtract(price);
       itemDiscounts.put(item, priceChange);
       total = calculateCost();
@@ -182,7 +169,7 @@ public class ShoppingCart {
   /**
    * Attempt to check the user's cart out.
    *
-   * @return true if succesful, false otherwise.
+   * @return true if successful, false otherwise.
    */
   public boolean checkOutCart() {
     if (customer == null) {
@@ -198,6 +185,22 @@ public class ShoppingCart {
             return false;
           }
         }
+        // Try every coupon to make sure that the coupon in the database hasn't been
+        // invalidated in the time it took to shop
+        for (String code : discountCodes) {
+          try {
+            if (!couponCanBeApplied(code)) {
+              System.out.println(String.format("Coupon code %s is no longer valid.", code));
+              continue;
+            }
+            int couponId = DatabaseSelectHelper.getCouponId(code);
+            int uses = DatabaseSelectHelper.getCouponUses(couponId);
+            DatabaseUpdateHelper.updateCouponUses(uses - 1, couponId);
+          } catch (DatabaseInsertException e) {
+            System.out.println(String.format("Unable to update remaining coupon uses for %s", code));
+          }
+        }
+
         // Calculate and submit price after tax
         BigDecimal totalPrice = total.multiply(taxRate).setScale(2, RoundingMode.CEILING);
         int saleId;
@@ -218,12 +221,42 @@ public class ShoppingCart {
           // System.out.println("Item quantity " + items.get(item));
           DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
         }
+
         clearCart();
       } catch (Exception e) {
         return false;
       }
       return true;
     }
+  }
+
+  private boolean couponCanBeApplied(String code) throws SQLException {
+    int couponId = DatabaseSelectHelper.getCouponId(code);
+    int itemId = DatabaseSelectHelper.getCouponItem(couponId);
+    DatabaseSelectHelper.getItem(itemId);
+    DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
+    BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
+    int uses = DatabaseSelectHelper.getCouponUses(couponId);
+    if (uses <= 0) {
+      System.out.println("This coupon has already been used the maximum number of times");
+    }
+    if (discountCodes.contains(code)) {
+      System.out.println("This coupon has already been applied");
+      return false;
+    }
+    if (type == null) {
+      System.out.println("Unable to get discount type for this coupon");
+      return false;
+    }
+    if (discount == null) {
+      System.out.println("Unable to get discount amount for this coupon");
+      return false;
+    }
+    if (!type.equals(DiscountTypes.FLAT_RATE) && !type.equals(DiscountTypes.PERCENTAGE)) {
+      System.out.println("Could not apply discount: unknown discount type.");
+      return false;
+    }
+    return true;
   }
 
   /**

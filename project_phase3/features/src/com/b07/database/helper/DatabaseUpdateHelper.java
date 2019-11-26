@@ -20,13 +20,13 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
    * Change the name associated with a roleID in the database.
    *
    * @param name the new name to be set.
-   * @param id the roleID to be altered.
+   * @param id   the roleID to be altered.
    * @return true if the name change is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the role name cannot be updated.
    */
-  public static boolean updateRoleName(String name, int id)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateRoleName(String name, int id) throws SQLException, DatabaseInsertException {
 
     if (name == null || !DatabaseSelectHelper.roleIdExists(id)) {
       throw new DatabaseInsertException();
@@ -41,14 +41,14 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
   /**
    * Update the name of a user in the database.
    *
-   * @param name the new name to be set.
+   * @param name   the new name to be set.
    * @param userId the id of the user to be altered.
    * @return true if the operation is successful
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the user's name cannot be updated.
    */
-  public static boolean updateUserName(String name, int userId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateUserName(String name, int userId) throws SQLException, DatabaseInsertException {
     if (!DatabaseSelectHelper.userIdExists(userId) || name == null) {
       throw new DatabaseInsertException();
     }
@@ -61,14 +61,14 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
   /**
    * Update the age of a user in the database.
    *
-   * @param age the new age to be set.
+   * @param age    the new age to be set.
    * @param userId the id of the user to be altered.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the user's age cannot be updated
    */
-  public static boolean updateUserAge(int age, int userId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateUserAge(int age, int userId) throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.userIdExists(userId) || age < 0) {
       throw new DatabaseInsertException();
@@ -84,13 +84,13 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
    * Update the address of a user in the database.
    *
    * @param address the new address to be set.
-   * @param userId the id of the user to be altered.
+   * @param userId  the id of the user to be altered.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the user's address cannot be updated.
    */
-  public static boolean updateUserAddress(String address, int userId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateUserAddress(String address, int userId) throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.userIdExists(userId) || address.length() > 100) {
       throw new DatabaseInsertException();
@@ -108,11 +108,11 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
    * @param roleId the id of the new role to be set.
    * @param userId the id of the user to be altered.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the user's role cannot be updated.
    */
-  public static boolean updateUserRole(int roleId, int userId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateUserRole(int roleId, int userId) throws SQLException, DatabaseInsertException {
     if (!DatabaseSelectHelper.userIdExists(userId) || !DatabaseSelectHelper.roleIdExists(roleId)) {
       throw new DatabaseInsertException();
     }
@@ -125,14 +125,14 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
   /**
    * Update the name of an item in the database.
    *
-   * @param name the new name to be set.
+   * @param name   the new name to be set.
    * @param itemId the id of the item to be altered.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the items name cannot be updated.
    */
-  public static boolean updateItemName(String name, int itemId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateItemName(String name, int itemId) throws SQLException, DatabaseInsertException {
     if (name == null || name.length() > 64 || !DatabaseSelectHelper.itemExists(itemId)) {
       throw new DatabaseInsertException();
     }
@@ -146,17 +146,16 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
   /**
    * Update an item's price in the database.
    *
-   * @param price the new price to be set.
+   * @param price  the new price to be set.
    * @param itemId the id of the item to be updated.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the item's price cannot be updated.
    */
-  public static boolean updateItemPrice(BigDecimal price, int itemId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateItemPrice(BigDecimal price, int itemId) throws SQLException, DatabaseInsertException {
 
-    if (Math.max(0, price.scale()) != 2
-        || !DatabaseSelectHelper.itemExists(itemId)
+    if (Math.max(0, price.scale()) != 2 || !DatabaseSelectHelper.itemExists(itemId)
         || price.compareTo(BigDecimal.ZERO) < 0) {
       throw new DatabaseInsertException();
     }
@@ -171,13 +170,13 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
    * Update an item's quantity in the database.
    *
    * @param quantity the new quantity to be set.
-   * @param itemId the id of the item who's quantity will be altered.
+   * @param itemId   the id of the item who's quantity will be altered.
    * @return true if the operation is successful.
-   * @throws SQLException if there is an issue communicating with the database.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
    * @throws DatabaseInsertException if the inventory quantity cannot be updated.
    */
-  public static boolean updateInventoryQuantity(int quantity, int itemId)
-      throws SQLException, DatabaseInsertException {
+  public static boolean updateInventoryQuantity(int quantity, int itemId) throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.itemExists(itemId) || quantity < 0) {
       throw new DatabaseInsertException();
@@ -185,6 +184,28 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
 
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     boolean complete = DatabaseUpdater.updateInventoryQuantity(quantity, itemId, connection);
+    connection.close();
+    return complete;
+  }
+
+  /**
+   * Update the number of uses for a coupon
+   * 
+   * @param uses     the number of uses
+   * @param couponId the id of the coupon
+   * @return true if the operation is successful.
+   * @throws SQLException            if there is an issue communicating with the
+   *                                 database.
+   * @throws DatabaseInsertException if the inventory quantity cannot be updated.
+   */
+  public static boolean updateCouponUses(int uses, int couponId) throws SQLException, DatabaseInsertException {
+
+    if (!DatabaseSelectHelper.couponIdExists(couponId)) {
+      throw new DatabaseInsertException();
+    }
+
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    boolean complete = DatabaseUpdater.updateCouponUses(couponId, uses, connection);
     connection.close();
     return complete;
   }

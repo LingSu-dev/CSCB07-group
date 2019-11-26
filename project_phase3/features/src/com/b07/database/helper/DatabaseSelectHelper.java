@@ -481,6 +481,26 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return validUserIds.contains(userID);
   }
 
+  
+
+  public static boolean couponIdExists(int userID) throws SQLException {
+    List<Integer> validCouponIds = DatabaseSelectHelper.getCouponIds();
+    return validCouponIds.contains(userID);
+  }
+
+  public static List<Integer> getCouponIds() throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    List<Integer> ids = new ArrayList<Integer>();
+    ResultSet results = DatabaseSelector.getCoupons(connection);
+
+    while (results.next()) {
+      ids.add(results.getInt("ID"));
+    }
+    results.close();
+    connection.close();
+    return ids;
+  }
+
   /**
    * Get the Role ID of a role by it's associated name.
    *
@@ -695,7 +715,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * 
    * @param code the coupon code
    * @return the coupon ID
-   * @throws SQLException if somethig goes wrong retrieving the data from the database
+   * @throws SQLException if something goes wrong retrieving the data from the database
    */
   public static int getCouponId(String code) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
@@ -742,6 +762,19 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   public static int getCouponItem(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     return DatabaseSelector.getCouponItemId(couponId, connection);
+
+  }
+
+  /**
+   * Get the number of uses for a coupon
+   * 
+   * @param couponId the id of the coupon
+   * @return the number of uses
+   * @throws SQLException if something goes wrong
+   */
+  public static int getCouponUses(int couponId) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    return DatabaseSelector.getCouponUses(couponId, connection);
 
   }
 
