@@ -128,6 +128,7 @@ public class ShoppingCart {
     itemDiscounts.clear();
     discountCodes.clear();
   }
+
   /** remove a coupon code */
   public boolean removeCoupon(String code) {
     return discountCodes.remove(code);
@@ -149,7 +150,7 @@ public class ShoppingCart {
       BigDecimal price = item.getPrice();
       DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
       BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
-      if (!couponCanBeApplied(code)) {
+      if (!couponCanBeApplied(code, 1)) {
         return;
       }
       if (discountCodes.contains(code)) {
@@ -197,7 +198,9 @@ public class ShoppingCart {
         // invalidated in the time it took to shop
         for (String code : discountCodes) {
           try {
-            if (!couponCanBeApplied(code)) {
+            // this first check exists so that it can notify the user of issues with the
+            // coupon to avoid throwing an exception later
+            if (!couponCanBeApplied(code, 1)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
               System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
               removeCoupon(code);
@@ -205,7 +208,15 @@ public class ShoppingCart {
             }
             int couponId = DatabaseSelectHelper.getCouponId(code);
             int uses = DatabaseSelectHelper.getCouponUses(couponId);
-            DatabaseUpdateHelper.updateCouponUses(uses - 1, couponId);
+            Item item = DatabaseSelectHelper.getItem(DatabaseSelectHelper.getCouponItem(couponId));
+            int itemQuantity = items.get(item);
+            if (!couponCanBeApplied(code, itemQuantity)) {
+              System.out.println(String.format("Coupon code %s is no longer valid.", code));
+              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              removeCoupon(code);
+              return false;
+            }
+            DatabaseUpdateHelper.updateCouponUses(uses - itemQuantity, couponId);
           } catch (DatabaseInsertException e) {
             System.out.println(String.format("Unable to update remaining coupon uses for %s", code));
           }
@@ -240,14 +251,14 @@ public class ShoppingCart {
     }
   }
 
-  private boolean couponCanBeApplied(String code) throws SQLException {
+  private boolean couponCanBeApplied(String code, int quantity) throws SQLException {
     int couponId = DatabaseSelectHelper.getCouponId(code);
     int itemId = DatabaseSelectHelper.getCouponItem(couponId);
     DatabaseSelectHelper.getItem(itemId);
     DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
     BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
     int uses = DatabaseSelectHelper.getCouponUses(couponId);
-    if (uses <= 0) {
+    if (uses - quantity < 0) {
       System.out.println("This coupon has already been used the maximum number of times");
     }
 //    if (discountCodes.contains(code)) {
