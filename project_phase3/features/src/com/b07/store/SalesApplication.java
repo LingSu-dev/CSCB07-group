@@ -1,6 +1,5 @@
 package com.b07.store;
 
-import com.b07.database.DatabaseDriver;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;

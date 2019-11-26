@@ -425,4 +425,33 @@ public class DatabaseSelector {
     results.close();
     return item;
   }
+
+  /**
+   *  Return a list of coupons
+   * @param connection a connection to the database
+   * @return a resultset of coupon ids
+   * @throws SQLException if something goes wrong
+   */
+  public static ResultSet getCoupons(Connection connection) throws SQLException {
+    String sql = "SELECT * FROM COUPONS;";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    return preparedStatement.executeQuery();
+  }
+
+  /**
+   * Return the number of uses left for a coupon
+   * @param couponId the coupon id
+   * @param connection the database connection
+   * @return the number of uses left
+   * @throws SQLException if something goes wrong
+   */
+  public static int getCouponUses(int couponId, Connection connection) throws SQLException {
+    String sql = "SELECT USES FROM COUPONS WHERE ID = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, couponId);
+    ResultSet results = preparedStatement.executeQuery();
+    int item = results.getInt("USES");
+    results.close();
+    return item;
+  }
 }
