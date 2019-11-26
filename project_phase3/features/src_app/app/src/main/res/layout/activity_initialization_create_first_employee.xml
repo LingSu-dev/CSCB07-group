@@ -12,24 +12,26 @@
         android:layout_height="wrap_content"
         android:hint="@string/createUserNameHint"
         android:layout_marginTop="40dp"
-        android:id="@+id/nameEntry"
-        android:layout_below="@+id/goBackButton"/>
+        android:id="@+id/initializationEmployeeNameEntry"
+        android:inputType="text"/>
 
     <EditText
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/createUserAgeHint"
         android:layout_marginTop="20dp"
-        android:id="@+id/ageEntry"
-        android:layout_below="@+id/nameEntry"/>
+        android:id="@+id/initializationEmployeeAgeEntry"
+        android:layout_below="@id/initializationEmployeeNameEntry"/>
 
     <EditText
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/createUserAddressHint"
         android:layout_marginTop="20dp"
-        android:id="@+id/addressEntry"
-        android:layout_below="@+id/ageEntry"/>
+        android:id="@+id/initializationEmployeeAddressEntry"
+        android:layout_below="@id/initializationEmployeeAgeEntry"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -37,14 +39,16 @@
         android:hint="@string/loginMenuPasswordHint"
         android:layout_marginTop="20dp"
         android:inputType="textPassword"
-        android:id="@+id/passwordEntry"
-        android:layout_below="@+id/addressEntry"/>
+        android:id="@+id/initializationEmployeePassword"
+        android:layout_below="@id/initializationEmployeeAddressEntry"/>
 
     <Button
+        android:id="@+id/initializationCreateEmployeeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/createEmployeeBtn"
-        android:layout_below="@id/passwordEntry"
+        android:layout_below="@id/initializationEmployeePassword"
         android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:icon="@drawable/ic_person_add_black_24dp"/>
 </RelativeLayout>

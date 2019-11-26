@@ -18,6 +18,7 @@
 
 <Button
     android:id="@+id/menuAuthenticateEmployeeBtn"
+    app:icon="@drawable/ic_verified_user_black_24dp"
     android:layout_width="@dimen/employeeMenuButtonWidth"
     android:layout_height="wrap_content"
     android:text="@string/authenticateBtn"
@@ -32,6 +33,7 @@
     android:text="@string/employeeMenuNewUserBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
+    app:icon="@drawable/ic_person_add_black_24dp"
     android:layout_below="@id/menuAuthenticateEmployeeBtn" />
 
 <Button
@@ -41,6 +43,7 @@
     android:text="@string/employeeMenuNewAccountBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
+    app:icon="@drawable/ic_account_box_black_24dp"
     android:layout_below="@id/menuMakeNewUserBtn" />
 
 <Button
@@ -50,6 +53,7 @@
     android:text="@string/employeeMenuNewEmployeeBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
+    app:icon="@drawable/ic_person_add_black_24dp"
     android:layout_below="@id/menuMakeNewAccountBtn" />
 
 <Button
@@ -59,6 +63,7 @@
     android:text="@string/restockInventoryBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
+    app:icon="@drawable/ic_add_circle_black_24dp"
     android:layout_below="@id/menuMakeNewEmployeeBtn" />
 
 <Button
@@ -68,5 +73,6 @@
     android:text="@string/exitBtn"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
+    app:icon="@drawable/ic_exit_to_app_black_24dp"
     android:layout_below="@id/menuRestockInventoryBtn" />
 </RelativeLayout>

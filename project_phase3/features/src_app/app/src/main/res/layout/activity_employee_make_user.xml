@@ -46,5 +46,6 @@
         android:text="@string/createUserBtn"
         android:layout_below="@id/makeUserPassword"
         android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:icon="@drawable/ic_person_add_black_24dp"/>
 </RelativeLayout>
