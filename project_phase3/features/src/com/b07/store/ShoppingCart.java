@@ -128,6 +128,10 @@ public class ShoppingCart {
     itemDiscounts.clear();
     discountCodes.clear();
   }
+  /** remove a coupon code */
+  public boolean removeCoupon(String code) {
+    return discountCodes.remove(code);
+  }
 
   /**
    * Apply a coupon code to an item and recalculate its price
@@ -146,6 +150,10 @@ public class ShoppingCart {
       DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
       BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
       if (!couponCanBeApplied(code)) {
+        return;
+      }
+      if (discountCodes.contains(code)) {
+        System.out.println("This coupon has already been applied");
         return;
       }
       if (type.equals(DiscountTypes.FLAT_RATE)) {
@@ -191,7 +199,9 @@ public class ShoppingCart {
           try {
             if (!couponCanBeApplied(code)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
-              continue;
+              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              removeCoupon(code);
+              return false;
             }
             int couponId = DatabaseSelectHelper.getCouponId(code);
             int uses = DatabaseSelectHelper.getCouponUses(couponId);
@@ -240,10 +250,10 @@ public class ShoppingCart {
     if (uses <= 0) {
       System.out.println("This coupon has already been used the maximum number of times");
     }
-    if (discountCodes.contains(code)) {
-      System.out.println("This coupon has already been applied");
-      return false;
-    }
+//    if (discountCodes.contains(code)) {
+//      System.out.println("This coupon has already been applied");
+//      return false;
+//    }
     if (type == null) {
       System.out.println("Unable to get discount type for this coupon");
       return false;
