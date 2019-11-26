@@ -34,7 +34,8 @@
     android:layout_alignBottom="@id/employeeIdEntry"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="-54dp"
-    android:text="@string/adminPromoteBtn" />
+    android:text="@string/adminPromoteBtn"
+    app:icon="@drawable/ic_supervisor_account_black_24dp"/>
 
   <EditText
      android:layout_width="match_parent"
@@ -89,7 +90,8 @@
     android:layout_below="@id/couponQuantityEntry"
     android:layout_marginTop="20dp"
     android:layout_centerHorizontal="true"
-    android:id="@+id/addCouponBtn"/>
+    android:id="@+id/addCouponBtn"
+    app:icon="@drawable/ic_local_offer_black_24dp"/>
 
   <Button
     android:layout_width="wrap_content"
@@ -98,7 +100,8 @@
     android:layout_below="@id/addCouponBtn"
     android:id="@+id/viewBooksBtn"
     android:layout_marginTop="30dp"
-    android:layout_marginLeft="88dp"/>
+    android:layout_marginLeft="50dp"
+    app:icon="@drawable/ic_library_books_black_24dp"/>
 
   <Button
     android:layout_width="wrap_content"
@@ -108,5 +111,6 @@
     android:layout_below="@id/addCouponBtn"
     android:id="@+id/adminLogoutBtn"
     android:layout_marginTop="30dp"
-    android:layout_marginLeft="10dp"/>
+    android:layout_marginLeft="10dp"
+    app:icon="@drawable/ic_exit_to_app_black_24dp"/>
 </RelativeLayout>

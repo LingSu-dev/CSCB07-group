@@ -29,5 +29,6 @@
         android:text="@string/restockInventoryBtn"
         android:layout_below="@id/restockInventoryQuantityEntry"
         android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        app:icon="@drawable/ic_add_circle_black_24dp"/>
 </RelativeLayout>

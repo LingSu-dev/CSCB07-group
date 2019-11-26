@@ -10,10 +10,15 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity android:name=".Activity.Admin.AdminViewBooks"></activity>
-    <activity android:name=".Activity.Initialization.MainActivity" />
+    <activity android:name=".Activity.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
     <activity android:name=".Activity.Customer.CustomerStore" />
     <activity android:name=".Activity.Customer.CustomerCheckout" />
-    <activity android:name=".CustomerStore" />
     <activity android:name=".Activity.Initialization.InitializationPopUp" />
     <activity android:name=".Activity.Initialization.InitializationCreateFirstAdmin" />
     <activity android:name=".Activity.Initialization.InitializationCreateFirstEmployee" />
@@ -24,13 +29,6 @@
     <activity android:name=".Activity.Employee.EmployeeMakeUser" />
     <activity android:name=".Activity.Employee.EmployeeMenu" />
     <activity android:name=".Activity.Admin.Admin" />
-    <activity android:name=".Activity.Login.LoginMenu">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+    <activity android:name=".Activity.Login.LoginMenu"/>
   </application>
-
 </manifest>

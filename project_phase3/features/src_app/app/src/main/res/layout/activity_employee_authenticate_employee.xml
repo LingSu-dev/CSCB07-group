@@ -32,5 +32,6 @@
         android:layout_below="@id/authenticateEmployeePassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="@string/authenticateBtn" />
+        android:text="@string/authenticateBtn"
+        app:icon="@drawable/ic_verified_user_black_24dp"/>
 </RelativeLayout>

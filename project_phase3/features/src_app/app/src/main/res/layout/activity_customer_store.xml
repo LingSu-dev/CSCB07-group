@@ -102,15 +102,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_centerHorizontal="true">
 
+    <!--
     <Button
       android:id="@+id/customerStoreAddToCartBtn"
       android:layout_width="0dip"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:text="@string/addToCart" />
+      -->
 
+    <ImageButton
+      android:id="@+id/customerStoreAddToCartBtn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:src="@drawable/ic_add_shopping_cart_black_24dp"
+      android:backgroundTint="@color/colorPrimary"
+      />
+
+    <ImageButton
+      android:id="@+id/customerStoreViewCartBtn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:src="@drawable/ic_shopping_cart_black_24dp"
+      android:backgroundTint="@color/colorPrimary"/>
+
+    <ImageButton
+      android:id="@+id/customerStoreLogoutBtn"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:src="@drawable/ic_exit_to_app_black_24dp"
+      android:backgroundTint="@color/colorPrimary"/>
+
+    <!--
     <Button
       android:id="@+id/customerStoreViewCartBtn"
       android:layout_width="0dip"
@@ -118,11 +147,14 @@
       android:layout_weight="1"
       android:text="@string/viewCart" />
 
+
     <Button
       android:id="@+id/customerStoreLogoutBtn"
       android:layout_width="0dip"
       android:layout_weight="1"
       android:layout_height="wrap_content"
       android:text="@string/logout" />
+      -->
+
   </LinearLayout>
 </RelativeLayout>

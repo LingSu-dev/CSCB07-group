@@ -22,5 +22,6 @@
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/makeAccountBtn"
-        android:text="@string/makeAccountBtn"/>
+        android:text="@string/makeAccountBtn"
+        app:icon="@drawable/ic_add_box_black_24dp"/>
 </RelativeLayout>
