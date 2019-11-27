@@ -555,12 +555,13 @@ public class SalesApplication {
             int itemId = Integer.parseInt(toStock);
             int quantityInt = Integer.parseInt(quantity);
             Item item = DatabaseSelectHelper.getItem(itemId);
-            if (item != null) {
-              shoppingCart.removeItem(item, quantityInt);
-            } else {
+            if (item == null) {
               System.out.println("No such item!");
+            } else if (shoppingCart.removeItem(item, quantityInt)) {
+              System.out.println("Successfully removed!");
+            } else {
+              System.out.println("Failed to remove item.");
             }
-            System.out.println("Successfully removed!");
           } catch (NumberFormatException e) {
             System.out.println("Must enter a valid number!");
           }
@@ -583,7 +584,7 @@ public class SalesApplication {
           } else {
             System.out.println("Cannot checkout, cart is empty!");
           }
-          
+
         } else if (input == 6) {
           // apply coupon
           System.out.println("Note, your current cart is as follows:");
@@ -594,7 +595,7 @@ public class SalesApplication {
           System.out.println("Enter the coupon code");
           String code = reader.readLine();
           shoppingCart.applyCoupon(code);
-          
+
         } else if (input == -1) {
           System.out.println("Please choose one of the options");
         }

@@ -61,18 +61,19 @@ public class ShoppingCart {
   /**
    * Remove some quantity of an item from the cart.
    *
-   * @param item     the item to remove.
+   * @param item the item to remove.
    * @param quantity the number of that item to remove.
    */
-  public void removeItem(Item item, int quantity) {
-    if (quantity < 0) {
-      return;
+  public boolean removeItem(Item item, int quantity) {
+    if (quantity < 0 || items.get(item) == null) {
+      return false;
     }
     items.put(item, Math.max(items.getOrDefault(item, 0) - quantity, 0));
     total = calculateCost();
     if (items.get(item) == 0) {
       items.remove(item);
     }
+    return true;
   }
 
   /**
