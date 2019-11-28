@@ -134,7 +134,7 @@ public class EmployeeInterface {
       if (DatabaseSelectHelper.getUserRoleId(customerId) != -1
           && DatabaseSelectHelper.getUserRoleId(customerId)
               == DatabaseSelectHelper.getRoleIdByName(Roles.CUSTOMER.name())) {
-        return DatabaseInsertHelper.insertAccount(customerId);
+        return DatabaseInsertHelper.insertAccount(customerId, true);
       }
     } catch (DatabaseInsertException e) {
       return -1;

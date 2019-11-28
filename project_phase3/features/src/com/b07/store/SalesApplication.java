@@ -7,6 +7,7 @@ import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
+import com.b07.users.Account;
 import com.b07.users.Admin;
 import com.b07.users.Customer;
 import com.b07.users.Employee;
@@ -469,6 +470,7 @@ public class SalesApplication {
       ShoppingCart shoppingCart;
 
       // Checking user accounts for existing items.
+      /*
       if (AccountHelper.customerHasShoppingCarts(customer.getId())) {
         System.out.println("It appears you have an existing shopping cart!");
         System.out.println("Would you like to restore and check out the existing shopping cart?");
@@ -493,6 +495,57 @@ public class SalesApplication {
           } else {
             System.out.println("Your shopping cart could not be recovered!");
           }
+        }
+      }
+      */
+      
+      //Checking user accounts for existing carts.
+      List<Integer> accs = DatabaseSelectHelper.getUserActiveAccounts(customer.getId());
+      
+      if (accs != null && !accs.isEmpty()) {
+        System.out.println("It appears you have existing accounts!");
+        System.out.println("Would you like to restore and check out an existing shopping cart?");
+        System.out.println("Your currently open account IDs are:");
+        for (int i = 0; i < accs.size(); i++) {
+          System.out.println(accs.get(i));
+        }
+        System.out.println("Enter the ID of the account you would like to restore,");
+        System.out.println("enter anything else to create a new cart and begin shopping");
+        String restore = reader.readLine();
+        try {
+          int toRestore = Integer.parseInt(restore);
+          if (accs.contains(toRestore)) {
+            Account account = new Account(customer.getId(), toRestore, true);
+            if (!account.retrieveCustomerCart()) {
+              System.out.println("Something went wrong restoring your cart, sorry!");
+            } else {
+              shoppingCart = account.getCart();
+              if (shoppingCart != null && !shoppingCart.getItems().isEmpty()) {
+                System.out.println("Your total is:");
+                System.out.println("$" + shoppingCart.getTotal());
+                System.out.println("You will also pay taxes to the order of:");
+                System.out.println("$" + shoppingCart.getTotal()
+                    .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+                boolean checkedOut = false;
+                checkedOut = shoppingCart.checkOutCart();
+                if (checkedOut) {
+                  System.out.println("Your order has been checked out!");
+                  if (!account.deactivate()) {
+                    System.out.println("Something went wrong deactivating your account!");
+                  }
+                } else {
+                  System.out.println("Sorry, your cart could not be checked out at this time");
+                }
+              } else {
+                System.out.println("Cannot checkout, cart is empty!");
+              }
+            }
+          } else {
+            System.out.println("Ok, continuing to shopping!");
+          }
+        } catch (NumberFormatException e) {
+          System.out.println("Not a number! Continuing to shopping");
+          
         }
       }
 
@@ -601,21 +654,38 @@ public class SalesApplication {
         }
         input = StoreHelpers.choicePrompt(customerOptions, reader);
       }
-
-      if (AccountHelper.customerHasAccount(customer.getId())
-          && !shoppingCart.getItems().isEmpty()) {
+      
+      //Store cart in account for later
+      accs = DatabaseSelectHelper.getUserActiveAccounts(customer.getId());
+      
+      if (accs != null && !accs.isEmpty() && !shoppingCart.getItems().isEmpty()) {
         System.out.println("Would you like to save your cart to your account?");
-        System.out.println("Enter '1' to save, anything else to exit without saving");
-        String restore = reader.readLine();
-        if (restore.equals("1")) {
-          boolean saved = AccountHelper.saveCustomerCart(customer.getId(), shoppingCart);
-          if (saved) {
-            System.out.println("Saved to your lowest number account!");
-          } else {
-            System.out.println("Sorry, could not save your cart at this time!");
-          }
+        System.out.println("Your currently open account IDs are:");
+        for (int i = 0; i < accs.size(); i++) {
+          System.out.println(accs.get(i));
         }
+        System.out.println("Enter the ID of the account you would like to save to,");
+        System.out.println("enter anything else to exit");
+        
+        String response = reader.readLine();
+        try {
+          int saveTo = Integer.parseInt(response);
+          if (accs.contains(saveTo)) {
+            Account account = new Account(customer.getId(), saveTo, true);
+            if (account.saveCustomerCart(shoppingCart)) {
+              System.out.println("Customer cart saved to specified account!");
+            } else {
+              System.out.println("There was an issue saving your cart!");
+            }
+          } else {
+            System.out.println("Exiting!");
+          }
+        } catch (NumberFormatException e) {
+          System.out.println("Exiting!");
+        }
+        
       }
+      
     } catch (IOException e) {
       System.out.println("Unable to read input from console");
       e.printStackTrace();

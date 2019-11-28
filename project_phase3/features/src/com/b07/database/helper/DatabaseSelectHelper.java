@@ -777,5 +777,55 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return DatabaseSelector.getCouponUses(couponId, connection);
 
   }
+  
+  /**
+   * Check if there is an account associated with a customer.
+   *
+   * @param userId The id of the user to check the account of.
+   * @return true if the user has an account.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
+  public static boolean customerHasAccount(int userId) throws SQLException {
+    List<Integer> accounts = DatabaseSelectHelper.getUserAccountsById(userId);
+    if (accounts == null) {
+      return false;
+    }
+    return !accounts.isEmpty();
+  }
+  
+  public static List<Integer> getUserActiveAccounts(int userId) throws SQLException{
+    if (!userIdExists(userId)) {
+      return null;
+    }
 
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    ResultSet results = DatabaseSelector.getUserActiveAccounts(userId, connection);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.next()) {
+      accounts.add(results.getInt("id"));
+    }
+    results.close();
+    connection.close();
+
+    return accounts;
+  }
+  
+  public static List<Integer> getUseInactiveAccounts(int userId) throws SQLException{
+    if (!userIdExists(userId)) {
+      return null;
+    }
+
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    ResultSet results = DatabaseSelector.getUserInactiveAccounts(userId, connection);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.next()) {
+      accounts.add(results.getInt("id"));
+    }
+    results.close();
+    connection.close();
+
+    return accounts;
+  }
 }
