@@ -9,14 +9,12 @@ public class InitializationEmployeeDialogController implements DialogInterface.O
 
   private Context appContext;
 
-  public InitializationEmployeeDialogController(Context context)
-  {
+  public InitializationEmployeeDialogController(Context context) {
     this.appContext = context;
   }
 
   @Override
-  public void onClick(DialogInterface dialog, int which)
-  {
+  public void onClick(DialogInterface dialog, int which) {
     appContext.startActivity(new Intent(appContext, LoginMenu.class));
   }
 }

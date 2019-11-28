@@ -17,7 +17,6 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "inventorymgmt.db";
 
     public DatabaseDriverAndroid(Context context) {
-
     super(context, DATABASE_NAME, null, 1);
   }
 
@@ -455,5 +454,4 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     sqLiteDatabase.close();
     return result;
   }
-
 }

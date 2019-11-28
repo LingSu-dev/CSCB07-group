@@ -8,6 +8,7 @@ import com.example.cscb07_app.R;
 public class InitializationController implements View.OnClickListener {
 
   private Context appContext;
+
   public InitializationController(Context context) {
     this.appContext = context;
   }
@@ -29,7 +30,7 @@ public class InitializationController implements View.OnClickListener {
         employeeAlertDialog.setMessage("Employee Id: 1");
         employeeAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
             new InitializationEmployeeDialogController(appContext));
-            employeeAlertDialog.show();
+        employeeAlertDialog.show();
         break;
     }
   }

@@ -3,15 +3,14 @@ package com.example.cscb07_app.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import com.example.cscb07_app.Activity.Admin.Admin;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
+import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
 import com.example.cscb07_app.Activity.Admin.AdminPromoteEmployee;
 import com.example.cscb07_app.Activity.Admin.AdminSaveAppData;
 import com.example.cscb07_app.Activity.Admin.AdminViewActiveAccounts;
 import com.example.cscb07_app.Activity.Admin.AdminViewBooks;
 import com.example.cscb07_app.Activity.Admin.AdminViewHistoricAccounts;
-import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.R;
 
 public class AdminController implements View.OnClickListener {
