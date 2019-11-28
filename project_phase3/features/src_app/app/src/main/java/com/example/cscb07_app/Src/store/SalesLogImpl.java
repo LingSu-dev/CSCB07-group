@@ -33,7 +33,9 @@ public class SalesLogImpl implements SalesLog {
     return sales;
   }
 
-  /** Add a sale to the log. */
+  /**
+   * Add a sale to the log.
+   */
   @Override
   public void addSale(Sale sale) {
     if (sale != null && !sales.contains(sale)) {
@@ -41,7 +43,9 @@ public class SalesLogImpl implements SalesLog {
     }
   }
 
-  /** Get total value of sales in sale log. */
+  /**
+   * Get total value of sales in sale log.
+   */
   @Override
   public BigDecimal getTotalValueOfSales() {
     BigDecimal value = new BigDecimal("0.00");

@@ -10,21 +10,22 @@ import java.util.List;
 
 /**
  * A class representing a user account.
- * @author Aidan Zorbas
  *
+ * @author Aidan Zorbas
  */
 public class Account {
+
   private ShoppingCart cart;
   private int accountId;
   private int userId;
   private boolean active;
-  
+
   public Account(int userId, int accountId, boolean active) {
     this.userId = userId;
     this.accountId = accountId;
     this.active = active;
   }
-  
+
   public boolean retrieveCustomerCart() throws SQLException {
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
@@ -33,11 +34,11 @@ public class Account {
     if (accountIds == null || !accountIds.contains(accountId)) {
       return false;
     }
-    
+
     cart = DatabaseHelperAdapter.getAccountDetails(accountId);
     return true;
-  } 
-  
+  }
+
   /**
    * Saves a customer's cart to their lowest numbered account.
    *
@@ -48,7 +49,6 @@ public class Account {
    */
   public boolean saveCustomerCart(ShoppingCart toAdd) throws SQLException {
 
-    
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
     }
@@ -65,21 +65,21 @@ public class Account {
       }
     }
     return true;
-    
+
   }
-  
+
   public ShoppingCart getCart() {
     return cart;
   }
-  
+
   public int getUserId() {
     return userId;
   }
-  
+
   public int getAccountId() {
     return accountId;
   }
-  
+
   public boolean deactivate() throws SQLException {
     try {
       return DatabaseHelperAdapter.updateAccountStatus(userId, accountId, false);

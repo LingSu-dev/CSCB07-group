@@ -20,6 +20,7 @@ import java.util.List;
  * @author Payam Yektamaram
  */
 public class ShoppingCart {
+
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
@@ -41,7 +42,7 @@ public class ShoppingCart {
   /**
    * Add some quantity of an item to the cart.
    *
-   * @param item     the item to add.
+   * @param item the item to add.
    * @param quantity the number of that item to add.
    */
   public void addItem(Item item, int quantity) {
@@ -120,7 +121,9 @@ public class ShoppingCart {
     return taxRate;
   }
 
-  /** clear the shopping cart. */
+  /**
+   * clear the shopping cart.
+   */
   public void clearCart() {
     items.clear();
     total = BigDecimal.ZERO;
@@ -128,7 +131,9 @@ public class ShoppingCart {
     discountCodes.clear();
   }
 
-  /** remove a coupon code */
+  /**
+   * remove a coupon code
+   */
   public boolean removeCoupon(String code) {
     boolean success = discountCodes.remove(code);
     total = calculateCost();
@@ -137,7 +142,7 @@ public class ShoppingCart {
 
   /**
    * Apply a coupon code to an item and recalculate its price
-   * 
+   *
    * @param item the item to apply the coupon to
    * @param code the coupon code
    */
@@ -161,12 +166,14 @@ public class ShoppingCart {
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
-        price = price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
+        price = price.multiply(new BigDecimal("100").subtract(discount))
+            .divide(new BigDecimal("100"));
       }
       discountCodes.add(code);
 
-      System.out.println(String.format("Original price of item %s: %s%nNew Price: %s", item.getName(), item.getPrice(),
-          price.toPlainString()));
+      System.out.println(String
+          .format("Original price of item %s: %s%nNew Price: %s", item.getName(), item.getPrice(),
+              price.toPlainString()));
       BigDecimal priceChange = item.getPrice().subtract(price);
       itemDiscounts.put(item, priceChange);
       total = calculateCost();
@@ -203,23 +210,27 @@ public class ShoppingCart {
             // coupon to avoid throwing an exception later
             if (!couponCanBeApplied(code, 1)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
-              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              System.out.println(String
+                  .format("The invalid coupon code has been removed. Please check out again."));
               removeCoupon(code);
               return false;
             }
             int couponId = DatabaseHelperAdapter.getCouponId(code);
             int uses = DatabaseHelperAdapter.getCouponUses(couponId);
-            Item item = DatabaseHelperAdapter.getItem(DatabaseHelperAdapter.getCouponItem(couponId));
+            Item item = DatabaseHelperAdapter
+                .getItem(DatabaseHelperAdapter.getCouponItem(couponId));
             int itemQuantity = items.getOrDefault(item, 0);
             if (!couponCanBeApplied(code, itemQuantity)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
-              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              System.out.println(String
+                  .format("The invalid coupon code has been removed. Please check out again."));
               removeCoupon(code);
               return false;
             }
             DatabaseHelperAdapter.updateCouponUses(uses - itemQuantity, couponId);
           } catch (DatabaseInsertException e) {
-            System.out.println(String.format("Unable to update remaining coupon uses for %s", code));
+            System.out
+                .println(String.format("Unable to update remaining coupon uses for %s", code));
           }
         }
 

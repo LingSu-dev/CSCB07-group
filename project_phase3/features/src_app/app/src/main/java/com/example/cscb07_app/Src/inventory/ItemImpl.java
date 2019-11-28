@@ -107,7 +107,9 @@ public class ItemImpl implements Item {
     return (toCompare.getId() == id);
   }
 
-  /** Generate a hashcode for an item. */
+  /**
+   * Generate a hashcode for an item.
+   */
   @Override
   public int hashCode() {
     return id;

@@ -10,6 +10,7 @@ import java.security.MessageDigest;
  * @author Joe
  */
 public class PasswordHelpers {
+
   /**
    * Returns a hashed version of password to be stored in database.
    *
