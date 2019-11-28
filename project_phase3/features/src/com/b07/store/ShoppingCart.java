@@ -1,8 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper;
-import com.b07.database.helper.DatabaseSelectHelper;
-import com.b07.database.helper.DatabaseUpdateHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
@@ -147,12 +145,12 @@ public class ShoppingCart {
     // TODO: add check for whether a given coupon code already exists when adding
     // new code
     try {
-      int couponId = DatabaseSelectHelper.getCouponId(code);
-      int itemId = DatabaseSelectHelper.getCouponItem(couponId);
-      Item item = DatabaseSelectHelper.getItem(itemId);
+      int couponId = DatabaseHelperAdapter.getCouponId(code);
+      int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
+      Item item = DatabaseHelperAdapter.getItem(itemId);
       BigDecimal price = item.getPrice();
-      DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
-      BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
+      DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
+      BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
       if (!couponCanBeApplied(code, 1)) {
         return;
       }
@@ -193,7 +191,7 @@ public class ShoppingCart {
         // Checking if inventory contains required amount of all items
         for (int i = 0; i < allItems.size(); i++) {
           itemId = allItems.get(i).getId();
-          if (DatabaseSelectHelper.getInventoryQuantity(itemId) < items.get(allItems.get(i))) {
+          if (DatabaseHelperAdapter.getInventoryQuantity(itemId) < items.get(allItems.get(i))) {
             return false;
           }
         }
@@ -209,9 +207,9 @@ public class ShoppingCart {
               removeCoupon(code);
               return false;
             }
-            int couponId = DatabaseSelectHelper.getCouponId(code);
-            int uses = DatabaseSelectHelper.getCouponUses(couponId);
-            Item item = DatabaseSelectHelper.getItem(DatabaseSelectHelper.getCouponItem(couponId));
+            int couponId = DatabaseHelperAdapter.getCouponId(code);
+            int uses = DatabaseHelperAdapter.getCouponUses(couponId);
+            Item item = DatabaseHelperAdapter.getItem(DatabaseHelperAdapter.getCouponItem(couponId));
             int itemQuantity = items.getOrDefault(item, 0);
             if (!couponCanBeApplied(code, itemQuantity)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
@@ -219,7 +217,7 @@ public class ShoppingCart {
               removeCoupon(code);
               return false;
             }
-            DatabaseUpdateHelper.updateCouponUses(uses - itemQuantity, couponId);
+            DatabaseHelperAdapter.updateCouponUses(uses - itemQuantity, couponId);
           } catch (DatabaseInsertException e) {
             System.out.println(String.format("Unable to update remaining coupon uses for %s", code));
           }
@@ -228,22 +226,22 @@ public class ShoppingCart {
         // Calculate and submit price after tax
         BigDecimal totalPrice = total.multiply(taxRate).setScale(2, RoundingMode.CEILING);
         int saleId;
-        saleId = DatabaseInsertHelper.insertSale(customer.getId(), totalPrice);
+        saleId = DatabaseHelperAdapter.insertSale(customer.getId(), totalPrice);
         // Update inventory
         int quantity;
         int toRemove;
         for (int i = 0; i < allItems.size(); i++) {
           itemId = allItems.get(i).getId();
-          quantity = DatabaseSelectHelper.getInventoryQuantity(itemId);
+          quantity = DatabaseHelperAdapter.getInventoryQuantity(itemId);
           toRemove = items.get(allItems.get(i));
-          DatabaseUpdateHelper.updateInventoryQuantity(quantity - toRemove, itemId);
+          DatabaseHelperAdapter.updateInventoryQuantity(quantity - toRemove, itemId);
         }
         // Insert Itemized sales
         for (Item item : items.keySet()) {
           // System.out.println("SaleId: " + saleId);
           // System.out.println("item ID: " + item.getId());
           // System.out.println("Item quantity " + items.get(item));
-          DatabaseInsertHelper.insertItemizedSale(saleId, item.getId(), items.get(item));
+          DatabaseHelperAdapter.insertItemizedSale(saleId, item.getId(), items.get(item));
         }
 
         clearCart();
@@ -255,12 +253,12 @@ public class ShoppingCart {
   }
 
   private boolean couponCanBeApplied(String code, int quantity) throws SQLException {
-    int couponId = DatabaseSelectHelper.getCouponId(code);
-    int itemId = DatabaseSelectHelper.getCouponItem(couponId);
-    DatabaseSelectHelper.getItem(itemId);
-    DiscountTypes type = DatabaseSelectHelper.getDiscountType(couponId);
-    BigDecimal discount = DatabaseSelectHelper.getDiscountAmount(couponId);
-    int uses = DatabaseSelectHelper.getCouponUses(couponId);
+    int couponId = DatabaseHelperAdapter.getCouponId(code);
+    int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
+    DatabaseHelperAdapter.getItem(itemId);
+    DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
+    BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
+    int uses = DatabaseHelperAdapter.getCouponUses(couponId);
     if (uses - quantity < 0) {
       System.out.println("This coupon has already been used the maximum number of times");
       return false;
