@@ -1,11 +1,11 @@
 package com.example.cscb07_app.Src.store;
 
-import com.b07.database.helper.DatabaseHelperAdapter;
-import com.b07.exceptions.DatabaseInsertException;
-import com.b07.inventory.Inventory;
-import com.b07.inventory.Item;
-import com.b07.users.Employee;
-import com.b07.users.Roles;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
+import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
+import com.example.cscb07_app.Src.inventory.Inventory;
+import com.example.cscb07_app.Src.inventory.Item;
+import com.example.cscb07_app.Src.users.Employee;
+import com.example.cscb07_app.Src.users.Roles;
 import java.sql.SQLException;
 
 /**

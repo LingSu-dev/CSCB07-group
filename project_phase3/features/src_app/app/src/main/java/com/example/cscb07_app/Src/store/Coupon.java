@@ -1,7 +1,7 @@
 package com.example.cscb07_app.Src.store;
 
 import java.math.BigDecimal;
-import com.b07.inventory.Item;
+import com.example.cscb07_app.Src.inventory.Item;
 
 public interface Coupon {
 
