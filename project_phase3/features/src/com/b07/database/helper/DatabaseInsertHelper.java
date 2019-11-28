@@ -203,11 +203,12 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * Insert a new account into the database.
    *
    * @param userId the userId for the user of the account.
+   * @param active if the account is active or inactive
    * @return the id of the account,
    * @throws DatabaseInsertException if something goes wrong.
    * @throws SQLException on failure.
    */
-  public static int insertAccount(int userId) throws DatabaseInsertException, SQLException {
+  public static int insertAccount(int userId, boolean active) throws DatabaseInsertException, SQLException {
 
     List<Integer> validUserIds = DatabaseSelectHelper.getUserIds();
     if (!validUserIds.contains(userId)) {
@@ -215,7 +216,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     }
 
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
-    int accountId = DatabaseInserter.insertAccount(userId, connection);
+    int accountId = DatabaseInserter.insertAccount(userId, active, connection);
     connection.close();
     return accountId;
   }

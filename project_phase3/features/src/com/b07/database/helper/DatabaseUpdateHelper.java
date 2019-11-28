@@ -5,6 +5,8 @@ import com.b07.exceptions.DatabaseInsertException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A series of helper methods for updating information in the database.
@@ -189,7 +191,7 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
   }
 
   /**
-   * Update the number of uses for a coupon
+   * Update the number of uses for a coupon.
    * 
    * @param uses     the number of uses
    * @param couponId the id of the coupon
@@ -198,7 +200,8 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
    *                                 database.
    * @throws DatabaseInsertException if the inventory quantity cannot be updated.
    */
-  public static boolean updateCouponUses(int uses, int couponId) throws SQLException, DatabaseInsertException {
+  public static boolean updateCouponUses(int uses, int couponId) 
+      throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.couponIdExists(couponId)) {
       throw new DatabaseInsertException();
@@ -208,5 +211,18 @@ public class DatabaseUpdateHelper extends DatabaseUpdater {
     boolean complete = DatabaseUpdater.updateCouponUses(couponId, uses, connection);
     connection.close();
     return complete;
+  }
+  
+  public static boolean updateAccountStatus(int userId, int accountId, boolean active) 
+      throws SQLException, DatabaseInsertException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    if (!DatabaseSelectHelper.userIdExists(userId)) {
+      throw new DatabaseInsertException();
+    }
+    List<Integer> userAccs = DatabaseSelectHelper.getUserAccountsById(userId);
+    if (!userAccs.contains(accountId)) {
+      throw new DatabaseInsertException();
+    }
+    return DatabaseUpdater.updateAccountStatus(accountId, active, connection);
   }
 }
