@@ -1,6 +1,6 @@
 package com.b07.users;
 
-import com.b07.database.helper.DatabaseSelectHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import java.sql.SQLException;
 
 /**
@@ -24,8 +24,8 @@ public class UserFactory {
    * @throws SQLException if there is an issue communicating with the database.
    */
   public static User createUser(int id, String name, int age, String address) throws SQLException {
-    int roleId = DatabaseSelectHelper.getUserRoleId(id);
-    String roleName = DatabaseSelectHelper.getRoleName(roleId);
+    int roleId = DatabaseHelperAdapter.getUserRoleId(id);
+    String roleName = DatabaseHelperAdapter.getRoleName(roleId);
 
     if (roleName.equals(Roles.ADMIN.name())) {
       return new Admin(id, name, age, address);

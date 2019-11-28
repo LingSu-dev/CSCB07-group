@@ -1,13 +1,10 @@
 package com.b07.users;
 
-import com.b07.database.helper.DatabaseInsertHelper;
-import com.b07.database.helper.DatabaseSelectHelper;
-import com.b07.database.helper.DatabaseUpdateHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,15 +26,15 @@ public class Account {
   }
   
   public boolean retrieveCustomerCart() throws SQLException {
-    if (!DatabaseSelectHelper.userIdExists(userId)) {
+    if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
     }
-    List<Integer> accountIds = DatabaseSelectHelper.getUserAccountsById(userId);
+    List<Integer> accountIds = DatabaseHelperAdapter.getUserAccountsById(userId);
     if (accountIds == null || !accountIds.contains(accountId)) {
       return false;
     }
     
-    cart = DatabaseSelectHelper.getAccountDetails(accountId);
+    cart = DatabaseHelperAdapter.getAccountDetails(accountId);
     return true;
   } 
   
@@ -52,17 +49,17 @@ public class Account {
   public boolean saveCustomerCart(ShoppingCart toAdd) throws SQLException {
 
     
-    if (!DatabaseSelectHelper.userIdExists(userId)) {
+    if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
     }
-    List<Integer> accountIds = DatabaseSelectHelper.getUserAccountsById(userId);
+    List<Integer> accountIds = DatabaseHelperAdapter.getUserAccountsById(userId);
     if (accountIds == null || !accountIds.contains(accountId)) {
       return false;
     }
     HashMap<Item, Integer> items = toAdd.getItemsWithQuantity();
     for (Item item : items.keySet()) {
       try {
-        DatabaseInsertHelper.insertAccountLine(accountId, item.getId(), items.get(item));
+        DatabaseHelperAdapter.insertAccountLine(accountId, item.getId(), items.get(item));
       } catch (DatabaseInsertException e) {
         return false;
       }
@@ -85,7 +82,7 @@ public class Account {
   
   public boolean deactivate() throws SQLException {
     try {
-      return DatabaseUpdateHelper.updateAccountStatus(userId, accountId, false);
+      return DatabaseHelperAdapter.updateAccountStatus(userId, accountId, false);
     } catch (DatabaseInsertException e) {
       return false;
     }

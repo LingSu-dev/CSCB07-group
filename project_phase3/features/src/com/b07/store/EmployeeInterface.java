@@ -1,8 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseInsertHelper;
-import com.b07.database.helper.DatabaseSelectHelper;
-import com.b07.database.helper.DatabaseUpdateHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
@@ -71,7 +69,7 @@ public class EmployeeInterface {
    */
   public boolean restockInventory(Item item, int quantity) throws SQLException {
     try {
-      DatabaseUpdateHelper.updateInventoryQuantity(quantity, item.getId());
+      DatabaseHelperAdapter.updateInventoryQuantity(quantity, item.getId());
     } catch (DatabaseInsertException e) {
       return false;
     }
@@ -94,9 +92,9 @@ public class EmployeeInterface {
       throws SQLException, DatabaseInsertException {
 
     int userId = -1;
-    userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
-    int customerId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
-    DatabaseUpdateHelper.updateUserRole(customerId, userId);
+    userId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+    int customerId = DatabaseHelperAdapter.getRoleIdByName("CUSTOMER");
+    DatabaseHelperAdapter.updateUserRole(customerId, userId);
     return userId;
   }
 
@@ -115,9 +113,9 @@ public class EmployeeInterface {
       throws SQLException, DatabaseInsertException {
 
     int userId = -1;
-    userId = DatabaseInsertHelper.insertNewUser(name, age, address, password);
-    int employeeId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-    DatabaseUpdateHelper.updateUserRole(employeeId, userId);
+    userId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+    int employeeId = DatabaseHelperAdapter.getRoleIdByName("EMPLOYEE");
+    DatabaseHelperAdapter.updateUserRole(employeeId, userId);
     return userId;
   }
 
@@ -131,10 +129,10 @@ public class EmployeeInterface {
   public int createAccount(int customerId) throws SQLException {
 
     try {
-      if (DatabaseSelectHelper.getUserRoleId(customerId) != -1
-          && DatabaseSelectHelper.getUserRoleId(customerId)
-              == DatabaseSelectHelper.getRoleIdByName(Roles.CUSTOMER.name())) {
-        return DatabaseInsertHelper.insertAccount(customerId, true);
+      if (DatabaseHelperAdapter.getUserRoleId(customerId) != -1
+          && DatabaseHelperAdapter.getUserRoleId(customerId)
+              == DatabaseHelperAdapter.getRoleIdByName(Roles.CUSTOMER.name())) {
+        return DatabaseHelperAdapter.insertAccount(customerId, true);
       }
     } catch (DatabaseInsertException e) {
       return -1;
