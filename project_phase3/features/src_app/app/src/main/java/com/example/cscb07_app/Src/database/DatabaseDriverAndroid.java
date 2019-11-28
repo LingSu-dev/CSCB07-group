@@ -1,13 +1,11 @@
-package com.b07.database;
+package com.example.cscb07_app.Src.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.b07.security.PasswordHelpers;
-
+import com.example.cscb07_app.Src.security.PasswordHelpers;
 import java.math.BigDecimal;
 
 /**

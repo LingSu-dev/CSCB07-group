@@ -9,6 +9,7 @@ package com.example.cscb07_app.Src.users;
  * @author Payam Yektamaram
  */
 public class Customer extends User {
+
   /**
    * Create a new customer, without setting their authentication value.
    *

@@ -61,7 +61,9 @@ public class StoreHelpers {
         System.out.println("Incorrect password");
         return null;
       }
-      System.out.println(String.format("Successfully logged in to role ID %d with user ID %d", user.getRoleId(), user.getId()));
+      System.out.println(String
+          .format("Successfully logged in to role ID %d with user ID %d", user.getRoleId(),
+              user.getId()));
       System.out.println(String.format("Welcome, %s", user.getName()));
       return user;
     } catch (NumberFormatException e) {

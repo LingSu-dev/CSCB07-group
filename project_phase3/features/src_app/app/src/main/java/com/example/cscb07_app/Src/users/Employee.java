@@ -9,6 +9,7 @@ package com.example.cscb07_app.Src.users;
  * @author Payam Yektamaram
  */
 public class Employee extends User {
+
   /**
    * Create a new employee, without setting their authentication value.
    *
