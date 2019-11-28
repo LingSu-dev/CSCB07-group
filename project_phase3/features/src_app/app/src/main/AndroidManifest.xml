@@ -9,7 +9,14 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".Activity.Admin.AdminViewBooks"></activity>
+    <activity android:name=".Activity.Admin.AdminCreateCoupon"></activity>
+    <activity android:name=".Activity.Admin.AdminLoadAppData" />
+    <activity android:name=".Activity.Admin.AdminSaveAppData" />
+    <activity android:name=".Activity.Admin.AdminViewActiveAccounts" />
+    <activity android:name=".Activity.Admin.AdminViewHistoricAccounts" />
+    <activity android:name=".Activity.Admin.AdminPromoteEmployee" />
+    <activity android:name=".Activity.Admin.AdminMenu" />
+    <activity android:name=".Activity.Admin.AdminViewBooks" />
     <activity android:name=".Activity.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -29,6 +36,7 @@
     <activity android:name=".Activity.Employee.EmployeeMakeUser" />
     <activity android:name=".Activity.Employee.EmployeeMenu" />
     <activity android:name=".Activity.Admin.Admin" />
-    <activity android:name=".Activity.Login.LoginMenu"/>
+    <activity android:name=".Activity.Login.LoginMenu" />
   </application>
+
 </manifest>

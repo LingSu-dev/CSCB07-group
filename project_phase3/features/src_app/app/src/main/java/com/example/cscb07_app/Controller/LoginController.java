@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Spinner;
 import com.example.cscb07_app.Activity.Admin.Admin;
+import com.example.cscb07_app.Activity.Admin.AdminMenu;
 import com.example.cscb07_app.Activity.Customer.CustomerStore;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
@@ -24,7 +25,7 @@ public class LoginController implements View.OnClickListener {
     String rolePosition = mySpinner.getSelectedItem().toString();
 
     if (rolePosition.equals("Admin")) {
-      appContext.startActivity(new Intent(this.appContext, Admin.class));
+      appContext.startActivity(new Intent(this.appContext, AdminMenu.class));
     } else if (rolePosition.equals("Employee")) {
       appContext.startActivity(new Intent(this.appContext, EmployeeMenu.class));
     } else if (rolePosition.equals("Customer")) {

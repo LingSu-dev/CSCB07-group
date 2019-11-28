@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".Activity.Admin.AdminViewHistoricAccounts"
+  android:padding="@dimen/activityPadding">
+
+  <TextView
+    android:id="@+id/historicAccountsPrompt"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_marginTop="15dp"
+    android:text="@string/viewHistoricAccountsPrompt"
+    android:textSize="@dimen/textViewTextSize" />
+
+  <EditText
+    android:id="@+id/historicAccountsCustomerIdEntry"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_marginLeft="15dp"
+    android:layout_toRightOf="@id/historicAccountsPrompt"
+    android:hint="@string/userIdHint"
+    android:inputType="text"
+    android:textSize="20dp" />
+
+  <Button
+    android:id="@+id/viewHistoricAccountsBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBottom="@id/historicAccountsCustomerIdEntry"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="-54dp"
+    android:text="@string/viewHistoricAccountsBtn"
+    app:icon="@drawable/ic_account_balance_black_24dp"/>
+
+  <TextView
+    android:layout_marginTop="70dp"
+    android:layout_below="@id/viewHistoricAccountsBtn"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textSize="@dimen/textViewTextSize"
+    android:id="@+id/viewHistoricAccountsText"
+    android:scrollbars="vertical"
+    />
+
+</RelativeLayout>

@@ -4,4 +4,5 @@
     <dimen name="textViewTextSize">20dp</dimen>
     <dimen name="employeeMenuOptionsTextSize">30dp</dimen>
     <dimen name="employeeMenuButtonWidth">235dp</dimen>
+    <dimen name="adminMenuButtonWidth">266dp</dimen>
 </resources>

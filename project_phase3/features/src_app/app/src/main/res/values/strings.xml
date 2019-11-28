@@ -54,7 +54,6 @@
   <string name="viewCart">View Cart</string>
   <string name="checkout">Checkout</string>
   <string name="logout">Logout</string>
-
   <string name="couponCodePrompt">Coupon Code</string>
   <string name="couponDiscountPrompt">Discount</string>
   <string name="couponItemIdPrompt">Item Id</string>
@@ -62,4 +61,22 @@
   <string name="viewBooksBtn">View Books</string>
   <string name="couponTypePrompt">Select Coupon Type</string>
   <string name="addCouponBtn">Add Coupon</string>
+
+  <string name="adminMenuViewHistoricAccounts">View Historic Accounts</string>
+  <string name="adminMenuViewActiveAccounts">View Active Accounts</string>
+  <string name="adminMenuSaveData">Save Application Data</string>
+  <string name="adminMenuLoadData">Load Application Data</string>
+  <string name="adminMenuCreateCoupon">Create Coupon</string>
+  <string name="viewHistoricAccountsBtn">View Historic Accounts</string>
+  <string name="viewHistoricAccountsPrompt">Historic Accounts:</string>
+  <string name="viewActiveAccountsBtn">View Active Accounts</string>
+  <string name="viewActiveAccountsPrompt">Active Accounts:</string>
+
+  <string name="saveAppDataPrompt">App Data:</string>
+  <string name="saveAppDataBtn">Save Data</string>
+  <string name="saveAppDataHint">File Name</string>
+
+  <string name="loadAppDataBtn">Load Data</string>
+
+
 </resources>
