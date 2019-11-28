@@ -21,16 +21,13 @@ public class DatabaseHelperAdapter {
     DatabaseHelperAdapter.platformHelper = toSet;
   }
 
-
   public static Connection connectOrCreateDataBase() {
     return platformHelper.connectOrCreateDataBase();
   }
 
-
   public static int insertRole(String name) throws DatabaseInsertException, SQLException {
     return platformHelper.insertRole(name);
   }
-
 
   public static int insertNewUser(String name, int age, String address, String password)
       throws DatabaseInsertException, SQLException {
