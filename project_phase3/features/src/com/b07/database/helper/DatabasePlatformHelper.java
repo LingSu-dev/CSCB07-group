@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface DatabasePlatformHelper{
+public interface DatabasePlatformHelper {
   //Driver Helper
   public Connection connectOrCreateDataBase();
   

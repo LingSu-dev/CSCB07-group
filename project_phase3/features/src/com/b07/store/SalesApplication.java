@@ -1,5 +1,7 @@
 package com.b07.store;
 
+import com.b07.database.helper.DatabaseDesktopHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseInsertHelper;
 import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
@@ -32,6 +34,7 @@ public class SalesApplication {
    */
   public static void main(String[] argv) {
 
+    DatabaseHelperAdapter.setPlatformHelper(new DatabaseDesktopHelper());
     Connection connection = DatabaseDriverExtender.connectOrCreateDataBase();
     if (connection == null) {
       System.out.print("Error establishing initial database connection");
