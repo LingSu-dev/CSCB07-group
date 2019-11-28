@@ -2,8 +2,6 @@ package com.b07.store;
 
 import com.b07.database.helper.DatabaseDesktopHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
-import com.b07.database.helper.DatabaseInsertHelper;
-import com.b07.database.helper.DatabaseSelectHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
@@ -129,9 +127,9 @@ public class SalesApplication {
     // Creating roles
 
     try {
-      DatabaseInsertHelper.insertRole("ADMIN");
-      DatabaseInsertHelper.insertRole("CUSTOMER");
-      DatabaseInsertHelper.insertRole("EMPLOYEE");
+      DatabaseHelperAdapter.insertRole("ADMIN");
+      DatabaseHelperAdapter.insertRole("CUSTOMER");
+      DatabaseHelperAdapter.insertRole("EMPLOYEE");
     } catch (DatabaseInsertException e1) {
       System.out.println("Unable to insert role into database");
       exitOnFailure(connection);
@@ -140,7 +138,7 @@ public class SalesApplication {
     // Creating discount types
     try {
       for (DiscountTypes type : DiscountTypes.values()) {
-        DatabaseInsertHelper.insertDiscountType(type.name());
+        DatabaseHelperAdapter.insertDiscountType(type.name());
       }
     } catch (DatabaseInsertException e1) {
       System.out.println("Unable to insert discount type into database");
@@ -167,11 +165,11 @@ public class SalesApplication {
       // Creating database admin
       try {
         int ageInt = Integer.parseInt(age);
-        id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
+        id = DatabaseHelperAdapter.insertNewUser(name, ageInt, address, password);
         exit = true;
         System.out.println("Created new Admin, ID: " + id);
-        int adminRoleId = DatabaseSelectHelper.getRoleIdByName("ADMIN");
-        DatabaseInsertHelper.insertUserRole(id, adminRoleId);
+        int adminRoleId = DatabaseHelperAdapter.getRoleIdByName("ADMIN");
+        DatabaseHelperAdapter.insertUserRole(id, adminRoleId);
       } catch (NumberFormatException e) {
         System.out.println("Please enter a valid number");
       } catch (DatabaseInsertException e1) {
@@ -198,10 +196,10 @@ public class SalesApplication {
       // creating first employee
       try {
         int ageInt = Integer.parseInt(age);
-        id = DatabaseInsertHelper.insertNewUser(name, ageInt, address, password);
+        id = DatabaseHelperAdapter.insertNewUser(name, ageInt, address, password);
         exit = true;
-        int employeeRoleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
-        DatabaseInsertHelper.insertUserRole(id, employeeRoleId);
+        int employeeRoleId = DatabaseHelperAdapter.getRoleIdByName("EMPLOYEE");
+        DatabaseHelperAdapter.insertUserRole(id, employeeRoleId);
         System.out.println("Created new Empolyee, ID: " + id);
       } catch (NumberFormatException e) {
         System.out.println("Please enter a valid number");
@@ -213,8 +211,8 @@ public class SalesApplication {
     try {
       int itemId;
       for (ItemTypes itemType : ItemTypes.values()) {
-        itemId = DatabaseInsertHelper.insertItem(itemType.toString(), new BigDecimal("10.00"));
-        DatabaseInsertHelper.insertInventory(itemId, 0);
+        itemId = DatabaseHelperAdapter.insertItem(itemType.toString(), new BigDecimal("10.00"));
+        DatabaseHelperAdapter.insertInventory(itemId, 0);
       }
     } catch (DatabaseInsertException e) {
       System.out.println("An issue occured while populating database Items!");
@@ -255,7 +253,7 @@ public class SalesApplication {
         System.out.println("Enter the id of the user you would like to promote:");
         try {
           int employeeId = Integer.parseInt(bufferedReader.readLine());
-          User toPromote = DatabaseSelectHelper.getUserDetails(employeeId);
+          User toPromote = DatabaseHelperAdapter.getUserDetails(employeeId);
           if (toPromote instanceof Employee) {
             admin.promoteEmployee((Employee) toPromote);
             System.out.println("Employee promoted successfully!");
@@ -266,7 +264,7 @@ public class SalesApplication {
           System.out.println("Please enter an ID number.");
         }
       } else if (input == 2) {
-        SalesLog salesLog = DatabaseSelectHelper.getSales();
+        SalesLog salesLog = DatabaseHelperAdapter.getSales();
         System.out.println(salesLog.viewBooks());
       } else if (input == 3) {
         System.out.println("Enter an item ID to add a coupon for:");
@@ -290,7 +288,7 @@ public class SalesApplication {
           int itemId = Integer.parseInt(itemIdString);
           int uses = Integer.parseInt(usesString);
           BigDecimal discount = new BigDecimal(discountString);
-          int couponId = DatabaseInsertHelper.insertCoupon(itemId, uses, type, discount, code);
+          int couponId = DatabaseHelperAdapter.insertCoupon(itemId, uses, type, discount, code);
           System.out.println("Created new coupon, ID: " + couponId);
         } catch (NumberFormatException e) {
           System.out.println("Please enter a valid number");
@@ -327,7 +325,7 @@ public class SalesApplication {
       System.out.println("Incorrect role. Please use the correct login for your role.");
       return;
     }
-    Inventory inventory = DatabaseSelectHelper.getInventory();
+    Inventory inventory = DatabaseHelperAdapter.getInventory();
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
     System.out.println("Employee options:");
 
@@ -370,13 +368,13 @@ public class SalesApplication {
           if (userId == -1) {
             break insertUser;
           }
-          int roleId = DatabaseSelectHelper.getRoleIdByName("CUSTOMER");
+          int roleId = DatabaseHelperAdapter.getRoleIdByName("CUSTOMER");
           if (userId == -1) {
             // should never run: included here due to UML-unstable EmployeeInterface change
             System.out.println("Unable to retrieve the role ID.");
             break insertUser;
           }
-          DatabaseInsertHelper.insertUserRole(userId, roleId);
+          DatabaseHelperAdapter.insertUserRole(userId, roleId);
           System.out.println("New Customer created with ID: " + userId);
         } catch (DatabaseInsertException e) {
           System.out.println("Unable to create an employee with the given parameters.");
@@ -423,12 +421,12 @@ public class SalesApplication {
             // should never run: included here due to UML-unstable EmployeeInterface change
             break insertUser;
           }
-          int roleId = DatabaseSelectHelper.getRoleIdByName("EMPLOYEE");
+          int roleId = DatabaseHelperAdapter.getRoleIdByName("EMPLOYEE");
           if (userId == -1) {
             System.out.println("Unable to retrieve the role ID.");
             break insertUser;
           }
-          DatabaseInsertHelper.insertUserRole(userId, roleId);
+          DatabaseHelperAdapter.insertUserRole(userId, roleId);
           System.out.println("New Employee created with ID: " + userId);
         } catch (DatabaseInsertException e) {
           System.out.println("Unable to create an employee with the given parameters.");
@@ -438,7 +436,7 @@ public class SalesApplication {
         try {
           System.out.println("Enter the ID of the item to restock");
           int id = Integer.parseInt(reader.readLine());
-          Item item = DatabaseSelectHelper.getItem(id);
+          Item item = DatabaseHelperAdapter.getItem(id);
           System.out.println("Enter a quantity of the item to restock");
           int quantity = Integer.parseInt(reader.readLine());
           employeeInterface.restockInventory(item, quantity);
@@ -503,7 +501,7 @@ public class SalesApplication {
       */
       
       //Checking user accounts for existing carts.
-      List<Integer> accs = DatabaseSelectHelper.getUserActiveAccounts(customer.getId());
+      List<Integer> accs = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
       
       if (accs != null && !accs.isEmpty()) {
         System.out.println("It appears you have existing accounts!");
@@ -568,7 +566,7 @@ public class SalesApplication {
 
         } else if (input == 2) {
           // Allow user to add items to cart
-          List<Item> items = DatabaseSelectHelper.getAllItems();
+          List<Item> items = DatabaseHelperAdapter.getAllItems();
           System.out.println("The following are the current items and their " + "IDs");
           for (int i = 0; i < items.size(); i++) {
             System.out.println(items.get(i).getName());
@@ -581,7 +579,7 @@ public class SalesApplication {
           try {
             int itemId = Integer.parseInt(toStock);
             int quantityInt = Integer.parseInt(quantity);
-            Item item = DatabaseSelectHelper.getItem(itemId);
+            Item item = DatabaseHelperAdapter.getItem(itemId);
             if (item != null) {
               shoppingCart.addItem(item, quantityInt);
               System.out.println("Successfully added!");
@@ -610,7 +608,7 @@ public class SalesApplication {
           try {
             int itemId = Integer.parseInt(toStock);
             int quantityInt = Integer.parseInt(quantity);
-            Item item = DatabaseSelectHelper.getItem(itemId);
+            Item item = DatabaseHelperAdapter.getItem(itemId);
             if (item == null) {
               System.out.println("No such item!");
             } else if (shoppingCart.removeItem(item, quantityInt)) {
@@ -659,7 +657,7 @@ public class SalesApplication {
       }
       
       //Store cart in account for later
-      accs = DatabaseSelectHelper.getUserActiveAccounts(customer.getId());
+      accs = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
       
       if (accs != null && !accs.isEmpty() && !shoppingCart.getItems().isEmpty()) {
         System.out.println("Would you like to save your cart to your account?");
