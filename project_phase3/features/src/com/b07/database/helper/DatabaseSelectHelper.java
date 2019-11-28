@@ -571,7 +571,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return the user id of the account's owner, -1 if not found.
    * @throws SQLException on failure
    */
-  private static int getUserIdByAccountId(int accountId) throws SQLException {
+  public static int getUserIdByAccountId(int accountId) throws SQLException {
     for (Integer userId : getUserIds()) {
       for (Integer acctId : getUserAccountsById(userId)) {
         if (acctId == accountId) {
@@ -669,7 +669,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return the name of the discount type
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
    */
-  private static String getDiscountTypeName(int discountTypeId) throws SQLException {
+  public static String getDiscountTypeName(int discountTypeId) throws SQLException {
     if (!discountTypeIdExists(discountTypeId)) {
       return null;
     }
@@ -686,7 +686,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return true if the discount type ID exists and false otherwise
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
    */
-  private static boolean discountTypeIdExists(int discountTypeId) throws SQLException {
+  public static boolean discountTypeIdExists(int discountTypeId) throws SQLException {
     List<Integer> validDisCountTypeIds = DatabaseSelectHelper.getDiscountTypeIds();
     return validDisCountTypeIds.contains(discountTypeId);
   }
@@ -697,7 +697,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
    * @return the list of discount type IDs
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
    */
-  private static List<Integer> getDiscountTypeIds() throws SQLException {
+  public static List<Integer> getDiscountTypeIds() throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     List<Integer> ids = new ArrayList<Integer>();
     ResultSet results = DatabaseSelector.getDiscountTypeIds(connection);
@@ -811,7 +811,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return accounts;
   }
   
-  public static List<Integer> getUseInactiveAccounts(int userId) throws SQLException{
+  public static List<Integer> getUserInactiveAccounts(int userId) throws SQLException{
     if (!userIdExists(userId)) {
       return null;
     }
