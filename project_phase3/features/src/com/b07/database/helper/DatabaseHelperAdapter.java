@@ -22,7 +22,7 @@ public class DatabaseHelperAdapter {
   
   
   public static Connection connectOrCreateDataBase() {
-    return DatabaseDriverHelper.connectOrCreateDataBase();
+    return platformHelper.connectOrCreateDataBase();
   }
 
   
