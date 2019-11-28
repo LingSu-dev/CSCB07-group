@@ -1,6 +1,6 @@
 package com.b07.store;
 
-import com.b07.database.helper.DatabaseSelectHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.users.Roles;
 import com.b07.users.User;
 import java.io.BufferedReader;
@@ -24,12 +24,12 @@ public class StoreHelpers {
    * @throws SQLException if there was an issue communicating with the database.
    */
   public static final User login(Roles role, int id, String password) throws SQLException {
-    User user = DatabaseSelectHelper.getUserDetails(id);
+    User user = DatabaseHelperAdapter.getUserDetails(id);
     if (user == null) {
       return null;
     }
     // int roleId = user.getRoleId();
-    // if (!Roles.valueOf(DatabaseSelectHelper.getRoleName(roleId)).equals(role)) {
+    // if (!Roles.valueOf(DatabaseHelperAdapter.getRoleName(roleId)).equals(role)) {
     // throw new DatabaseInsertException();
     // }
     if (user.authenticate(password)) {

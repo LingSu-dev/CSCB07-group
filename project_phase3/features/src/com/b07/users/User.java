@@ -1,6 +1,6 @@
 package com.b07.users;
 
-import com.b07.database.helper.DatabaseSelectHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.security.PasswordHelpers;
 import java.sql.SQLException;
 
@@ -89,7 +89,7 @@ public abstract class User {
    */
   public final boolean authenticate(String password) throws SQLException {
     String hashedPassword;
-    hashedPassword = DatabaseSelectHelper.getPassword(id);
+    hashedPassword = DatabaseHelperAdapter.getPassword(id);
     if (hashedPassword == null) {
       return false;
     }

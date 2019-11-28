@@ -1,7 +1,6 @@
 package com.b07.users;
 
-import com.b07.database.helper.DatabaseSelectHelper;
-import com.b07.database.helper.DatabaseUpdateHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import java.sql.SQLException;
 
@@ -56,11 +55,11 @@ public class Admin extends User {
   public boolean promoteEmployee(Employee employee) throws SQLException {
     int id = employee.getId();
     try {
-      int adminId = DatabaseSelectHelper.getUserRoleId(getId());
+      int adminId = DatabaseHelperAdapter.getUserRoleId(getId());
       if (adminId == -1) {
         return false;
       }
-      return DatabaseUpdateHelper.updateUserRole(adminId, id);
+      return DatabaseHelperAdapter.updateUserRole(adminId, id);
     } catch (DatabaseInsertException e) {
       return false;
     }
