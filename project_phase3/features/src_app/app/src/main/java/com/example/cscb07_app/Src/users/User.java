@@ -1,7 +1,7 @@
 package com.example.cscb07_app.Src.users;
 
-import com.b07.database.helper.DatabaseHelperAdapter;
-import com.b07.security.PasswordHelpers;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
+import com.example.cscb07_app.Src.security.PasswordHelpers;
 import java.sql.SQLException;
 
 /**

@@ -1,13 +1,13 @@
 package com.example.cscb07_app.Src.database.helper;
 
-import com.b07.exceptions.DatabaseInsertException;
-import com.b07.inventory.Inventory;
-import com.b07.inventory.Item;
-import com.b07.store.DiscountTypes;
-import com.b07.store.Sale;
-import com.b07.store.SalesLog;
-import com.b07.store.ShoppingCart;
-import com.b07.users.User;
+import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
+import com.example.cscb07_app.Src.inventory.Inventory;
+import com.example.cscb07_app.Src.inventory.Item;
+import com.example.cscb07_app.Src.store.DiscountTypes;
+import com.example.cscb07_app.Src.store.Sale;
+import com.example.cscb07_app.Src.store.SalesLog;
+import com.example.cscb07_app.Src.store.ShoppingCart;
+import com.example.cscb07_app.Src.users.User;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ public class DatabaseHelperAdapter {
 
 
   public static Connection connectOrCreateDataBase() {
-    return DatabaseDriverHelper.connectOrCreateDataBase();
+    return platformHelper.connectOrCreateDataBase();
   }
 
 

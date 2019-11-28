@@ -1,7 +1,7 @@
 package com.example.cscb07_app.Src.store;
 
-import com.b07.inventory.Item;
-import com.b07.users.User;
+import com.example.cscb07_app.Src.inventory.Item;
+import com.example.cscb07_app.Src.users.User;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;

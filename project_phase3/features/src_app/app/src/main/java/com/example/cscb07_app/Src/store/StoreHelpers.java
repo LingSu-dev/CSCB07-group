@@ -1,8 +1,8 @@
 package com.example.cscb07_app.Src.store;
 
-import com.b07.database.helper.DatabaseHelperAdapter;
-import com.b07.users.Roles;
-import com.b07.users.User;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
+import com.example.cscb07_app.Src.users.Roles;
+import com.example.cscb07_app.Src.users.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;

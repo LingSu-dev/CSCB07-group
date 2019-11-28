@@ -1,9 +1,9 @@
 package com.example.cscb07_app.Src.store;
 
-import com.b07.database.helper.DatabaseHelperAdapter;
-import com.b07.exceptions.DatabaseInsertException;
-import com.b07.inventory.Item;
-import com.b07.users.Customer;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
+import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
+import com.example.cscb07_app.Src.inventory.Item;
+import com.example.cscb07_app.Src.users.Customer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
