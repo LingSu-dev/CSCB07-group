@@ -245,8 +245,8 @@ public class SalesApplication {
       return;
     }
 
-    String[] adminOptions =
-        {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons", "0. Exit"};
+    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons",
+        "4. View Customer Accounts", "0. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     while (input != 0) {
       if (input == 1) {
@@ -296,6 +296,24 @@ public class SalesApplication {
           System.out.println("The item doesn't exist or the number of uses is invalid.");
         }
 
+      } else if (input == 4) {
+        System.out.println("Input a customer ID");
+        String idString = bufferedReader.readLine();
+        String[] customerCartChoices = {"1. Active", "2. Inactive"};
+        int active = StoreHelpers.choicePrompt(customerCartChoices, bufferedReader);
+        try {
+          int userId = Integer.parseInt(idString);
+          if (active == 1) {
+            System.out.println(DatabaseHelperAdapter.getUserActiveAccounts(userId));
+          } else if (active == 0) {
+            System.out.println(DatabaseHelperAdapter.getUserInactiveAccounts(userId));
+          } else {
+            System.out.println("Unknown option");
+          }
+        } catch (Exception e) {
+          // TODO Auto-generated catch blo
+          e.printStackTrace();
+        }
       } else if (input == 0) {
         System.out.println("Exiting");
         return;
@@ -471,37 +489,26 @@ public class SalesApplication {
 
       // Checking user accounts for existing items.
       /*
-      if (AccountHelper.customerHasShoppingCarts(customer.getId())) {
-        System.out.println("It appears you have an existing shopping cart!");
-        System.out.println("Would you like to restore and check out the existing shopping cart?");
-        System.out.println("Enter '1' to check out, anything else to create a new cart");
-        String restore = reader.readLine();
-        if (restore.equals("1")) {
-          shoppingCart = AccountHelper.retrieveCustomerCart(customer.getId());
-          if (shoppingCart != null) {
-            System.out.println("Your total is:");
-            System.out.println("$" + shoppingCart.getTotal());
-            System.out.println("You will also pay taxes to the order of:");
-            System.out.println("$" + shoppingCart.getTotal().multiply(shoppingCart.getTaxRate())
-                .setScale(2, RoundingMode.CEILING));
-            boolean checkedOut = false;
-            checkedOut = shoppingCart.checkOutCart();
-            if (checkedOut) {
-              System.out.println("Your order has been checked out!");
-            } else {
-              System.out.println("Sorry, your cart could not be checked out at this time");
-              System.out.println("There may not be enough of certain items in your cart in stock");
-            }
-          } else {
-            System.out.println("Your shopping cart could not be recovered!");
-          }
-        }
-      }
-      */
-      
-      //Checking user accounts for existing carts.
+       * if (AccountHelper.customerHasShoppingCarts(customer.getId())) {
+       * System.out.println("It appears you have an existing shopping cart!");
+       * System.out.println("Would you like to restore and check out the existing shopping cart?");
+       * System.out.println("Enter '1' to check out, anything else to create a new cart"); String
+       * restore = reader.readLine(); if (restore.equals("1")) { shoppingCart =
+       * AccountHelper.retrieveCustomerCart(customer.getId()); if (shoppingCart != null) {
+       * System.out.println("Your total is:"); System.out.println("$" + shoppingCart.getTotal());
+       * System.out.println("You will also pay taxes to the order of:"); System.out.println("$" +
+       * shoppingCart.getTotal().multiply(shoppingCart.getTaxRate()) .setScale(2,
+       * RoundingMode.CEILING)); boolean checkedOut = false; checkedOut =
+       * shoppingCart.checkOutCart(); if (checkedOut) {
+       * System.out.println("Your order has been checked out!"); } else {
+       * System.out.println("Sorry, your cart could not be checked out at this time");
+       * System.out.println("There may not be enough of certain items in your cart in stock"); } }
+       * else { System.out.println("Your shopping cart could not be recovered!"); } } }
+       */
+
+      // Checking user accounts for existing carts.
       List<Integer> accs = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
-      
+
       if (accs != null && !accs.isEmpty()) {
         System.out.println("It appears you have existing accounts!");
         System.out.println("Would you like to restore and check out an existing shopping cart?");
@@ -545,7 +552,7 @@ public class SalesApplication {
           }
         } catch (NumberFormatException e) {
           System.out.println("Not a number! Continuing to shopping");
-          
+
         }
       }
 
@@ -654,10 +661,10 @@ public class SalesApplication {
         }
         input = StoreHelpers.choicePrompt(customerOptions, reader);
       }
-      
-      //Store cart in account for later
+
+      // Store cart in account for later
       accs = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
-      
+
       if (accs != null && !accs.isEmpty() && !shoppingCart.getItems().isEmpty()) {
         System.out.println("Would you like to save your cart to your account?");
         System.out.println("Your currently open account IDs are:");
@@ -666,7 +673,7 @@ public class SalesApplication {
         }
         System.out.println("Enter the ID of the account you would like to save to,");
         System.out.println("enter anything else to exit");
-        
+
         String response = reader.readLine();
         try {
           int saveTo = Integer.parseInt(response);
@@ -683,9 +690,9 @@ public class SalesApplication {
         } catch (NumberFormatException e) {
           System.out.println("Exiting!");
         }
-        
+
       }
-      
+
     } catch (IOException e) {
       System.out.println("Unable to read input from console");
       e.printStackTrace();
