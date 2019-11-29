@@ -23,10 +23,9 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
         this.driver = driver;
     }
 
-
     //Driver Helper
     public Connection connectOrCreateDataBase(){
-        return null;
+      return null;
     }
 
     //InsertHelper

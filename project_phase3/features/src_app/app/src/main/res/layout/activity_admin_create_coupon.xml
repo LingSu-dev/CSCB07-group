@@ -23,7 +23,7 @@
     android:layout_below="@id/couponCodePrompt"
     android:id="@+id/couponTypeEntry"
     android:layout_marginTop="20dp"
-    android:spinnerMode="dialog"/>
+    android:spinnerMode="dialog" />
 
   <EditText
     android:inputType="numberDecimal"
@@ -32,7 +32,7 @@
     android:hint="@string/couponDiscountPrompt"
     android:layout_below="@id/couponTypeEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponDiscountEntry"/>
+    android:id="@+id/couponDiscountEntry" />
 
   <EditText
     android:inputType="number"
@@ -41,7 +41,7 @@
     android:hint="@string/couponItemIdPrompt"
     android:layout_below="@id/couponDiscountEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponItemIdEntry"/>
+    android:id="@+id/couponItemIdEntry" />
 
   <EditText
     android:inputType="number"
@@ -50,7 +50,7 @@
     android:hint="@string/couponQuantityPrompt"
     android:layout_below="@id/couponItemIdEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponQuantityEntry"/>
+    android:id="@+id/couponQuantityEntry" />
 
   <Button
     android:layout_width="wrap_content"
@@ -60,6 +60,6 @@
     android:layout_marginTop="20dp"
     android:layout_centerHorizontal="true"
     android:id="@+id/addCouponBtn"
-    app:icon="@drawable/ic_local_offer_black_24dp"/>
+    app:icon="@drawable/ic_local_offer_black_24dp" />
 
 </RelativeLayout>

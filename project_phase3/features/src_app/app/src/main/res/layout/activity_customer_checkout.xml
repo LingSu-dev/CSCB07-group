@@ -69,8 +69,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="0.5"
           android:text="@string/plus"
-          android:textSize="24sp">
-        </Button>
+          android:textSize="24sp"></Button>
       </LinearLayout>
 
       <LinearLayout
@@ -125,8 +124,7 @@
           android:layout_height="wrap_content"
           android:layout_weight="0.5"
           android:text="@string/plus"
-          android:textSize="24sp">
-        </Button>
+          android:textSize="24sp"></Button>
       </LinearLayout>
     </LinearLayout>
   </ScrollView>

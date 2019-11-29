@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
 import com.example.cscb07_app.Src.database.DatabaseDriverAndroid;
-import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 
 public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
@@ -18,9 +18,11 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     Button createAdmin = findViewById(R.id.initializationCreateAdminButton);
     createAdmin.setOnClickListener(new InitializationController(this));
 
-    DatabaseDriverAndroid driver = new DatabaseDriverAndroid(this);
+    DatabaseDriverAndroid driver = new DatabaseDriverAndroid(getApplicationContext());
     DatabaseAndroidHelper helper = new DatabaseAndroidHelper();
     helper.setDriver(driver);
     DatabaseHelperAdapter.setPlatformHelper(helper);
+
+    driver.getWritableDatabase();
   }
 }

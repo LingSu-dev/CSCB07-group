@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import com.example.cscb07_app.Src.security.PasswordHelpers;
 import java.math.BigDecimal;
 
@@ -18,10 +19,14 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
 
     public DatabaseDriverAndroid(Context context) {
     super(context, DATABASE_NAME, null, 1);
+    Log.d("Database", "Constructor called");
   }
 
   @Override
   public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+    Log.d("Database", "Created");
+
     String sql = "CREATE TABLE ROLES "
             + "(ID INTEGER PRIMARY KEY NOT NULL,"
             + "NAME TEXT NOT NULL)";
