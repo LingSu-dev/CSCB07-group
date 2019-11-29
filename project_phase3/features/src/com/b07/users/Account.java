@@ -11,6 +11,9 @@ import java.util.List;
 /**
  * A class representing a user account.
  * @author Aidan Zorbas
+ * @author Alex Efimov
+ * @author Lingfeng Su
+ * @author Payam Yektamaram
  *
  */
 public class Account {
