@@ -1,6 +1,8 @@
 package com.b07.store;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.database.helper.DatabaseSelectHelper;
+import com.b07.exceptions.WrongRoleException;
 import com.b07.users.Roles;
 import com.b07.users.User;
 import java.io.BufferedReader;
@@ -22,16 +24,17 @@ public class StoreHelpers {
    * @param password the password
    * @return whether the login was successful
    * @throws SQLException if there was an issue communicating with the database.
+   * @throws WrongRoleException  if the user entered the correct credentials, but for the wrong role
    */
-  public static final User login(Roles role, int id, String password) throws SQLException {
+  public static final User login(Roles role, int id, String password) throws SQLException, WrongRoleException {
     User user = DatabaseHelperAdapter.getUserDetails(id);
     if (user == null) {
       return null;
     }
-    // int roleId = user.getRoleId();
-    // if (!Roles.valueOf(DatabaseHelperAdapter.getRoleName(roleId)).equals(role)) {
-    // throw new DatabaseInsertException();
-    // }
+     int roleId = user.getRoleId();
+     if (!Roles.valueOf(DatabaseHelperAdapter.getRoleName(roleId)).equals(role)) {
+     throw new WrongRoleException();
+     }
     if (user.authenticate(password)) {
       return user;
     }
@@ -66,6 +69,8 @@ public class StoreHelpers {
       return user;
     } catch (NumberFormatException e) {
       System.out.println("Unable to read ID. Please input only the number.");
+    } catch (WrongRoleException e) {
+      System.out.println("Please log in to the correct role");
     }
     return null;
   }
