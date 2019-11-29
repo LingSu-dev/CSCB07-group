@@ -8,8 +8,8 @@ import com.example.cscb07_app.Src.store.DiscountTypes;
 import com.example.cscb07_app.Src.store.Sale;
 import com.example.cscb07_app.Src.store.SalesLog;
 import com.example.cscb07_app.Src.store.ShoppingCart;
+import com.example.cscb07_app.Src.users.Roles;
 import com.example.cscb07_app.Src.users.User;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,9 +28,29 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
       return null;
     }
 
-    //InsertHelper
+    /**
+     *
+     * @param name
+     * @return
+     * @throws DatabaseInsertException
+     * @throws SQLException
+     */
     public int insertRole(String name) throws DatabaseInsertException, SQLException{
-        return 0;
+
+        // Check that role name is Roles enum
+        boolean valid = false;
+        for (Roles role : Roles.values()) {
+            if (role.toString().equals(name)) {
+                valid = true;
+            }
+        }
+
+        if (!valid || name == null) {
+            throw new DatabaseInsertException();
+        }
+
+        int roleId = driver.insertRole(name);
+        return roleId;
     }
 
     public int insertNewUser(String name, int age, String address, String password)
@@ -287,5 +307,4 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     public List<Integer> getUserInactiveAccounts(int userId) throws SQLException{
         return null;
     }
-
 }
