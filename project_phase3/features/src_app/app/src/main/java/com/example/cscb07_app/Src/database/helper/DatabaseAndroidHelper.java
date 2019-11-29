@@ -1,6 +1,5 @@
 package com.example.cscb07_app.Src.database.helper;
 
-import com.example.cscb07_app.Src.database.DatabaseDriverAndroid;
 import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Src.inventory.Inventory;
 import com.example.cscb07_app.Src.inventory.Item;
@@ -17,9 +16,9 @@ import java.util.List;
 
 public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
-    private DatabaseDriverAndroid driver;
+    private DatabaseMethodHelper driver;
 
-    public void setDriver(DatabaseDriverAndroid driver){
+    public void setDriver(DatabaseMethodHelper driver){
         this.driver = driver;
     }
 
@@ -28,12 +27,14 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
       return null;
     }
 
+
     /**
+     * Insert role into ROLES table and return id.
      *
-     * @param name
-     * @return
-     * @throws DatabaseInsertException
-     * @throws SQLException
+     * @param name role name
+     * @return id of role
+     * @throws DatabaseInsertException on failure
+     * @throws SQLException on failure
      */
     public int insertRole(String name) throws DatabaseInsertException, SQLException{
 
@@ -49,8 +50,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
             throw new DatabaseInsertException();
         }
 
-        int roleId = driver.insertRole(name);
-        return roleId;
+        long roleId = driver.insertRole(name);
+        return Math.toIntExact(roleId);
     }
 
     public int insertNewUser(String name, int age, String address, String password)
