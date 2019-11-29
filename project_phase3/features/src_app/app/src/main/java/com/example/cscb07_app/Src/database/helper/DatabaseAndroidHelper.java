@@ -13,6 +13,7 @@ import com.example.cscb07_app.Src.store.SaleImpl;
 import com.example.cscb07_app.Src.store.SalesLog;
 import com.example.cscb07_app.Src.store.SalesLogImpl;
 import com.example.cscb07_app.Src.store.ShoppingCart;
+import com.example.cscb07_app.Src.users.Customer;
 import com.example.cscb07_app.Src.users.Roles;
 import com.example.cscb07_app.Src.users.User;
 import com.example.cscb07_app.Src.users.UserFactory;
@@ -277,7 +278,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
       throw new DatabaseInsertException();
     }
 
-    boolean complete = DatabaseUpdater.updateRoleName(name, id);
+    boolean complete = driver.updateRoleName(name, id);
     return complete;
   }
 
@@ -868,19 +869,48 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   // ------------------------Aidan-----------------------
 
+  /**
+   * Check if an item is in the database.
+   *
+   * @param itemId the item's ID.
+   * @return true if the item is in the database.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   public boolean itemExists(int itemId) throws SQLException {
-    return true;
+    List<Item> items = getAllItems();
+    for (int i = 0; i < items.size(); i++) {
+      if (items.get(i).getId() == itemId) {
+        return true;
+      }
+    }
+    return false;
   }
 
+  /**
+   * Check if role id exists.
+   *
+   * @param roleID the id of interest
+   * @return true if exists, otherwise false
+   * @throws SQLException on failure
+   */
   public boolean roleIdExists(int roleID) throws SQLException {
     return true;
   }
 
+  /**
+   * Check if user id exists.
+   *
+   * @param userID the user id of interest
+   * @return true if exists, otherwise false
+   * @throws SQLException on failure
+   */
   public boolean userIdExists(int userID) throws SQLException {
-    return true;
+    List<Integer> validUserIds = getUserIds();
+    return validUserIds.contains(userID);
   }
 
   public boolean couponIdExists(int userID) throws SQLException {
+    //TODO
     return true;
   }
 
@@ -888,75 +918,242 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return null;
   }
 
+  /**
+   * Get the Role ID of a role by it's associated name.
+   *
+   * @param name the name of the role.
+   * @return the role's ID, -1 if no such role.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   public int getRoleIdByName(String name) throws SQLException {
-    return 0;
+    List<Integer> ids;
+    ids = getRoleIds();
+    for (int i = 0; i < ids.size(); i++) {
+      if (getRoleName(ids.get(i)) != null && getRoleName(ids.get(i)).equals(name)) {
+        return ids.get(i);
+      }
+    }
+
+    return -1;
   }
 
+  /**
+   * Checks if a sale exists within the database.
+   *
+   * @param saleId the id of the sale to check.
+   * @return true if the sale is in the database.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   public boolean saleExists(int saleId) throws SQLException {
-    return true;
+    Cursor results = driver.getSaleById(saleId);
+
+    boolean exists = results.moveToNext();
+    results.close();
+    return exists;
   }
 
+  /**
+   * Get the accounts assigned to a given user.
+   *
+   * @param userId the id of the user.
+   * @return a list containing the id's of the user's accounts, null if userId doesn't exist
+   * @throws SQLException if something goes wrong.
+   */
   public List<Integer> getUserAccountsById(int userId) throws SQLException {
-    return null;
+    if (!userIdExists(userId)) {
+      return null;
+    }
+
+    Cursor results = driver.getUserAccounts(userId);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.moveToNext()) {
+      accounts.add(results.getInt(results.getColumnIndex("id")));
+    }
+
+    results.close();
+    return accounts;
   }
 
+  /**
+   * Return the associated user id of an account.
+   *
+   * @param accountId the account to retrieve the associated user of.
+   * @return the user id of the account's owner, -1 if not found.
+   * @throws SQLException on failure
+   */
   public int getUserIdByAccountId(int accountId) throws SQLException {
-    return 0;
+    for (Integer userId : getUserIds()) {
+      for (Integer acctId : getUserAccountsById(userId)) {
+        if (acctId == accountId) {
+          return userId;
+        }
+      }
+    }
+    return -1;
   }
 
+  /**
+   * Get the details of a given account given acctId.
+   *
+   * @param accountId the ID of the account to retrieve the details of
+   * @return a shopping cart with all their items, null if not found.
+   * @throws SQLException if something goes wrong.
+   */
   public ShoppingCart getAccountDetails(int accountId) throws SQLException {
-    return null;
+    if (!getAllAccountIds().contains(accountId)) {
+      return null;
+    }
+
+    Cursor results = driver.getAccountDetails(accountId);
+    int userId = getUserIdByAccountId(accountId);
+
+    if (userId == -1) {
+      return null;
+    }
+
+    User user = getUserDetails(userId);
+    if(user == null || !(user instanceof Customer)) {
+      return null;
+    }
+    Customer customer = (Customer) user;
+
+    ShoppingCart cart = new ShoppingCart(customer);
+
+    int itemId;
+    int quantity;
+
+    while (results.moveToNext()) {
+      itemId = results.getInt(results.getColumnIndex("itemId"));
+      quantity = results.getInt(results.getColumnIndex("quantity"));
+      cart.addItem(getItem(itemId), quantity);
+    }
+    results.close();
+    return cart;
   }
 
+  /**
+   * Gets all the account ids.
+   *
+   * @return list of all the account ids
+   * @throws SQLException if something goes wrong
+   */
   public List<Integer> getAllAccountIds() throws SQLException {
-    return null;
+    List<Integer> allUserIds = getUserIds();
+    List<Integer> allAccountIds = new ArrayList<>();
+
+    for (Integer userId : allUserIds) {
+      for (Integer userAccount : getUserAccountsById(userId)) {
+        if (!allAccountIds.contains(userAccount)) {
+          allAccountIds.add(userAccount);
+        }
+      }
+    }
+    return allAccountIds;
   }
 
   public int getDiscountTypeIdByName(String type) throws SQLException {
+    //TODO
     return 0;
   }
 
   public String getDiscountTypeName(int discountTypeId) throws SQLException {
+    //TODO
     return null;
   }
 
   public boolean discountTypeIdExists(int discountTypeId) throws SQLException {
+   //TODO
     return true;
   }
 
   public List<Integer> getDiscountTypeIds() throws SQLException {
+    //TODO
     return null;
   }
 
   public int getCouponId(String code) throws SQLException {
+    //TODO
     return 0;
   }
 
   public DiscountTypes getDiscountType(int couponId) throws SQLException {
+    //TODO
     return null;
   }
 
   public BigDecimal getDiscountAmount(int couponId) throws SQLException {
+    //TODO
     return null;
   }
 
   public int getCouponItem(int couponId) throws SQLException {
+    //TODO
     return 0;
   }
 
   public int getCouponUses(int couponId) throws SQLException {
+    //TODO
     return 0;
   }
 
+  /**
+   * Check if there is an account associated with a customer.
+   *
+   * @param userId The id of the user to check the account of.
+   * @return true if the user has an account.
+   * @throws SQLException if there is an issue communicating with the database.
+   */
   public boolean customerHasAccount(int userId) throws SQLException {
-    return true;
+    List<Integer> accounts = getUserAccountsById(userId);
+    if (accounts == null) {
+      return false;
+    }
+    return !accounts.isEmpty();
   }
 
+  /**
+   * Get an user's active accounts.
+   *
+   * @param userId the user of interest
+   * @return list of all active accounts
+   * @throws SQLException on failure
+   */
   public List<Integer> getUserActiveAccounts(int userId) throws SQLException {
-    return null;
+    if (!userIdExists(userId)) {
+      return null;
+    }
+
+    Cursor results = driver.getUserActiveAccounts(userId);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.moveToNext()) {
+      accounts.add(results.getInt(results.getColumnIndex("id")));
+    }
+
+    results.close();
+    return accounts;
   }
 
+  /**
+   * Get an user's inactive accounts.
+   *
+   * @param userId the user of interest
+   * @return list of inactive accounts
+   * @throws SQLException on failure
+   */
   public List<Integer> getUserInactiveAccounts(int userId) throws SQLException {
-    return null;
+    if (!userIdExists(userId)) {
+      return null;
+    }
+
+    Cursor results = driver.getUserInactiveAccounts(userId);
+    List<Integer> accounts = new ArrayList<>();
+
+    while (results.moveToNext()) {
+      accounts.add(results.getInt(results.getColumnIndex("id")));
+    }
+    results.close();
+    return accounts;
   }
 }
