@@ -35,7 +35,7 @@
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="-54dp"
     android:text="@string/viewActiveAccountsBtn"
-    app:icon="@drawable/ic_account_balance_black_24dp"/>
+    app:icon="@drawable/ic_account_balance_black_24dp" />
 
   <TextView
     android:layout_marginTop="70dp"
@@ -44,6 +44,5 @@
     android:layout_height="match_parent"
     android:textSize="@dimen/textViewTextSize"
     android:id="@+id/viewActiveAccountsText"
-    android:scrollbars="vertical"
-    />
+    android:scrollbars="vertical" />
 </RelativeLayout>

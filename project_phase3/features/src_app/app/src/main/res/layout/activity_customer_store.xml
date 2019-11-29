@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -84,8 +83,7 @@
       android:layout_height="0dip"
       android:layout_weight="1"
       android:hint="@string/inputID"
-      android:inputType="number">
-    </EditText>
+      android:inputType="number"></EditText>
 
     <EditText
       android:id="@+id/amountOfProduct"
@@ -93,8 +91,7 @@
       android:layout_height="0dip"
       android:layout_weight="1"
       android:hint="@string/inputAmount"
-      android:inputType="number">
-    </EditText>
+      android:inputType="number"></EditText>
   </LinearLayout>
 
   <LinearLayout
@@ -120,8 +117,7 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:src="@drawable/ic_add_shopping_cart_black_24dp"
-      android:backgroundTint="@color/colorPrimary"
-      />
+      android:backgroundTint="@color/colorPrimary" />
 
     <ImageButton
       android:id="@+id/customerStoreViewCartBtn"
@@ -129,7 +125,7 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:src="@drawable/ic_shopping_cart_black_24dp"
-      android:backgroundTint="@color/colorPrimary"/>
+      android:backgroundTint="@color/colorPrimary" />
 
     <ImageButton
       android:id="@+id/customerStoreLogoutBtn"
@@ -137,7 +133,7 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:src="@drawable/ic_exit_to_app_black_24dp"
-      android:backgroundTint="@color/colorPrimary"/>
+      android:backgroundTint="@color/colorPrimary" />
 
     <!--
     <Button

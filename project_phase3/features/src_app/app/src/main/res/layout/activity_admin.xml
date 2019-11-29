@@ -35,16 +35,16 @@
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="-54dp"
     android:text="@string/adminPromoteBtn"
-    app:icon="@drawable/ic_supervisor_account_black_24dp"/>
+    app:icon="@drawable/ic_supervisor_account_black_24dp" />
 
   <EditText
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:hint="@string/couponCodePrompt"
-     android:layout_below="@id/promoteEmployeeButton"
-     android:layout_marginTop="70dp"
-     android:inputType="text"
-     android:id="@+id/couponCodePrompt" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/couponCodePrompt"
+    android:layout_below="@id/promoteEmployeeButton"
+    android:layout_marginTop="70dp"
+    android:inputType="text"
+    android:id="@+id/couponCodePrompt" />
 
   <Spinner
     android:layout_width="match_parent"
@@ -54,7 +54,7 @@
     android:layout_below="@id/couponCodePrompt"
     android:id="@+id/couponTypeEntry"
     android:layout_marginTop="20dp"
-    android:spinnerMode="dialog"/>
+    android:spinnerMode="dialog" />
 
   <EditText
     android:inputType="numberDecimal"
@@ -63,7 +63,7 @@
     android:hint="@string/couponDiscountPrompt"
     android:layout_below="@id/couponTypeEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponDiscountEntry"/>
+    android:id="@+id/couponDiscountEntry" />
 
   <EditText
     android:inputType="number"
@@ -72,7 +72,7 @@
     android:hint="@string/couponItemIdPrompt"
     android:layout_below="@id/couponDiscountEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponItemIdEntry"/>
+    android:id="@+id/couponItemIdEntry" />
 
   <EditText
     android:inputType="number"
@@ -81,7 +81,7 @@
     android:hint="@string/couponQuantityPrompt"
     android:layout_below="@id/couponItemIdEntry"
     android:layout_marginTop="20dp"
-    android:id="@+id/couponQuantityEntry"/>
+    android:id="@+id/couponQuantityEntry" />
 
   <Button
     android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
     android:layout_marginTop="20dp"
     android:layout_centerHorizontal="true"
     android:id="@+id/addCouponBtn"
-    app:icon="@drawable/ic_local_offer_black_24dp"/>
+    app:icon="@drawable/ic_local_offer_black_24dp" />
 
   <Button
     android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
     android:id="@+id/viewBooksBtn"
     android:layout_marginTop="30dp"
     android:layout_marginLeft="50dp"
-    app:icon="@drawable/ic_library_books_black_24dp"/>
+    app:icon="@drawable/ic_library_books_black_24dp" />
 
   <Button
     android:layout_width="wrap_content"
@@ -112,5 +112,5 @@
     android:id="@+id/adminLogoutBtn"
     android:layout_marginTop="30dp"
     android:layout_marginLeft="10dp"
-    app:icon="@drawable/ic_exit_to_app_black_24dp"/>
+    app:icon="@drawable/ic_exit_to_app_black_24dp" />
 </RelativeLayout>

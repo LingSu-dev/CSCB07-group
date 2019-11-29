@@ -73,7 +73,7 @@
     android:layout_below="@id/adminMenuViewBooks"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="15dp"
-    app:icon="@drawable/ic_local_offer_black_24dp"/>
+    app:icon="@drawable/ic_local_offer_black_24dp" />
 
   <Button
     android:id="@+id/adminMenuViewBooks"

@@ -35,5 +35,5 @@
     android:layout_centerHorizontal="true"
     android:layout_marginTop="20dp"
     android:text="@string/adminPromoteBtn"
-    app:icon="@drawable/ic_supervisor_account_black_24dp"/>
+    app:icon="@drawable/ic_supervisor_account_black_24dp" />
 </RelativeLayout>
