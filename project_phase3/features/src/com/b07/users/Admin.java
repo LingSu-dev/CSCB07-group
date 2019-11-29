@@ -21,12 +21,14 @@ public class Admin extends User {
    * @param name the name of the admin to be created.
    * @param age the age of the admin to be created.
    * @param address the address of the admin to be created.
+   * @throws SQLException 
    */
-  public Admin(int id, String name, int age, String address) {
+  public Admin(int id, String name, int age, String address) throws SQLException {
     setId(id);
     setName(name);
     setAge(age);
     setAddress(address);
+    setRole();
   }
 
   /**
@@ -37,12 +39,22 @@ public class Admin extends User {
    * @param age the age of the admin to be created.
    * @param address the address of the admin to be created.
    * @param authenticated whether the admin should be created authenticated or not.
+   * @throws SQLException 
    */
-  public Admin(int id, String name, int age, String address, boolean authenticated) {
+  public Admin(int id, String name, int age, String address, boolean authenticated) throws SQLException {
     setId(id);
     setName(name);
     setAge(age);
     setAddress(address);
+    setRole();
+  }
+  
+  /**
+   * use the user's id to an admin id 
+   * @throws SQLException  if the role id annot be retreived
+   */
+  private void setRole() throws SQLException {
+    super.roleId = DatabaseHelperAdapter.getRoleIdByName("ADMIN");
   }
 
   /**
