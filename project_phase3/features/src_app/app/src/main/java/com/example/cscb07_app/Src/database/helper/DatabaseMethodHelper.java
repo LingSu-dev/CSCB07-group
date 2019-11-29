@@ -131,5 +131,4 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   public boolean updateAccountStatus(int accountId, boolean active){
     return super.updateAccountStatus(accountId, active);
   }
-
 }
