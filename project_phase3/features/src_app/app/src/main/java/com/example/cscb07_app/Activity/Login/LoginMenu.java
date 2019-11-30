@@ -5,9 +5,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.LoginController;
 import com.example.cscb07_app.R;
-import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
-import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
-import com.example.cscb07_app.Src.database.helper.DatabaseMethodHelper;
+import com.b07.database.helper.DatabaseAndroidHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.database.helper.DatabaseMethodHelper;
 
 public class LoginMenu extends AppCompatActivity {
 
