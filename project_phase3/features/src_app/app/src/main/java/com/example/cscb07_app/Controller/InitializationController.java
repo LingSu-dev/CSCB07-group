@@ -1,37 +1,157 @@
 package com.example.cscb07_app.Controller;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import com.example.cscb07_app.R;
+import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
+import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
+import com.example.cscb07_app.Src.users.Roles;
+import java.sql.SQLException;
 
 public class InitializationController implements View.OnClickListener {
 
   private Context appContext;
+  private DatabaseAndroidHelper androidHelper;
 
-  public InitializationController(Context context) {
+  public InitializationController(Context context, DatabaseAndroidHelper helper) {
     this.appContext = context;
+    this.androidHelper = helper;
   }
+
+
 
   @Override
   public void onClick(View view) {
+    AlertDialog ageAlertDialog = new AlertDialog.Builder(appContext).create();
+    ageAlertDialog.setTitle("Age Format Error");
+    ageAlertDialog.setMessage("Age cannot be empty!");
+    ageAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+        new DialogController(appContext, DialogId.AGE_EMPTY_DIALOG));
+
+    String name;
+    int age = 0;
+    String address;
+    String password;
+
+    EditText nameEntry;
+    EditText ageEntry;
+    EditText addressEntry;
+    EditText passwordEntry;
+
     switch (view.getId()) {
       case R.id.initializationCreateAdminButton:
-        AlertDialog adminAlertDialog = new AlertDialog.Builder(appContext).create();
-        adminAlertDialog.setTitle("Admin Details");
-        adminAlertDialog.setMessage("Admin Id: 0");
-        adminAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
-            new InitializationAdminDialogController(appContext));
-        adminAlertDialog.show();
+
+        boolean adminAgeValid = true;
+
+        ageEntry = ((Activity) appContext).findViewById(R.id.initializationAdminAgeEntry);
+
+        try {
+          age = Integer.parseInt(ageEntry.getText().toString()); //Potential Number format exception
+        } catch (NumberFormatException e) {
+          adminAgeValid = false;
+        }
+
+        if (adminAgeValid) {
+          nameEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationAdminNameEntry);
+
+          name = nameEntry.getText().toString();
+
+          addressEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationAdminAddressEntry);
+          address = addressEntry.getText().toString();
+
+          passwordEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationAdminPassword);
+          password = passwordEntry.getText().toString();
+
+          int adminId = insertAdmin(name, age, address, password);
+
+          AlertDialog adminAlertDialog = new AlertDialog.Builder(appContext).create();
+          adminAlertDialog.setTitle("Admin Details");
+          adminAlertDialog.setMessage("Admin Id: " + adminId);
+          adminAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
+              new DialogController(appContext, DialogId.CREATE_FIRST_ADMIN_DETAILS));
+          adminAlertDialog.show();
+        } else {
+          ageAlertDialog.show();
+        }
         break;
       case R.id.initializationCreateEmployeeButton:
-        AlertDialog employeeAlertDialog = new AlertDialog.Builder(appContext).create();
-        employeeAlertDialog.setTitle("Employee Details");
-        employeeAlertDialog.setMessage("Employee Id: 1");
-        employeeAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
-            new InitializationEmployeeDialogController(appContext));
-        employeeAlertDialog.show();
+        boolean employeeAgeValid = true;
+        ageEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeeAgeEntry);
+
+        try {
+          age = Integer.parseInt(ageEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          employeeAgeValid = false;
+        }
+
+        if (employeeAgeValid) {
+          nameEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationEmployeeNameEntry);
+          name = nameEntry.getText().toString();
+
+          addressEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationEmployeeAddressEntry);
+          address = addressEntry.getText().toString();
+
+          passwordEntry = ((Activity) appContext)
+              .findViewById(R.id.initializationEmployeePassword);
+          password = passwordEntry.getText().toString();
+
+          int employeeId = insertEmployee(name, age, address, password);
+
+          AlertDialog employeeAlertDialog = new AlertDialog.Builder(appContext).create();
+          employeeAlertDialog.setTitle("Employee Details");
+          employeeAlertDialog.setMessage("Employee Id: " + employeeId);
+          employeeAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
+              new DialogController(appContext, DialogId.CREATE_FIRST_EMPLOYEE_DETAILS));
+          employeeAlertDialog.show();
+        }
+        else
+        {
+          ageAlertDialog.show();
+        }
         break;
     }
+  }
+
+  public int insertAdmin(String name, int age, String address, String password) {
+
+    int adminRoleId = 0;
+    int adminId = 0;
+
+    try {
+      adminId = androidHelper.insertNewUser(name, age, address, password);
+      adminRoleId = androidHelper.getRoleIdByName(Roles.ADMIN.name());
+      androidHelper.insertUserRole(adminId, adminRoleId);
+    } catch (DatabaseInsertException e) {
+    } catch (SQLException e) {
+      Log.d("happybanana", e.getMessage());
+    }
+
+    return adminId;
+  }
+
+  public int insertEmployee(String name, int age, String address, String password) {
+
+    int employeeRoleId = 0;
+    int employeeId = 0;
+
+    try {
+      employeeId = androidHelper.insertNewUser(name, age, address, password);
+      employeeRoleId = androidHelper.getRoleIdByName(Roles.EMPLOYEE.name());
+      androidHelper.insertUserRole(employeeId, employeeRoleId);
+    } catch (DatabaseInsertException e) {
+      e.printStackTrace();
+    } catch (SQLException e) {
+      Log.d("happybanana", e.getMessage());
+    }
+    return employeeId;
   }
 }
