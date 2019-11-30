@@ -3,6 +3,7 @@ package com.example.cscb07_app.Activity.Employee;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import com.b07.users.Employee;
 import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 
@@ -12,6 +13,8 @@ public class EmployeeMenu extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_employee_menu);
+
+    Employee currentEmployee = (Employee)getIntent().getSerializableExtra("employee");
 
     Button authenticateEmployee = findViewById(R.id.menuAuthenticateEmployeeBtn);
     authenticateEmployee.setOnClickListener(new EmployeeController(this));
