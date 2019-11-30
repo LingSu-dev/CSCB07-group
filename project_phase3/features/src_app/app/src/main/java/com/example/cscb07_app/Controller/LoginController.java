@@ -120,7 +120,6 @@ public class LoginController implements View.OnClickListener {
     }
   }
 
-
   public void employeeLogin(int userId, String password,
       AlertDialog loginIncorrectCredentialDialog) {
     Employee currentEmployee = null;
