@@ -29,6 +29,20 @@ public class DataStorage implements Serializable {
   private HashMap<Integer, String> discountTypes;
   private HashMap<Integer, Coupon> couponIdsToCoupons;
 
+  /**
+   * Makes a object that stores the whole database
+   * @param roleIdToRoleNames
+   * @param users
+   * @param userToRole
+   * @param items
+   * @param inventory
+   * @param sales
+   * @param itemizedSales
+   * @param accounts
+   * @param userToHashedPWs
+   * @param discountTypes
+   * @param couponIdsToCoupons
+   */
   public DataStorage(HashMap<Integer, String> roleIdToRoleNames, ArrayList<User> users,
       HashMap<Integer, Integer> userToRole, ArrayList<Item> items, Inventory inventory,
       SalesLog sales, SalesLog itemizedSales, ArrayList<Account> accounts,
