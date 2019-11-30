@@ -4,6 +4,8 @@ import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -19,7 +21,11 @@ import java.util.List;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
+  /**
+   * Serial Version ID of ShoppingCart.
+   */
+  private static final long serialVersionUID = 1L;
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");

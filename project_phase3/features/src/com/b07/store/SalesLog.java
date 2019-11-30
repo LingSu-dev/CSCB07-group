@@ -2,6 +2,8 @@ package com.b07.store;
 
 import com.b07.inventory.Item;
 import com.b07.users.User;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public interface SalesLog {
+public interface SalesLog extends Serializable {
 
   /**
    * Get the log of all the sale transactions.

@@ -1,5 +1,6 @@
 package com.b07.inventory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -10,7 +11,7 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public interface Inventory {
+public interface Inventory extends Serializable {
 
   /**
    * Return hash-map of items in inventory with the item as the key and quantity as value.

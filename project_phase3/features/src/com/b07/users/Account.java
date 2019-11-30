@@ -4,6 +4,8 @@ import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,12 @@ import java.util.List;
  * @author Payam Yektamaram
  *
  */
-public class Account {
+public class Account implements Serializable {
+  
+  /**
+   * Serial Version ID of Account Class.
+   */
+  private static final long serialVersionUID = -7781563226375042210L;
   private ShoppingCart cart;
   private int accountId;
   private int userId;

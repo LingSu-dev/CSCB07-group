@@ -1,5 +1,6 @@
 package com.b07.inventory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -10,8 +11,13 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class InventoryImpl implements Inventory {
+public class InventoryImpl implements Inventory, Serializable {
 
+  /**
+   * Serial Version ID of InventoryImpl.
+   */
+  private static final long serialVersionUID = 1L;
+  
   private HashMap<Item, Integer> itemMap = new HashMap<Item, Integer>();
   int totalItems;
 

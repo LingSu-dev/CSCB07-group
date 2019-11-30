@@ -2,6 +2,8 @@ package com.b07.store;
 
 import com.b07.inventory.Item;
 import com.b07.users.User;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -13,8 +15,11 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SaleImpl implements Sale {
-
+public class SaleImpl implements Sale, Serializable {
+  /**
+   * Serial Version ID of SaleImpl.
+   */
+  private static final long serialVersionUID = 1L;
   private int id;
   private User user;
   private BigDecimal totalPrice;
