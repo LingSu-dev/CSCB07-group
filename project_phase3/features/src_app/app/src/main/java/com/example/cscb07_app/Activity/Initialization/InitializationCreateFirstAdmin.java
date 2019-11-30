@@ -5,12 +5,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
-import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
-import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
-import com.example.cscb07_app.Src.database.helper.DatabaseMethodHelper;
-import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
-import com.example.cscb07_app.Src.inventory.ItemTypes;
-import com.example.cscb07_app.Src.users.Roles;
+import com.b07.database.helper.DatabaseAndroidHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.database.helper.DatabaseMethodHelper;
+import com.b07.exceptions.DatabaseInsertException;
+import com.b07.inventory.ItemTypes;
+import com.b07.users.Roles;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 

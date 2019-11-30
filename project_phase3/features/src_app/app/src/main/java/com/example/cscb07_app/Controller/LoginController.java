@@ -12,11 +12,11 @@ import com.example.cscb07_app.Activity.Customer.CustomerStore;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
-import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
-import com.example.cscb07_app.Src.users.Admin;
-import com.example.cscb07_app.Src.users.Customer;
-import com.example.cscb07_app.Src.users.Employee;
-import com.example.cscb07_app.Src.users.User;
+import com.b07.database.helper.DatabaseAndroidHelper;
+import com.b07.users.Admin;
+import com.b07.users.Customer;
+import com.b07.users.Employee;
+import com.b07.users.User;
 import java.sql.SQLException;
 
 /**

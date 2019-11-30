@@ -6,9 +6,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import com.example.cscb07_app.R;
-import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
-import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
-import com.example.cscb07_app.Src.users.Roles;
+import com.b07.database.helper.DatabaseAndroidHelper;
+import com.b07.exceptions.DatabaseInsertException;
+import com.b07.users.Roles;
 import java.sql.SQLException;
 
 /**
