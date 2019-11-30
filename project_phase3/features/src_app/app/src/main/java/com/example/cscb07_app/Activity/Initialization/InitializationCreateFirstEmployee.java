@@ -5,6 +5,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
+import com.example.cscb07_app.Src.database.helper.DatabaseAndroidHelper;
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
+import com.example.cscb07_app.Src.database.helper.DatabaseMethodHelper;
 
 public class InitializationCreateFirstEmployee extends AppCompatActivity {
 
@@ -13,7 +16,18 @@ public class InitializationCreateFirstEmployee extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_initialization_create_first_employee);
 
+    DatabaseMethodHelper methodHelper = new DatabaseMethodHelper(getApplicationContext());
+    DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
+    androidHelper.setDriver(methodHelper);
+    DatabaseHelperAdapter.setPlatformHelper(androidHelper);
+    methodHelper.getWritableDatabase(); //Just to create database
+
     Button createAdmin = findViewById(R.id.initializationCreateEmployeeButton);
-    createAdmin.setOnClickListener(new InitializationController(this));
+    createAdmin.setOnClickListener(new InitializationController(this, androidHelper));
+  }
+
+  @Override
+  public void onBackPressed() {
+    return;
   }
 }
