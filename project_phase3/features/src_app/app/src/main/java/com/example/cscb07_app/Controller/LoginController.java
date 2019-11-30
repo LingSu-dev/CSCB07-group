@@ -81,7 +81,6 @@ public class LoginController implements View.OnClickListener {
     }
   }
 
-
   /**
    * Authenticates admin and logs them in.
    *
@@ -114,7 +113,6 @@ public class LoginController implements View.OnClickListener {
     }
   }
 
-
   /**
    * Authenticates customer and logs them in.
    *
@@ -124,6 +122,7 @@ public class LoginController implements View.OnClickListener {
    */
   public void customerLogin(int userId, String password,
       AlertDialog loginIncorrectCredentialDialog) {
+
     boolean authenticated = true;
     try {
       User currentUser = androidHelper.getUserDetails(userId);
@@ -157,6 +156,7 @@ public class LoginController implements View.OnClickListener {
    */
   public void employeeLogin(int userId, String password,
       AlertDialog loginIncorrectCredentialDialog) {
+
     Employee currentEmployee = null;
     boolean authenticated = false;
 
@@ -176,7 +176,7 @@ public class LoginController implements View.OnClickListener {
     Intent employeeIntent = new Intent(this.appContext, EmployeeMenu.class);
 
     if (authenticated) {
-      //employeeIntent.putExtra("employee", currentEmployee);
+      employeeIntent.putExtra("employee", currentEmployee);
       appContext.startActivity(employeeIntent);
     } else {
       loginIncorrectCredentialDialog
