@@ -4,6 +4,8 @@ import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Src.inventory.Item;
 import com.example.cscb07_app.Src.store.ShoppingCart;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  *
  * @author Aidan Zorbas
  */
-public class Account {
+public class Account implements Serializable {
 
   private ShoppingCart cart;
   private int accountId;

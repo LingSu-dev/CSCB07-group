@@ -4,6 +4,8 @@ import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Src.inventory.Item;
 import com.example.cscb07_app.Src.users.Customer;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
@@ -19,7 +21,7 @@ import java.util.List;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ShoppingCart {
+public class ShoppingCart  implements Serializable {
 
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;

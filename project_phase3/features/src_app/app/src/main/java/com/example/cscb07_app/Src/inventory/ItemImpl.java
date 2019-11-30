@@ -1,5 +1,6 @@
 package com.example.cscb07_app.Src.inventory;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ItemImpl implements Item {
+public class ItemImpl implements Item, Serializable {
 
   private String name;
   private int id;

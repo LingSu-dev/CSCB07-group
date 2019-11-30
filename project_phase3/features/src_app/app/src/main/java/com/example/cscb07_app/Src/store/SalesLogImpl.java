@@ -2,6 +2,8 @@ package com.example.cscb07_app.Src.store;
 
 import com.example.cscb07_app.Src.inventory.Item;
 import com.example.cscb07_app.Src.users.User;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.Set;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SalesLogImpl implements SalesLog {
+public class SalesLogImpl implements SalesLog, Serializable {
 
   private ArrayList<Sale> sales = new ArrayList<Sale>();
 

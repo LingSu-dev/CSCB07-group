@@ -2,6 +2,8 @@ package com.example.cscb07_app.Src.store;
 
 import com.example.cscb07_app.Src.inventory.Item;
 import com.example.cscb07_app.Src.users.User;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -13,7 +15,7 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SaleImpl implements Sale {
+public class SaleImpl implements Sale, Serializable {
 
   private int id;
   private User user;

@@ -1,5 +1,6 @@
 package com.example.cscb07_app.Src.inventory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -10,7 +11,7 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class InventoryImpl implements Inventory {
+public class InventoryImpl implements Inventory, Serializable {
 
   private HashMap<Item, Integer> itemMap = new HashMap<Item, Integer>();
   int totalItems;
