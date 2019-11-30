@@ -1,9 +1,10 @@
 package com.b07.store;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import com.b07.inventory.Item;
 
-public interface Coupon {
+public interface Coupon extends Serializable {
 
 
   /**

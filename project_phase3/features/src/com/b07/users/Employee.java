@@ -1,5 +1,6 @@
 package com.b07.users;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import com.b07.database.helper.DatabaseHelperAdapter;
 
@@ -11,7 +12,12 @@ import com.b07.database.helper.DatabaseHelperAdapter;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class Employee extends User {
+public class Employee extends User implements Serializable{
+  /**
+   * Serial Version ID of Employee.
+   */
+  private static final long serialVersionUID = 1L;
+
   /**
    * Create a new employee, without setting their authentication value.
    *

@@ -31,10 +31,10 @@ public class StoreHelpers {
     if (user == null) {
       return null;
     }
-     int roleId = user.getRoleId();
-     if (!Roles.valueOf(DatabaseHelperAdapter.getRoleName(roleId)).equals(role)) {
-     throw new WrongRoleException();
-     }
+    int roleId = user.getRoleId();
+    if (!Roles.valueOf(DatabaseHelperAdapter.getRoleName(roleId)).equals(role)) {
+      throw new WrongRoleException();
+    }
     if (user.authenticate(password)) {
       return user;
     }
