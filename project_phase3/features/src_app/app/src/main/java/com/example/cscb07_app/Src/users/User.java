@@ -2,6 +2,8 @@ package com.example.cscb07_app.Src.users;
 
 import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 import com.example.cscb07_app.Src.security.PasswordHelpers;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
@@ -12,7 +14,7 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public abstract class User {
+public abstract class User  implements Serializable {
 
   private int id;
   private String name;
