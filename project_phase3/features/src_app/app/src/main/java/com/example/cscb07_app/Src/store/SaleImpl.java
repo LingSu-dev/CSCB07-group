@@ -15,7 +15,7 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SaleImpl implements Sale, Serializable {
+public class SaleImpl implements Sale{
 
   private int id;
   private User user;

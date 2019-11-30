@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ItemImpl implements Item, Serializable {
+public class ItemImpl implements Item {
 
   private String name;
   private int id;

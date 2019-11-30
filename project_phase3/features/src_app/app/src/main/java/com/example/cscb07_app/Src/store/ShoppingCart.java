@@ -21,7 +21,7 @@ import java.util.List;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ShoppingCart  implements Serializable {
+public class ShoppingCart {
 
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;

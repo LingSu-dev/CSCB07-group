@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Aidan Zorbas
  */
-public class Account implements Serializable {
+public class Account {
 
   private ShoppingCart cart;
   private int accountId;

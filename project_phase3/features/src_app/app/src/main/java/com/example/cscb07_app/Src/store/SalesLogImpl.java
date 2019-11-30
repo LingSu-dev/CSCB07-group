@@ -21,7 +21,7 @@ import java.util.Set;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SalesLogImpl implements SalesLog, Serializable {
+public class SalesLogImpl implements SalesLog {
 
   private ArrayList<Sale> sales = new ArrayList<Sale>();
 
