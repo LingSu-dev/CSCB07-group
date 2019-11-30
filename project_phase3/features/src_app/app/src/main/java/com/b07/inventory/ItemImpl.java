@@ -1,5 +1,6 @@
 package com.b07.inventory;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,8 +11,13 @@ import java.math.BigDecimal;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class ItemImpl implements Item {
+public class ItemImpl implements Item, Serializable {
 
+  /**
+   * Serial Version ID of ItemImpl.
+   */
+  private static final long serialVersionUID = 1L;
+  
   private String name;
   private int id;
   private BigDecimal price;
@@ -107,9 +113,7 @@ public class ItemImpl implements Item {
     return (toCompare.getId() == id);
   }
 
-  /**
-   * Generate a hashcode for an item.
-   */
+  /** Generate a hashcode for an item. */
   @Override
   public int hashCode() {
     return id;

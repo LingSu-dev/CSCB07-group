@@ -3,6 +3,7 @@ package com.b07.store;
 import com.b07.inventory.Item;
 import com.b07.users.User;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ import java.util.Set;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class SalesLogImpl implements SalesLog {
+public class SalesLogImpl implements SalesLog, Serializable {
 
+  /**
+   * Serial Version ID of SalesLogImpl.
+   */
+  private static final long serialVersionUID = 1L;
   private ArrayList<Sale> sales = new ArrayList<Sale>();
 
   /**
@@ -34,9 +39,7 @@ public class SalesLogImpl implements SalesLog {
     return sales;
   }
 
-  /**
-   * Add a sale to the log.
-   */
+  /** Add a sale to the log. */
   @Override
   public void addSale(Sale sale) {
     if (sale != null && !sales.contains(sale)) {
@@ -44,9 +47,7 @@ public class SalesLogImpl implements SalesLog {
     }
   }
 
-  /**
-   * Get total value of sales in sale log.
-   */
+  /** Get total value of sales in sale log. */
   @Override
   public BigDecimal getTotalValueOfSales() {
     BigDecimal value = new BigDecimal("0.00");

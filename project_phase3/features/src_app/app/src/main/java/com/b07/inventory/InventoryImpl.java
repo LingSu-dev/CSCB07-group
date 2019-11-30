@@ -17,7 +17,7 @@ public class InventoryImpl implements Inventory, Serializable {
    * Serial Version ID of InventoryImpl.
    */
   private static final long serialVersionUID = 1L;
-
+  
   private HashMap<Item, Integer> itemMap = new HashMap<Item, Integer>();
   int totalItems;
 
