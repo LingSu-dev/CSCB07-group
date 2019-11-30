@@ -1,7 +1,7 @@
-package com.b07.users;
+package com.example.cscb07_app.Src.users;
 
+import com.example.cscb07_app.Src.database.helper.DatabaseHelperAdapter;
 import java.sql.SQLException;
-import com.b07.database.helper.DatabaseHelperAdapter;
 
 /**
  * A class representing an employee within the sales application system.

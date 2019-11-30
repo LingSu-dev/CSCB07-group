@@ -1,6 +1,7 @@
 package com.example.cscb07_app.Src.database.helper;
 
 import android.database.Cursor;
+import android.util.Log;
 import com.example.cscb07_app.Src.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Src.inventory.Inventory;
 import com.example.cscb07_app.Src.inventory.InventoryImpl;
@@ -48,6 +49,12 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    */
   public int insertRole(String name) throws DatabaseInsertException, SQLException {
 
+    //TODO: added this code to avoid duplicate roles
+    if (getRoleIdByName(name) != -1)
+    {
+      return getRoleIdByName(name);
+    }
+
     // Check that role name is Roles enum
     boolean valid = false;
     for (Roles role : Roles.values()) {
@@ -79,11 +86,13 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   public int insertNewUser(String name, int age, String address, String password)
       throws DatabaseInsertException, SQLException {
 
+    Log.d("happybanana", "Called");
     if (age < 0 || name == null || address.length() > 100) {
       throw new DatabaseInsertException();
     }
 
     long userId = driver.insertNewUser(name, age, address, password);
+    Log.d("happybanana", "User id: " + userId);
     return Math.toIntExact(userId);
   }
 
@@ -121,6 +130,17 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    */
   public int insertItem(String name, BigDecimal price)
       throws DatabaseInsertException, SQLException {
+
+    //TODO: Avoid duplicated items in ITEMS table
+    for (Item item: getAllItems())
+    {
+      if (item.getName().equals(name))
+      {
+        Log.d("happybanana", "Item Id:"+item.getId());
+        return item.getId();
+      }
+    }
+
     // Check if item is a valid type
     boolean valid = false;
     for (ItemTypes type : ItemTypes.values()) {
