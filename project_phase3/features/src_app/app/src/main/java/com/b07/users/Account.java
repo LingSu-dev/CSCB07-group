@@ -5,28 +5,36 @@ import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * A class representing a user account.
- *
  * @author Aidan Zorbas
+ * @author Alex Efimov
+ * @author Lingfeng Su
+ * @author Payam Yektamaram
+ *
  */
-public class Account {
-
+public class Account implements Serializable {
+  
+  /**
+   * Serial Version ID of Account Class.
+   */
+  private static final long serialVersionUID = -7781563226375042210L;
   private ShoppingCart cart;
   private int accountId;
   private int userId;
   private boolean active;
-
+  
   public Account(int userId, int accountId, boolean active) {
     this.userId = userId;
     this.accountId = accountId;
     this.active = active;
   }
-
+  
   public boolean retrieveCustomerCart() throws SQLException {
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
@@ -35,11 +43,11 @@ public class Account {
     if (accountIds == null || !accountIds.contains(accountId)) {
       return false;
     }
-
+    
     cart = DatabaseHelperAdapter.getAccountDetails(accountId);
     return true;
-  }
-
+  } 
+  
   /**
    * Saves a customer's cart to their lowest numbered account.
    *
@@ -50,6 +58,7 @@ public class Account {
    */
   public boolean saveCustomerCart(ShoppingCart toAdd) throws SQLException {
 
+    
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
     }
@@ -66,21 +75,21 @@ public class Account {
       }
     }
     return true;
-
+    
   }
-
+  
   public ShoppingCart getCart() {
     return cart;
   }
-
+  
   public int getUserId() {
     return userId;
   }
-
+  
   public int getAccountId() {
     return accountId;
   }
-
+  
   public boolean deactivate() throws SQLException {
     try {
       return DatabaseHelperAdapter.updateAccountStatus(userId, accountId, false);

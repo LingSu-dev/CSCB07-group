@@ -3,6 +3,7 @@ package com.b07.users;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.security.PasswordHelpers;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
@@ -13,8 +14,12 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public abstract class User {
+public abstract class User implements Serializable {
 
+  /**
+   * Serial Version ID of User class.
+   */
+  private static final long serialVersionUID = 1L;
   private int id;
   private String name;
   private int age;
@@ -22,23 +27,17 @@ public abstract class User {
   protected int roleId;
   private boolean authenticated = false;
 
-  /**
-   * Return user's id.
-   */
+  /** Return user's id. */
   public int getId() {
     return id;
   }
 
-  /**
-   * Set user's id.
-   */
+  /** Set user's id. */
   public void setId(int id) {
     this.id = id;
   }
 
-  /**
-   * Get user's name.
-   */
+  /** Get user's name. */
   public String getName() {
     return name;
   }
@@ -56,23 +55,17 @@ public abstract class User {
     this.name = name;
   }
 
-  /**
-   * Get user's age.
-   */
+  /** Get user's age. */
   public int getAge() {
     return age;
   }
 
-  /**
-   * Set user's age.
-   */
+  /** Set user's age. */
   public void setAge(int age) {
     this.age = age;
   }
 
-  /**
-   * Get user's address.
-   */
+  /** Get user's address. */
   public String getAddress() {
     return address;
   }
@@ -88,9 +81,7 @@ public abstract class User {
     }
   }
 
-  /**
-   * Get user's role id.
-   */
+  /** Get user's role id. */
   public int getRoleId() {
     return roleId;
   }
@@ -113,9 +104,7 @@ public abstract class User {
     return result;
   }
 
-  /**
-   * Returns true if user is authenticated, false otherwise.
-   */
+  /** Returns true if user is authenticated, false otherwise. */
   public boolean getAuthenticated() {
     return authenticated;
   }

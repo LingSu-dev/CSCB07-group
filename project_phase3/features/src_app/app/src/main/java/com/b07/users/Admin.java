@@ -2,6 +2,8 @@ package com.b07.users;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
@@ -12,7 +14,12 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class Admin extends User {
+public class Admin extends User implements Serializable {
+
+  /**
+   * Serial Version ID of Admin.
+   */
+  private static final long serialVersionUID = 1L;
 
   /**
    * Create a new admin, without setting their authentication value.
