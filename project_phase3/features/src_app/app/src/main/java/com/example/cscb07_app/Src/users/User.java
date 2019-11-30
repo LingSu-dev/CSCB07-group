@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public abstract class User  implements Serializable {
+public abstract class User {
 
   private int id;
   private String name;

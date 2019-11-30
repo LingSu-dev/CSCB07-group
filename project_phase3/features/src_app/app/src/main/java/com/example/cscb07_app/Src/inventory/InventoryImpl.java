@@ -11,7 +11,7 @@ import java.util.HashMap;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class InventoryImpl implements Inventory, Serializable {
+public class InventoryImpl implements Inventory {
 
   private HashMap<Item, Integer> itemMap = new HashMap<Item, Integer>();
   int totalItems;
