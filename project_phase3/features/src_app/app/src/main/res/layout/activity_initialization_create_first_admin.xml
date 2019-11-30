@@ -20,6 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/createUserAgeHint"
+    android:maxLength="3"
     android:layout_marginTop="20dp"
     android:id="@+id/initializationAdminAgeEntry"
     android:layout_below="@id/initializationAdminNameEntry"
@@ -30,6 +31,7 @@
     android:layout_height="wrap_content"
     android:hint="@string/createUserAddressHint"
     android:layout_marginTop="20dp"
+    android:maxLength="100"
     android:id="@+id/initializationAdminAddressEntry"
     android:layout_below="@id/initializationAdminAgeEntry"
     android:inputType="text" />
