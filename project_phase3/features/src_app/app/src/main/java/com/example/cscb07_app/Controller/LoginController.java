@@ -19,16 +19,30 @@ import com.example.cscb07_app.Src.users.Employee;
 import com.example.cscb07_app.Src.users.User;
 import java.sql.SQLException;
 
+/**
+ * Class that controls all actions for events on login activity
+ */
 public class LoginController implements View.OnClickListener {
 
   private Context appContext;
   private DatabaseAndroidHelper androidHelper;
 
+  /**
+   * Constructor for LoginController.
+   *
+   * @param context the context it is called in
+   * @param androidHelper the helper to access database methods
+   */
   public LoginController(Context context, DatabaseAndroidHelper androidHelper) {
     this.appContext = context;
     this.androidHelper = androidHelper;
   }
 
+  /**
+   * Performs actions based on events in login activity.
+   *
+   * @param v the view
+   */
   @Override
   public void onClick(View v) {
     Spinner mySpinner = ((LoginMenu) appContext).findViewById(R.id.rolePositionEntry);
@@ -68,6 +82,13 @@ public class LoginController implements View.OnClickListener {
   }
 
 
+  /**
+   * Authenticates admin and logs them in.
+   *
+   * @param userId the admin's user id
+   * @param password the admin's password
+   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
+   */
   public void adminLogin(int userId, String password, AlertDialog loginIncorrectCredentialDialog) {
     boolean authenticated = true;
 
@@ -94,6 +115,13 @@ public class LoginController implements View.OnClickListener {
   }
 
 
+  /**
+   * Authenticates customer and logs them in.
+   *
+   * @param userId the customer's user id
+   * @param password the customer's password
+   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
+   */
   public void customerLogin(int userId, String password,
       AlertDialog loginIncorrectCredentialDialog) {
     boolean authenticated = true;
@@ -120,6 +148,13 @@ public class LoginController implements View.OnClickListener {
     }
   }
 
+  /**
+   * Authenticates employee and logs them in.
+   *
+   * @param userId the employee's user id
+   * @param password the employee's password
+   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
+   */
   public void employeeLogin(int userId, String password,
       AlertDialog loginIncorrectCredentialDialog) {
     Employee currentEmployee = null;
