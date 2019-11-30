@@ -31,6 +31,7 @@ public class LoginController implements View.OnClickListener {
 
   @Override
   public void onClick(View v) {
+
     Spinner mySpinner = ((LoginMenu) appContext).findViewById(R.id.rolePositionEntry);
     String rolePosition = mySpinner.getSelectedItem().toString();
 
@@ -42,73 +43,96 @@ public class LoginController implements View.OnClickListener {
     loginIncorrectCredentialDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ok",
         new DialogController(appContext, DialogId.LOGIN_INCORRECT_CREDENTIALS));
 
-    int userId = Integer.parseInt(userIdEntry.getText().toString());
-    String password = passwordEntry.getText().toString();
-    boolean authenticated = false;
+    boolean userIdValid = true;
+    int userId = 0;
 
-    if (rolePosition.equals("Admin")) {
-      try {
-        User currentUser = androidHelper.getUserDetails(userId);
+    try {
+      userId = Integer.parseInt(userIdEntry.getText().toString());
+    }catch(NumberFormatException e)
+    {
+      userIdValid = false;
+    }
 
-        if (userId < 1 || currentUser == null || !(currentUser instanceof Admin)) {
-          authenticated = false;
-        } else {
-          Admin admin = (Admin) androidHelper.getUserDetails(userId);
-          authenticated = admin.authenticate(password);
+    if (userIdValid) {
+
+      String password = passwordEntry.getText().toString();
+      boolean authenticated = false;
+
+      if (rolePosition.equals("Admin")) {
+        try {
+          User currentUser = androidHelper.getUserDetails(userId);
+
+          if (userId < 1 || currentUser == null || !(currentUser instanceof Admin)) {
+            authenticated = false;
+          } else {
+            Admin admin = (Admin) androidHelper.getUserDetails(userId);
+            authenticated = admin.authenticate(password);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
 
-      if (authenticated) {
-        appContext.startActivity(new Intent(this.appContext, AdminMenu.class));
-      } else {
-        loginIncorrectCredentialDialog
-            .setMessage("Double check your id and password and make sure its an admin account!");
-        loginIncorrectCredentialDialog.show();
-      }
-    } else if (rolePosition.equals("Employee")) {
-      try {
-        User currentUser = androidHelper.getUserDetails(userId);
-
-        if (userId < 1 || currentUser == null || !(currentUser instanceof Employee)) {
-          authenticated = false;
+        if (authenticated) {
+          appContext.startActivity(new Intent(this.appContext, AdminMenu.class));
         } else {
-          Employee employee = (Employee) androidHelper.getUserDetails(userId);
-          authenticated = employee.authenticate(password);
+          loginIncorrectCredentialDialog
+              .setMessage("Double check your id and password and make sure its an admin account!");
+          loginIncorrectCredentialDialog.show();
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      } else if (rolePosition.equals("Employee")) {
+        try {
+          User currentUser = androidHelper.getUserDetails(userId);
 
-      if (authenticated) {
-        appContext.startActivity(new Intent(this.appContext, EmployeeMenu.class));
-      } else {
-        loginIncorrectCredentialDialog
-            .setMessage("Double check your id and password and make sure its an employee account!");
-        loginIncorrectCredentialDialog.show();
-      }
-    } else if (rolePosition.equals("Customer")) {
-      try {
-        User currentUser = androidHelper.getUserDetails(userId);
+          if (userId < 1 || currentUser == null || !(currentUser instanceof Employee)) {
+            authenticated = false;
+          } else {
+            Employee employee = (Employee) androidHelper.getUserDetails(userId);
+            authenticated = employee.authenticate(password);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
 
-        if (userId < 1 || currentUser == null || !(currentUser instanceof Customer)) {
-          authenticated = false;
+        if (authenticated) {
+          appContext.startActivity(new Intent(this.appContext, EmployeeMenu.class));
         } else {
-          Customer customer = (Customer) androidHelper.getUserDetails(userId);
-          authenticated = customer.authenticate(password);
+          loginIncorrectCredentialDialog
+              .setMessage(
+                  "Double check your id and password and make sure its an employee account!");
+          loginIncorrectCredentialDialog.show();
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      } else if (rolePosition.equals("Customer")) {
+        try {
+          User currentUser = androidHelper.getUserDetails(userId);
 
-      if (authenticated) {
-        appContext.startActivity(new Intent(this.appContext, CustomerStore.class));
-      } else {
-        loginIncorrectCredentialDialog
-            .setMessage("Double check your id and password and make sure its a customer account!");
-        loginIncorrectCredentialDialog.show();
+          if (userId < 1 || currentUser == null || !(currentUser instanceof Customer)) {
+            authenticated = false;
+          } else {
+            Customer customer = (Customer) androidHelper.getUserDetails(userId);
+            authenticated = customer.authenticate(password);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+
+        if (authenticated) {
+          appContext.startActivity(new Intent(this.appContext, CustomerStore.class));
+        } else {
+          loginIncorrectCredentialDialog
+              .setMessage(
+                  "Double check your id and password and make sure its a customer account!");
+          loginIncorrectCredentialDialog.show();
+        }
       }
+    }
+    else
+    {
+      AlertDialog invalidUserIdDialog = new AlertDialog.Builder(appContext).create();
+      invalidUserIdDialog.setTitle("User Id Format Error");
+      invalidUserIdDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+          new DialogController(appContext, DialogId.LOGIN_INCORRECT_CREDENTIALS));
+      invalidUserIdDialog.setMessage("User id can't be empty!");
+      invalidUserIdDialog.show();
     }
   }
 }
