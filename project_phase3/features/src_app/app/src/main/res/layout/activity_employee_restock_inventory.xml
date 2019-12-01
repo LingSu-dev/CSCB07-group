@@ -11,6 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="40dp"
+    android:inputType="number"
     android:hint="@string/itemIdHint"
     android:id="@+id/restockInventoryItemIdEntry" />
 
@@ -18,6 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
+    android:inputType="number"
     android:hint="@string/quantityHint"
     android:layout_below="@id/restockInventoryItemIdEntry"
     android:id="@+id/restockInventoryQuantityEntry" />

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.inventory.Item;
 import com.b07.store.EmployeeInterface;
 import com.b07.users.Roles;
 import com.example.cscb07_app.Activity.Employee.EmployeeAuthenticateEmployee;
@@ -50,7 +51,6 @@ public class EmployeeController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, EmployeeMakeEmployee.class));
         break;
       case R.id.menuRestockInventoryBtn:
-        //TODO
         appContext.startActivity(new Intent(this.appContext, EmployeeRestockInventory.class));
         break;
       case R.id.menuExitBtn:
@@ -209,7 +209,60 @@ public class EmployeeController implements View.OnClickListener {
         }
         break;
       case R.id.restockInventoryBtn:
-        //TODO: add functionality
+        EditText itemId = ((Activity) appContext).findViewById(R.id.restockInventoryItemIdEntry);
+        EditText quantity = ((Activity) appContext).findViewById(R.id.restockInventoryQuantityEntry);
+
+        int itemIdNumber = -1;
+        int quantityNumber = 0;
+        boolean restocked = false;
+        boolean bothNumbersValid = true;
+        //Check validity of textfield data.
+        try {
+          itemIdNumber = Integer.parseInt(itemId.getText().toString());
+          quantityNumber = Integer.parseInt(quantity.getText().toString());
+          if(quantityNumber < 0) {
+            bothNumbersValid = false;
+          }
+        } catch (NumberFormatException e){
+          bothNumbersValid = false;
+        }
+        try {
+          //Attempt restock, if valid.
+          if (bothNumbersValid) {
+            if (DatabaseHelperAdapter.itemExists(itemIdNumber)) {
+              Item item = DatabaseHelperAdapter.getItem(itemIdNumber);
+              restocked = employeeInterface.restockInventory(item, quantityNumber);
+            } else {
+              AlertDialog noItemDialog = new AlertDialog.Builder(appContext).create();
+              noItemDialog.setTitle("No such item ID!");
+              noItemDialog.setMessage("The entered Item ID is invalid!");
+              noItemDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                      new DialogController(appContext, DialogId.AGE_EMPTY_DIALOG));
+              noItemDialog.show();
+            }
+          } else {
+            AlertDialog restockAlertDialog = new AlertDialog.Builder(appContext).create();
+            restockAlertDialog.setTitle("Format Error");
+            restockAlertDialog.setMessage("Make sure to enter a value for both the ID and quantity, " +
+                    "and ensure that the quantity is positive!");
+            restockAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                    new DialogController(appContext, DialogId.AGE_EMPTY_DIALOG));
+            restockAlertDialog.show();
+          }
+
+          if (restocked) {
+            AlertDialog restockSuccessfulDialog = new AlertDialog.Builder(appContext).create();
+            restockSuccessfulDialog.setTitle("Restock successful!");
+            restockSuccessfulDialog.setMessage("Item: "
+                    + DatabaseHelperAdapter.getItem(itemIdNumber).getName() + "\nQuantity:" +
+                    quantityNumber);
+            restockSuccessfulDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
+                    new DialogController(appContext, DialogId.CREATE__NEW_USER_DETAILS));
+            restockSuccessfulDialog.show();
+          }
+        } catch (SQLException e){
+          //Will Never Occur, holdover from cross platform adapter structure.
+        }
         break;
     }
   }

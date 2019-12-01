@@ -45,4 +45,9 @@ public class EmployeeMenu extends AppCompatActivity {
     Button exitButton = findViewById(R.id.menuExitBtn);
     exitButton.setOnClickListener(new EmployeeController(this, employeeInterface));
   }
+
+  @Override
+  public void onBackPressed() {
+    return;
+  }
 }
