@@ -76,7 +76,7 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
             + "ITEMID INTEGER NOT NULL,"
             + "QUANTITY INTEGER NOT NULL,"
             + "FOREIGN KEY(SALEID) REFERENCES SALES(ID),"
-            + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID)"
+            + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID),"
             + "PRIMARY KEY(SALEID, ITEMID))";
     sqLiteDatabase.execSQL(sql);
 
@@ -94,7 +94,22 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
             + "FOREIGN KEY(ACCTID) REFERENCES ACCOUNT(ID), "
             + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID), "
             + "PRIMARY KEY(ACCTID, ITEMID))";
+    sqLiteDatabase.execSQL(sql);
 
+    sql = "CREATE TABLE DISCOUNTTYPES "
+            + "(ID INTEGER PRIMARY KEY NOT NULL,"
+            + "NAME TEXT NOT NULL)";
+    sqLiteDatabase.execSQL(sql);
+
+    sql = "CREATE TABLE COUPONS "
+            + "(ID INTEGER PRIMARY KEY NOT NULL, "
+            + "ITEMID INTEGER NOT NULL, "
+            + "USES INTEGER NOT NULL, "
+            + "TYPEID INTEGER NOT NULL , "
+            + "DISCOUNT TEXT NOT NULL , "
+            + "CODE TEXT NOT NULL , "
+            + "FOREIGN KEY(ITEMID) REFERENCES ITEMS(ID), "
+            + "FOREIGN KEY(TYPEID) REFERENCES DISCOUNTTYPES(ID))";
     sqLiteDatabase.execSQL(sql);
   }
 
@@ -110,6 +125,8 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ITEMIZEDSALES");
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ACCOUNT");
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS ACCOUNTSUMMARY");
+    sqLiteDatabase.execSQL("DROP TABLE IF EXISTS DISCOUNTTYPES");
+    sqLiteDatabase.execSQL("DROP TABLE IF EXISTS COUPONS");
 
     onCreate(sqLiteDatabase);
   }
@@ -366,6 +383,107 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM ACCOUNT WHERE userId = ? and ACTIVE = ?",
             new String[] {String.valueOf(userId), String.valueOf(0)});
     return cursor;
+  }
+  /**
+   * Get the discount type for a given ID.
+   *
+   * @param discountTypeId the discount type id.
+   * @return the name of the discount type
+   */
+  protected String getDiscountType(int discountTypeId) {
+    String sql = "SELECT NAME FROM DISCOUNTTYPES WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[] {String.valueOf(discountTypeId)});
+    cursor.moveToFirst();
+    String results = cursor.getString(cursor.getColumnIndex("NAME"));
+    cursor.close();
+    return results;
+  }
+
+  /**
+   * Get every discount type ID.
+   *
+   * @return a cursor containing every discount type id in the database.
+   */
+  protected Cursor getDiscountTypeIds() {
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM DISCOUNTTYPES;", null);
+    return cursor;
+  }
+
+  /**
+   * get the id of a coupon
+   *
+   * @param code the coupon code
+   * @return the id of the coupon
+   */
+  protected int getCouponId(String code) {
+    String sql = "SELECT ID FROM COUPONS WHERE CODE = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{code});
+    cursor.moveToFirst();
+    int id = cursor.getInt(cursor.getColumnIndex("ID"));
+    cursor.close();
+    return id;
+  }
+
+  /**
+   * get the discount amount for a coupon
+   *
+   * @param id the coupon id
+   * @return the id of the coupon
+   * @if something goes wrong
+   */
+  protected String getCouponDiscountAmount(int id) {
+    String sql = "SELECT DISCOUNT FROM COUPONS WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(id)});
+    cursor.moveToFirst();
+    String discount = cursor.getString(cursor.getColumnIndex("DISCOUNT"));
+    cursor.close();
+    return discount;
+  }
+
+  /**
+   * get the item id for a coupon
+   *
+   * @param id the coupon id
+   * @return the id of the item
+   * @if something goes wrong
+   */
+  protected int getCouponItemId(int id) {
+    String sql = "SELECT ITEMID FROM COUPONS WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(id)});
+    int item = cursor.getInt(cursor.getColumnIndex("ITEMID"));
+    cursor.close();
+    return item;
+  }
+
+  /**
+   *  Return a list of coupons
+   * @return a cursor of coupon ids
+   * @if something goes wrong
+   */
+  protected Cursor getCoupons() {
+    String sql = "SELECT * FROM COUPONS;";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    return sqLiteDatabase.rawQuery(sql, null);
+  }
+
+  /**
+   * Return the number of uses left for a coupon
+   * @param couponId the coupon id
+   * @return the number of uses left
+   * @if something goes wrong
+   */
+  protected int getCouponUses(int couponId) {
+    String sql = "SELECT USES FROM COUPONS WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(couponId)});
+    int item = cursor.getInt(cursor.getColumnIndex("USES"));
+    cursor.close();
+    return item;
   }
 
   //UPDATE METHODS
