@@ -9,9 +9,11 @@
 
 
   <EditText
+    android:inputType="number"
     android:id="@+id/makeAccountCustomerIdEntry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:layout_marginTop="50dp"
     android:hint="@string/userIdHint" />
 

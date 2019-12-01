@@ -19,14 +19,12 @@ public class EmployeeMakeUser extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_employee_make_user);
 
-    EmployeeInterface employeeInterface = (EmployeeInterface)getIntent().getSerializableExtra("employeeInterface");
-
     DatabaseMethodHelper methodHelper = new DatabaseMethodHelper(getApplicationContext());
     DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
     androidHelper.setDriver(methodHelper);
     DatabaseHelperAdapter.setPlatformHelper(androidHelper);
 
     Button createEmployee = findViewById(R.id.makeUserBtn);
-    createEmployee.setOnClickListener(new EmployeeController(this, employeeInterface));
+    createEmployee.setOnClickListener(new EmployeeController(this));
   }
 }

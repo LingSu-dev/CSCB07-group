@@ -3,6 +3,9 @@ package com.example.cscb07_app.Controller;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import com.b07.store.EmployeeInterface;
+import com.b07.users.Employee;
 import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstEmployee;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
@@ -19,7 +22,7 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   @Override
   public void onClick(DialogInterface dialog, int which) {
-    switch(id){
+    switch (id) {
       case CREATE_FIRST_ADMIN_DETAILS:
         appContext.startActivity(new Intent(appContext, InitializationCreateFirstEmployee.class));
         break;
