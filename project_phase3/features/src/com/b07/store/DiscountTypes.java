@@ -1,6 +1,8 @@
 package com.b07.store;
 
-public enum DiscountTypes {
+import java.io.Serializable;
+
+public enum DiscountTypes implements Serializable{
   PERCENTAGE,
   FLAT_RATE
 }
