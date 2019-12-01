@@ -385,7 +385,7 @@ public class SalesApplication {
       } else if (input == 0) {
         System.out.println("Exiting");
         return;
-      }
+      } 
       input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     }
     System.out.println("Exiting");
