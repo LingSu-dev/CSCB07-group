@@ -367,8 +367,10 @@ public class SalesApplication {
           } 
         } catch (IOException e) {
           System.out.println("Unable to read data from file");
+          e.printStackTrace();
         } catch (SQLException e) {
           System.out.println("Something went wrong while setting data in the database");
+          e.printStackTrace();
         } catch (ClassNotFoundException e) {
           System.out.println("Unable to find a necessary part of the application");
           e.printStackTrace();
