@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.exceptions.DifferentEnumException;
 import com.b07.inventory.Inventory;
@@ -124,7 +125,6 @@ public class SerializeDatabase {
   }
 
   private static boolean checkEnums(DataStorage database) {
-    //TODO: Check roles, Coupontype, and Items Enum, return false if any do not match
     List<String> rolesEnum = new ArrayList<String>();
     for (Roles role : Roles.values()) {
       rolesEnum.add(role.toString());
@@ -295,15 +295,23 @@ public class SerializeDatabase {
     if (!checkEnums(database)) {
       throw new DifferentEnumException();
     }
-     
-    //TODO: Rename old database to database_backup for reverting
+    SerializeFunc.serialize(getDatabaseObject(), location + "database_backup.ser");
     try {
       DatabaseHelperAdapter.reInitialize();
       insertDataStorage(database);
     } catch (Exception i){
-      //TODO: Use OS to load the backup database
+      database = SerializeFunc.deserialize(location + "database_backup.ser");
+      System.out.println("Encourtered an error, reverting...");
+        try {
+          DatabaseHelperAdapter.reInitialize();
+          insertDataStorage(database);
+          System.out.println("Revert Successful");
+        } catch (ConnectionFailedException | DatabaseInsertException e) {
+          e.printStackTrace();
+          System.out.println("Failed to revert, please manually revert Database File");
+        }
+          
     }
-    //TODO: Use OS to remove the backup database since data was inserted successfully
     //TODO: Ask if the admin who performed the populate want to be inserted if missing
     
     
