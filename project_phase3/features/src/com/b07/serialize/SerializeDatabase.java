@@ -309,6 +309,7 @@ public class SerializeDatabase {
         } catch (ConnectionFailedException | DatabaseInsertException e) {
           e.printStackTrace();
           System.out.println("Failed to revert, please manually revert Database File");
+          throw new SQLException();
         }
           
     }

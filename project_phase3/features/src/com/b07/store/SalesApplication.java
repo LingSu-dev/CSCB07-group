@@ -353,14 +353,14 @@ public class SalesApplication {
           if (reinsert) {
             System.out.println("You are not currently part of the database, do you wish to reinsert yourself? Y/n");
             String reinsertChoice = bufferedReader.readLine();
-            while (!(reinsertChoice == "Y" || reinsertChoice == "n")) {
+            while (!(reinsertChoice.equals("Y") || reinsertChoice.equals("n"))) {
               System.out.println("Please input a valid choice");
               reinsertChoice = bufferedReader.readLine();
             }
-            if (reinsertChoice == "Y") {
+            if (reinsertChoice.equals("Y")) {
               // TODO: temp password
               DatabaseHelperAdapter.insertNewUser(admin.getName(), admin.getAge(), admin.getAddress(), "temp");
-            } else if (reinsertChoice == "n"){
+            } else if (reinsertChoice.equals("n")){
               System.out.println("Exiting");
               return;
             } 
