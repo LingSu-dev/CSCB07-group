@@ -159,8 +159,8 @@ public class SerializeDatabase {
   }
   
   private static void insertDataStorage(DataStorage database) throws SQLException, DatabaseInsertException {
-    HashMap<Integer, String> roleIdToRoleNames = ;
-    ArrayList<User> users;
+    HashMap<Integer, String> roleIdToRoleNames = database.getRoleIdToRoleNames();
+    ArrayList<User> users = ;
     HashMap<Integer, Integer> userToRole;
     ArrayList<Item> items;
     Inventory inventory;
@@ -182,7 +182,7 @@ public class SerializeDatabase {
     
     //TODO: Rename old database to database_backup for reverting
     try {
-      // TODO: DatabaseHelperAdapter.reInitialize;
+      DatabaseHelperAdapter.reInitialize();
       insertDataStorage(database);
     } catch (Exception i){
       //TODO: Use OS to load the backup database
