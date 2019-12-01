@@ -1,5 +1,6 @@
 package com.b07.database.helper;
 
+import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
@@ -24,7 +25,10 @@ public class DatabaseHelperAdapter {
   public static Connection connectOrCreateDataBase() {
     return platformHelper.connectOrCreateDataBase();
   }
-
+  
+  public static Connection reInitialize() throws ConnectionFailedException {
+    return platformHelper.reInitialize();
+  }
   
   public static int insertRole(String name) throws DatabaseInsertException, SQLException {
     return platformHelper.insertRole(name);

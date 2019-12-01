@@ -1,5 +1,6 @@
 package com.b07.database.helper;
 
+import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
@@ -17,6 +18,8 @@ import java.util.List;
 public interface DatabasePlatformHelper {
   //Driver Helper
   public Connection connectOrCreateDataBase();
+  
+  public Connection reInitialize() throws ConnectionFailedException;
   
   //InsertHelper
   public int insertRole(String name) throws DatabaseInsertException, SQLException;

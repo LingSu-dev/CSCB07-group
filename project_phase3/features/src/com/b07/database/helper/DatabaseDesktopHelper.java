@@ -1,5 +1,6 @@
 package com.b07.database.helper;
 
+import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
@@ -17,6 +18,11 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
 
   @Override
   public Connection connectOrCreateDataBase() {
+    return DatabaseDriverHelper.connectOrCreateDataBase();
+  }
+  
+  @Override
+  public Connection reInitialize() throws ConnectionFailedException {
     return DatabaseDriverHelper.connectOrCreateDataBase();
   }
 
@@ -340,5 +346,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   public List<Integer> getUserInactiveAccounts(int userId) throws SQLException {
     return DatabaseSelectHelper.getUserInactiveAccounts(userId);
   }
+
+
 
 }
