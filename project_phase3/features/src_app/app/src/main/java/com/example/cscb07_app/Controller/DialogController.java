@@ -1,5 +1,6 @@
 package com.example.cscb07_app.Controller;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,6 +40,21 @@ public class DialogController implements DialogInterface.OnClickListener {
       case CREATE__NEW_USER_DETAILS:
         appContext.startActivity(new Intent(appContext, EmployeeMenu.class));
         break;
+      case NULL_DIALOG:
+        break;
+      case CHECKOUT_CART:
+        ((CustomerCheckout)appContext).recreate();
+        break;
+      case SAVE_SHOPPING_CART:
+        if (which == Dialog.BUTTON_POSITIVE)
+        {
+
+        }
+        else
+        {
+          ((CustomerCheckout)appContext).finish();
+          appContext.startActivity(new Intent(appContext, LoginMenu.class));
+        }
     }
   }
 }
