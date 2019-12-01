@@ -18,12 +18,14 @@ import com.b07.serialize.SerializeFunc;
 import com.b07.store.Coupon;
 import com.b07.store.CouponImpl;
 import com.b07.store.DiscountTypes;
+import com.b07.store.Sale;
 import com.b07.store.SalesLog;
 import com.b07.store.ShoppingCart;
 import com.b07.users.Account;
 import com.b07.users.Roles;
 import com.b07.users.User;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class SerializeDatabase {
@@ -160,16 +162,132 @@ public class SerializeDatabase {
   
   private static void insertDataStorage(DataStorage database) throws SQLException, DatabaseInsertException {
     HashMap<Integer, String> roleIdToRoleNames = database.getRoleIdToRoleNames();
-    ArrayList<User> users = ;
-    HashMap<Integer, Integer> userToRole;
-    ArrayList<Item> items;
-    Inventory inventory;
-    SalesLog sales;
-    SalesLog itemizedSales;
-    ArrayList<Account> accounts;
-    HashMap<Integer, String> userToHashedPWs;
-    HashMap<Integer, String> discountTypes;
-    HashMap<Integer, Coupon> couponIdsToCoupons;
+    ArrayList<User> users = database.getUsers();
+    HashMap<Integer, Integer> userToRole = database.getUserToRole();
+    ArrayList<Item> items = database.getItems();
+    Inventory inventory = database.getInventory();
+    SalesLog sales = database.getSales();
+    SalesLog itemizedSales = database.getItemizedSales();
+    ArrayList<Account> accounts = database.getAccounts();
+    HashMap<Integer, String> userToHashedPWs = database.getUserToHashedPWs();
+    HashMap<Integer, String> discountTypes = database.getDiscountTypes();
+    HashMap<Integer, Coupon> couponIdsToCoupons = database.getCouponIdsToCoupons();
+    
+    //Roles
+    ArrayList<Integer> roleIds = new ArrayList<Integer>();
+    for (Integer roleId : roleIdToRoleNames.keySet()) {
+      roleIds.add(roleId);
+    }
+    Collections.sort(roleIds);
+    for (Integer roleId : roleIds) {
+      DatabaseHelperAdapter.insertRole(roleIdToRoleNames.get(roleId));
+    }
+    
+    //Users + UserPW
+    HashMap<Integer, User> idToUser = new HashMap<Integer, User>();
+    ArrayList<Integer> userIds = new ArrayList<Integer>();
+    for (User user : users) {
+      idToUser.put(user.getId(), user);
+      userIds.add(user.getId());
+    }
+    Collections.sort(userIds); 
+    User currentUser;
+    for (Integer userId : userIds) {
+      currentUser = idToUser.get(userId);
+      //TODO: Password
+      DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
+    }
+    
+    //Userrole
+    for (Integer  userId: userToRole.keySet()) {
+      DatabaseHelperAdapter.insertUserRole(userId, userToRole.get(userId));
+    }
+    
+    //Items
+    HashMap<Integer, Item> idToItems = new HashMap<Integer, Item>();
+    ArrayList<Integer> itemIds = new ArrayList<Integer>();
+    for (Item item : items) {
+      idToItems.put(item.getId(), item);
+      itemIds.add(item.getId());
+    }
+    Collections.sort(itemIds);
+    Item currentItem;
+    for (Integer itemId : itemIds) {
+      currentItem = idToItems.get(itemId);
+      DatabaseHelperAdapter.insertItem(currentItem.getName(), currentItem.getPrice());
+    }
+    
+    //inventory
+    for (Item currItem : inventory.getItemMap().keySet()) {
+      DatabaseHelperAdapter.insertInventory(currItem.getId(), inventory.getItemMap().get(currItem));
+    }
+    
+    //Sales
+    ArrayList<Sale> allSales = (ArrayList<Sale>) sales.getSales();
+    HashMap<Integer, Sale> idToSales = new HashMap<Integer, Sale>();
+    ArrayList<Integer> saleIds = new ArrayList<Integer>();
+    for (Sale sale : allSales) {
+      idToSales.put(sale.getId(), sale);
+      saleIds.add(sale.getId());
+    }
+    Collections.sort(saleIds);
+    Sale currentSale;
+    for (Integer saleId : saleIds) {
+      currentSale = idToSales.get(saleId);
+      DatabaseHelperAdapter.insertSale(currentSale.getUser().getId(), currentSale.getTotalPrice());
+    }
+    
+    //ItemizedSales
+    for (Sale currSale : itemizedSales.getSales()) {
+      HashMap<Item, Integer> itemToQuantity = currSale.getItemMap();
+      for (Item currItem : itemToQuantity.keySet()) {
+        DatabaseHelperAdapter.insertItemizedSale(currSale.getId(), currItem.getId(), itemToQuantity.get(currItem));
+      }
+    }
+    
+    //Account
+    HashMap<Integer, Account> accountIdToAccount = new HashMap<Integer, Account>();
+    ArrayList<Integer> accountIds = new ArrayList<Integer>();
+    for (Account currAccount : accounts) {
+      accountIdToAccount.put(currAccount.getAccountId(), currAccount);
+      accountIds.add(currAccount.getAccountId());
+    }
+    Collections.sort(accountIds);
+    Account currentAccount;
+    for (Integer accountId : accountIds) {
+      currentAccount = accountIdToAccount.get(accountId);
+      DatabaseHelperAdapter.insertAccount(currentAccount.getUserId(), currentAccount.getActiveStatus());
+      //AccountSummary
+      ShoppingCart currentCart = currentAccount.getCart();
+      HashMap<Item, Integer> itemToQuantity = currentCart.getItemsWithQuantity();
+      for (Item item : currentCart.getItems()) {
+        DatabaseHelperAdapter.insertAccountLine(accountId, item.getId(), itemToQuantity.get(item));
+      }
+    }
+    
+    //Discounttypes
+    ArrayList<Integer> discountIds = new ArrayList<Integer>();
+    for (Integer discountId : discountTypes.keySet()) {
+      discountIds.add(discountId);
+    }
+    Collections.sort(discountIds);
+    for (Integer discountId : discountIds) {
+      DatabaseHelperAdapter.insertDiscountType(discountTypes.get(discountId));
+    }
+    
+    //Coupons
+    ArrayList<Integer> couponIds = new ArrayList<Integer>();
+    for (Integer couponId : couponIdsToCoupons.keySet()) {
+      couponIds.add(couponId);
+    }
+    Collections.sort(couponIds);
+    Coupon currCoupon;
+    for (Integer couponId : couponIds) {
+      currCoupon = couponIdsToCoupons.get(couponId);
+      DatabaseHelperAdapter.insertCoupon(currCoupon.getItemId(), currCoupon.getUses(), currCoupon.getType(), currCoupon.getDiscount(), currCoupon.getCode());
+    }
+    
+    
     
     
   }
