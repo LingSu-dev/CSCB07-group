@@ -11,11 +11,14 @@ import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.store.EmployeeInterface;
+import com.b07.users.Employee;
 import com.b07.users.Roles;
+import com.b07.users.User;
 import com.example.cscb07_app.Activity.Employee.EmployeeAuthenticateEmployee;
 import com.example.cscb07_app.Activity.Employee.EmployeeMakeAccount;
 import com.example.cscb07_app.Activity.Employee.EmployeeMakeEmployee;
 import com.example.cscb07_app.Activity.Employee.EmployeeMakeUser;
+import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Employee.EmployeeRestockInventory;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
@@ -38,7 +41,6 @@ public class EmployeeController implements View.OnClickListener {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menuAuthenticateEmployeeBtn:
-        //TODO
         appContext.startActivity(new Intent(this.appContext, EmployeeAuthenticateEmployee.class));
         break;
       case R.id.menuMakeNewUserBtn:
@@ -58,6 +60,26 @@ public class EmployeeController implements View.OnClickListener {
         break;
       case R.id.authenticateEmployeeBtn:
         //TODO: add functionality
+        EditText newEmployeeId = ((Activity) appContext).findViewById(R.id.authenticateEmployeeIdEntry);
+        EditText newEmployeePassword = ((Activity) appContext).findViewById(R.id.authenticateEmployeePassword);
+
+        boolean userIdValid = true;
+        int newEmployeeIdNum = 0;
+        String newEmployeePasswordString = newEmployeePassword.getText().toString();
+
+        try {
+          newEmployeeIdNum = Integer.parseInt(newEmployeeId.getText().toString());
+        } catch (NumberFormatException e) {
+          userIdValid = false;
+        }
+
+        if(userIdValid){
+          authenticateNewEmployee(newEmployeeIdNum, newEmployeePasswordString);
+        } else {
+          DialogFactory
+                  .createAlertDialog(appContext, "User ID Format Error", "User ID cannot be empty!",
+                          "Ok", DialogId.NULL_DIALOG).show();
+        }
         break;
       case R.id.makeAccountBtn:
 
@@ -314,5 +336,41 @@ public class EmployeeController implements View.OnClickListener {
       //Will Never Occur, holdover from cross platform adapter structure.
     }
     return customerId;
+  }
+
+  /**
+   * Authenticates employee and logs them in.
+   *
+   * @param userId the employee's user id
+   * @param password the employee's password
+   */
+  public void authenticateNewEmployee(int userId, String password) {
+
+    Employee currentEmployee = null;
+    boolean authenticated = false;
+
+    try {
+      User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
+
+      if (userId < 1 || currentUser == null || !(currentUser instanceof Employee)) {
+        authenticated = false;
+      } else {
+        currentEmployee = (Employee) DatabaseHelperAdapter.getUserDetails(userId);
+        authenticated = currentEmployee.authenticate(password);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    if (authenticated) {
+      employeeInterface.setCurrentEmployee(currentEmployee);
+      DialogFactory.createAlertDialog(appContext, "Success!",
+              "Current Employee Set to " + currentEmployee.getName(),
+              "Ok", DialogId.CREATE__NEW_USER_DETAILS).show();
+    } else {
+      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
+              "Double check your id and password and make sure they belong to an employee account!",
+              "Ok", DialogId.NULL_DIALOG).show();
+    }
   }
 }
