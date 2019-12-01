@@ -330,6 +330,7 @@ public class SalesApplication {
       } else if (input == 6) {
         System.out.println("Enter a location to retreive the backup from");
         String location = bufferedReader.readLine();
+        // TODO: Add check for admin to re-add their own account if they are not in it
         try {
           SerializeDatabase.populateFromFile(location);
         } catch (IOException e) {
