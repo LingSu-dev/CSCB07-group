@@ -328,6 +328,7 @@ public class SalesApplication {
         }
         
       } else if (input == 6) {
+        System.out.println("Please manually make a backup of the database file before proceeding incase reverting fails");
         System.out.println("Enter a location to retreive the backup from");
         String location = bufferedReader.readLine();
         // TODO: Add check for admin to re-add their own account if they are not in it
