@@ -57,6 +57,7 @@ public class DataStorage implements Serializable {
     this.itemizedSales = itemizedSales;
     this.accounts = accounts;
     this.userToHashedPWs = userToHashedPWs;
+    this.discountTypes = discountTypes;
     this.couponIdsToCoupons = couponIdsToCoupons;
   }
 
