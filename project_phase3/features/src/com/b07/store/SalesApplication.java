@@ -4,9 +4,11 @@ import com.b07.database.helper.DatabaseDesktopHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.exceptions.DifferentEnumException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
+import com.b07.serialize.SerializeDatabase;
 import com.b07.users.Account;
 import com.b07.users.Admin;
 import com.b07.users.Customer;
@@ -44,7 +46,7 @@ public class SalesApplication {
       }
 
       if (selection.equals("-1")) {
-        //  mode
+        // mode
         firstTimeSetup(connection);
 
       } else if (selection.equals("1")) {
@@ -246,7 +248,7 @@ public class SalesApplication {
     }
 
     String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons",
-        "4. View Customer Accounts", "0. Exit"};
+        "4. View Customer Accounts", "5. Backup database", "6. Restore database", "0. Exit"};
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     while (input != 0) {
       if (input == 1) {
@@ -312,6 +314,33 @@ public class SalesApplication {
           }
         } catch (Exception e) {
           // TODO Auto-generated catch blo
+          e.printStackTrace();
+        }
+      } else if (input == 5) {
+        System.out.println("Enter a location to save the file to");
+        String location = bufferedReader.readLine();
+        try {
+          SerializeDatabase.serializeToFile(location);
+        } catch (IOException e) {
+          System.out.println("Unable to save file");
+        } catch (SQLException e) {
+          System.out.println("Something went wrong while retreiving data");
+        }
+        
+      } else if (input == 6) {
+        System.out.println("Enter a location to retreive the backup from");
+        String location = bufferedReader.readLine();
+        try {
+          SerializeDatabase.populateFromFile(location);
+        } catch (IOException e) {
+          System.out.println("Unable to read data from file");
+        } catch (SQLException e) {
+          System.out.println("Something went wrong while setting data in the database");
+        } catch (ClassNotFoundException e) {
+          System.out.println("Unable to find a necessary part of the application");
+          e.printStackTrace();
+        } catch (DifferentEnumException e) {
+          System.out.println("This application does not support the given data");
           e.printStackTrace();
         }
       } else if (input == 0) {

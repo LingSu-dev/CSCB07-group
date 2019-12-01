@@ -58,6 +58,20 @@ public class AdminController implements View.OnClickListener {
         Spinner couponTypeEntry = ((Activity)appContext).findViewById(R.id.couponTypeEntry);
         String couponType = couponTypeEntry.getSelectedItem().toString();
 
+        EditText couponDiscountEntry = ((Activity)appContext).findViewById(R.id.couponDiscountEntry);
+        String couponDiscount = couponDiscountEntry.getText().toString();
+
+        EditText couponItemIdEntry = ((Activity)appContext).findViewById(R.id.couponDiscountEntry);
+        int couponItemId;
+        try{
+          couponItemId = Integer.parseInt(couponDiscountEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          
+        }
+
+
+
+
         break;
     }
   }
