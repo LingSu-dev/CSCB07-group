@@ -23,7 +23,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   
   @Override
   public Connection reInitialize() throws ConnectionFailedException {
-    return DatabaseDriverHelper.connectOrCreateDataBase();
+    return DatabaseDriverHelper.reInitialize();
   }
 
   @Override
