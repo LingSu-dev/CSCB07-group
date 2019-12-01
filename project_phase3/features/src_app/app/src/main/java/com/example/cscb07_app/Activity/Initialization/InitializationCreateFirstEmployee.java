@@ -20,10 +20,9 @@ public class InitializationCreateFirstEmployee extends AppCompatActivity {
     DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
     androidHelper.setDriver(methodHelper);
     DatabaseHelperAdapter.setPlatformHelper(androidHelper);
-    methodHelper.getWritableDatabase(); //Just to create database
 
-    Button createAdmin = findViewById(R.id.initializationCreateEmployeeButton);
-    createAdmin.setOnClickListener(new InitializationController(this, androidHelper));
+    Button createEmployee = findViewById(R.id.initializationCreateEmployeeButton);
+    createEmployee.setOnClickListener(new InitializationController(this));
   }
 
   @Override

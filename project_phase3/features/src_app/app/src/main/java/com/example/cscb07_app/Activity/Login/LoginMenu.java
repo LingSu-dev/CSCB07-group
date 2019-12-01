@@ -20,11 +20,9 @@ public class LoginMenu extends AppCompatActivity {
     DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
     androidHelper.setDriver(methodHelper);
     DatabaseHelperAdapter.setPlatformHelper(androidHelper);
-    methodHelper.getWritableDatabase(); //Just to create database
 
     Button loginBtn = findViewById(R.id.loginButton);
-
-    loginBtn.setOnClickListener(new LoginController(this, androidHelper));
+    loginBtn.setOnClickListener(new LoginController(this));
   }
 
   @Override

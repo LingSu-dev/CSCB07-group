@@ -3,14 +3,14 @@ package com.example.cscb07_app.Activity.Initialization;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.cscb07_app.Controller.InitializationController;
-import com.example.cscb07_app.R;
 import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.ItemTypes;
 import com.b07.users.Roles;
+import com.example.cscb07_app.Controller.InitializationController;
+import com.example.cscb07_app.R;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
@@ -25,7 +25,8 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
     androidHelper.setDriver(methodHelper);
     DatabaseHelperAdapter.setPlatformHelper(androidHelper);
-    methodHelper.getWritableDatabase(); //Just to create database
+
+    //methodHelper.getWritableDatabase(); //Just to create database
 
     try {
       //To avoid duplicate initialization
@@ -33,20 +34,17 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
         setUpDatabase(androidHelper);
       }
     } catch (DatabaseInsertException e) {
-
     } catch (SQLException e) {
-      e.printStackTrace();
     }
 
     Button createAdmin = findViewById(R.id.initializationCreateAdminButton);
-    createAdmin.setOnClickListener(new InitializationController(this, androidHelper));
+    createAdmin.setOnClickListener(new InitializationController(this));
   }
 
   @Override
   public void onBackPressed() {
     return;
   }
-
 
   public void setUpDatabase(DatabaseAndroidHelper androidHelper)
       throws DatabaseInsertException, SQLException {
