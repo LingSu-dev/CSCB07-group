@@ -2,6 +2,8 @@ package com.b07.database.helper;
 
 import android.database.Cursor;
 import android.util.Log;
+
+import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.InventoryImpl;
@@ -38,6 +40,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return null;
   }
 
+  public Connection reInitialize() throws ConnectionFailedException { return null; }
 
   /**
    * Insert role into ROLES table and return id.
