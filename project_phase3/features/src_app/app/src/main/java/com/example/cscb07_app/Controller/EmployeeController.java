@@ -24,10 +24,13 @@ import java.sql.SQLException;
 public class EmployeeController implements View.OnClickListener {
 
   private Context appContext;
-  private EmployeeInterface employeeInterface;
-  public EmployeeController(Context context, EmployeeInterface employeeInterface) {
+  private static EmployeeInterface employeeInterface;
+  public EmployeeController(Context context, EmployeeInterface e) {
     this.appContext = context;
-    this.employeeInterface = employeeInterface;
+    employeeInterface = e;
+  }
+  public EmployeeController(Context context) {
+    this.appContext = context;
   }
 
   @Override
@@ -38,18 +41,13 @@ public class EmployeeController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, EmployeeAuthenticateEmployee.class));
         break;
       case R.id.menuMakeNewUserBtn:
-        Intent newUserIntent = new Intent(this.appContext, EmployeeMakeUser.class);
-        newUserIntent.putExtra("employeeInterface", employeeInterface);
-        appContext.startActivity(newUserIntent);
+        appContext.startActivity(new Intent(this.appContext, EmployeeMakeUser.class));
         break;
       case R.id.menuMakeNewAccountBtn:
-        //TODO
         appContext.startActivity(new Intent(this.appContext, EmployeeMakeAccount.class));
         break;
       case R.id.menuMakeNewEmployeeBtn:
-        Intent newEmployeeIntent = new Intent(this.appContext, EmployeeMakeEmployee.class);
-        newEmployeeIntent.putExtra("employeeInterface", employeeInterface);
-        appContext.startActivity(newEmployeeIntent);
+        appContext.startActivity(new Intent(this.appContext, EmployeeMakeEmployee.class));
         break;
       case R.id.menuRestockInventoryBtn:
         //TODO
@@ -62,7 +60,48 @@ public class EmployeeController implements View.OnClickListener {
         //TODO: add functionality
         break;
       case R.id.makeAccountBtn:
-        //TODO: add functionality
+
+        AlertDialog invalidIdAlertDialog = new AlertDialog.Builder(appContext).create();
+        invalidIdAlertDialog.setTitle("ID Format Error");
+        invalidIdAlertDialog.setMessage("ID Cannot be empty!");
+        invalidIdAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                new DialogController(appContext, DialogId.NULL_DIALOG));
+
+        boolean validId = true;
+        EditText makeAccountCustomerId = ((Activity) appContext).findViewById(R.id.makeAccountCustomerIdEntry);
+        int makeAccountCustomerIdAsNumber = -1;
+        try {
+          try {
+           makeAccountCustomerIdAsNumber = Integer.parseInt(makeAccountCustomerId.getText().toString());
+          } catch (NumberFormatException e) {
+           validId = false;
+           }
+
+           int result = -1;
+           if(validId){
+             result = employeeInterface.createAccount(makeAccountCustomerIdAsNumber);
+             if (result == -1){
+               AlertDialog noInsert = new AlertDialog.Builder(appContext).create();
+               noInsert.setTitle("Account not created");
+               noInsert.setMessage("This likely occured because the given user ID is not a valid customer");
+               invalidIdAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
+                       new DialogController(appContext, DialogId.NULL_DIALOG));
+               noInsert.show();
+             } else{
+               AlertDialog accountAlert = new AlertDialog.Builder(appContext).create();
+               accountAlert.setTitle("Account Details");
+               accountAlert.setMessage("Account Id: " + result);
+               accountAlert.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
+                       new DialogController(appContext, DialogId.CREATE__NEW_USER_DETAILS));
+               accountAlert.show();
+             }
+           } else{
+            invalidIdAlertDialog.show();
+           }
+        } catch(SQLException e){
+          //Will Never Occur, holdover from cross platform adapter structure.
+        }
+
         break;
       case R.id.makeEmployeeBtn:
 
