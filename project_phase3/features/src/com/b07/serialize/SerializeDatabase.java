@@ -288,9 +288,6 @@ public class SerializeDatabase {
       DatabaseHelperAdapter.insertCoupon(currCoupon.getItemId(), currCoupon.getUses(), currCoupon.getType(), currCoupon.getDiscount(), currCoupon.getCode());
     }
     
-    
-    
-    
   }
   
   public static void populateFromFile(String location) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
@@ -308,38 +305,6 @@ public class SerializeDatabase {
     }
     //TODO: Use OS to remove the backup database since data was inserted successfully
     //TODO: Ask if the admin who performed the populate want to be inserted if missing
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
   }
