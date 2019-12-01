@@ -179,7 +179,7 @@ public class SerializeDatabase {
     if (!checkEnums(database)) {
       throw new DifferentEnumException();
     }
-    
+     
     //TODO: Rename old database to database_backup for reverting
     try {
       DatabaseHelperAdapter.reInitialize();
