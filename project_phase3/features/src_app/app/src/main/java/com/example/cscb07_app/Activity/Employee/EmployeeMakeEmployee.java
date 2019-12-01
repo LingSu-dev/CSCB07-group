@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
-import com.example.cscb07_app.Controller.EmployeeMakeUserController;
-import com.example.cscb07_app.Controller.InitializationController;
+import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 
 public class EmployeeMakeEmployee extends AppCompatActivity {
@@ -25,6 +24,6 @@ public class EmployeeMakeEmployee extends AppCompatActivity {
     DatabaseHelperAdapter.setPlatformHelper(androidHelper);
 
     Button createEmployee = findViewById(R.id.makeEmployeeBtn);
-    createEmployee.setOnClickListener(new EmployeeMakeUserController(this));
+    createEmployee.setOnClickListener(new EmployeeController(this));
   }
 }

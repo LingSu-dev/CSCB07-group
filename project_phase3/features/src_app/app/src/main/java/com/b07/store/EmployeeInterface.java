@@ -6,6 +6,8 @@ import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.users.Employee;
 import com.b07.users.Roles;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
@@ -16,7 +18,8 @@ import java.sql.SQLException;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class EmployeeInterface {
+public class EmployeeInterface implements Serializable {
+
 
   private Employee currentEmployee = null;
   private Inventory inventory;
