@@ -1,11 +1,16 @@
 package com.example.cscb07_app.Controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
 import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
@@ -15,6 +20,9 @@ import com.example.cscb07_app.Activity.Admin.AdminViewActiveAccounts;
 import com.example.cscb07_app.Activity.Admin.AdminViewBooks;
 import com.example.cscb07_app.Activity.Admin.AdminViewHistoricAccounts;
 import com.example.cscb07_app.R;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
 
 public class AdminController implements View.OnClickListener {
 
@@ -52,27 +60,51 @@ public class AdminController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, AdminCreateCoupon.class));
         break;
       case R.id.addCouponBtn:
-        EditText couponCodeEntry = ((Activity)appContext).findViewById(R.id.couponCodeEntry);
+        Activity context = (Activity)appContext;
+        EditText couponCodeEntry = context.findViewById(R.id.couponCodeEntry);
         String couponCode = couponCodeEntry.getText().toString();
 
-        Spinner couponTypeEntry = ((Activity)appContext).findViewById(R.id.couponTypeEntry);
+        Spinner couponTypeEntry = context.findViewById(R.id.couponTypeEntry);
         String couponType = couponTypeEntry.getSelectedItem().toString();
 
-        EditText couponDiscountEntry = ((Activity)appContext).findViewById(R.id.couponDiscountEntry);
+        EditText couponDiscountEntry = context.findViewById(R.id.couponDiscountEntry);
         String couponDiscount = couponDiscountEntry.getText().toString();
 
-        EditText couponItemIdEntry = ((Activity)appContext).findViewById(R.id.couponDiscountEntry);
-        int couponItemId;
-        try{
-          couponItemId = Integer.parseInt(couponDiscountEntry.getText().toString());
+        EditText couponItemIdEntry = context.findViewById(R.id.couponDiscountEntry);
+
+        EditText couponQuantityEntry = context.findViewById(R.id.couponDiscountEntry);
+        int couponItemId = -1;
+        int quantity = -1;
+        BigDecimal couponDiscountDecimal = BigDecimal.ZERO;
+        boolean valid = false;
+        try {
+          couponDiscountDecimal = new BigDecimal(couponDiscount);
+          couponItemId = Integer.parseInt(couponItemIdEntry.getText().toString());
+          quantity = Integer.parseInt(couponQuantityEntry.getText().toString());
+          valid = true;
         } catch (NumberFormatException e) {
-          
+          AlertDialog parseFailDialog = new AlertDialog.Builder(appContext)
+                  .setTitle("Incorrect input")
+                  .setMessage("Please enter a number")
+                  .create();
+          parseFailDialog.show();
         }
-
-
-
-
-        break;
+        if(valid){
+          try {
+            DatabaseHelperAdapter.insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal, couponCode);
+          } catch (SQLException | DatabaseInsertException e) {
+            AlertDialog insertFailDialog = new AlertDialog.Builder(appContext)
+                    .setTitle("Failed to add coupon")
+                    .setMessage("An error occurred when adding the coupon to the database")
+                    .create();
+            insertFailDialog.show();
+          }
+          AlertDialog successDialog = new AlertDialog.Builder(appContext)
+                  .setTitle("Success!")
+                  .setMessage("The coupon has been added to the database")
+                  .create();
+          successDialog.show();
+        }
     }
   }
 }

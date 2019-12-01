@@ -29,6 +29,9 @@ public class DialogController implements DialogInterface.OnClickListener {
         break;
       case AGE_EMPTY_DIALOG:
         break;
+      case CREATE_COUPON_DIALOG:
+        appContext.startActivity(new Intent(appContext, AdminController.class));
+        break;
     }
   }
 }
