@@ -1,7 +1,6 @@
 package com.example.cscb07_app.Controller;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -13,7 +12,7 @@ import com.b07.users.Customer;
 import com.b07.users.Employee;
 import com.b07.users.User;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
-import com.example.cscb07_app.Activity.Customer.CustomerStore;
+import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
@@ -48,11 +47,6 @@ public class LoginController implements View.OnClickListener {
     EditText userIdEntry = ((Activity) appContext).findViewById(R.id.loginUserIdEntry);
     EditText passwordEntry = ((Activity) appContext).findViewById(R.id.loginPassword);
 
-    AlertDialog loginIncorrectCredentialDialog = new AlertDialog.Builder(appContext).create();
-    loginIncorrectCredentialDialog.setTitle("Incorrect Credentials");
-    loginIncorrectCredentialDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "ok",
-        new DialogController(appContext, DialogId.LOGIN_INCORRECT_CREDENTIALS));
-
     boolean userIdValid = true;
     int userId = 0;
 
@@ -65,16 +59,16 @@ public class LoginController implements View.OnClickListener {
     if (userIdValid) {
       String password = passwordEntry.getText().toString();
       if (rolePosition.equals("Admin")) {
-        adminLogin(userId, password, loginIncorrectCredentialDialog);
+        adminLogin(userId, password);
       } else if (rolePosition.equals("Employee")) {
-        employeeLogin(userId, password, loginIncorrectCredentialDialog);
+        employeeLogin(userId, password);
       } else if (rolePosition.equals("Customer")) {
-        customerLogin(userId,password, loginIncorrectCredentialDialog);
+        customerLogin(userId, password);
       }
     } else {
-      loginIncorrectCredentialDialog.setTitle("User Id Format Error");
-      loginIncorrectCredentialDialog.setMessage("User id can't be empty!");
-      loginIncorrectCredentialDialog.show();
+      DialogFactory
+          .createAlertDialog(appContext, "User ID Format Error", "User ID cannot be empty!",
+              "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
     }
   }
 
@@ -83,11 +77,10 @@ public class LoginController implements View.OnClickListener {
    *
    * @param userId the admin's user id
    * @param password the admin's password
-   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
    */
-  public void adminLogin(int userId, String password, AlertDialog loginIncorrectCredentialDialog) {
-    boolean authenticated = true;
+  public void adminLogin(int userId, String password) {
 
+    boolean authenticated = true;
     Admin admin = null;
 
     try {
@@ -96,7 +89,7 @@ public class LoginController implements View.OnClickListener {
       if (userId < 1 || currentUser == null || !(currentUser instanceof Admin)) {
         authenticated = false;
       } else {
-        admin = (Admin) DatabaseHelperAdapter.getUserDetails(userId);
+        admin = (Admin) currentUser;
         authenticated = admin.authenticate(password);
       }
     } catch (SQLException e) {
@@ -108,9 +101,9 @@ public class LoginController implements View.OnClickListener {
       intent.putExtra("adminObject", admin);
       appContext.startActivity(intent);
     } else {
-      loginIncorrectCredentialDialog
-          .setMessage("Double check your id and password and make sure its an admin account!");
-      loginIncorrectCredentialDialog.show();
+      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
+          "Double check your id and password and make sure its an admin account!",
+          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
     }
   }
 
@@ -119,32 +112,33 @@ public class LoginController implements View.OnClickListener {
    *
    * @param userId the customer's user id
    * @param password the customer's password
-   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
    */
-  public void customerLogin(int userId, String password,
-      AlertDialog loginIncorrectCredentialDialog) {
+  public void customerLogin(int userId, String password) {
 
     boolean authenticated = true;
+    Customer customer = null;
     try {
       User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
 
       if (userId < 1 || currentUser == null || !(currentUser instanceof Customer)) {
         authenticated = false;
       } else {
-        Customer customer = (Customer) DatabaseHelperAdapter.getUserDetails(userId);
+        customer = (Customer) DatabaseHelperAdapter.getUserDetails(userId);
         authenticated = customer.authenticate(password);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
+    Intent customerIntent = new Intent(this.appContext, CustomerCheckout.class);
+
     if (authenticated) {
-      appContext.startActivity(new Intent(this.appContext, CustomerStore.class));
+      customerIntent.putExtra("customer", customer);
+      appContext.startActivity(customerIntent);
     } else {
-      loginIncorrectCredentialDialog
-          .setMessage(
-              "Double check your id and password and make sure its a customer account!");
-      loginIncorrectCredentialDialog.show();
+      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
+          "Double check your id and password and make sure its a customer account!",
+          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
     }
   }
 
@@ -153,10 +147,8 @@ public class LoginController implements View.OnClickListener {
    *
    * @param userId the employee's user id
    * @param password the employee's password
-   * @param loginIncorrectCredentialDialog alert dialog to be displayed on failure
    */
-  public void employeeLogin(int userId, String password,
-      AlertDialog loginIncorrectCredentialDialog) {
+  public void employeeLogin(int userId, String password) {
 
     Employee currentEmployee = null;
     boolean authenticated = false;
@@ -180,10 +172,9 @@ public class LoginController implements View.OnClickListener {
       employeeIntent.putExtra("employee", currentEmployee);
       appContext.startActivity(employeeIntent);
     } else {
-      loginIncorrectCredentialDialog
-          .setMessage(
-              "Double check your id and password and make sure its an employee account!");
-      loginIncorrectCredentialDialog.show();
+      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
+          "Double check your id and password and make sure its an employee account!",
+          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
     }
   }
 }

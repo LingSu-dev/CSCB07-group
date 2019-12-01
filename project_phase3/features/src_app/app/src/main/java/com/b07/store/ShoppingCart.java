@@ -249,7 +249,6 @@ public class ShoppingCart implements Serializable {
           // System.out.println("Item quantity " + items.get(item));
           DatabaseHelperAdapter.insertItemizedSale(saleId, item.getId(), items.get(item));
         }
-
         clearCart();
       } catch (Exception e) {
         return false;

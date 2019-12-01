@@ -586,6 +586,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws SQLException if there is an issue communicating with the database.
    */
   public User getUserDetails(int userId) throws SQLException {
+
     if (!userIdExists(userId)) {
       return null;
     }
@@ -597,14 +598,15 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     int age;
     String address;
     User newUser = null;
+
     while (results.moveToNext()) {
       id = results.getInt(results.getColumnIndex("ID"));
       name = results.getString(results.getColumnIndex("NAME"));
       age = results.getInt(results.getColumnIndex("AGE"));
       address = results.getString(results.getColumnIndex("ADDRESS"));
-
       newUser = UserFactory.createUser(id, name, age, address);
     }
+
     results.close();
     return newUser;
   }
