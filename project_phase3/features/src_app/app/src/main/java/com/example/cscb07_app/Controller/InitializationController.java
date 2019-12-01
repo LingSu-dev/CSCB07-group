@@ -35,12 +35,6 @@ public class InitializationController implements View.OnClickListener {
   @Override
   public void onClick(View view) {
 
-    AlertDialog ageAlertDialog = new AlertDialog.Builder(appContext).create();
-    ageAlertDialog.setTitle("Age Format Error");
-    ageAlertDialog.setMessage("Age cannot be empty!");
-    ageAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
-        new DialogController(appContext, DialogId.AGE_EMPTY_DIALOG));
-
     String name;
     int age = 0;
     String address;
@@ -81,14 +75,12 @@ public class InitializationController implements View.OnClickListener {
 
           int adminId = insertAdmin(name, age, address, password);
 
-          AlertDialog adminAlertDialog = new AlertDialog.Builder(appContext).create();
-          adminAlertDialog.setTitle("Admin Details");
-          adminAlertDialog.setMessage("Admin Id: " + adminId);
-          adminAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
-              new DialogController(appContext, DialogId.CREATE_FIRST_ADMIN_DETAILS));
-          adminAlertDialog.show();
+          DialogFactory.createAlertDialog(appContext, "Admin Details",
+              "Admin Id: " + adminId, "Continue",
+              DialogId.CREATE_FIRST_ADMIN_DETAILS).show();
         } else {
-          ageAlertDialog.show();
+          DialogFactory.createAlertDialog(appContext, "Age Format Error",
+              "Age cannot be empty",  "Continue", DialogId.AGE_EMPTY_DIALOG).show();
         }
         break;
       case R.id.initializationCreateEmployeeButton:
@@ -122,8 +114,14 @@ public class InitializationController implements View.OnClickListener {
           employeeAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Continue",
               new DialogController(appContext, DialogId.CREATE_FIRST_EMPLOYEE_DETAILS));
           employeeAlertDialog.show();
+
+          DialogFactory.createAlertDialog(appContext, "Employee Details",
+              "Employee Id: " + employeeId, "Continue",
+              DialogId.CREATE_FIRST_EMPLOYEE_DETAILS).show();
+
         } else {
-          ageAlertDialog.show();
+          DialogFactory.createAlertDialog(appContext, "Age Format Error",
+              "Age cannot be empty",  "Continue", DialogId.AGE_EMPTY_DIALOG).show();
         }
         break;
     }
@@ -141,7 +139,7 @@ public class InitializationController implements View.OnClickListener {
   public int insertAdmin(String name, int age, String address, String password) {
 
     int adminRoleId = 0;
-    int adminId = -1;
+    int adminId = 1;
 
     try {
       adminId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);

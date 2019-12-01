@@ -25,13 +25,13 @@
         android:orientation="horizontal">
 
         <TextView
-          android:id="@+id/name1"
+          android:id="@+id/cartItem1"
           android:layout_width="0dip"
           android:layout_height="wrap_content"
           android:layout_gravity="center_vertical"
           android:layout_weight="2"
-          android:text="example item"
-          android:textSize="24sp" />
+          android:text="@string/itemOneName"
+          android:textSize="20sp" />
 
         <TextView
           android:id="@+id/price1"
@@ -39,7 +39,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_weight="1"
-          android:text="$12.00"
+          android:text="$10.00"
           android:textAlignment="center"
           android:textSize="24sp" />
 
@@ -50,16 +50,15 @@
           android:layout_weight="0.5"
           android:text="@string/minus"
           android:textSize="24sp">
-
         </Button>
 
-        <EditText
+        <TextView
           android:id="@+id/amount1"
           android:layout_width="0dip"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_weight="0.5"
-          android:text="1"
+          android:text="0"
           android:textAlignment="center"
           android:textSize="24sp" />
 
@@ -76,17 +75,17 @@
         android:id="@+id/singleItem2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
 
         <TextView
-          android:id="@+id/name2"
+          android:id="@+id/cartItem2"
           android:layout_width="0dip"
           android:layout_height="wrap_content"
           android:layout_gravity="center_vertical"
           android:layout_weight="2"
-          android:text="example item"
-          android:textSize="24sp" />
+          android:text="@string/itemTwoName"
+          android:textSize="20sp" />
 
         <TextView
           android:id="@+id/price2"
@@ -94,7 +93,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_weight="1"
-          android:text="$12.00"
+          android:text="$10.00"
           android:textAlignment="center"
           android:textSize="24sp" />
 
@@ -105,16 +104,15 @@
           android:layout_weight="0.5"
           android:text="@string/minus"
           android:textSize="24sp">
-
         </Button>
 
-        <EditText
+        <TextView
           android:id="@+id/amount2"
           android:layout_width="0dip"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:layout_weight="0.5"
-          android:text="1"
+          android:text="0"
           android:textAlignment="center"
           android:textSize="24sp" />
 
@@ -126,6 +124,169 @@
           android:text="@string/plus"
           android:textSize="24sp"></Button>
       </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/singleItem3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+          android:id="@+id/cartItem3"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_weight="2"
+          android:text="@string/itemThreeName"
+          android:textSize="20sp" />
+
+        <TextView
+          android:id="@+id/price3"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:text="$10.00"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/minus3"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/minus"
+          android:textSize="24sp">
+        </Button>
+
+        <TextView
+          android:id="@+id/amount3"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="0.5"
+          android:text="0"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/plus3"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/plus"
+          android:textSize="24sp"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/singleItem4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+          android:id="@+id/cartItem4"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_weight="2"
+          android:text="@string/itemFourName"
+          android:textSize="21sp" />
+
+        <TextView
+          android:id="@+id/price4"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:text="$10.00"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/minus4"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/minus"
+          android:textSize="24sp">
+        </Button>
+
+        <TextView
+          android:id="@+id/amount4"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="0.5"
+          android:text="0"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/plus4"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/plus"
+          android:textSize="24sp"></Button>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/singleItem5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+          android:id="@+id/cartItem5"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_weight="2"
+          android:text="@string/itemFiveName"
+          android:textSize="20sp" />
+
+        <TextView
+          android:id="@+id/price5"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:text="$10.00"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/minus5"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/minus"
+          android:textSize="24sp">
+        </Button>
+
+        <TextView
+          android:id="@+id/amount5"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_weight="0.5"
+          android:text="0"
+          android:textAlignment="center"
+          android:textSize="24sp" />
+
+        <Button
+          android:id="@+id/plus5"
+          android:layout_width="0dip"
+          android:layout_height="wrap_content"
+          android:layout_weight="0.5"
+          android:text="@string/plus"
+          android:textSize="24sp"></Button>
+      </LinearLayout>
+
     </LinearLayout>
   </ScrollView>
 
@@ -137,7 +298,6 @@
     android:layout_below="@id/shoppingCartView"
     android:orientation="vertical">
 
-
     <TextView
       android:id="@+id/priceTotal"
       android:layout_width="match_parent"
@@ -146,7 +306,6 @@
       android:text="Your Price Total Is: $24.00"
       android:textAlignment="center"
       android:textSize="24sp">
-
     </TextView>
 
   </LinearLayout>
@@ -165,7 +324,16 @@
       android:layout_height="wrap_content"
       android:text="@string/checkout"
       app:icon="@drawable/ic_local_grocery_store_black_24dp">
-
     </Button>
+
+    <Button
+      android:layout_marginLeft="15dp"
+      android:id="@+id/checkPriceBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text= "Check Price"
+      app:icon="@drawable/ic_check_box_black_24dp">
+    </Button>
+
   </LinearLayout>
 </RelativeLayout>
