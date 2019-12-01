@@ -7,16 +7,16 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.users.Admin;
+import com.b07.users.Customer;
+import com.b07.users.Employee;
+import com.b07.users.User;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
 import com.example.cscb07_app.Activity.Customer.CustomerStore;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
-import com.b07.database.helper.DatabaseAndroidHelper;
-import com.b07.users.Admin;
-import com.b07.users.Customer;
-import com.b07.users.Employee;
-import com.b07.users.User;
 import java.sql.SQLException;
 
 /**
@@ -25,17 +25,14 @@ import java.sql.SQLException;
 public class LoginController implements View.OnClickListener {
 
   private Context appContext;
-  private DatabaseAndroidHelper androidHelper;
 
   /**
    * Constructor for LoginController.
    *
    * @param context the context it is called in
-   * @param androidHelper the helper to access database methods
    */
-  public LoginController(Context context, DatabaseAndroidHelper androidHelper) {
+  public LoginController(Context context) {
     this.appContext = context;
-    this.androidHelper = androidHelper;
   }
 
   /**
@@ -91,13 +88,15 @@ public class LoginController implements View.OnClickListener {
   public void adminLogin(int userId, String password, AlertDialog loginIncorrectCredentialDialog) {
     boolean authenticated = true;
 
+    Admin admin = null;
+
     try {
-      User currentUser = androidHelper.getUserDetails(userId);
+      User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
 
       if (userId < 1 || currentUser == null || !(currentUser instanceof Admin)) {
         authenticated = false;
       } else {
-        Admin admin = (Admin) androidHelper.getUserDetails(userId);
+        admin = (Admin) DatabaseHelperAdapter.getUserDetails(userId);
         authenticated = admin.authenticate(password);
       }
     } catch (SQLException e) {
@@ -105,7 +104,9 @@ public class LoginController implements View.OnClickListener {
     }
 
     if (authenticated) {
-      appContext.startActivity(new Intent(this.appContext, AdminMenu.class));
+      Intent intent = new Intent(this.appContext, AdminMenu.class);
+      intent.putExtra("adminObject", admin);
+      appContext.startActivity(intent);
     } else {
       loginIncorrectCredentialDialog
           .setMessage("Double check your id and password and make sure its an admin account!");
@@ -125,12 +126,12 @@ public class LoginController implements View.OnClickListener {
 
     boolean authenticated = true;
     try {
-      User currentUser = androidHelper.getUserDetails(userId);
+      User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
 
       if (userId < 1 || currentUser == null || !(currentUser instanceof Customer)) {
         authenticated = false;
       } else {
-        Customer customer = (Customer) androidHelper.getUserDetails(userId);
+        Customer customer = (Customer) DatabaseHelperAdapter.getUserDetails(userId);
         authenticated = customer.authenticate(password);
       }
     } catch (SQLException e) {
@@ -161,12 +162,12 @@ public class LoginController implements View.OnClickListener {
     boolean authenticated = false;
 
     try {
-      User currentUser = androidHelper.getUserDetails(userId);
+      User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
 
       if (userId < 1 || currentUser == null || !(currentUser instanceof Employee)) {
         authenticated = false;
       } else {
-        currentEmployee = (Employee) androidHelper.getUserDetails(userId);
+        currentEmployee = (Employee) DatabaseHelperAdapter.getUserDetails(userId);
         authenticated = currentEmployee.authenticate(password);
       }
     } catch (SQLException e) {

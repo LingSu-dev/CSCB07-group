@@ -38,8 +38,8 @@
   <string name="createAdminBtn">Create Admin</string>
   <string name="plus">+</string>
   <string name="minus">-</string>
-  <string name="inputID">Input ID of product</string>
-  <string name="inputAmount">Input amount</string>
+  <string name="inputID">Item ID</string>
+  <string name="inputAmount">Item Quantity</string>
   <string name="checkout">Checkout</string>
   <string name="logout">Logout</string>
   <string name="couponCodePrompt">Coupon Code</string>
@@ -65,6 +65,12 @@
   <string name="saveAppDataHint">File Name</string>
 
   <string name="loadAppDataBtn">Load Data</string>
+
+  <string name="itemOneName">FISHING_ROD</string>
+  <string name="itemTwoName">HOCKEY_STICK</string>
+  <string name="itemThreeName">SKATES</string>
+  <string name="itemFourName">RUNNING_SHOES</string>
+  <string name="itemFiveName">PROTEIN_BAR</string>
 
 
 </resources>

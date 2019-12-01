@@ -44,7 +44,7 @@ public class SalesApplication {
       }
 
       if (selection.equals("-1")) {
-        // Setup mode
+        //  mode
         firstTimeSetup(connection);
 
       } else if (selection.equals("1")) {

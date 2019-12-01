@@ -5,10 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
-import com.example.cscb07_app.R;
-import com.b07.database.helper.DatabaseAndroidHelper;
+import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.users.Roles;
+import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
 /**
@@ -17,17 +17,14 @@ import java.sql.SQLException;
 public class InitializationController implements View.OnClickListener {
 
   private Context appContext;
-  private DatabaseAndroidHelper androidHelper;
 
   /**
    * Constructor for InitializationController.
    *
    * @param context the context it is in
-   * @param helper the helper to connect with database methods
    */
-  public InitializationController(Context context, DatabaseAndroidHelper helper) {
+  public InitializationController(Context context) {
     this.appContext = context;
-    this.androidHelper = helper;
   }
 
   /**
@@ -37,6 +34,7 @@ public class InitializationController implements View.OnClickListener {
    */
   @Override
   public void onClick(View view) {
+
     AlertDialog ageAlertDialog = new AlertDialog.Builder(appContext).create();
     ageAlertDialog.setTitle("Age Format Error");
     ageAlertDialog.setMessage("Age cannot be empty!");
@@ -54,6 +52,7 @@ public class InitializationController implements View.OnClickListener {
     EditText passwordEntry;
 
     switch (view.getId()) {
+
       case R.id.initializationCreateAdminButton:
 
         boolean adminAgeValid = true;
@@ -61,7 +60,7 @@ public class InitializationController implements View.OnClickListener {
         ageEntry = ((Activity) appContext).findViewById(R.id.initializationAdminAgeEntry);
 
         try {
-          age = Integer.parseInt(ageEntry.getText().toString()); //Potential Number format exception
+          age = Integer.parseInt(ageEntry.getText().toString());
         } catch (NumberFormatException e) {
           adminAgeValid = false;
         }
@@ -145,9 +144,9 @@ public class InitializationController implements View.OnClickListener {
     int adminId = -1;
 
     try {
-      adminId = androidHelper.insertNewUser(name, age, address, password);
-      adminRoleId = androidHelper.getRoleIdByName(Roles.ADMIN.name());
-      androidHelper.insertUserRole(adminId, adminRoleId);
+      adminId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+      adminRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name());
+      DatabaseHelperAdapter.insertUserRole(adminId, adminRoleId);
     } catch (DatabaseInsertException e) {
       //TODO: catch it later
     } catch (SQLException e) {
@@ -171,9 +170,9 @@ public class InitializationController implements View.OnClickListener {
     int employeeId = -1;
 
     try {
-      employeeId = androidHelper.insertNewUser(name, age, address, password);
-      employeeRoleId = androidHelper.getRoleIdByName(Roles.EMPLOYEE.name());
-      androidHelper.insertUserRole(employeeId, employeeRoleId);
+      employeeId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+      employeeRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.EMPLOYEE.name());
+      DatabaseHelperAdapter.insertUserRole(employeeId, employeeRoleId);
     } catch (DatabaseInsertException e) {
       //TODO: catch it later
     } catch (SQLException e) {

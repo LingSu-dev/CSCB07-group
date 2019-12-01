@@ -1,8 +1,11 @@
 package com.example.cscb07_app.Controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
 import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
@@ -16,7 +19,6 @@ import com.example.cscb07_app.R;
 public class AdminController implements View.OnClickListener {
 
   private Context appContext;
-
 
   public AdminController(Context context) {
     this.appContext = context;
@@ -49,7 +51,14 @@ public class AdminController implements View.OnClickListener {
       case R.id.adminMenuCreateCoupon:
         appContext.startActivity(new Intent(this.appContext, AdminCreateCoupon.class));
         break;
+      case R.id.addCouponBtn:
+        EditText couponCodeEntry = ((Activity)appContext).findViewById(R.id.couponCodeEntry);
+        String couponCode = couponCodeEntry.getText().toString();
 
+        Spinner couponTypeEntry = ((Activity)appContext).findViewById(R.id.couponTypeEntry);
+        String couponType = couponTypeEntry.getSelectedItem().toString();
+
+        break;
     }
   }
 }
