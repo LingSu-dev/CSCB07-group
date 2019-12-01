@@ -9,14 +9,12 @@ import java.io.Serializable;
 
 public class SerializeFunc {
 
-  public static String serialize(Serializable x, String location) throws IOException {
+  public static void serialize(Serializable x, String location) throws IOException {
     FileOutputStream fileOut = new FileOutputStream(location);
     ObjectOutputStream out = new ObjectOutputStream(fileOut);
     out.writeObject(x);
     out.close();
     fileOut.close();
-    
-    return x.toString();
   }
 
 
