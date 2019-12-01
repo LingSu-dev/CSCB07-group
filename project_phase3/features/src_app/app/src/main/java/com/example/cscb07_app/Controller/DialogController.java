@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstEmployee;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
+import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 
 public class DialogController implements DialogInterface.OnClickListener {
 
@@ -31,6 +32,9 @@ public class DialogController implements DialogInterface.OnClickListener {
         break;
       case CREATE_COUPON_DIALOG:
         appContext.startActivity(new Intent(appContext, AdminController.class));
+        break;
+      case CREATE__NEW_USER_DETAILS:
+        appContext.startActivity(new Intent(appContext, EmployeeMenu.class));
         break;
     }
   }
