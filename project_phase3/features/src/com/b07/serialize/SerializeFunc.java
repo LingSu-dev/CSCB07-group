@@ -9,37 +9,24 @@ import java.io.Serializable;
 
 public class SerializeFunc {
 
-  public static String serialize(Serializable x, String location) {
-    try {
-      FileOutputStream fileOut = new FileOutputStream(location + "database_copy.ser");
-      ObjectOutputStream out = new ObjectOutputStream(fileOut);
-      out.writeObject(x);
-      out.close();
-      fileOut.close();
-      System.out.println(location + "database_copy.ser");
-    } catch (IOException i) {
-      i.printStackTrace();
-    }
+  public static String serialize(Serializable x, String location) throws IOException {
+    FileOutputStream fileOut = new FileOutputStream(location);
+    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+    out.writeObject(x);
+    out.close();
+    fileOut.close();
+    
     return x.toString();
   }
 
 
-  public static DataStorage deserialize(String location) {
-    try {
-      FileInputStream fileIn = new FileInputStream(location + "database_copy.ser");
-      ObjectInputStream in = new ObjectInputStream(fileIn);
-      Object z = in.readObject();
-      in.close();
-      fileIn.close();
-      return (DataStorage) z;
-    } catch (IOException i) {
-      i.printStackTrace();
-      return null;
-    } catch (ClassNotFoundException c) {
-      System.out.println("Class not found");
-      c.printStackTrace();
-      return null;
-    }
+  public static DataStorage deserialize(String location) throws IOException, ClassNotFoundException {
+    FileInputStream fileIn = new FileInputStream(location);
+    ObjectInputStream in = new ObjectInputStream(fileIn);
+    Object z = in.readObject();
+    in.close();
+    fileIn.close();
+    return (DataStorage) z;
   }
 
 }
