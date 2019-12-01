@@ -20,7 +20,10 @@ import java.sql.SQLException;
  */
 public class EmployeeInterface implements Serializable {
 
-
+  /**
+   * Serial Version ID of employeeInterface.
+   */
+  private static final long serialVersionUID = 1L;
   private Employee currentEmployee = null;
   private Inventory inventory;
 

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.store.EmployeeInterface;
 import com.b07.users.Roles;
 import com.example.cscb07_app.Activity.Employee.EmployeeAuthenticateEmployee;
 import com.example.cscb07_app.Activity.Employee.EmployeeMakeAccount;
@@ -23,9 +24,10 @@ import java.sql.SQLException;
 public class EmployeeController implements View.OnClickListener {
 
   private Context appContext;
-
-  public EmployeeController(Context context) {
+  private EmployeeInterface employeeInterface;
+  public EmployeeController(Context context, EmployeeInterface employeeInterface) {
     this.appContext = context;
+    this.employeeInterface = employeeInterface;
   }
 
   @Override
@@ -36,14 +38,18 @@ public class EmployeeController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, EmployeeAuthenticateEmployee.class));
         break;
       case R.id.menuMakeNewUserBtn:
-        appContext.startActivity(new Intent(this.appContext, EmployeeMakeUser.class));
+        Intent newUserIntent = new Intent(this.appContext, EmployeeMakeUser.class);
+        newUserIntent.putExtra("employeeInterface", employeeInterface);
+        appContext.startActivity(newUserIntent);
         break;
       case R.id.menuMakeNewAccountBtn:
         //TODO
         appContext.startActivity(new Intent(this.appContext, EmployeeMakeAccount.class));
         break;
       case R.id.menuMakeNewEmployeeBtn:
-        appContext.startActivity(new Intent(this.appContext, EmployeeMakeEmployee.class));
+        Intent newEmployeeIntent = new Intent(this.appContext, EmployeeMakeEmployee.class);
+        newEmployeeIntent.putExtra("employeeInterface", employeeInterface);
+        appContext.startActivity(newEmployeeIntent);
         break;
       case R.id.menuRestockInventoryBtn:
         //TODO
@@ -179,12 +185,10 @@ public class EmployeeController implements View.OnClickListener {
    * @return employee's id
    */
   public int insertEmployee(String name, int age, String address, String password) {
-
-    int employeeRoleId = 0;
     int employeeId = -1;
-
+    int employeeRoleId = 0;
     try {
-      employeeId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+      employeeId = employeeInterface.createEmployee(name, age, address, password);
       employeeRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.EMPLOYEE.name());
       DatabaseHelperAdapter.insertUserRole(employeeId, employeeRoleId);
     } catch (DatabaseInsertException e) {
@@ -206,11 +210,10 @@ public class EmployeeController implements View.OnClickListener {
    */
   public int insertCustomer(String name, int age, String address, String password) {
 
-    int customerRoleId = 0;
     int customerId = -1;
-
+    int customerRoleId = 0;
     try {
-      customerId = DatabaseHelperAdapter.insertNewUser(name, age, address, password);
+      customerId = employeeInterface.createCustomer(name, age, address, password);
       customerRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.CUSTOMER.name());
       DatabaseHelperAdapter.insertUserRole(customerId, customerRoleId);
     } catch (DatabaseInsertException e) {
