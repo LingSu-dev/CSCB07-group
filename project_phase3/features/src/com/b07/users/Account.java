@@ -90,6 +90,10 @@ public class Account implements Serializable {
     return accountId;
   }
   
+  public boolean getActiveStatus() {
+    return active;
+  }
+  
   public boolean deactivate() throws SQLException {
     try {
       return DatabaseHelperAdapter.updateAccountStatus(userId, accountId, false);
