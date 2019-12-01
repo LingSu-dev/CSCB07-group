@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -331,9 +332,39 @@ public class SalesApplication {
         System.out.println("Please manually make a backup of the database file before proceeding incase reverting fails");
         System.out.println("Enter a location to retreive the backup from");
         String location = bufferedReader.readLine();
-        // TODO: Add check for admin to re-add their own account if they are not in it
+        String adminHashedPassword = DatabaseHelperAdapter.getPassword(admin.getId());
         try {
           SerializeDatabase.populateFromFile(location);
+          List<User> allUsers = DatabaseHelperAdapter.getUsersDetails();
+          List<Admin> adminUsers = new ArrayList<Admin>();
+          for (User currUser : allUsers) {
+            if (currUser instanceof Admin) {
+              adminUsers.add((Admin) currUser);
+            }
+          }
+          boolean reinsert = true;
+          for (Admin currAdmin : adminUsers) {
+            if (currAdmin.getName() == admin.getName() && currAdmin.getAge() == admin.getAge() && currAdmin.getAddress() == admin.getAddress()) {
+              if (DatabaseHelperAdapter.getPassword(currAdmin.getId()) == adminHashedPassword) {
+                reinsert = false;
+              }
+            }
+          }
+          if (reinsert) {
+            System.out.println("You are not currently part of the database, do you wish to reinsert yourself? Y/n");
+            String reinsertChoice = bufferedReader.readLine();
+            while (!(reinsertChoice == "Y" || reinsertChoice == "n")) {
+              System.out.println("Please input a valid choice");
+              reinsertChoice = bufferedReader.readLine();
+            }
+            if (reinsertChoice == "Y") {
+              // TODO: temp password
+              DatabaseHelperAdapter.insertNewUser(admin.getName(), admin.getAge(), admin.getAddress(), "temp");
+            } else if (reinsertChoice == "n"){
+              System.out.println("Exiting");
+              return;
+            } 
+          } 
         } catch (IOException e) {
           System.out.println("Unable to read data from file");
         } catch (SQLException e) {
@@ -343,6 +374,10 @@ public class SalesApplication {
           e.printStackTrace();
         } catch (DifferentEnumException e) {
           System.out.println("This application does not support the given data");
+          e.printStackTrace();
+        } catch (DatabaseInsertException e) {
+          // TODO Auto-generated catch block
+          System.out.println("Failed to reinsert admin");
           e.printStackTrace();
         }
       } else if (input == 0) {
