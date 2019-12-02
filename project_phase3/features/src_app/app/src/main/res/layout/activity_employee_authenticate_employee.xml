@@ -23,7 +23,7 @@
     android:layout_below="@id/authenticateEmployeeIdEntry"
     android:layout_marginTop="40dp"
     android:hint="@string/loginMenuPasswordHint"
-    android:inputType="textVisiblePassword" />
+    android:inputType="textPassword" />
 
   <Button
     android:id="@+id/authenticateEmployeeBtn"
