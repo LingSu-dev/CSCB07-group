@@ -24,7 +24,7 @@
     android:layout_marginLeft="15dp"
     android:layout_toRightOf="@id/saveAppDataPrompt"
     android:hint="@string/saveAppDataHint"
-    android:inputType="text"
+    android:inputType="textUri"
     android:textSize="20dp" />
 
   <Button
