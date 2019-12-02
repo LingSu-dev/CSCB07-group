@@ -353,13 +353,17 @@ public class SalesApplication {
           if (reinsert) {
             System.out.println("You are not currently part of the database, do you wish to reinsert yourself? Y/n");
             String reinsertChoice = bufferedReader.readLine();
+            //TODO REMOVE
+            //System.out.println(reinsertChoice);
             while (!(reinsertChoice.equals("Y") || reinsertChoice.equals("n"))) {
               System.out.println("Please input a valid choice");
               reinsertChoice = bufferedReader.readLine();
             }
             if (reinsertChoice.equals("Y")) {
               // TODO: temp password
-              DatabaseHelperAdapter.insertNewUser(admin.getName(), admin.getAge(), admin.getAddress(), "temp");
+              int adminId = 0;
+              adminId = DatabaseHelperAdapter.insertNewUser(admin.getName(), admin.getAge(), admin.getAddress(), "temp");
+              DatabaseHelperAdapter.insertUserRole(adminId, DatabaseHelperAdapter.getRoleIdByName("ADMIN"));
             } else if (reinsertChoice.equals("n")){
               System.out.println("Exiting");
               return;
