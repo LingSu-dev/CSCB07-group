@@ -2,6 +2,7 @@ package com.b07.database.helper;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.b07.database.DatabaseDriverAndroid;
 
@@ -11,6 +12,11 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
 
   public DatabaseMethodHelper(Context context) {
     super(context);
+  }
+
+  public void deleteDatabase() {
+    SQLiteDatabase sqLiteDatabase = super.getWritableDatabase();
+   super.onUpgrade(sqLiteDatabase,1 ,2);
   }
 
   // Setters

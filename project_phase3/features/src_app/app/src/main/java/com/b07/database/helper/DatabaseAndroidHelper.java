@@ -1,6 +1,8 @@
 package com.b07.database.helper;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.b07.exceptions.ConnectionFailedException;
@@ -20,7 +22,12 @@ import com.b07.users.Customer;
 import com.b07.users.Roles;
 import com.b07.users.User;
 import com.b07.users.UserFactory;
+
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,7 +47,10 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return null;
   }
 
-  public Connection reInitialize() throws ConnectionFailedException { return null; }
+  public Connection reInitialize() throws ConnectionFailedException {
+    //driver.reInitialize();;
+    return null;
+  }
 
   /**
    * Insert role into ROLES table and return id.

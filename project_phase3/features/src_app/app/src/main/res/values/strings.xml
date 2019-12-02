@@ -62,7 +62,7 @@
 
   <string name="saveAppDataPrompt">App Data:</string>
   <string name="saveAppDataBtn">Save Data</string>
-  <string name="saveAppDataHint">File Name</string>
+  <string name="saveAppDataHint">File Name (Omit Trailing Slash)</string>
 
   <string name="loadAppDataBtn">Load Data</string>
 
