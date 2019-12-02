@@ -6,11 +6,16 @@
   tools:context=".Activity.Admin.AdminViewBooks"
   android:padding="@dimen/activityPadding">
 
-  <TextView
+
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textSize="@dimen/textViewTextSize"
-    android:id="@+id/viewBooksText"
-    android:scrollbars="vertical" />
+    android:layout_height="match_parent">
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:textSize="@dimen/textViewTextSize"
+      android:id="@+id/viewBooksText"
+      android:scrollbars="vertical" />
+  </ScrollView>
 
 </RelativeLayout>

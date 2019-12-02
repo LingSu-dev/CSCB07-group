@@ -43,7 +43,9 @@ public class AdminController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         break;
       case R.id.adminMenuViewBooks:
-        appContext.startActivity(new Intent(this.appContext, AdminViewBooks.class));
+        Intent intent = new Intent(this.appContext, AdminViewBooks.class);
+        intent.putExtra("adminObject", admin);
+        appContext.startActivity(intent);
         break;
       case R.id.adminMenuPromoteEmployee:
         appContext.startActivity(new Intent(this.appContext, AdminPromoteEmployee.class));
