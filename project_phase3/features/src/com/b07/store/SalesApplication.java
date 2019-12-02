@@ -319,7 +319,7 @@ public class SalesApplication {
           e.printStackTrace();
         }
       } else if (input == 5) {
-        System.out.println("Enter a location to save the file to");
+        System.out.println("Enter a directory to save the file to, do add a trailing slash");
         String location = bufferedReader.readLine();
         try {
           SerializeDatabase.serializeToFile(location);
@@ -331,7 +331,7 @@ public class SalesApplication {
         
       } else if (input == 6) {
         System.out.println("Please manually make a backup of the database file before proceeding incase reverting fails");
-        System.out.println("Enter a location to retreive the backup from");
+        System.out.println("Enter a directory to retreive the backup from, do add a trailing slash");
         String location = bufferedReader.readLine();
         String adminHashedPassword = DatabaseHelperAdapter.getPassword(admin.getId());
         try {
