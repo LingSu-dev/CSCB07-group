@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.serialize.SerializeDatabase;
+import com.b07.users.Admin;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
 import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.Activity.Admin.AdminPromoteEmployee;
@@ -18,17 +20,22 @@ import com.example.cscb07_app.Activity.Admin.AdminViewBooks;
 import com.example.cscb07_app.Activity.Admin.AdminViewHistoricAccounts;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
+
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
 public class AdminController implements View.OnClickListener {
 
   private Context appContext;
-
+  private static Admin admin;
   public AdminController(Context context) {
     this.appContext = context;
   }
-
+  public AdminController(Context context, Admin a) {
+    this.appContext = context;
+    admin = a;
+  }
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
@@ -102,6 +109,23 @@ public class AdminController implements View.OnClickListener {
                   .create();
           successDialog.show();
         }
+        break;
+      case R.id.saveDataBtn:
+        EditText saveLoc = ((Activity) appContext).findViewById(R.id.saveAppDataEntry);
+        String saveLocString = saveLoc.getText().toString();
+        try {
+          SerializeDatabase.serializeToFile(saveLocString);
+        } catch (IOException e){
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "Could not save data to this location!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        } catch (SQLException e) {
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "There was an issue with the SQL database!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        }
+
+          break;
     }
   }
 }

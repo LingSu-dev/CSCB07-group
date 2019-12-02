@@ -10,5 +10,7 @@ public class Admin extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin);
+
+    //Pretty sure this doesn't get used at all.
   }
 }
