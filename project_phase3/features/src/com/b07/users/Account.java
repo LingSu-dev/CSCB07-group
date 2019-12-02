@@ -29,12 +29,23 @@ public class Account implements Serializable {
   private int userId;
   private boolean active;
   
+  /**
+   * Makes an account object
+   * @param userId the id of the user
+   * @param accountId the id of the account
+   * @param active the active status of the account
+   */
   public Account(int userId, int accountId, boolean active) {
     this.userId = userId;
     this.accountId = accountId;
     this.active = active;
   }
   
+  /**
+   * Get a list of customer's account by userID and stores them in the account object
+   * @return true if successful
+   * @throws SQLException
+   */
   public boolean retrieveCustomerCart() throws SQLException {
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
@@ -78,22 +89,43 @@ public class Account implements Serializable {
     
   }
   
+  /**
+   * get the shopping cart of the account
+   * @return the shopping cart
+   */
   public ShoppingCart getCart() {
     return cart;
   }
   
+  /**
+   * get the user's id of the account
+   * @return user id
+   */
   public int getUserId() {
     return userId;
   }
   
+  /**
+   * Get the id of the account
+   * @return account id
+   */
   public int getAccountId() {
     return accountId;
   }
   
+  /**
+   * Get the active status of the account
+   * @return true if active, false if not
+   */
   public boolean getActiveStatus() {
     return active;
   }
   
+  /**
+   * deactivates this account
+   * @return true if success, false otherwise
+   * @throws SQLException
+   */
   public boolean deactivate() throws SQLException {
     try {
       return DatabaseHelperAdapter.updateAccountStatus(userId, accountId, false);
