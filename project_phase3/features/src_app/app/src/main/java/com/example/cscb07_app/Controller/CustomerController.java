@@ -12,6 +12,7 @@ import com.b07.store.ShoppingCart;
 import com.b07.users.Account;
 import com.b07.users.Customer;
 import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
+import com.example.cscb07_app.Activity.Customer.CustomerLoadShoppingCart;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
 import java.math.BigDecimal;
@@ -59,7 +60,8 @@ public class CustomerController implements View.OnClickListener {
     String item4Name = null;
     String item5Name = null;
 
-    if (view.getId() != R.id.saveShoppingCartBtn && view.getId() != R.id.loadShoppingCartBtn) {
+    if (view.getId() != R.id.saveShoppingCartBtn && view.getId() != R.id.loadShoppingCartBtn
+        && view.getId() != R.id.skipCartLoading) {
       amount1 = ((Activity) appContext).findViewById(R.id.amount1);
       amount2 = ((Activity) appContext).findViewById(R.id.amount2);
       amount3 = ((Activity) appContext).findViewById(R.id.amount3);
@@ -207,6 +209,11 @@ public class CustomerController implements View.OnClickListener {
           loadShoppingCart(loadAccountId);
         }
         break;
+      case R.id.skipCartLoading:
+        Intent intent = new Intent(appContext, CustomerCheckout.class);
+        intent.putExtra("customer", customer);
+        ((CustomerLoadShoppingCart) appContext).finish();
+        appContext.startActivity(intent);
     }
   }
 
@@ -254,8 +261,10 @@ public class CustomerController implements View.OnClickListener {
               , DialogId.CHECKOUT_LOADED_CART).show();
         } else {
           DialogFactory
-              .createAlertDialogFailedCart(appContext, "Empty Account", "This account has no items, you will"
-                  + " be taken to the store!", "Continue", DialogId.LOAD_CART_FAILED, customer).show();
+              .createAlertDialogFailedCart(appContext, "Empty Account",
+                  "This account has no items, you will"
+                      + " be taken to the store!", "Continue", DialogId.LOAD_CART_FAILED, customer)
+              .show();
         }
       } else {
         DialogFactory
