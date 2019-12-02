@@ -164,7 +164,7 @@ public class EmployeeController implements View.OnClickListener {
           employeeNameValid = false;
         }
         if (employeeAddress.isEmpty()){
-          employeeAddress = false;
+          employeeAddressValid = false;
         }
         if (employeePassword.isEmpty()){
           employeePasswordValid = false;

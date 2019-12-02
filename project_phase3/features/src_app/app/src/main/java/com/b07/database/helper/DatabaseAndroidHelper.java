@@ -48,7 +48,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public Connection reInitialize() throws ConnectionFailedException {
-    //driver.reInitialize();;
     return null;
   }
 
