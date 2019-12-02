@@ -1118,8 +1118,13 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public int getCouponUses(int couponId) throws SQLException {
-
+    //TODO
     return 0;
+  }
+
+  public String getCouponCode(int couponId) throws SQLException {
+    //TODO
+    return null;
   }
 
   /**
