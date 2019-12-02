@@ -279,11 +279,13 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws SQLException if there is an issue communicating with the database.
    */
   public int insertDiscountType(String name) throws DatabaseInsertException, SQLException {
+    //TODO
     return 0;
   }
 
   public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws DatabaseInsertException, SQLException {
+    //TODO
     return 0;
   }
 
@@ -940,6 +942,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public List<Integer> getCouponIds() throws SQLException {
+    //TODO
     return null;
   }
 

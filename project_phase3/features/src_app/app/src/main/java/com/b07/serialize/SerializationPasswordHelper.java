@@ -18,7 +18,7 @@ import com.b07.exceptions.DatabaseInsertException;
 public class SerializationPasswordHelper {
   
   public static int insertUserNoHash(String name, int age, String address, String password) throws DatabaseInsertException, SQLException {
-    if (age < 0 || name == null || address.length() > 100) {
+  /*  if (age < 0 || name == null || address.length() > 100) {
       throw new DatabaseInsertException();
     }
 
@@ -57,5 +57,7 @@ public class SerializationPasswordHelper {
     }
     connection.close();
     return userId;
+    */
+  return 0;
   }
 }

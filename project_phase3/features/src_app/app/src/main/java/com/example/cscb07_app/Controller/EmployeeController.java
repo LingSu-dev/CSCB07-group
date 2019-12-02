@@ -59,7 +59,6 @@ public class EmployeeController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         break;
       case R.id.authenticateEmployeeBtn:
-        //TODO: add functionality
         EditText newEmployeeId = ((Activity) appContext).findViewById(R.id.authenticateEmployeeIdEntry);
         EditText newEmployeePassword = ((Activity) appContext).findViewById(R.id.authenticateEmployeePassword);
 

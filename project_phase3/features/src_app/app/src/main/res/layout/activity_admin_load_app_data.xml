@@ -17,7 +17,7 @@
     android:textSize="@dimen/textViewTextSize" />
 
   <EditText
-    android:id="@+id/saveAppDataEntry"
+    android:id="@+id/loadAppDataEntry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
@@ -28,10 +28,10 @@
     android:textSize="20dp" />
 
   <Button
-    android:id="@+id/saveDataBtn"
+    android:id="@+id/loadDataBtn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignBottom="@id/saveAppDataEntry"
+    android:layout_alignBottom="@id/loadAppDataEntry"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="-64dp"
     android:text="@string/loadAppDataBtn"
