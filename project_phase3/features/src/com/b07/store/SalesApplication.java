@@ -8,6 +8,7 @@ import com.b07.exceptions.DifferentEnumException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
+import com.b07.serialize.SerializationPasswordHelper;
 import com.b07.serialize.SerializeDatabase;
 import com.b07.users.Account;
 import com.b07.users.Admin;
@@ -360,7 +361,7 @@ public class SalesApplication {
             if (reinsertChoice.equals("Y")) {
               // TODO: temp password
               int adminId = 0;
-              adminId = DatabaseHelperAdapter.insertNewUser(admin.getName(), admin.getAge(), admin.getAddress(), "temp");
+              adminId = SerializationPasswordHelper.insertUserNoHash(admin.getName(), admin.getAge(), admin.getAddress(), adminHashedPassword);
               DatabaseHelperAdapter.insertUserRole(adminId, DatabaseHelperAdapter.getRoleIdByName("ADMIN"));
             } else if (reinsertChoice.equals("n")){
               System.out.println("Exiting");
