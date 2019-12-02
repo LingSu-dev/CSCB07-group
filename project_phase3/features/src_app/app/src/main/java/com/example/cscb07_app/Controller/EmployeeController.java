@@ -127,10 +127,10 @@ public class EmployeeController implements View.OnClickListener {
       case R.id.makeEmployeeBtn:
 
         AlertDialog employeeAgeAlertDialog = new AlertDialog.Builder(appContext).create();
-        employeeAgeAlertDialog.setTitle("Age Format Error");
-        employeeAgeAlertDialog.setMessage("Age cannot be empty!");
+        employeeAgeAlertDialog.setTitle("Fields Format Error");
+        employeeAgeAlertDialog.setMessage("Fields cannot be empty!");
         employeeAgeAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
-                new DialogController(appContext, DialogId.AGE_EMPTY_DIALOG));
+                new DialogController(appContext, DialogId.NULL_DIALOG));
 
         String employeeName;
         int employeeAge = 0;
@@ -143,16 +143,12 @@ public class EmployeeController implements View.OnClickListener {
         EditText employeePasswordEntry;
 
         boolean employeeAgeValid = true;
+        boolean employeeNameValid = true;
+        boolean employeeAddressValid = true;
+        boolean employeePasswordValid = true;
+
         employeeAgeEntry = ((Activity) appContext).findViewById(R.id.makeEmployeeAgeEntry);
-
-        try {
-          employeeAge = Integer.parseInt(employeeAgeEntry.getText().toString());
-        } catch (NumberFormatException e) {
-          employeeAgeValid = false;
-        }
-
-        if (employeeAgeValid) {
-          employeeNameEntry = ((Activity) appContext)
+        employeeNameEntry = ((Activity) appContext)
                   .findViewById(R.id.makeEmployeeNameEntry);
           employeeName = employeeNameEntry.getText().toString();
 
@@ -163,6 +159,24 @@ public class EmployeeController implements View.OnClickListener {
           employeePasswordEntry = ((Activity) appContext)
                   .findViewById(R.id.makeEmployeePassword);
           employeePassword = employeePasswordEntry.getText().toString();
+
+        if (employeeName.isEmpty()){
+          employeeNameValid = false;
+        }
+        if (employeeAddress.isEmpty()){
+          employeeAddress = false;
+        }
+        if (employeePassword.isEmpty()){
+          employeePasswordValid = false;
+        }
+
+        try {
+          employeeAge = Integer.parseInt(employeeAgeEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          employeeAgeValid = false;
+        }
+
+        if (employeeAgeValid && employeeNameValid && employeeAddressValid && employeePasswordValid){
 
           int employeeId = insertEmployee(employeeName, employeeAge, employeeAddress, employeePassword);
 
