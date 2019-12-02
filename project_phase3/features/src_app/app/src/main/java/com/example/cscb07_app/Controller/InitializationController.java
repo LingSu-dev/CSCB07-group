@@ -57,8 +57,30 @@ public class InitializationController implements View.OnClickListener {
    */
   public void createFirstAdmin() {
     boolean adminAgeValid = true;
+    boolean adminNameValid = true;
+    boolean adminAddressValid = true;
+    boolean adminPasswordValid = true;
 
     ageEntry = ((Activity) appContext).findViewById(R.id.initializationAdminAgeEntry);
+    nameEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationAdminNameEntry);
+    name = nameEntry.getText().toString();
+    addressEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationAdminAddressEntry);
+    address = addressEntry.getText().toString();
+    passwordEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationAdminPassword);
+    password = passwordEntry.getText().toString();
+
+    if (name.isEmpty()){
+      adminNameValid = false;
+    }
+    if (address.isEmpty()){
+      adminAddressValid = false;
+    }
+    if (password.isEmpty()){
+      adminPasswordValid = false;
+    }
 
     try {
       age = Integer.parseInt(ageEntry.getText().toString());
@@ -66,28 +88,15 @@ public class InitializationController implements View.OnClickListener {
       adminAgeValid = false;
     }
 
-    if (adminAgeValid) {
-      nameEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationAdminNameEntry);
-
-      name = nameEntry.getText().toString();
-
-      addressEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationAdminAddressEntry);
-      address = addressEntry.getText().toString();
-
-      passwordEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationAdminPassword);
-      password = passwordEntry.getText().toString();
-
+    if (adminAgeValid && adminNameValid && adminAddressValid && adminPasswordValid) {
       int adminId = insertAdmin(name, age, address, password);
 
       DialogFactory.createAlertDialog(appContext, "Admin Details",
           "Admin Id: " + adminId, "Continue",
           DialogId.CREATE_FIRST_ADMIN_DETAILS).show();
     } else {
-      DialogFactory.createAlertDialog(appContext, "Age Format Error",
-          "Age cannot be empty", "Continue", DialogId.AGE_EMPTY_DIALOG).show();
+      DialogFactory.createAlertDialog(appContext, "Fields Format Error",
+          "Fields cannot be empty", "Continue", DialogId.NULL_DIALOG).show();
     }
   }
 
@@ -96,8 +105,32 @@ public class InitializationController implements View.OnClickListener {
    */
   public void createFirstEmployee() {
     boolean employeeAgeValid = true;
+    boolean employeeNameValid = true;
+    boolean employeeAddressValid = true;
+    boolean employeePasswordValid = true;
 
     ageEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeeAgeEntry);
+    nameEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationEmployeeNameEntry);
+    name = nameEntry.getText().toString();
+
+    addressEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationEmployeeAddressEntry);
+    address = addressEntry.getText().toString();
+
+    passwordEntry = ((Activity) appContext)
+            .findViewById(R.id.initializationEmployeePassword);
+    password = passwordEntry.getText().toString();
+
+    if (name.isEmpty()){
+      employeeNameValid = false;
+    }
+    if (address.isEmpty()){
+      employeeAddressValid = false;
+    }
+    if (password.isEmpty()){
+      employeePasswordValid = false;
+    }
 
     try {
       age = Integer.parseInt(ageEntry.getText().toString());
@@ -105,19 +138,7 @@ public class InitializationController implements View.OnClickListener {
       employeeAgeValid = false;
     }
 
-    if (employeeAgeValid) {
-      nameEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationEmployeeNameEntry);
-      name = nameEntry.getText().toString();
-
-      addressEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationEmployeeAddressEntry);
-      address = addressEntry.getText().toString();
-
-      passwordEntry = ((Activity) appContext)
-          .findViewById(R.id.initializationEmployeePassword);
-      password = passwordEntry.getText().toString();
-
+    if (employeeAgeValid && employeeAddressValid && employeeNameValid && employeePasswordValid) {
       int employeeId = insertEmployee(name, age, address, password);
 
       DialogFactory.createAlertDialog(appContext, "Employee Details",
@@ -125,8 +146,8 @@ public class InitializationController implements View.OnClickListener {
           DialogId.CREATE_FIRST_EMPLOYEE_DETAILS).show();
 
     } else {
-      DialogFactory.createAlertDialog(appContext, "Age Format Error",
-          "Age cannot be empty", "Continue", DialogId.AGE_EMPTY_DIALOG).show();
+      DialogFactory.createAlertDialog(appContext, "Fields Format Error",
+          "Fields cannot be empty", "Continue", DialogId.NULL_DIALOG).show();
     }
   }
 
