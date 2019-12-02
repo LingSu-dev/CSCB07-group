@@ -76,6 +76,7 @@ public class AdminController implements View.OnClickListener {
         Spinner couponTypeEntry = context.findViewById(R.id.couponTypeEntry);
         String couponType = couponTypeEntry.getSelectedItem().toString();
 
+
         EditText couponDiscountEntry = context.findViewById(R.id.couponDiscountEntry);
         String couponDiscount = couponDiscountEntry.getText().toString();
 
@@ -87,17 +88,25 @@ public class AdminController implements View.OnClickListener {
         BigDecimal couponDiscountDecimal = BigDecimal.ZERO;
 
         boolean isNumber = true;
+        boolean validCouponType = true;
+        int couponTypeId = -1;
         try {
           couponDiscountDecimal = new BigDecimal(couponDiscount);
           couponItemId = Integer.parseInt(couponItemIdEntry.getText().toString());
           quantity = Integer.parseInt(couponQuantityEntry.getText().toString());
+          couponTypeId = DatabaseHelperAdapter.getDiscountTypeIdByName(couponType);
         } catch (NumberFormatException e) {
           isNumber = false;
+        } catch (SQLException e) {
+          validCouponType = false;
         }
 
         if (!isNumber) {
           DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
               , "Ok", DialogId.NULL_DIALOG).show();
+        } else if (!validCouponType) {
+          DialogFactory.createAlertDialog(appContext, "Invalid Discount Type", "This discount type is not valid"
+                  , "Ok", DialogId.NULL_DIALOG).show();
         } else {
           int id = -1;
           try {
@@ -112,7 +121,7 @@ public class AdminController implements View.OnClickListener {
                 + " when adding coupon!", "Ok", DialogId.NULL_DIALOG).show();
           } else {
             DialogFactory.createAlertDialog(appContext, "Successfully Added Coupon",
-                "Coupon was added -to the database!", "Ok", DialogId.NULL_DIALOG).show();
+                "Coupon was added to the database!", "Ok", DialogId.NULL_DIALOG).show();
           }
         }
         break;
