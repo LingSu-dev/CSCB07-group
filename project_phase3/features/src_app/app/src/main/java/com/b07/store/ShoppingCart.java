@@ -143,11 +143,9 @@ public class ShoppingCart implements Serializable {
 
   /**
    * Apply a coupon code to an item and recalculate its price
-   * 
-   * @param item the item to apply the coupon to
    * @param code the coupon code
    */
-  public void applyCoupon(String code) {
+  public int applyCoupon(String code) {
     // TODO: add check for whether a given coupon code already exists when adding
     // new code
     try {
@@ -158,11 +156,11 @@ public class ShoppingCart implements Serializable {
       DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
       BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
       if (!couponCanBeApplied(code, 1)) {
-        return;
+        return -1;
       }
       if (discountCodes.contains(code)) {
         System.out.println("This coupon has already been applied");
-        return;
+        return -1;
       }
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
@@ -177,8 +175,10 @@ public class ShoppingCart implements Serializable {
       itemDiscounts.put(item, priceChange);
       total = calculateCost();
       System.out.println(String.format("Your new total is %s", total.toPlainString()));
+      return 1;
     } catch (SQLException e) {
       System.out.println("Unable to find a coupon with this code");
+      return -1;
     }
   }
 
