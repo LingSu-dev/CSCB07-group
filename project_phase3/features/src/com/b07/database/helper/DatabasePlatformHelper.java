@@ -153,6 +153,8 @@ public interface DatabasePlatformHelper {
   
   public int getCouponUses(int couponId) throws SQLException;
   
+  public String getCouponCode(int couponId) throws SQLException;
+  
   public boolean customerHasAccount(int userId) throws SQLException;
   
   public List<Integer> getUserActiveAccounts(int userId) throws SQLException;
