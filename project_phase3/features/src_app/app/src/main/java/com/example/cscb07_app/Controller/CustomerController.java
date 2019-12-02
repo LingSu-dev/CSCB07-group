@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
+import com.b07.users.Account;
 import com.b07.users.Customer;
 import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
@@ -15,6 +17,7 @@ import com.example.cscb07_app.R;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerController implements View.OnClickListener {
@@ -30,6 +33,7 @@ public class CustomerController implements View.OnClickListener {
 
   public CustomerController(Context context, ShoppingCart cart) {
     this.appContext = context;
+    this.customer = cart.getCustomer();
     this.cart = cart;
   }
 
@@ -37,23 +41,43 @@ public class CustomerController implements View.OnClickListener {
   public void onClick(View view) {
     int temp = 0;
 
-    TextView amount1 = ((Activity) appContext).findViewById(R.id.amount1);
-    TextView amount2 = ((Activity) appContext).findViewById(R.id.amount2);
-    TextView amount3 = ((Activity) appContext).findViewById(R.id.amount3);
-    TextView amount4 = ((Activity) appContext).findViewById(R.id.amount4);
-    TextView amount5 = ((Activity) appContext).findViewById(R.id.amount5);
+    TextView amount1 = null;
+    TextView amount2 = null;
+    TextView amount3 = null;
+    TextView amount4 = null;
+    TextView amount5 = null;
 
-    TextView item1 = ((Activity) appContext).findViewById(R.id.cartItem1);
-    TextView item2 = ((Activity) appContext).findViewById(R.id.cartItem2);
-    TextView item3 = ((Activity) appContext).findViewById(R.id.cartItem3);
-    TextView item4 = ((Activity) appContext).findViewById(R.id.cartItem4);
-    TextView item5 = ((Activity) appContext).findViewById(R.id.cartItem5);
+    TextView item1 = null;
+    TextView item2 = null;
+    TextView item3 = null;
+    TextView item4 = null;
+    TextView item5 = null;
 
-    String item1Name = item1.getText().toString();
-    String item2Name = item2.getText().toString();
-    String item3Name = item3.getText().toString();
-    String item4Name = item4.getText().toString();
-    String item5Name = item5.getText().toString();
+    String item1Name = null;
+    String item2Name = null;
+    String item3Name = null;
+    String item4Name = null;
+    String item5Name = null;
+
+    if (view.getId() != R.id.saveShoppingCartBtn && view.getId() != R.id.loadShoppingCartBtn) {
+      amount1 = ((Activity) appContext).findViewById(R.id.amount1);
+      amount2 = ((Activity) appContext).findViewById(R.id.amount2);
+      amount3 = ((Activity) appContext).findViewById(R.id.amount3);
+      amount4 = ((Activity) appContext).findViewById(R.id.amount4);
+      amount5 = ((Activity) appContext).findViewById(R.id.amount5);
+
+      item1 = ((Activity) appContext).findViewById(R.id.cartItem1);
+      item2 = ((Activity) appContext).findViewById(R.id.cartItem2);
+      item3 = ((Activity) appContext).findViewById(R.id.cartItem3);
+      item4 = ((Activity) appContext).findViewById(R.id.cartItem4);
+      item5 = ((Activity) appContext).findViewById(R.id.cartItem5);
+
+      item1Name = item1.getText().toString();
+      item2Name = item2.getText().toString();
+      item3Name = item3.getText().toString();
+      item4Name = item4.getText().toString();
+      item5Name = item5.getText().toString();
+    }
 
     switch (view.getId()) {
       case R.id.plus1:
@@ -146,10 +170,124 @@ public class CustomerController implements View.OnClickListener {
           appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         } else if (!cartIsEmpty() && customerHasActiveAccounts()) {
           DialogFactory
-              .createAlertDialogYesNo(appContext, "Save Shopping Cart", "Would you like to save"
-                  + "your shopping cart?", "Yes", "No", DialogId.SAVE_SHOPPING_CART).show();
+              .createAlertDialogYesNoCart(appContext, "Save Shopping Cart", "Would you like to save"
+                  + " your shopping cart?", "Yes", "No", DialogId.SAVE_SHOPPING_CART, cart).show();
         }
         break;
+      case R.id.saveShoppingCartBtn:
+        EditText saveAccountIdEntry = ((Activity) appContext).findViewById(R.id.saveAccountIdEntry);
+        int accountId = 0;
+        boolean isValidAccountId = true;
+
+        try {
+          accountId = Integer.parseInt(saveAccountIdEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          isValidAccountId = false;
+        }
+
+        if (!isValidAccountId) {
+          DialogFactory.createAlertDialog(appContext, "Account ID Format Error",
+              "Account ID can't be empty!",
+              "Ok", DialogId.NULL_DIALOG).show();
+        } else {
+          saveShoppingCart(accountId);
+        }
+        break;
+      case R.id.loadShoppingCartBtn:
+        EditText loadAccountIdEntry = ((Activity) appContext).findViewById(R.id.loadAccountIdEntry);
+        int loadAccountId = 0;
+        boolean isValidLoadAccountId = true;
+
+        try {
+          loadAccountId = Integer.parseInt(loadAccountIdEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          isValidLoadAccountId = false;
+        }
+
+        if (!isValidLoadAccountId) {
+          DialogFactory.createAlertDialog(appContext, "Account ID Format Error",
+              "Account ID can't be empty!",
+              "Ok", DialogId.NULL_DIALOG).show();
+        } else {
+
+          loadShoppingCart(loadAccountId);
+
+        }
+        break;
+    }
+  }
+
+
+  public void loadShoppingCart(int accountId) {
+    List<Integer> accts = new ArrayList<>();
+    try {
+      accts = DatabaseHelperAdapter.getUserActiveAccounts(cart.getCustomer().getId());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    if (!accts.contains(accountId)) {
+      DialogFactory
+          .createAlertDialog(appContext, "Invalid Account Id", "Please input a valid account id!"
+              , "Ok", DialogId.NULL_DIALOG).show();
+    } else {
+
+      Account account = new Account(customer.getId(), accountId, true);
+      boolean failed = false;
+
+      try {
+        if (!account.retrieveCustomerCart()) {
+          DialogFactory
+              .createAlertDialogFailedCart(appContext, "Failure", "Something went wrong with"
+                  + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer);
+          failed = true;
+        }
+      } catch (SQLException e) {
+        failed = true;
+      }
+
+      ShoppingCart loadCart;
+      if (!failed) {
+        loadCart = account.getCart();
+        if (loadCart != null && !loadCart.getItems().isEmpty()) {
+          BigDecimal price = (loadCart.getTotal().multiply(cart.getTaxRate()))
+              .setScale(2, RoundingMode.CEILING);
+
+          DialogFactory.createAlertDialog(appContext, "Check Out",
+              "The total price with tax is $" +price.toString(), "Check out"
+          , DialogId.CHECKOUT_CART);
+        }
+      }
+      else
+      {
+        DialogFactory
+            .createAlertDialogFailedCart(appContext, "Failure", "Something went wrong with"
+                + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer);
+      }
+    }
+  }
+
+  public void saveShoppingCart(int accountId) {
+    List<Integer> accts = new ArrayList<>();
+    try {
+      accts = DatabaseHelperAdapter.getUserActiveAccounts(cart.getCustomer().getId());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    if (!accts.contains(accountId)) {
+      DialogFactory
+          .createAlertDialog(appContext, "Invalid Account Id", "Please input a valid account id!"
+              , "Ok", DialogId.NULL_DIALOG).show();
+    } else {
+      Account account = new Account(cart.getCustomer().getId(), accountId, true);
+      try {
+        account.saveCustomerCart(cart);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      DialogFactory.createAlertDialog(appContext, "Success", "Cart has been successfully "
+          + "saved", "Ok", DialogId.SAVED_SHOPPING_CART).show();
     }
   }
 
@@ -162,7 +300,7 @@ public class CustomerController implements View.OnClickListener {
     List<Integer> accounts = null;
 
     try {
-      accounts = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
+      accounts = DatabaseHelperAdapter.getUserActiveAccounts(cart.getCustomer().getId());
     } catch (SQLException e) {
     }
 
@@ -236,50 +374,6 @@ public class CustomerController implements View.OnClickListener {
    */
   public boolean cartIsEmpty() {
     return cart.getTotal().compareTo(BigDecimal.ZERO) == 0;
-  }
-
-  /**
-   * Add all items to cart.
-   */
-  public void addAllItemsToCart() {
-
-    TextView amount1 = ((Activity) appContext).findViewById(R.id.amount1);
-    TextView amount2 = ((Activity) appContext).findViewById(R.id.amount2);
-    TextView amount3 = ((Activity) appContext).findViewById(R.id.amount3);
-    TextView amount4 = ((Activity) appContext).findViewById(R.id.amount4);
-    TextView amount5 = ((Activity) appContext).findViewById(R.id.amount5);
-
-    TextView item1 = ((Activity) appContext).findViewById(R.id.cartItem1);
-    TextView item2 = ((Activity) appContext).findViewById(R.id.cartItem2);
-    TextView item3 = ((Activity) appContext).findViewById(R.id.cartItem3);
-    TextView item4 = ((Activity) appContext).findViewById(R.id.cartItem4);
-    TextView item5 = ((Activity) appContext).findViewById(R.id.cartItem5);
-
-    String item1Name = item1.getText().toString();
-    String item2Name = item2.getText().toString();
-    String item3Name = item3.getText().toString();
-    String item4Name = item4.getText().toString();
-    String item5Name = item5.getText().toString();
-
-    try {
-      cart.addItem(DatabaseHelperAdapter.getItem(getItemIdByName(item1Name)),
-          Integer.parseInt(amount1.getText().toString()));
-
-      cart.addItem(DatabaseHelperAdapter.getItem(getItemIdByName(item2Name)),
-          Integer.parseInt(amount2.getText().toString()));
-
-      cart.addItem(DatabaseHelperAdapter.getItem(getItemIdByName(item3Name)),
-          Integer.parseInt(amount3.getText().toString()));
-
-      cart.addItem(DatabaseHelperAdapter.getItem(getItemIdByName(item4Name)),
-          Integer.parseInt(amount4.getText().toString()));
-
-      cart.addItem(DatabaseHelperAdapter.getItem(getItemIdByName(item5Name)),
-          Integer.parseInt(amount5.getText().toString()));
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
   }
 
   /**
