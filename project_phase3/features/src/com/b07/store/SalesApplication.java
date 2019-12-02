@@ -319,7 +319,7 @@ public class SalesApplication {
           e.printStackTrace();
         }
       } else if (input == 5) {
-        System.out.println("Enter a directory to save the file to, do add a trailing slash");
+        System.out.println("Enter a directory to save the file to, do not add a trailing slash");
         String location = bufferedReader.readLine();
         try {
           SerializeDatabase.serializeToFile(location);
