@@ -353,8 +353,6 @@ public class SalesApplication {
           if (reinsert) {
             System.out.println("You are not currently part of the database, do you wish to reinsert yourself? Y/n");
             String reinsertChoice = bufferedReader.readLine();
-            //TODO REMOVE
-            //System.out.println(reinsertChoice);
             while (!(reinsertChoice.equals("Y") || reinsertChoice.equals("n"))) {
               System.out.println("Please input a valid choice");
               reinsertChoice = bufferedReader.readLine();
@@ -374,17 +372,17 @@ public class SalesApplication {
           e.printStackTrace();
         } catch (SQLException e) {
           System.out.println("Something went wrong while setting data in the database");
-          e.printStackTrace();
+          //e.printStackTrace();
         } catch (ClassNotFoundException e) {
           System.out.println("Unable to find a necessary part of the application");
-          e.printStackTrace();
+          //e.printStackTrace();
         } catch (DifferentEnumException e) {
           System.out.println("This application does not support the given data");
-          e.printStackTrace();
+          //e.printStackTrace();
         } catch (DatabaseInsertException e) {
           // TODO Auto-generated catch block
           System.out.println("Failed to reinsert admin");
-          e.printStackTrace();
+          //e.printStackTrace();
         }
       } else if (input == 0) {
         System.out.println("Exiting");
