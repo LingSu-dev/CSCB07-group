@@ -88,11 +88,12 @@ public class DialogController implements DialogInterface.OnClickListener {
         Intent intent = new Intent (appContext, CustomerCheckout.class);
         intent.putExtra("customer", customer);
         appContext.startActivity(intent);
+        break;
       case CHECKOUT_LOADED_CART:
         ((CustomerLoadShoppingCart)appContext).finish();
-        intent = new Intent (appContext, CustomerCheckout.class);
-        intent.putExtra("customer", customer);
-        appContext.startActivity(intent);
+        Intent intent2 = new Intent (appContext, CustomerCheckout.class);
+        intent2.putExtra("customer", customer);
+        appContext.startActivity(intent2);
         break;
     }
   }
