@@ -34,7 +34,7 @@
     android:maxLength="100"
     android:id="@+id/initializationAdminAddressEntry"
     android:layout_below="@id/initializationAdminAgeEntry"
-    android:inputType="text" />
+    android:inputType="textPostalAddress" />
 
   <EditText
     android:layout_width="match_parent"

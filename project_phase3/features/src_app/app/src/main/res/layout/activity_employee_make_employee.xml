@@ -25,10 +25,10 @@
     android:layout_below="@id/makeEmployeeNameEntry" />
 
   <EditText
+    android:inputType="textPostalAddress"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/createUserAddressHint"
-    android:inputType="text"
     android:layout_marginTop="20dp"
     android:id="@+id/makeEmployeeAddressEntry"
     android:layout_below="@id/makeEmployeeAgeEntry" />
