@@ -1,17 +1,12 @@
 package com.example.cscb07_app.Controller;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import androidx.core.app.ActivityCompat;
-
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.serialize.SerializeDatabase;
@@ -25,22 +20,24 @@ import com.example.cscb07_app.Activity.Admin.AdminViewBooks;
 import com.example.cscb07_app.Activity.Admin.AdminViewHistoricAccounts;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
 public class AdminController implements View.OnClickListener {
 
-  private Context appContext;
   private static Admin admin;
+  private Context appContext;
+
   public AdminController(Context context) {
     this.appContext = context;
   }
+
   public AdminController(Context context, Admin a) {
     this.appContext = context;
     admin = a;
   }
+
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
@@ -81,42 +78,44 @@ public class AdminController implements View.OnClickListener {
         EditText couponDiscountEntry = context.findViewById(R.id.couponDiscountEntry);
         String couponDiscount = couponDiscountEntry.getText().toString();
 
-        EditText couponItemIdEntry = context.findViewById(R.id.couponDiscountEntry);
+        EditText couponItemIdEntry = context.findViewById(R.id.couponItemIdEntry);
 
-        EditText couponQuantityEntry = context.findViewById(R.id.couponDiscountEntry);
+        EditText couponQuantityEntry = context.findViewById(R.id.couponQuantityEntry);
+
         int couponItemId = -1;
         int quantity = -1;
         BigDecimal couponDiscountDecimal = BigDecimal.ZERO;
-        boolean valid = false;
+
+        boolean isNumber = true;
         try {
           couponDiscountDecimal = new BigDecimal(couponDiscount);
           couponItemId = Integer.parseInt(couponItemIdEntry.getText().toString());
           quantity = Integer.parseInt(couponQuantityEntry.getText().toString());
-          valid = true;
         } catch (NumberFormatException e) {
-          AlertDialog parseFailDialog = new AlertDialog.Builder(appContext)
-              .setTitle("Incorrect input")
-              .setMessage("Please enter a number")
-              .create();
-          parseFailDialog.show();
+          isNumber = false;
         }
-        if (valid) {
+
+        if (!isNumber) {
+          DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
+              , "Ok", DialogId.NULL_DIALOG).show();
+        } else {
+
+          boolean couponInserted = true;
+
           try {
             DatabaseHelperAdapter
                 .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,
                     couponCode);
           } catch (SQLException | DatabaseInsertException e) {
-            AlertDialog insertFailDialog = new AlertDialog.Builder(appContext)
-                .setTitle("Failed to add coupon")
-                .setMessage("An error occurred when adding the coupon to the database")
-                .create();
-            insertFailDialog.show();
+            couponInserted = false;
           }
-          AlertDialog successDialog = new AlertDialog.Builder(appContext)
-              .setTitle("Success!")
-              .setMessage("The coupon has been added to the database")
-              .create();
-          successDialog.show();
+          if (!couponInserted) {
+            DialogFactory.createAlertDialog(appContext, "Failed to Add Coupon", "An error occurred"
+                + " when adding coupon!", "Ok", DialogId.NULL_DIALOG).show();
+          } else {
+            DialogFactory.createAlertDialog(appContext, "Successfully Added Coupon",
+                "Coupon was added to the database!", "Ok", DialogId.NULL_DIALOG).show();
+          }
         }
         break;
       case R.id.saveDataBtn:
@@ -125,19 +124,19 @@ public class AdminController implements View.OnClickListener {
         String saveLocString = saveLoc.getText().toString();
         try {
           SerializeDatabase.serializeToFile(saveLocString);
-        } catch (IOException e){
+        } catch (IOException e) {
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "Could not save data to this location!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "Could not save data to this location!",
+              "Ok", DialogId.NULL_DIALOG).show();
           Log.e("myApp", "exception", e);
         } catch (SQLException e) {
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "There was an issue with the SQL database!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "There was an issue with the SQL database!",
+              "Ok", DialogId.NULL_DIALOG).show();
           Log.e("myApp", "exception", e);
         }
 
-          break;
+        break;
     }
   }
 }

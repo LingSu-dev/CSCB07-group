@@ -298,11 +298,14 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws DatabaseInsertException, SQLException {
     if (!itemExists(itemId) || uses < 0) {
+      Log.d("monkeyman", "Item doesn't exist or users < 0");
+      Log.d("monkeyman", "" + itemExists(itemId) + " " + uses);
       throw new DatabaseInsertException();
     }
 
     int typeId = getDiscountTypeIdByName(type);
     long couponId = driver.insertCoupon(uses, typeId, itemId, discount, code);
+    Log.d("monkeyman", "Coupon should be inserted");
     return Math.toIntExact(couponId);
   }
 

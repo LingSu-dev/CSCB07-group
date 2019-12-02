@@ -103,9 +103,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp <= getMaxQuantity(item2Name)) {
           amount2.setText(String.valueOf(temp));
           addItemToCart(item2Name);
-        }
-        else
-        {
+        } else {
           toastAdd.show();
         }
         break;
@@ -114,8 +112,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp <= getMaxQuantity(item3Name)) {
           amount3.setText(String.valueOf(temp));
           addItemToCart(item3Name);
-        }
-        else {
+        } else {
           toastAdd.show();
         }
         break;
@@ -124,9 +121,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp <= getMaxQuantity(item4Name)) {
           amount4.setText(String.valueOf(temp));
           addItemToCart(item4Name);
-        }
-        else
-        {
+        } else {
           toastAdd.show();
         }
         break;
@@ -135,9 +130,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp <= getMaxQuantity(item5Name)) {
           amount5.setText(String.valueOf(temp));
           addItemToCart(item5Name);
-        }
-        else
-        {
+        } else {
           toastAdd.show();
         }
         break;
@@ -146,9 +139,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp >= 0) {
           amount1.setText(String.valueOf(temp));
           removeItemFromCart(item1Name);
-        }
-        else
-        {
+        } else {
           toastRemove.show();
         }
         break;
@@ -157,9 +148,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp >= 0) {
           amount2.setText(String.valueOf(temp));
           removeItemFromCart(item2Name);
-        }
-        else
-        {
+        } else {
           toastRemove.show();
         }
         break;
@@ -168,8 +157,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp >= 0) {
           amount3.setText(String.valueOf(temp));
           removeItemFromCart(item3Name);
-        }
-        else{
+        } else {
           toastRemove.show();
         }
         break;
@@ -178,8 +166,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp >= 0) {
           amount4.setText(String.valueOf(temp));
           removeItemFromCart(item4Name);
-        }
-        else{
+        } else {
           toastRemove.show();
         }
         break;
@@ -188,8 +175,7 @@ public class CustomerController implements View.OnClickListener {
         if (temp >= 0) {
           amount5.setText(String.valueOf(temp));
           removeItemFromCart(item5Name);
-        }
-        else{
+        } else {
           toastRemove.show();
         }
         break;
@@ -255,6 +241,27 @@ public class CustomerController implements View.OnClickListener {
         intent.putExtra("customer", customer);
         ((CustomerLoadShoppingCart) appContext).finish();
         appContext.startActivity(intent);
+      case R.id.applyCouponBtn:
+        EditText couponCode = ((Activity) appContext).findViewById(R.id.couponCodeEntry);
+        String couponText = couponCode.getText().toString();
+        applyCoupon(couponText);
+        break;
+    }
+  }
+
+  public void applyCoupon(String couponText) {
+    int result = cart.applyCoupon(couponText);
+
+    if (result == -1) {
+      DialogFactory
+          .createAlertDialog(appContext, "Coupon Code Failed", "Make sure it's a valid coupon code"
+              + " or the max redemption limit has been exceeded!", "Ok", DialogId.NULL_DIALOG).show();
+    }
+    else
+    {
+      updatePrice();
+      DialogFactory.createAlertDialog(appContext, "Coupon Successful", "The discount was applied successfully!",
+          "Ok", DialogId.NULL_DIALOG).show();
     }
   }
 
