@@ -279,15 +279,32 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws DatabaseInsertException if the discount type cannot be inserted into the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public int insertDiscountType(String name) throws DatabaseInsertException, SQLException {
-    //TODO
-    return 0;
+  public long insertDiscountType(String name) throws DatabaseInsertException, SQLException {
+    // Check that role name is DiscountTypes enum
+    boolean valid = false;
+    for (DiscountTypes type : DiscountTypes.values()) {
+      if (type.toString().equals(name)) {
+        valid = true;
+      }
+    }
+
+    if (!valid || name == null) {
+      throw new DatabaseInsertException();
+    }
+    long roleId = driver.insertDiscountType(name);
+    return roleId;
+
   }
 
-  public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
+  public long insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws DatabaseInsertException, SQLException {
-    //TODO
-    return 0;
+    if (!itemExists(itemId) || uses < 0) {
+      throw new DatabaseInsertException();
+    }
+
+    int typeId = getDiscountTypeIdByName(type);
+    long couponId = driver.insertCoupon(uses, typeId, itemId, discount, code);
+    return couponId;
   }
 
   /**
@@ -938,13 +955,19 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public boolean couponIdExists(int userID) throws SQLException {
-    //TODO
-    return true;
+    List<Integer> validCouponIds = getCouponIds();
+    return validCouponIds.contains(userID);
   }
 
   public List<Integer> getCouponIds() throws SQLException {
-    //TODO
-    return null;
+    List<Integer> ids = new ArrayList<Integer>();
+    Cursor results = driver.getCoupons();
+
+    while (results.moveToNext()) {
+      ids.add(results.getInt(results.getColumnIndex("ID")));
+    }
+    results.close();
+    return ids;
   }
 
   /**
