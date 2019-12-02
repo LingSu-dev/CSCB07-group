@@ -15,69 +15,70 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DatabaseHelperAdapter {
-
   private static DatabasePlatformHelper platformHelper;
 
   public static void setPlatformHelper(DatabasePlatformHelper toSet) {
     DatabaseHelperAdapter.platformHelper = toSet;
   }
 
+
   public static Connection connectOrCreateDataBase() {
     return platformHelper.connectOrCreateDataBase();
-  }
-
-  public static int insertRole(String name) throws DatabaseInsertException, SQLException {
-    return platformHelper.insertRole(name);
   }
 
   public static Connection reInitialize() throws ConnectionFailedException {
     return platformHelper.reInitialize();
   }
 
+  public static int insertRole(String name) throws DatabaseInsertException, SQLException {
+    return platformHelper.insertRole(name);
+  }
+
+
   public static int insertNewUser(String name, int age, String address, String password)
-      throws DatabaseInsertException, SQLException {
+          throws DatabaseInsertException, SQLException {
     return platformHelper.insertNewUser(name, age, address, password);
   }
 
 
   public static int insertUserRole(int userId, int roleId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.insertUserRole(userId, roleId);
   }
 
 
   public static int insertItem(String name, BigDecimal price)
-      throws DatabaseInsertException, SQLException {
+          throws DatabaseInsertException, SQLException {
     return platformHelper.insertItem(name, price);
   }
 
 
   public static int insertInventory(int itemId, int quantity)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.insertInventory(itemId, quantity);
   }
 
 
   public static int insertSale(int userId, BigDecimal totalPrice)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.insertSale(userId, totalPrice);
   }
 
 
   public static int insertItemizedSale(int saleId, int itemId, int quantity)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.insertItemizedSale(saleId, itemId, quantity);
   }
 
 
   public static int insertAccount(int userId, boolean active)
-      throws DatabaseInsertException, SQLException {
+          throws DatabaseInsertException, SQLException {
     return platformHelper.insertAccount(userId, active);
   }
 
 
   public static int insertAccountLine(int accountId, int itemId, int quantity)
-      throws DatabaseInsertException, SQLException {
+          throws DatabaseInsertException, SQLException {
     return platformHelper.insertAccountLine(accountId, itemId, quantity);
   }
 
@@ -88,67 +89,67 @@ public class DatabaseHelperAdapter {
 
 
   public static int insertCoupon(int itemId, int uses, String type, BigDecimal discount,
-      String code) throws SQLException, DatabaseInsertException {
+                                 String code)  throws SQLException, DatabaseInsertException {
     return platformHelper.insertCoupon(itemId, uses, type, discount, code);
   }
 
 
   public static boolean updateRoleName(String name, int id)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateRoleName(name, id);
   }
 
 
   public static boolean updateUserName(String name, int userId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateUserName(name, userId);
   }
 
 
   public static boolean updateUserAge(int age, int userId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateUserAge(age, userId);
   }
 
 
   public static boolean updateUserAddress(String address, int userId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateUserAddress(address, userId);
   }
 
 
   public static boolean updateUserRole(int roleId, int userId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateUserRole(roleId, userId);
   }
 
 
   public static boolean updateItemName(String name, int itemId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateItemName(name, itemId);
   }
 
 
   public static boolean updateItemPrice(BigDecimal price, int itemId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateItemPrice(price, itemId);
   }
 
 
   public static boolean updateInventoryQuantity(int quantity, int itemId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateInventoryQuantity(quantity, itemId);
   }
 
 
   public static boolean updateCouponUses(int uses, int couponId)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateCouponUses(uses, couponId);
   }
 
 
   public static boolean updateAccountStatus(int userId, int accountId, boolean active)
-      throws SQLException, DatabaseInsertException {
+          throws SQLException, DatabaseInsertException {
     return platformHelper.updateAccountStatus(userId, accountId, active);
   }
 
@@ -173,7 +174,7 @@ public class DatabaseHelperAdapter {
   }
 
 
-  public static List<User> getUsersDetails() throws SQLException {
+  public static List<User> getUsersDetails() throws SQLException  {
     return platformHelper.getUsersDetails();
   }
 
@@ -335,6 +336,10 @@ public class DatabaseHelperAdapter {
 
   public static int getCouponUses(int couponId) throws SQLException {
     return platformHelper.getCouponUses(couponId);
+  }
+
+  public static String getCouponCode(int couponId) throws SQLException {
+    return platformHelper.getCouponCode(couponId);
   }
 
 

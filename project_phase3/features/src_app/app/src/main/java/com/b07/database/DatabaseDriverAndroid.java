@@ -486,6 +486,15 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     return item;
   }
 
+  protected String getCouponCode(int couponId) {
+    String sql = "SELECT CODE FROM COUPONS WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(couponId)});
+    String item = cursor.getString(cursor.getColumnIndex("CODE"));
+    cursor.close();
+    return item;
+  }
+
   //UPDATE METHODS
 
   protected boolean updateRoleName(String name, int id) {
