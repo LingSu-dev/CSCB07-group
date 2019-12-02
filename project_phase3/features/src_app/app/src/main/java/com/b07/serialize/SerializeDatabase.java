@@ -1,5 +1,8 @@
 package com.b07.serialize;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -7,7 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
+import com.b07.database.helper.DatabaseMethodHelper;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.exceptions.DifferentEnumException;
@@ -196,9 +202,9 @@ public class SerializeDatabase {
     for (Integer userId : userIds) {
       currentUser = idToUser.get(userId);
       //TODO: Password
-      //DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
-      SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
-          currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()));
+      DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
+      //SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
+      //    currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()));
     }
     
     //Userrole
@@ -292,16 +298,23 @@ public class SerializeDatabase {
     
   }
   
-  public static void populateFromFile(String location) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
+  public static void populateFromFile(String location, Context context) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
     DataStorage database = SerializeFunc.deserialize(location + "/database_copy.ser");
     if (!checkEnums(database)) {
       throw new DifferentEnumException();
     }
+    //This is a gross violation of SOLID design
+    //Please lord Mo forgive my transgression
+    //For I know not what I do
     SerializeFunc.serialize(getDatabaseObject(), location + "/database_backup.ser");
+    DatabaseMethodHelper h = new DatabaseMethodHelper(context);
+    h.deleteDatabase();
+
     try {
       DatabaseHelperAdapter.reInitialize();
       insertDataStorage(database);
     } catch (Exception i){
+      Log.e("Deserialiaze", "Need to revert", i);
       database = SerializeFunc.deserialize(location + "/database_backup.ser");
       System.out.println("Encourtered an error, reverting...");
         try {

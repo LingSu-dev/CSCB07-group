@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
+import com.b07.exceptions.DifferentEnumException;
 import com.b07.serialize.SerializeDatabase;
 import com.b07.users.Admin;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
@@ -129,13 +130,56 @@ public class AdminController implements View.OnClickListener {
               "Could not save data to this location!",
               "Ok", DialogId.NULL_DIALOG).show();
           Log.e("myApp", "exception", e);
+          break;
         } catch (SQLException e) {
           DialogFactory.createAlertDialog(appContext, "Error!",
               "There was an issue with the SQL database!",
               "Ok", DialogId.NULL_DIALOG).show();
           Log.e("myApp", "exception", e);
+          break;
         }
+        DialogFactory.createAlertDialog(appContext, "Success!",
+                "Serialized to " + saveLocString + "/database_copy.ser",
+                "Ok", DialogId.NULL_DIALOG).show();
 
+        break;
+      case R.id.loadDataBtn:
+        EditText restoreLoc = ((Activity) appContext).findViewById(R.id.loadAppDataEntry);
+        String restoreLocString = restoreLoc.getText().toString();
+        try {
+
+            SerializeDatabase.populateFromFile(restoreLocString, appContext);
+
+        } catch (IOException e) {
+          Log.e("myApp", "exception", e);
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "Could not restore from this location!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+          break;
+        } catch (SQLException e) {
+          Log.e("myApp", "exception", e);
+
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "There was an issue with the SQL database!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+          break;
+        } catch (DifferentEnumException e){
+          Log.e("myApp", "exception", e);
+
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "The data on this device does not match the data in the stored db!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+          break;
+        } catch (ClassNotFoundException e) {
+          Log.e("myApp", "exception", e);
+          DialogFactory.createAlertDialog(appContext, "Error!",
+                  "One or more classes not found!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+          break;
+        }
+        DialogFactory.createAlertDialog(appContext, "Success!",
+                "Database restored!",
+                "Ok", DialogId.NULL_DIALOG).show();
         break;
     }
   }
