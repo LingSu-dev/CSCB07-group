@@ -196,7 +196,9 @@ public class SerializeDatabase {
     for (Integer userId : userIds) {
       currentUser = idToUser.get(userId);
       //TODO: Password
-      DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
+      //DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
+      SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
+          currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()));
     }
     
     //Userrole
