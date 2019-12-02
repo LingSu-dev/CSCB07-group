@@ -1129,33 +1129,32 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public int getCouponId(String code) throws SQLException {
-    //TODO
-    return 0;
+    int id = driver.getCouponId(code);
+    return id;
   }
 
   public DiscountTypes getDiscountType(int couponId) throws SQLException {
-    //TODO
-    return null;
+    String type = driver.getDiscountType(couponId);
+    DiscountTypes discountType = DiscountTypes.valueOf(type);
+    return discountType;
   }
 
   public BigDecimal getDiscountAmount(int couponId) throws SQLException {
-    //TODO
-    return null;
+    String discountString = driver.getCouponDiscountAmount(couponId);
+    BigDecimal discount = new BigDecimal(discountString);
+    return discount;
   }
 
   public int getCouponItem(int couponId) throws SQLException {
-    //TODO
-    return 0;
+    return driver.getCouponItemId(couponId);
   }
 
   public int getCouponUses(int couponId) throws SQLException {
-    //TODO
-    return 0;
+    return driver.getCouponUses(couponId);
   }
 
   public String getCouponCode(int couponId) throws SQLException {
-    //TODO
-    return null;
+    return driver.getCouponCode(couponId);
   }
 
   /**
