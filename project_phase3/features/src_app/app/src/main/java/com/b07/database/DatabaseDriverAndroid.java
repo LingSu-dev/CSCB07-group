@@ -243,6 +243,37 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     sqLiteDatabase.close();
   }
 
+  /**
+   * Use this to insert new discount types into the database.
+   *
+   * @param type the new discount type to be added.
+   * @return the id of the discount type that was inserted.
+   */
+  protected long insertDiscountType(String type)
+   {
+    SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+      ContentValues contentValues = new ContentValues();
+      contentValues.put("NAME", type);
+      long id = sqLiteDatabase.insert("DISCOUNTTYPES", null, contentValues);
+      sqLiteDatabase.close();
+      return id;
+  }
+
+  protected long insertCoupon(int uses, int typeId, int itemId, BigDecimal discount, String code)
+           {
+    SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put("USES", uses);
+    contentValues.put("TYPEID", typeId);
+    contentValues.put("ITEMID", itemId);
+    contentValues.put("DISCOUNT", discount.toPlainString());
+    contentValues.put("CODE", code);
+    long id = sqLiteDatabase.insert("COUPONS", null, contentValues);
+    sqLiteDatabase.close();
+    return id;
+  }
+
+
   //SELECT METHODS
   protected Cursor getRoles() {
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -583,6 +614,25 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     contentValues.put("ACTIVE", active ? 1 : 0);
     boolean result = sqLiteDatabase.update("ACCOUNT", contentValues, "ID=?",
             new String[] {String.valueOf(accountId)}) > 0;
+    sqLiteDatabase.close();
+    return result;
+  }
+
+  /**
+   * Update the uses of a coupon.
+   *
+   * @param couponId  the id of the coupon.
+   * @param uses the remaining number of uses the coupon should have
+   * 
+   * @return true if successful, false otherwise.
+   */
+  protected  boolean updateCouponUses(int couponId, int uses) {
+    SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put("ID", couponId);
+    contentValues.put("USES", uses);
+    boolean result = sqLiteDatabase.update("COUPONS", contentValues, "ID=?",
+            new String[] {String.valueOf(couponId)}) > 0;
     sqLiteDatabase.close();
     return result;
   }
