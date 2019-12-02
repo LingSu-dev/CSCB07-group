@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/createUserNameHint"
-    android:inputType="text"
+    android:inputType="textPersonName"
     android:layout_marginTop="40dp"
     android:id="@+id/makeEmployeeNameEntry" />
 
