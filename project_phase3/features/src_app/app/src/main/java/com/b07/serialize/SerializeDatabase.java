@@ -167,7 +167,7 @@ public class SerializeDatabase {
     return true;
   }
   
-  private static void insertDataStorage(DataStorage database) throws SQLException, DatabaseInsertException {
+  private static void insertDataStorage(DataStorage database, Context context) throws SQLException, DatabaseInsertException {
     HashMap<Integer, String> roleIdToRoleNames = database.getRoleIdToRoleNames();
     ArrayList<User> users = database.getUsers();
     HashMap<Integer, Integer> userToRole = database.getUserToRole();
@@ -201,10 +201,9 @@ public class SerializeDatabase {
     User currentUser;
     for (Integer userId : userIds) {
       currentUser = idToUser.get(userId);
-      //TODO: Password
-      DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
-      //SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
-      //    currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()));
+      //DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
+      SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
+          currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()), context);
     }
     
     //Userrole
@@ -312,14 +311,14 @@ public class SerializeDatabase {
 
     try {
       DatabaseHelperAdapter.reInitialize();
-      insertDataStorage(database);
+      insertDataStorage(database, context);
     } catch (Exception i){
       Log.e("Deserialiaze", "Need to revert", i);
       database = SerializeFunc.deserialize(location + "/database_backup.ser");
       System.out.println("Encourtered an error, reverting...");
         try {
           DatabaseHelperAdapter.reInitialize();
-          insertDataStorage(database);
+          insertDataStorage(database, context);
           System.out.println("Revert Successful");
         } catch (ConnectionFailedException | DatabaseInsertException e) {
           e.printStackTrace();

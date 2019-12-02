@@ -1,10 +1,12 @@
 package com.b07.database.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.b07.database.DatabaseDriverAndroid;
+import com.b07.security.PasswordHelpers;
 
 import java.math.BigDecimal;
 
@@ -14,10 +16,7 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
     super(context);
   }
 
-  public void deleteDatabase() {
-    SQLiteDatabase sqLiteDatabase = super.getWritableDatabase();
-   super.onUpgrade(sqLiteDatabase,1 ,2);
-  }
+
 
   // Setters
 
@@ -176,5 +175,16 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   }
   public boolean updateCouponUses(int couponId, int uses){
     return super.updateCouponUses(couponId, uses);
+  }
+
+  //Other, android specific.
+
+  public void deleteDatabase() {
+    SQLiteDatabase sqLiteDatabase = super.getWritableDatabase();
+    super.onUpgrade(sqLiteDatabase,1 ,2);
+  }
+
+  public SQLiteDatabase getReadableDatabase() {
+    return super.getReadableDatabase();
   }
 }
