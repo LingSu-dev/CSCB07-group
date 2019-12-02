@@ -80,7 +80,6 @@ public class AdminController implements View.OnClickListener {
         String couponDiscount = couponDiscountEntry.getText().toString();
 
         EditText couponItemIdEntry = context.findViewById(R.id.couponItemIdEntry);
-
         EditText couponQuantityEntry = context.findViewById(R.id.couponQuantityEntry);
 
         int couponItemId = -1;
@@ -100,9 +99,7 @@ public class AdminController implements View.OnClickListener {
           DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
               , "Ok", DialogId.NULL_DIALOG).show();
         } else {
-
           boolean couponInserted = true;
-
           try {
             DatabaseHelperAdapter
                 .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,

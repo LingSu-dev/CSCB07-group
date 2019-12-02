@@ -155,11 +155,15 @@ public class ShoppingCart implements Serializable {
       int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
       Log.d("monmon", "Error 2 with itemId = " + itemId );
       Item item = DatabaseHelperAdapter.getItem(itemId);
-      Log.d("monmon", "Error 3 with item = " + item.getName());
+      Log.d("bigmon", "Error 3 with item = " + item.getName());
       BigDecimal price = item.getPrice();
-      Log.d("monmon", "Error 4 with price = " + price.toString());
+      Log.d("bigmon", "Error 4 with price = " + price.toString());
+
+      //Fix something here
+      //DatabaseHelperAdapter.getDiscountType()
+
       DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
-      Log.d("monmon", "Error 5 with type = " + type.name());
+      Log.d("bigmon", "Error 5 with type = " + type.name() + " couponId = " + couponId);
       BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
       Log.d("monmon", "Error 6 with discount = " + discount.toString());
       if (!couponCanBeApplied(code, 1)) {
@@ -172,6 +176,7 @@ public class ShoppingCart implements Serializable {
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
+        Log.d("monmon", "This code is being run");
         price = price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
       discountCodes.add(code);

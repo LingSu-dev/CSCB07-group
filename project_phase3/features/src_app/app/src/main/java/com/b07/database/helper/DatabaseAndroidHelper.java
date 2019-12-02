@@ -1116,7 +1116,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return allAccountIds;
   }
 
-  /**
+  /*
    * Get the discount type ID from its name
    *
    * @param type the name of the discount type
@@ -1124,14 +1124,29 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws SQLException if soemthing goes wrong retrieving the ID from the database
    */
   public int getDiscountTypeIdByName(String type) throws SQLException {
-    List<Integer> ids;
-    ids = getDiscountTypeIds();
+    List<Integer> ids = getDiscountTypeIds();
+
+    for (Integer id : getDiscountTypeIds())
+    {
+      String discountName = getDiscountTypeName(id);
+      Log.d("bigmon", discountName);
+
+      if (discountName != null && discountName.equals(type))
+      {
+        return id;
+      }
+    }
+
+    return -1;
+
+    /**
     for (int i = 0; i < ids.size(); i++) {
+      Log.d("bigmon", getDiscountTypeName(ids.get(0)))
       if (getDiscountTypeName(ids.get(i)) != null && getDiscountTypeName(ids.get(i)).equals(type)) {
         return ids.get(i);
       }
     }
-    return -1;
+    return -1;*/
   }
 
   /**

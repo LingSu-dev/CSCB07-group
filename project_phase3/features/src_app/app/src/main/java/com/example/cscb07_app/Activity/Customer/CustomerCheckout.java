@@ -13,6 +13,7 @@ import com.example.cscb07_app.R;
  */
 public class CustomerCheckout extends AppCompatActivity {
 
+
   /**
    * Creation of activity.
    *
@@ -57,5 +58,10 @@ public class CustomerCheckout extends AppCompatActivity {
 
     Button applyCoupon = findViewById(R.id.applyCouponBtn);
     applyCoupon.setOnClickListener(new CustomerController(this, cart));
+  }
+
+  @Override
+  public void onBackPressed() {
+    return;
   }
 }
