@@ -28,7 +28,10 @@ import com.b07.users.User;
 import java.util.Arrays;
 import java.util.Collections;
 
-
+/**
+ * This class serializes the database to a location
+ * @author lingf
+ */
 public class SerializeDatabase {
 
   private static DataStorage getDatabaseObject() throws SQLException {
@@ -117,6 +120,14 @@ public class SerializeDatabase {
     return data;
   }
 
+  /**
+   * Serialize the database to a location, using a DataStorage object, named database_copy.ser
+   * 
+   * 
+   * @param location without trailing slash
+   * @throws SQLException
+   * @throws IOException
+   */
   public static void serializeToFile(String location) throws SQLException, IOException {
 
     DataStorage database = getDatabaseObject();
@@ -292,6 +303,17 @@ public class SerializeDatabase {
     
   }
   
+  /**
+   * Populates the current database with an serialized database object, named database_copy.ser, 
+   * erases the current database and creates a serialized database object, named database_backup.ser in the same folder
+   * attempts to repopulate with database_backup.ser upon error on populating with dabase_copy.ser
+   * 
+   * @param location of the database_copy.ser without a trailing slash
+   * @throws SQLException
+   * @throws IOException
+   * @throws ClassNotFoundException
+   * @throws DifferentEnumException if the enum of the new database do not match up with the enums of the current database
+   */
   public static void populateFromFile(String location) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
     DataStorage database = SerializeFunc.deserialize(location + "\\database_copy.ser");
     if (!checkEnums(database)) {
