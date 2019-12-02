@@ -288,7 +288,6 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     String value = cursor.getString(cursor.getColumnIndex("NAME"));
     cursor.close();
     return value;
-
   }
 
   protected int getUserRole(int userId) {
@@ -483,13 +482,24 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
    * @if something goes wrong
    */
   protected int getCouponItemId(int id) {
+    //String sql = "SELECT ITEMID FROM COUPONS WHERE CODE = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery("SELECT ITEMID FROM COUPONS WHERE ID + ?"
+    , new String[]{String.valueOf(id)});
+    cursor.moveToFirst();
+    int itemId = cursor.getInt(cursor.getColumnIndex("ITEMID"));
+    return itemId;
+
+    /*
     String sql = "SELECT ITEMID FROM COUPONS WHERE ID = ?";
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
     Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(id)});
     int item = cursor.getInt(cursor.getColumnIndex("ITEMID"));
     cursor.close();
-    return item;
+    return item;*/
   }
+
+
 
   /**
    *  Return a list of coupons
@@ -512,6 +522,7 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     String sql = "SELECT USES FROM COUPONS WHERE ID = ?";
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
     Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(couponId)});
+    cursor.moveToNext();
     int item = cursor.getInt(cursor.getColumnIndex("USES"));
     cursor.close();
     return item;
@@ -521,6 +532,7 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     String sql = "SELECT CODE FROM COUPONS WHERE ID = ?";
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
     Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[]{String.valueOf(couponId)});
+    cursor.moveToFirst();
     String item = cursor.getString(cursor.getColumnIndex("CODE"));
     cursor.close();
     return item;

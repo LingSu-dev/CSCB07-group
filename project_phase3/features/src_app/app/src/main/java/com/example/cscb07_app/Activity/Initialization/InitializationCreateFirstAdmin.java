@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.ItemTypes;
+import com.b07.store.DiscountTypes;
 import com.b07.users.Roles;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
@@ -39,6 +40,10 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
   public void setUpDatabase()
       throws DatabaseInsertException, SQLException {
+
+    for (DiscountTypes type : DiscountTypes.values()) {
+      DatabaseHelperAdapter.insertDiscountType(type.name());
+    }
 
     for (Roles role : Roles.values()) {
       DatabaseHelperAdapter.insertRole(role.name());

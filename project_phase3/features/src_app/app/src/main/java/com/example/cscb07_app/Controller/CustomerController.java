@@ -244,9 +244,31 @@ public class CustomerController implements View.OnClickListener {
       case R.id.applyCouponBtn:
         EditText couponCode = ((Activity) appContext).findViewById(R.id.couponCodeEntry);
         String couponText = couponCode.getText().toString();
-        applyCoupon(couponText);
+        if (isValidCouponName(couponText)) {
+          applyCoupon(couponText);
+        } else {
+          DialogFactory
+              .createAlertDialog(appContext, "Invalid Coupon", "Please Enter a Valid Coupon Code!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        }
         break;
     }
+  }
+
+  public boolean isValidCouponName(String name) {
+    List<Integer> couponIds = null;
+    try {
+      couponIds = DatabaseHelperAdapter.getCouponIds();
+
+      for (Integer id : couponIds) {
+        if (DatabaseHelperAdapter.getCouponCode(id).equals(name)) {
+          return true;
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   public void applyCoupon(String couponText) {
@@ -255,12 +277,12 @@ public class CustomerController implements View.OnClickListener {
     if (result == -1) {
       DialogFactory
           .createAlertDialog(appContext, "Coupon Code Failed", "Make sure it's a valid coupon code"
-              + " or the max redemption limit has been exceeded!", "Ok", DialogId.NULL_DIALOG).show();
-    }
-    else
-    {
+              + " or the max redemption limit has been exceeded!", "Ok", DialogId.NULL_DIALOG)
+          .show();
+    } else {
       updatePrice();
-      DialogFactory.createAlertDialog(appContext, "Coupon Successful", "The discount was applied successfully!",
+      DialogFactory.createAlertDialog(appContext, "Coupon Successful",
+          "The discount was applied successfully!",
           "Ok", DialogId.NULL_DIALOG).show();
     }
   }
