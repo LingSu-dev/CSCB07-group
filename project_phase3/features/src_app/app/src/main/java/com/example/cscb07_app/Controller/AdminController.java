@@ -2,25 +2,22 @@ package com.example.cscb07_app.Controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
 import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
-import com.example.cscb07_app.Activity.Admin.AdminMenu;
 import com.example.cscb07_app.Activity.Admin.AdminPromoteEmployee;
 import com.example.cscb07_app.Activity.Admin.AdminSaveAppData;
 import com.example.cscb07_app.Activity.Admin.AdminViewActiveAccounts;
 import com.example.cscb07_app.Activity.Admin.AdminViewBooks;
 import com.example.cscb07_app.Activity.Admin.AdminViewHistoricAccounts;
+import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
-
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
@@ -36,7 +33,7 @@ public class AdminController implements View.OnClickListener {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.adminMenuExitBtn:
-        ((AdminMenu) appContext).onBackPressed();
+        appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         break;
       case R.id.adminMenuViewBooks:
         appContext.startActivity(new Intent(this.appContext, AdminViewBooks.class));

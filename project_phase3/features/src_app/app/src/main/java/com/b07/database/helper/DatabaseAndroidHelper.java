@@ -993,7 +993,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     List<Integer> accounts = new ArrayList<>();
 
     while (results.moveToNext()) {
-      accounts.add(results.getInt(results.getColumnIndex("id")));
+      accounts.add(results.getInt(results.getColumnIndex("ID")));
     }
 
     results.close();
@@ -1049,8 +1049,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     int quantity;
 
     while (results.moveToNext()) {
-      itemId = results.getInt(results.getColumnIndex("itemId"));
-      quantity = results.getInt(results.getColumnIndex("quantity"));
+      itemId = results.getInt(results.getColumnIndex("ITEMID"));
+      quantity = results.getInt(results.getColumnIndex("QUANTITY"));
       cart.addItem(getItem(itemId), quantity);
     }
     results.close();
@@ -1158,7 +1158,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     List<Integer> accounts = new ArrayList<>();
 
     while (results.moveToNext()) {
-      accounts.add(results.getInt(results.getColumnIndex("id")));
+      accounts.add(results.getInt(results.getColumnIndex("ID")));
     }
 
     results.close();

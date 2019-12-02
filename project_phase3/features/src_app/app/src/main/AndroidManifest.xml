@@ -9,7 +9,9 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".Activity.Admin.AdminCreateCoupon"></activity>
+    <activity android:name=".Activity.Customer.CustomerLoadShoppingCart"></activity>
+    <activity android:name=".Activity.Customer.CustomerSaveShoppingCart" />
+    <activity android:name=".Activity.Admin.AdminCreateCoupon" />
     <activity android:name=".Activity.Admin.AdminLoadAppData" />
     <activity android:name=".Activity.Admin.AdminSaveAppData" />
     <activity android:name=".Activity.Admin.AdminViewActiveAccounts" />
