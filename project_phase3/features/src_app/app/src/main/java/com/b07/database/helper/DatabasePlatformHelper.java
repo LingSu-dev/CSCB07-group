@@ -44,9 +44,9 @@ public interface DatabasePlatformHelper {
   public int insertAccountLine(int accountId, int itemId, int quantity)
           throws DatabaseInsertException, SQLException;
 
-  public int insertDiscountType(String name) throws DatabaseInsertException, SQLException;
+  public long insertDiscountType(String name) throws DatabaseInsertException, SQLException;
 
-  public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
+  public long insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
           throws DatabaseInsertException, SQLException;
 
   //UpdateHelper

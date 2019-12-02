@@ -3,7 +3,6 @@ package com.b07.database.helper;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.b07.database.DatabaseDriverAndroid;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
