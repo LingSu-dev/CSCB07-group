@@ -4,21 +4,39 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import com.b07.store.EmployeeInterface;
-import com.b07.users.Employee;
+import com.b07.store.ShoppingCart;
+import com.b07.users.Customer;
+import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
+import com.example.cscb07_app.Activity.Customer.CustomerLoadShoppingCart;
+import com.example.cscb07_app.Activity.Customer.CustomerSaveShoppingCart;
+import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstEmployee;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
-import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 
 public class DialogController implements DialogInterface.OnClickListener {
 
   private Context appContext;
   private DialogId id;
+  private ShoppingCart cart;
+  private Customer customer;
 
   public DialogController(Context context, DialogId id) {
     this.appContext = context;
     this.id = id;
+  }
+
+  public DialogController(Context context, DialogId id, ShoppingCart cart)
+  {
+    this.appContext = context;
+    this.id = id;
+    this.cart = cart;
+  }
+
+  public DialogController(Context context, DialogId id, Customer customer)
+  {
+    this.appContext = context;
+    this.id = id;
+    this.customer = customer;
   }
 
   @Override
@@ -46,15 +64,27 @@ public class DialogController implements DialogInterface.OnClickListener {
         ((CustomerCheckout)appContext).recreate();
         break;
       case SAVE_SHOPPING_CART:
+        ((CustomerCheckout)appContext).finish();
         if (which == Dialog.BUTTON_POSITIVE)
         {
-
+          Intent intent = new Intent(appContext, CustomerSaveShoppingCart.class);
+          intent.putExtra("cart", cart);
+          appContext.startActivity(intent);
         }
         else
         {
-          ((CustomerCheckout)appContext).finish();
           appContext.startActivity(new Intent(appContext, LoginMenu.class));
         }
+       break;
+      case SAVED_SHOPPING_CART:
+        ((CustomerSaveShoppingCart)appContext).finish();
+        appContext.startActivity(new Intent(appContext,LoginMenu.class));
+        break;
+      case LOAD_CART_FAILED:
+        ((CustomerLoadShoppingCart)appContext).finish();
+        Intent intent = new Intent (appContext, CustomerCheckout.class);
+        intent.putExtra("customer", customer);
+        appContext.startActivity(intent);
     }
   }
 }

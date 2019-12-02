@@ -13,10 +13,13 @@ import com.b07.users.Employee;
 import com.b07.users.User;
 import com.example.cscb07_app.Activity.Admin.AdminMenu;
 import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
+import com.example.cscb07_app.Activity.Customer.CustomerLoadShoppingCart;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that controls all actions for events on login activity
@@ -130,11 +133,30 @@ public class LoginController implements View.OnClickListener {
       e.printStackTrace();
     }
 
-    Intent customerIntent = new Intent(this.appContext, CustomerCheckout.class);
+
 
     if (authenticated) {
-      customerIntent.putExtra("customer", customer);
-      appContext.startActivity(customerIntent);
+
+      List<Integer> accts = new ArrayList<>();
+
+      try {
+        accts = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
+      }catch (SQLException e)
+      { }
+
+      if (accts == null || accts.isEmpty())
+      {
+        Intent customerIntent = new Intent(this.appContext, CustomerCheckout.class);
+        customerIntent.putExtra("customer", customer);
+        appContext.startActivity(customerIntent);
+      }
+      else if (accts != null && !accts.isEmpty())
+      {
+        Intent loadCartIntent = new Intent(this.appContext, CustomerLoadShoppingCart.class);
+        loadCartIntent .putExtra("customer", customer);
+        appContext.startActivity(loadCartIntent);
+      }
+
     } else {
       DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
           "Double check your id and password and make sure its a customer account!",
