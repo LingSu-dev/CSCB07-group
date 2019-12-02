@@ -120,8 +120,8 @@ public class SerializeDatabase {
   public static void serializeToFile(String location) throws SQLException, IOException {
 
     DataStorage database = getDatabaseObject();
-    SerializeFunc.serialize(database, location + "\\database_copy.ser");
-    System.out.println("Database stored in: " + location + "\\database_copy.ser");
+    SerializeFunc.serialize(database, location + "/database_copy.ser");
+    System.out.println("Database stored in: " + location + "/database_copy.ser");
   }
 
   private static boolean checkEnums(DataStorage database) {
@@ -293,16 +293,16 @@ public class SerializeDatabase {
   }
   
   public static void populateFromFile(String location) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
-    DataStorage database = SerializeFunc.deserialize(location + "\\database_copy.ser");
+    DataStorage database = SerializeFunc.deserialize(location + "/database_copy.ser");
     if (!checkEnums(database)) {
       throw new DifferentEnumException();
     }
-    SerializeFunc.serialize(getDatabaseObject(), location + "\\database_backup.ser");
+    SerializeFunc.serialize(getDatabaseObject(), location + "/database_backup.ser");
     try {
       DatabaseHelperAdapter.reInitialize();
       insertDataStorage(database);
     } catch (Exception i){
-      database = SerializeFunc.deserialize(location + "\\database_backup.ser");
+      database = SerializeFunc.deserialize(location + "/database_backup.ser");
       System.out.println("Encourtered an error, reverting...");
         try {
           DatabaseHelperAdapter.reInitialize();
