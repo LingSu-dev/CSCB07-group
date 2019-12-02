@@ -10,6 +10,7 @@ import com.example.cscb07_app.Activity.Customer.CustomerCheckout;
 import com.example.cscb07_app.Activity.Customer.CustomerLoadShoppingCart;
 import com.example.cscb07_app.Activity.Customer.CustomerSaveShoppingCart;
 import com.example.cscb07_app.Activity.Employee.EmployeeMenu;
+import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstAdmin;
 import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstEmployee;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 
@@ -43,9 +44,11 @@ public class DialogController implements DialogInterface.OnClickListener {
   public void onClick(DialogInterface dialog, int which) {
     switch (id) {
       case CREATE_FIRST_ADMIN_DETAILS:
+        ((InitializationCreateFirstAdmin)appContext).finish();
         appContext.startActivity(new Intent(appContext, InitializationCreateFirstEmployee.class));
         break;
       case CREATE_FIRST_EMPLOYEE_DETAILS:
+        ((InitializationCreateFirstEmployee)appContext).finish();
         appContext.startActivity(new Intent(appContext, LoginMenu.class));
         break;
       case LOGIN_INCORRECT_CREDENTIALS:
@@ -85,6 +88,12 @@ public class DialogController implements DialogInterface.OnClickListener {
         Intent intent = new Intent (appContext, CustomerCheckout.class);
         intent.putExtra("customer", customer);
         appContext.startActivity(intent);
+      case CHECKOUT_LOADED_CART:
+        ((CustomerLoadShoppingCart)appContext).finish();
+        intent = new Intent (appContext, CustomerCheckout.class);
+        intent.putExtra("customer", customer);
+        appContext.startActivity(intent);
+        break;
     }
   }
 }

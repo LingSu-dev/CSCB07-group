@@ -102,6 +102,7 @@ public class LoginController implements View.OnClickListener {
     if (authenticated) {
       Intent intent = new Intent(this.appContext, AdminMenu.class);
       intent.putExtra("adminObject", admin);
+      ((LoginMenu)appContext).finish();
       appContext.startActivity(intent);
     } else {
       DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
@@ -120,6 +121,7 @@ public class LoginController implements View.OnClickListener {
 
     boolean authenticated = true;
     Customer customer = null;
+
     try {
       User currentUser = DatabaseHelperAdapter.getUserDetails(userId);
 
@@ -133,30 +135,26 @@ public class LoginController implements View.OnClickListener {
       e.printStackTrace();
     }
 
-
-
     if (authenticated) {
 
       List<Integer> accts = new ArrayList<>();
 
       try {
         accts = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
-      }catch (SQLException e)
-      { }
+      } catch (SQLException e) {
+      }
 
-      if (accts == null || accts.isEmpty())
-      {
+      if (accts == null || accts.isEmpty()) {
         Intent customerIntent = new Intent(this.appContext, CustomerCheckout.class);
         customerIntent.putExtra("customer", customer);
+        ((LoginMenu)appContext).finish();
         appContext.startActivity(customerIntent);
-      }
-      else if (accts != null && !accts.isEmpty())
-      {
+      } else if (accts != null && !accts.isEmpty()) {
         Intent loadCartIntent = new Intent(this.appContext, CustomerLoadShoppingCart.class);
-        loadCartIntent .putExtra("customer", customer);
+        loadCartIntent.putExtra("customer", customer);
+        ((LoginMenu)appContext).finish();
         appContext.startActivity(loadCartIntent);
       }
-
     } else {
       DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
           "Double check your id and password and make sure its a customer account!",
@@ -192,6 +190,7 @@ public class LoginController implements View.OnClickListener {
 
     if (authenticated) {
       employeeIntent.putExtra("employee", currentEmployee);
+      ((LoginMenu)appContext).finish();
       appContext.startActivity(employeeIntent);
     } else {
       DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",

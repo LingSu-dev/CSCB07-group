@@ -85,8 +85,6 @@ public class DialogFactory {
    * @param appContext the context
    * @param title the dialog's title
    * @param message the dialog's message
-   * @param btnYesText the dialog's yes message
-   * @param btnNoText the dialog's no message
    * @param id the dialog's id
    * @return the alert dialog
    */

@@ -159,11 +159,6 @@ public class CustomerController implements View.OnClickListener {
           checkoutCart();
         }
         break;
-      case R.id.customerStoreAddToCartBtn:
-        break;
-      case R.id.customerStoreViewCartBtn:
-        appContext.startActivity(new Intent(this.appContext, CustomerCheckout.class));
-        break;
       case R.id.checkOutExitButton:
         if (cartIsEmpty() || !customerHasActiveAccounts()) {
           ((CustomerCheckout) appContext).finish();
@@ -209,9 +204,7 @@ public class CustomerController implements View.OnClickListener {
               "Account ID can't be empty!",
               "Ok", DialogId.NULL_DIALOG).show();
         } else {
-
           loadShoppingCart(loadAccountId);
-
         }
         break;
     }
@@ -221,7 +214,7 @@ public class CustomerController implements View.OnClickListener {
   public void loadShoppingCart(int accountId) {
     List<Integer> accts = new ArrayList<>();
     try {
-      accts = DatabaseHelperAdapter.getUserActiveAccounts(cart.getCustomer().getId());
+      accts = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -250,19 +243,24 @@ public class CustomerController implements View.OnClickListener {
       if (!failed) {
         loadCart = account.getCart();
         if (loadCart != null && !loadCart.getItems().isEmpty()) {
-          BigDecimal price = (loadCart.getTotal().multiply(cart.getTaxRate()))
+          BigDecimal price = (loadCart.getTotal().multiply(loadCart.getTaxRate()))
               .setScale(2, RoundingMode.CEILING);
-
+          try {
+            account.deactivate();
+          } catch (SQLException e) {
+          }
           DialogFactory.createAlertDialog(appContext, "Check Out",
-              "The total price with tax is $" +price.toString(), "Check out"
-          , DialogId.CHECKOUT_CART);
+              "The total price with tax is $" + price.toString(), "Check out"
+              , DialogId.CHECKOUT_LOADED_CART).show();
+        } else {
+          DialogFactory
+              .createAlertDialogFailedCart(appContext, "Empty Account", "This account has no items, you will"
+                  + " be taken to the store!", "Continue", DialogId.LOAD_CART_FAILED, customer).show();
         }
-      }
-      else
-      {
+      } else {
         DialogFactory
             .createAlertDialogFailedCart(appContext, "Failure", "Something went wrong with"
-                + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer);
+                + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer).show();
       }
     }
   }
@@ -300,7 +298,7 @@ public class CustomerController implements View.OnClickListener {
     List<Integer> accounts = null;
 
     try {
-      accounts = DatabaseHelperAdapter.getUserActiveAccounts(cart.getCustomer().getId());
+      accounts = DatabaseHelperAdapter.getUserActiveAccounts(customer.getId());
     } catch (SQLException e) {
     }
 
