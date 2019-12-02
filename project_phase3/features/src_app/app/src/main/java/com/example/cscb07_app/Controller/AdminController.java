@@ -114,7 +114,7 @@ public class AdminController implements View.OnClickListener {
                 .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,
                     couponCode);
           } catch (SQLException | DatabaseInsertException e) {
-            // do nothing: this is handled by the coupon id
+            // do nothing: failure is handled by the coupon id
           }
           if (id == -1) {
             DialogFactory.createAlertDialog(appContext, "Failed to Add Coupon", "An error occurred"
