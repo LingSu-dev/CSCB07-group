@@ -63,4 +63,9 @@ public class CustomerLoadShoppingCart extends AppCompatActivity {
 
     loadAccountIds.setText(data.toString());
   }
+
+  @Override
+  public void onBackPressed() {
+    return;
+  }
 }

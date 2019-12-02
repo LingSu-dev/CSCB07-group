@@ -260,7 +260,7 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
   }
 
   protected long insertCoupon(int uses, int typeId, int itemId, BigDecimal discount, String code)
-           {
+  {
     SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
     ContentValues contentValues = new ContentValues();
     contentValues.put("USES", uses);
@@ -421,6 +421,7 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
    * @return the name of the discount type
    */
   protected String getDiscountType(int discountTypeId) {
+    Log.d("bigmon", " " + discountTypeId);
     String sql = "SELECT NAME FROM DISCOUNTTYPES WHERE ID = ?";
     SQLiteDatabase sqLiteDatabase = getReadableDatabase();
     Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[] {String.valueOf(discountTypeId)});

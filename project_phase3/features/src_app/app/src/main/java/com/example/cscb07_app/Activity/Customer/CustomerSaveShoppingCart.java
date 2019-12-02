@@ -26,8 +26,7 @@ public class CustomerSaveShoppingCart extends AppCompatActivity {
 
   }
 
-  public void loadAccountIds(ShoppingCart cart)
-  {
+  public void loadAccountIds(ShoppingCart cart) {
     List<Integer> accounts = null;
 
     try {
@@ -41,11 +40,16 @@ public class CustomerSaveShoppingCart extends AppCompatActivity {
     data.append("Active Account IDs\n");
     data.append("------------------------------\n");
 
-    for (Integer acct: accounts)
-    {
-      data.append("Account ID: " + acct+"\n");
+    for (Integer acct : accounts) {
+      data.append("Account ID: " + acct + "\n");
     }
 
     saveAccountIds.setText(data.toString());
   }
+
+  @Override
+  public void onBackPressed() {
+    return;
+  }
+
 }
