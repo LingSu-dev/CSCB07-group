@@ -363,6 +363,7 @@ public class SalesApplication {
               int adminId = 0;
               adminId = SerializationPasswordHelper.insertUserNoHash(admin.getName(), admin.getAge(), admin.getAddress(), adminHashedPassword);
               DatabaseHelperAdapter.insertUserRole(adminId, DatabaseHelperAdapter.getRoleIdByName("ADMIN"));
+              System.out.println("Your new ID is: " + adminId);
             } else if (reinsertChoice.equals("n")){
               System.out.println("Exiting");
               return;
