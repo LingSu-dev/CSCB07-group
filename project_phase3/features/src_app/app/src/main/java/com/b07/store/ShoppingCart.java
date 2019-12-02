@@ -1,10 +1,10 @@
 package com.b07.store;
 
+import android.util.Log;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.users.Customer;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -149,12 +149,19 @@ public class ShoppingCart implements Serializable {
     // TODO: add check for whether a given coupon code already exists when adding
     // new code
     try {
+      Log.d("monmon", "Error 0");
       int couponId = DatabaseHelperAdapter.getCouponId(code);
+      Log.d("monmon", "Error 1 with couponId = " + couponId);
       int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
+      Log.d("monmon", "Error 2 with itemId = " + itemId );
       Item item = DatabaseHelperAdapter.getItem(itemId);
+      Log.d("monmon", "Error 3 with item = " + item.getName());
       BigDecimal price = item.getPrice();
+      Log.d("monmon", "Error 4 with price = " + price.toString());
       DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
+      Log.d("monmon", "Error 5 with type = " + type.name());
       BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
+      Log.d("monmon", "Error 6 with discount = " + discount.toString());
       if (!couponCanBeApplied(code, 1)) {
         return -1;
       }

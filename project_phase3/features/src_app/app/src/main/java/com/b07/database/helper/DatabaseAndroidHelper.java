@@ -1153,6 +1153,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return ids;
   }
 
+
   public int getCouponId(String code) throws SQLException {
     int id = driver.getCouponId(code);
     return id;
