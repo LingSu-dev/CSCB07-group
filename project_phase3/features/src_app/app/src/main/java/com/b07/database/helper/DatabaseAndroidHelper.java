@@ -3,6 +3,7 @@ package com.b07.database.helper;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.b07.database.DatabaseDriverAndroid;
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
@@ -1080,14 +1081,36 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return allAccountIds;
   }
 
+  /**
+   * Get the discount type ID from its name
+   *
+   * @param type the name of the discount type
+   * @return the id of the discount type, or -1 if it is not found
+   * @throws SQLException if soemthing goes wrong retrieving the ID from the database
+   */
   public int getDiscountTypeIdByName(String type) throws SQLException {
-    //TODO
-    return 0;
+    List<Integer> ids;
+    ids = getDiscountTypeIds();
+    for (int i = 0; i < ids.size(); i++) {
+      if (getDiscountTypeName(ids.get(i)) != null && getDiscountTypeName(ids.get(i)).equals(type)) {
+        return ids.get(i);
+      }
+    }
+    return -1;
   }
 
+  /**
+   * Get the name of the discount type from its ID
+   *
+   * @param discountTypeId the discount type ID
+   * @return the name of the discount type
+   * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
+   */
   public String getDiscountTypeName(int discountTypeId) throws SQLException {
-    //TODO
-    return null;
+    if (!discountTypeIdExists(discountTypeId)) {
+      return null;
+    }
+    String type = driver.getD
   }
 
   public boolean discountTypeIdExists(int discountTypeId) throws SQLException {

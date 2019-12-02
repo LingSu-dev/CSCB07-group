@@ -13,6 +13,8 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
     super(context);
   }
 
+  // Setters
+
   public long insertRole(String role) {
     return super.insertRole(role);
   }
@@ -43,6 +45,14 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   public long insertAccountLine(int accountId, int itemId, int quantity){
     return super.insertAccountLine(accountId, itemId, quantity);
   }
+  public long insertDiscountType(String type) {
+    return super.insertDiscountType(type);
+  }
+  protected long insertCoupon(int uses, int typeId, int itemId, BigDecimal discount, String code) {
+    return super.insertCoupon(uses, typeId, itemId, discount, code);
+  }
+
+  // Getters
 
   public Cursor getRoles(){
     return super.getRoles();
@@ -104,6 +114,33 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   public Cursor getUserInactiveAccounts(int userId){
     return super.getUserInactiveAccounts(userId);
   }
+  public String getDiscountType(int discountTypeId) {
+    return super.getDiscountType(discountTypeId);
+  }
+  public Cursor getDiscountTypeIds(){
+    return super.getDiscountTypeIds();
+  }
+  public int getCouponId(String code) {
+    return super.getCouponId(code);
+  }
+  public String getCouponDiscountAmount(int id){
+    return super.getCouponDiscountAmount(id);
+  }
+  public int getCouponItemId(int id){
+    return super.getCouponItemId(id);
+  }
+  public Cursor getCoupons(){
+    return super.getCoupons();
+  }
+  public int getCouponUses(int couponId){
+    return super.getCouponUses(couponId);
+  }
+  public String getCouponCode(int couponId) {
+    return super.getCouponCode(couponId);
+  }
+
+  // Updaters
+
   public boolean updateRoleName(String name, int id){
     return super.updateRoleName(name, id);
   }
@@ -130,5 +167,8 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   }
   public boolean updateAccountStatus(int accountId, boolean active){
     return super.updateAccountStatus(accountId, active);
+  }
+  public boolean updateCouponUses(int couponId, int uses){
+    return super.updateCouponUses(couponId, uses);
   }
 }
