@@ -1,12 +1,17 @@
 package com.example.cscb07_app.Controller;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import androidx.core.app.ActivityCompat;
+
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.serialize.SerializeDatabase;
@@ -115,6 +120,7 @@ public class AdminController implements View.OnClickListener {
         }
         break;
       case R.id.saveDataBtn:
+
         EditText saveLoc = ((Activity) appContext).findViewById(R.id.saveAppDataEntry);
         String saveLocString = saveLoc.getText().toString();
         try {
@@ -123,10 +129,12 @@ public class AdminController implements View.OnClickListener {
           DialogFactory.createAlertDialog(appContext, "Error!",
                   "Could not save data to this location!",
                   "Ok", DialogId.NULL_DIALOG).show();
+          Log.e("myApp", "exception", e);
         } catch (SQLException e) {
           DialogFactory.createAlertDialog(appContext, "Error!",
                   "There was an issue with the SQL database!",
                   "Ok", DialogId.NULL_DIALOG).show();
+          Log.e("myApp", "exception", e);
         }
 
           break;

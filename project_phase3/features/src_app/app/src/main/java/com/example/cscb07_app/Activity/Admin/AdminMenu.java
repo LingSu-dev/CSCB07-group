@@ -1,8 +1,11 @@
 package com.example.cscb07_app.Activity.Admin;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.example.cscb07_app.Controller.AdminController;
 import com.b07.users.Admin;
 import com.example.cscb07_app.R;
@@ -26,6 +29,8 @@ public class AdminMenu extends AppCompatActivity {
     viewActiveAccounts.setOnClickListener(new AdminController(this, admin));
 
     Button saveAppData = findViewById(R.id.adminMenuSaveData);
+    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
     saveAppData.setOnClickListener(new AdminController(this, admin));
 
     Button loadAppData = findViewById(R.id.adminMenuLoadData);
