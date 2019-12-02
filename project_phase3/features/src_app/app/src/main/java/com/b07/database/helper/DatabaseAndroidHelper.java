@@ -1114,16 +1114,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   public boolean discountTypeIdExists(int discountTypeId) throws SQLException {
-//    List<Integer> validDisCountTypeIds =
-            Cursor results = driver.getDiscountTypeIds();
-    while (results.moveToNext()) {
-      int id = results.getInt(results.getColumnIndex("ID"));
-      if(id == discountTypeId){
-        return true;
-      }
-    }
-    results.close();
-    return false;
+    List<Integer> validDisCountTypeIds = getDiscountTypeIds();
+    return validDisCountTypeIds.contains(discountTypeId);
   }
 
   public List<Integer> getDiscountTypeIds() throws SQLException {
