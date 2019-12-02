@@ -278,7 +278,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws DatabaseInsertException if the discount type cannot be inserted into the database.
    * @throws SQLException if there is an issue communicating with the database.
    */
-  public long insertDiscountType(String name) throws DatabaseInsertException, SQLException {
+  public int insertDiscountType(String name) throws DatabaseInsertException, SQLException {
     // Check that role name is DiscountTypes enum
     boolean valid = false;
     for (DiscountTypes type : DiscountTypes.values()) {
@@ -291,11 +291,11 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
       throw new DatabaseInsertException();
     }
     long roleId = driver.insertDiscountType(name);
-    return roleId;
+    return Math.toIntExact(roleId);
 
   }
 
-  public long insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
+  public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws DatabaseInsertException, SQLException {
     if (!itemExists(itemId) || uses < 0) {
       throw new DatabaseInsertException();
@@ -303,7 +303,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
     int typeId = getDiscountTypeIdByName(type);
     long couponId = driver.insertCoupon(uses, typeId, itemId, discount, code);
-    return couponId;
+    return Math.toIntExact(couponId);
   }
 
   /**
