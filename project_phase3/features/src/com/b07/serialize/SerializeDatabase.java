@@ -107,7 +107,7 @@ public class SerializeDatabase {
       type = DatabaseHelperAdapter.getDiscountTypeName(couponId);
       discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
       //TODO: Get the code from Database
-      code = null;
+      code = DatabaseHelperAdapter.getCouponCode(couponId);
       coupons.put(couponId, new CouponImpl(itemId, uses, type, discount, code));
     }
 
