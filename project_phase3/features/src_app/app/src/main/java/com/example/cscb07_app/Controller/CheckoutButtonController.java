@@ -9,14 +9,28 @@ import com.b07.inventory.Item;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
+/**
+ * Controls all the buttons in checkout
+ */
 public class CheckoutButtonController implements View.OnClickListener {
 
   private Context appContext;
 
+  /**
+   * Constructor for a checkout button, takes in current app context
+   * @param context of app
+   */
   public CheckoutButtonController(Context context) {
     this.appContext = context;
   }
 
+  /**
+   * onClick method for controlling a button to add/subtract from the amount
+   * displayed by the textViews. Button only add/subtract if there are enough
+   * of an item within inventory/>0 item in cart. 
+   * 
+   * @param button
+   */
   @Override
   public void onClick(View view) {
 
@@ -104,6 +118,12 @@ public class CheckoutButtonController implements View.OnClickListener {
     }
   }
 
+  /**
+   * gets the max quantity of an item
+   * 
+   * @param item
+   * @return max quantity
+   */
   public int getMaxQuantity(String itemName) {
     int max = 0;
     try {
