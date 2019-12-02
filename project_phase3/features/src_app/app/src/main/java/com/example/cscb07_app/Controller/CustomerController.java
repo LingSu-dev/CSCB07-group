@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
@@ -81,12 +82,20 @@ public class CustomerController implements View.OnClickListener {
       item5Name = item5.getText().toString();
     }
 
+    Toast toastAdd = Toast
+        .makeText(appContext, "There are no more items in stock", Toast.LENGTH_SHORT);
+
+    Toast toastRemove = Toast
+        .makeText(appContext, "Cannot remove any more items", Toast.LENGTH_SHORT);
+
     switch (view.getId()) {
       case R.id.plus1:
         temp = Integer.parseInt(amount1.getText().toString()) + 1;
         if (temp <= getMaxQuantity(item1Name)) {
           amount1.setText(String.valueOf(temp));
           addItemToCart(item1Name);
+        } else {
+          toastAdd.show();
         }
         break;
       case R.id.plus2:
@@ -95,12 +104,19 @@ public class CustomerController implements View.OnClickListener {
           amount2.setText(String.valueOf(temp));
           addItemToCart(item2Name);
         }
+        else
+        {
+          toastAdd.show();
+        }
         break;
       case R.id.plus3:
         temp = Integer.parseInt(amount3.getText().toString()) + 1;
         if (temp <= getMaxQuantity(item3Name)) {
           amount3.setText(String.valueOf(temp));
           addItemToCart(item3Name);
+        }
+        else {
+          toastAdd.show();
         }
         break;
       case R.id.plus4:
@@ -109,12 +125,20 @@ public class CustomerController implements View.OnClickListener {
           amount4.setText(String.valueOf(temp));
           addItemToCart(item4Name);
         }
+        else
+        {
+          toastAdd.show();
+        }
         break;
       case R.id.plus5:
         temp = Integer.parseInt(amount5.getText().toString()) + 1;
         if (temp <= getMaxQuantity(item5Name)) {
           amount5.setText(String.valueOf(temp));
           addItemToCart(item5Name);
+        }
+        else
+        {
+          toastAdd.show();
         }
         break;
       case R.id.minus1:
@@ -123,12 +147,20 @@ public class CustomerController implements View.OnClickListener {
           amount1.setText(String.valueOf(temp));
           removeItemFromCart(item1Name);
         }
+        else
+        {
+          toastRemove.show();
+        }
         break;
       case R.id.minus2:
         temp = Integer.parseInt(amount2.getText().toString()) - 1;
         if (temp >= 0) {
           amount2.setText(String.valueOf(temp));
           removeItemFromCart(item2Name);
+        }
+        else
+        {
+          toastRemove.show();
         }
         break;
       case R.id.minus3:
@@ -137,6 +169,9 @@ public class CustomerController implements View.OnClickListener {
           amount3.setText(String.valueOf(temp));
           removeItemFromCart(item3Name);
         }
+        else{
+          toastRemove.show();
+        }
         break;
       case R.id.minus4:
         temp = Integer.parseInt(amount4.getText().toString()) - 1;
@@ -144,12 +179,18 @@ public class CustomerController implements View.OnClickListener {
           amount4.setText(String.valueOf(temp));
           removeItemFromCart(item4Name);
         }
+        else{
+          toastRemove.show();
+        }
         break;
       case R.id.minus5:
         temp = Integer.parseInt(amount5.getText().toString()) - 1;
         if (temp >= 0) {
           amount5.setText(String.valueOf(temp));
           removeItemFromCart(item5Name);
+        }
+        else{
+          toastRemove.show();
         }
         break;
       case R.id.checkOutButton:
