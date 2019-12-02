@@ -99,20 +99,20 @@ public class AdminController implements View.OnClickListener {
           DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
               , "Ok", DialogId.NULL_DIALOG).show();
         } else {
-          boolean couponInserted = true;
+          int id = -1;
           try {
             DatabaseHelperAdapter
                 .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,
                     couponCode);
           } catch (SQLException | DatabaseInsertException e) {
-            couponInserted = false;
+            // do nothing
           }
-          if (!couponInserted) {
+          if (id == -1) {
             DialogFactory.createAlertDialog(appContext, "Failed to Add Coupon", "An error occurred"
                 + " when adding coupon!", "Ok", DialogId.NULL_DIALOG).show();
           } else {
             DialogFactory.createAlertDialog(appContext, "Successfully Added Coupon",
-                "Coupon was added to the database!", "Ok", DialogId.NULL_DIALOG).show();
+                "Coupon was added -to the database!", "Ok", DialogId.NULL_DIALOG).show();
           }
         }
         break;
