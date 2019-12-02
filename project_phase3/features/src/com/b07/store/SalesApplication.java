@@ -331,7 +331,7 @@ public class SalesApplication {
         
       } else if (input == 6) {
         System.out.println("Please manually make a backup of the database file before proceeding incase reverting fails");
-        System.out.println("Enter a directory to retreive the backup from, do add a trailing slash");
+        System.out.println("Enter a directory to retreive the backup from, do not add a trailing slash");
         String location = bufferedReader.readLine();
         String adminHashedPassword = DatabaseHelperAdapter.getPassword(admin.getId());
         try {
