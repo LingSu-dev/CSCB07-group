@@ -778,6 +778,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   }
   
+  public static String getCouponCode(int couponId) throws SQLException {
+    Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
+    return DatabaseSelector.getCouponCode(couponId, connection);
+  }
+  
   /**
    * Check if there is an account associated with a customer.
    *

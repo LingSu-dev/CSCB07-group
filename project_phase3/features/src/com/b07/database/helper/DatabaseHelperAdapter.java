@@ -338,6 +338,10 @@ public class DatabaseHelperAdapter {
     return platformHelper.getCouponUses(couponId);
   }
 
+  public static String getCouponCode(int couponId) throws SQLException {
+    return platformHelper.getCouponCode(couponId);
+  }
+
   
   public static boolean customerHasAccount(int userId) throws SQLException {
     return platformHelper.customerHasAccount(userId);

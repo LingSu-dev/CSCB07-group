@@ -331,6 +331,11 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   public int getCouponUses(int couponId) throws SQLException {
     return DatabaseSelectHelper.getCouponUses(couponId);
   }
+  
+  @Override
+  public String getCouponCode(int couponId) throws SQLException {
+    return DatabaseSelectHelper.getCouponCode(couponId);
+  }
 
   @Override
   public boolean customerHasAccount(int userId) throws SQLException {
@@ -347,6 +352,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
     return DatabaseSelectHelper.getUserInactiveAccounts(userId);
   }
 
+  
 
 
 }

@@ -454,4 +454,14 @@ public class DatabaseSelector {
     results.close();
     return item;
   }
+  
+  public static String getCouponCode(int couponId, Connection connection) throws SQLException {
+    String sql = "SELECT CODE FROM COUPONS WHERE ID = ?";
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setInt(1, couponId);
+    ResultSet results = preparedStatement.executeQuery();
+    String itemCode = results.getString("CODE");
+    results.close();
+    return itemCode;
+  }
 }
