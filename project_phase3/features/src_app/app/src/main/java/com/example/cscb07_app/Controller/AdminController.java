@@ -64,7 +64,7 @@ public class AdminController implements View.OnClickListener {
         appContext.startActivity(new Intent(this.appContext, AdminCreateCoupon.class));
         break;
       case R.id.addCouponBtn:
-        Activity context = (Activity)appContext;
+        Activity context = (Activity) appContext;
         EditText couponCodeEntry = context.findViewById(R.id.couponCodeEntry);
         String couponCode = couponCodeEntry.getText().toString();
 
@@ -88,25 +88,27 @@ public class AdminController implements View.OnClickListener {
           valid = true;
         } catch (NumberFormatException e) {
           AlertDialog parseFailDialog = new AlertDialog.Builder(appContext)
-                  .setTitle("Incorrect input")
-                  .setMessage("Please enter a number")
-                  .create();
+              .setTitle("Incorrect input")
+              .setMessage("Please enter a number")
+              .create();
           parseFailDialog.show();
         }
-        if(valid){
+        if (valid) {
           try {
-            DatabaseHelperAdapter.insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal, couponCode);
+            DatabaseHelperAdapter
+                .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,
+                    couponCode);
           } catch (SQLException | DatabaseInsertException e) {
             AlertDialog insertFailDialog = new AlertDialog.Builder(appContext)
-                    .setTitle("Failed to add coupon")
-                    .setMessage("An error occurred when adding the coupon to the database")
-                    .create();
+                .setTitle("Failed to add coupon")
+                .setMessage("An error occurred when adding the coupon to the database")
+                .create();
             insertFailDialog.show();
           }
           AlertDialog successDialog = new AlertDialog.Builder(appContext)
-                  .setTitle("Success!")
-                  .setMessage("The coupon has been added to the database")
-                  .create();
+              .setTitle("Success!")
+              .setMessage("The coupon has been added to the database")
+              .create();
           successDialog.show();
         }
         break;
