@@ -4,6 +4,7 @@ import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
 import com.b07.store.ShoppingCart;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -11,11 +12,11 @@ import java.util.List;
 
 /**
  * A class representing a user account.
- *
  * @author Aidan Zorbas
  * @author Alex Efimov
  * @author Lingfeng Su
  * @author Payam Yektamaram
+ *
  */
 public class Account implements Serializable {
 
@@ -57,6 +58,7 @@ public class Account implements Serializable {
    */
   public boolean saveCustomerCart(ShoppingCart toAdd) throws SQLException {
 
+
     if (!DatabaseHelperAdapter.userIdExists(userId)) {
       return false;
     }
@@ -86,6 +88,10 @@ public class Account implements Serializable {
 
   public int getAccountId() {
     return accountId;
+  }
+
+  public boolean getActiveStatus() {
+    return active;
   }
 
   public boolean deactivate() throws SQLException {
