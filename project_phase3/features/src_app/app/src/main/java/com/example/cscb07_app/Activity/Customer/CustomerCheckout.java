@@ -54,5 +54,8 @@ public class CustomerCheckout extends AppCompatActivity {
 
     Button exitBtn = findViewById(R.id.checkOutExitButton);
     exitBtn.setOnClickListener(new CustomerController(this, cart));
+
+    Button applyCoupon = findViewById(R.id.applyCouponBtn);
+    applyCoupon.setOnClickListener(new CustomerController(this, cart));
   }
 }
