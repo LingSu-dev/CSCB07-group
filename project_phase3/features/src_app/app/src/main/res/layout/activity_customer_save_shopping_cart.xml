@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".Activity.Customer.CustomerSaveShoppingCart"
+  android:padding="@dimen/activityPadding">
+
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="235dp"
+    android:id="@+id/accountIdsData"
+    android:textSize="@dimen/textViewTextSize"
+    android:scrollbars="vertical"/>
+
+  <EditText
+    android:inputType=""
+    android:layout_marginLeft="30dp"
+    android:id="@+id/saveAccountIdEntry"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="Enter an Account Id"
+    android:layout_below="@id/accountIdsData"/>
+
+  <Button
+    android:layout_marginLeft="20dp"
+    android:id="@+id/saveShoppingCartBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Save Cart"
+    android:layout_below="@id/accountIdsData"
+    android:layout_toRightOf="@id/saveAccountIdEntry"
+    android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".Activity.Customer.CustomerLoadShoppingCart"
+  android:padding="@dimen/activityPadding">
+
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="235dp"
+    android:id="@+id/loadAccountIdsData"
+    android:textSize="@dimen/textViewTextSize"
+    android:scrollbars="vertical"/>
+
+  <EditText
+    android:inputType="number"
+    android:id="@+id/loadAccountIdEntry"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint=" Account ID "
+    android:layout_below="@id/loadAccountIdsData"/>
+
+  <Button
+    android:layout_marginLeft="20dp"
+    android:id="@+id/loadShoppingCartBtn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Load Cart"
+    android:layout_below="@id/loadAccountIdsData"
+    android:layout_toRightOf="@id/loadAccountIdEntry"
+    android:layout_centerHorizontal="true"
+    app:icon="@drawable/ic_file_download_black_24dp"/>
+
+  <Button
+    android:layout_marginLeft="20dp"
+    android:id="@+id/skipCartLoading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Skip"
+    android:layout_below="@id/loadAccountIdsData"
+    android:layout_toRightOf="@id/loadShoppingCartBtn"
+    android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
