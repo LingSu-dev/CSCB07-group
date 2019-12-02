@@ -19,14 +19,6 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_initialization_create_first_admin);
 
-    /*
-    DatabaseMethodHelper methodHelper = new DatabaseMethodHelper(getApplicationContext());
-    DatabaseAndroidHelper androidHelper = new DatabaseAndroidHelper();
-    androidHelper.setDriver(methodHelper);
-    DatabaseHelperAdapter.setPlatformHelper(androidHelper);*/
-
-    //methodHelper.getWritableDatabase(); //Just to create database
-
     try {
       //To avoid duplicate initialization
       if (DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name()) == -1) {
@@ -52,11 +44,9 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
       DatabaseHelperAdapter.insertRole(role.name());
     }
 
-    int x = 5; //TODO: change back to zero
     for (ItemTypes item : ItemTypes.values()) {
       int itemId = DatabaseHelperAdapter.insertItem(item.name(), new BigDecimal("10.00"));
-      DatabaseHelperAdapter.insertInventory(itemId, x);
-      x++;
+      DatabaseHelperAdapter.insertInventory(itemId, 0);
     }
   }
 }

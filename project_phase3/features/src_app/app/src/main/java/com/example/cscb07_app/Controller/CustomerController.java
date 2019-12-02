@@ -217,7 +217,6 @@ public class CustomerController implements View.OnClickListener {
     }
   }
 
-
   public void loadShoppingCart(int accountId) {
     List<Integer> accts = new ArrayList<>();
     try {
@@ -256,9 +255,10 @@ public class CustomerController implements View.OnClickListener {
             account.deactivate();
           } catch (SQLException e) {
           }
-          DialogFactory.createAlertDialog(appContext, "Check Out",
+          loadCart.checkOutCart();
+          DialogFactory.createAlertDialogFailedCart(appContext, "Check Out",
               "The total price with tax is $" + price.toString(), "Check out"
-              , DialogId.CHECKOUT_LOADED_CART).show();
+              , DialogId.CHECKOUT_LOADED_CART, customer).show();
         } else {
           DialogFactory
               .createAlertDialogFailedCart(appContext, "Empty Account",
@@ -274,6 +274,11 @@ public class CustomerController implements View.OnClickListener {
     }
   }
 
+  /**
+   * Save the shopping cart.
+   *
+   * @param accountId the account of interest.
+   */
   public void saveShoppingCart(int accountId) {
     List<Integer> accts = new ArrayList<>();
     try {
