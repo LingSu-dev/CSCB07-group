@@ -8,10 +8,9 @@ import java.math.BigDecimal;
  * @author lingf
  */
 public class CouponImpl implements Coupon {
-  /**
-   * The Serial Version ID of CouponImpl.
-   */
+  /** The Serial Version ID of CouponImpl. */
   private static final long serialVersionUID = 1L;
+
   int item;
   int uses;
   String type;
