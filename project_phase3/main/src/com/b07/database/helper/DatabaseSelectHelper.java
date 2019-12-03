@@ -481,8 +481,6 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     return validUserIds.contains(userID);
   }
 
-  
-
   public static boolean couponIdExists(int userID) throws SQLException {
     List<Integer> validCouponIds = DatabaseSelectHelper.getCouponIds();
     return validCouponIds.contains(userID);
@@ -604,7 +602,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
 
     User user = getUserDetails(userId);
-    if(user == null || !(user instanceof Customer)) {
+    if (user == null || !(user instanceof Customer)) {
       return null;
     }
     Customer customer = (Customer) user;
@@ -646,7 +644,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the discount type ID from its name
-   * 
+   *
    * @param type the name of the discount type
    * @return the id of the discount type, or -1 if it is not found
    * @throws SQLException if soemthing goes wrong retrieving the ID from the database
@@ -664,7 +662,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the name of the discount type from its ID
-   * 
+   *
    * @param discountTypeId the discount type ID
    * @return the name of the discount type
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
@@ -681,7 +679,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Check whether the discount type ID exists in the database
-   * 
+   *
    * @param discountTypeId the discount type ID
    * @return true if the discount type ID exists and false otherwise
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
@@ -693,7 +691,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get a list of every discount type ID
-   * 
+   *
    * @return the list of discount type IDs
    * @throws SQLException if soemthing goes wrong retrieving the discount type from the database
    */
@@ -712,7 +710,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the coupon ID from the code
-   * 
+   *
    * @param code the coupon code
    * @return the coupon ID
    * @throws SQLException if something goes wrong retrieving the data from the database
@@ -721,12 +719,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int id = DatabaseSelector.getCouponId(code, connection);
     return id;
-
   }
 
   /**
    * Get the discount type for a given coupon
-   * 
+   *
    * @param couponId the id of the coupon
    * @return the discount type
    * @throws SQLException if something goes wrong
@@ -740,7 +737,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the discount amount for a given coupon
-   * 
+   *
    * @param couponId the id of the coupon
    * @return the discount amount
    * @throws SQLException if something goes wrong
@@ -754,7 +751,7 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
   /**
    * Get the item Id associated with a coupon
-   * 
+   *
    * @param couponId the id of the coupon
    * @return the item id
    * @throws SQLException if something goes wrong
@@ -762,12 +759,11 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   public static int getCouponItem(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     return DatabaseSelector.getCouponItemId(couponId, connection);
-
   }
 
   /**
    * Get the number of uses for a coupon
-   * 
+   *
    * @param couponId the id of the coupon
    * @return the number of uses
    * @throws SQLException if something goes wrong
@@ -775,14 +771,13 @@ public class DatabaseSelectHelper extends DatabaseSelector {
   public static int getCouponUses(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     return DatabaseSelector.getCouponUses(couponId, connection);
-
   }
-  
+
   public static String getCouponCode(int couponId) throws SQLException {
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     return DatabaseSelector.getCouponCode(couponId, connection);
   }
-  
+
   /**
    * Check if there is an account associated with a customer.
    *
@@ -797,8 +792,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
     }
     return !accounts.isEmpty();
   }
-  
-  public static List<Integer> getUserActiveAccounts(int userId) throws SQLException{
+
+  public static List<Integer> getUserActiveAccounts(int userId) throws SQLException {
     if (!userIdExists(userId)) {
       return null;
     }
@@ -815,8 +810,8 @@ public class DatabaseSelectHelper extends DatabaseSelector {
 
     return accounts;
   }
-  
-  public static List<Integer> getUserInactiveAccounts(int userId) throws SQLException{
+
+  public static List<Integer> getUserInactiveAccounts(int userId) throws SQLException {
     if (!userIdExists(userId)) {
       return null;
     }

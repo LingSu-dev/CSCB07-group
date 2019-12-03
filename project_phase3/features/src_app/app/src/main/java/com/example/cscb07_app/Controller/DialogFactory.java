@@ -5,9 +5,7 @@ import android.content.Context;
 import com.b07.store.ShoppingCart;
 import com.b07.users.Customer;
 
-/**
- * Factory to create alert dialog boxes.
- */
+/** Factory to create alert dialog boxes. */
 public class DialogFactory {
 
   /**
@@ -20,14 +18,13 @@ public class DialogFactory {
    * @param id the dialog's id
    * @return the alert dialog
    */
-  public static AlertDialog createAlertDialog(Context appContext, String title, String message,
-      String btnText, DialogId id) {
+  public static AlertDialog createAlertDialog(
+      Context appContext, String title, String message, String btnText, DialogId id) {
 
     AlertDialog dialog = new AlertDialog.Builder(appContext).create();
     dialog.setTitle(title);
     dialog.setMessage(message);
-    dialog.setButton(AlertDialog.BUTTON_NEUTRAL, btnText,
-        new DialogController(appContext, id));
+    dialog.setButton(AlertDialog.BUTTON_NEUTRAL, btnText, new DialogController(appContext, id));
     return dialog;
   }
 
@@ -42,16 +39,19 @@ public class DialogFactory {
    * @param id the dialog's id
    * @return the alert dialog
    */
-  public static AlertDialog createAlertDialogYesNo(Context appContext, String title, String message,
-      String btnYesText, String btnNoText, DialogId id) {
+  public static AlertDialog createAlertDialogYesNo(
+      Context appContext,
+      String title,
+      String message,
+      String btnYesText,
+      String btnNoText,
+      DialogId id) {
 
     AlertDialog dialog = new AlertDialog.Builder(appContext).create();
     dialog.setTitle(title);
     dialog.setMessage(message);
-    dialog.setButton(AlertDialog.BUTTON_NEGATIVE, btnNoText,
-        new DialogController(appContext, id));
-    dialog.setButton(AlertDialog.BUTTON_POSITIVE, btnYesText,
-        new DialogController(appContext, id));
+    dialog.setButton(AlertDialog.BUTTON_NEGATIVE, btnNoText, new DialogController(appContext, id));
+    dialog.setButton(AlertDialog.BUTTON_POSITIVE, btnYesText, new DialogController(appContext, id));
     return dialog;
   }
 
@@ -66,16 +66,22 @@ public class DialogFactory {
    * @param id the dialog's id
    * @return the alert dialog
    */
-  public static AlertDialog createAlertDialogYesNoCart(Context appContext, String title, String message,
-      String btnYesText, String btnNoText, DialogId id, ShoppingCart cart) {
+  public static AlertDialog createAlertDialogYesNoCart(
+      Context appContext,
+      String title,
+      String message,
+      String btnYesText,
+      String btnNoText,
+      DialogId id,
+      ShoppingCart cart) {
 
     AlertDialog dialog = new AlertDialog.Builder(appContext).create();
     dialog.setTitle(title);
     dialog.setMessage(message);
-    dialog.setButton(AlertDialog.BUTTON_POSITIVE, btnYesText,
-        new DialogController(appContext, id, cart));
-    dialog.setButton(AlertDialog.BUTTON_NEGATIVE, btnNoText,
-        new DialogController(appContext, id, cart));
+    dialog.setButton(
+        AlertDialog.BUTTON_POSITIVE, btnYesText, new DialogController(appContext, id, cart));
+    dialog.setButton(
+        AlertDialog.BUTTON_NEGATIVE, btnNoText, new DialogController(appContext, id, cart));
     return dialog;
   }
 
@@ -88,14 +94,19 @@ public class DialogFactory {
    * @param id the dialog's id
    * @return the alert dialog
    */
-  public static AlertDialog createAlertDialogFailedCart(Context appContext, String title,
-      String message,String btnText, DialogId id, Customer customer) {
+  public static AlertDialog createAlertDialogFailedCart(
+      Context appContext,
+      String title,
+      String message,
+      String btnText,
+      DialogId id,
+      Customer customer) {
 
     AlertDialog dialog = new AlertDialog.Builder(appContext).create();
     dialog.setTitle(title);
     dialog.setMessage(message);
-    dialog.setButton(AlertDialog.BUTTON_NEUTRAL, btnText,
-        new DialogController(appContext, id, customer));
+    dialog.setButton(
+        AlertDialog.BUTTON_NEUTRAL, btnText, new DialogController(appContext, id, customer));
     return dialog;
   }
 }

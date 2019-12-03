@@ -21,10 +21,9 @@ import java.util.List;
  * @author Payam Yektamaram
  */
 public class ShoppingCart implements Serializable {
-  /**
-   * Serial Version ID of ShoppingCart.
-   */
+  /** Serial Version ID of ShoppingCart. */
   private static final long serialVersionUID = 1L;
+
   private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
   private Customer customer = null;
   private BigDecimal total = new BigDecimal("0.00");
@@ -46,7 +45,7 @@ public class ShoppingCart implements Serializable {
   /**
    * Add some quantity of an item to the cart.
    *
-   * @param item     the item to add.
+   * @param item the item to add.
    * @param quantity the number of that item to add.
    */
   public void addItem(Item item, int quantity) {
@@ -66,8 +65,7 @@ public class ShoppingCart implements Serializable {
    *
    * @return list of discount codes.
    */
-  public ArrayList<String> getDiscountCodes()
-  {
+  public ArrayList<String> getDiscountCodes() {
     return discountCodes;
   }
 
@@ -152,6 +150,7 @@ public class ShoppingCart implements Serializable {
 
   /**
    * Apply a coupon code to an item and recalculate its price
+   *
    * @param code the coupon code
    */
   public int applyCoupon(String code) {
@@ -176,7 +175,8 @@ public class ShoppingCart implements Serializable {
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
-        price = price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
+        price =
+            price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
       discountCodes.add(code);
 
@@ -216,23 +216,29 @@ public class ShoppingCart implements Serializable {
             // coupon to avoid throwing an exception later
             if (!couponCanBeApplied(code, 1)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
-              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              System.out.println(
+                  String.format(
+                      "The invalid coupon code has been removed. Please check out again."));
               removeCoupon(code);
               return false;
             }
             int couponId = DatabaseHelperAdapter.getCouponId(code);
             int uses = DatabaseHelperAdapter.getCouponUses(couponId);
-            Item item = DatabaseHelperAdapter.getItem(DatabaseHelperAdapter.getCouponItem(couponId));
+            Item item =
+                DatabaseHelperAdapter.getItem(DatabaseHelperAdapter.getCouponItem(couponId));
             int itemQuantity = items.getOrDefault(item, 0);
             if (!couponCanBeApplied(code, itemQuantity)) {
               System.out.println(String.format("Coupon code %s is no longer valid.", code));
-              System.out.println(String.format("The invalid coupon code has been removed. Please check out again."));
+              System.out.println(
+                  String.format(
+                      "The invalid coupon code has been removed. Please check out again."));
               removeCoupon(code);
               return false;
             }
             DatabaseHelperAdapter.updateCouponUses(uses - itemQuantity, couponId);
           } catch (DatabaseInsertException e) {
-            System.out.println(String.format("Unable to update remaining coupon uses for %s", code));
+            System.out.println(
+                String.format("Unable to update remaining coupon uses for %s", code));
           }
         }
 
@@ -275,10 +281,10 @@ public class ShoppingCart implements Serializable {
       System.out.println("This coupon has already been used the maximum number of times");
       return false;
     }
-//    if (discountCodes.contains(code)) {
-//      System.out.println("This coupon has already been applied");
-//      return false;
-//    }
+    //    if (discountCodes.contains(code)) {
+    //      System.out.println("This coupon has already been applied");
+    //      return false;
+    //    }
     if (type == null) {
       System.out.println("Unable to get discount type for this coupon");
       return false;
@@ -294,9 +300,7 @@ public class ShoppingCart implements Serializable {
     return true;
   }
 
-  /**
-   * @return the total cost of all the items in the cart
-   */
+  /** @return the total cost of all the items in the cart */
   private BigDecimal calculateCost() {
     if (items == null) {
       return BigDecimal.ZERO;

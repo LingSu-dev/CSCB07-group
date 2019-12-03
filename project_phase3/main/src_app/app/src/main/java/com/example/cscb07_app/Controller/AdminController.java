@@ -129,8 +129,8 @@ public class AdminController implements View.OnClickListener {
           if (couponCode.isEmpty()) {
             isValidData = false;
           } else if (couponType.equals("PERCENTAGE")) {
-            if (couponDiscountDecimal.compareTo(BigDecimal.ZERO) == -1 || couponDiscountDecimal
-                .compareTo(new BigDecimal("100")) == 1) {
+            if (couponDiscountDecimal.compareTo(BigDecimal.ZERO) == -1
+                || couponDiscountDecimal.compareTo(new BigDecimal("100")) == 1) {
               isValidData = false;
             }
           } else {
@@ -146,58 +146,91 @@ public class AdminController implements View.OnClickListener {
           }
         }
         if (!isNumber) {
-          DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input numbers"
-                  + " for all numeric entries!"
-              , "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Incorrect Input",
+                  "Please input numbers" + " for all numeric entries!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else if (!validCouponType) {
-          DialogFactory.createAlertDialog(appContext, "Invalid Discount Type",
-              "This discount type is not valid"
-              , "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Invalid Discount Type",
+                  "This discount type is not valid",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else if (!isValidData) {
-          DialogFactory
-              .createAlertDialog(appContext, "Invalid Coupon", "Please make sure discounts"
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Invalid Coupon",
+                  "Please make sure discounts"
                       + " don't exceed 100% or the item's price! Coupon code also can't be empty! ",
-                  "Ok", DialogId.NULL_DIALOG).show();
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else {
           int id = -1;
           try {
-            id = DatabaseHelperAdapter
-                .insertCoupon(couponItemId, quantity, couponType, couponDiscountDecimal,
-                    couponCode);
+            id =
+                DatabaseHelperAdapter.insertCoupon(
+                    couponItemId, quantity, couponType, couponDiscountDecimal, couponCode);
           } catch (SQLException | DatabaseInsertException e) {
             // do nothing: failure is handled by the coupon id
           }
           if (id == -1) {
-            DialogFactory.createAlertDialog(appContext, "Failed to Add Coupon", "An error occurred"
-                + " when adding coupon!", "Ok", DialogId.NULL_DIALOG).show();
+            DialogFactory.createAlertDialog(
+                    appContext,
+                    "Failed to Add Coupon",
+                    "An error occurred" + " when adding coupon!",
+                    "Ok",
+                    DialogId.NULL_DIALOG)
+                .show();
           } else {
-            DialogFactory.createAlertDialog(appContext, "Successfully Added Coupon",
-                "Coupon was added to the database!", "Ok", DialogId.NULL_DIALOG).show();
+            DialogFactory.createAlertDialog(
+                    appContext,
+                    "Successfully Added Coupon",
+                    "Coupon was added to the database!",
+                    "Ok",
+                    DialogId.NULL_DIALOG)
+                .show();
           }
         }
         break;
       case R.id.saveDataBtn:
-
         EditText saveLoc = ((Activity) appContext).findViewById(R.id.saveAppDataEntry);
         String saveLocString = saveLoc.getText().toString();
         try {
           SerializeDatabase.serializeToFile(saveLocString);
         } catch (IOException e) {
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "Could not save data to this location!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "Could not save data to this location!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           Log.e("myApp", "exception", e);
           break;
         } catch (SQLException e) {
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "There was an issue with the SQL database!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "There was an issue with the SQL database!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           Log.e("myApp", "exception", e);
           break;
         }
-        DialogFactory.createAlertDialog(appContext, "Success!",
-            "Serialized to " + saveLocString + "/database_copy.ser",
-            "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext,
+                "Success!",
+                "Serialized to " + saveLocString + "/database_copy.ser",
+                "Ok",
+                DialogId.NULL_DIALOG)
+            .show();
 
         break;
       case R.id.loadDataBtn:
@@ -220,64 +253,96 @@ public class AdminController implements View.OnClickListener {
 
         } catch (IOException e) {
           Log.e("myApp", "exception", e);
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "Could not restore from this location!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "Could not restore from this location!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           break;
         } catch (SQLException e) {
           Log.e("myApp", "exception", e);
 
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "There was an issue with the SQL database!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "There was an issue with the SQL database!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           break;
         } catch (DifferentEnumException e) {
           Log.e("myApp", "exception", e);
 
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "The data on this device does not match the data in the stored db!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "The data on this device does not match the data in the stored db!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           break;
         } catch (ClassNotFoundException e) {
           Log.e("myApp", "exception", e);
-          DialogFactory.createAlertDialog(appContext, "Error!",
-              "One or more classes not found!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Error!",
+                  "One or more classes not found!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
           break;
         }
 
         int newAdminId;
         if (hashedPassSaved) {
           try {
-            newAdminId = SerializationPasswordHelper
-                .insertUserNoHash(admin.getName(), admin.getAge(),
-                    admin.getAddress(), hashedPassword, appContext);
+            newAdminId =
+                SerializationPasswordHelper.insertUserNoHash(
+                    admin.getName(),
+                    admin.getAge(),
+                    admin.getAddress(),
+                    hashedPassword,
+                    appContext);
             int adminRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name());
             DatabaseHelperAdapter.insertUserRole(newAdminId, adminRoleId);
             admin.setId(newAdminId);
-            DialogFactory.createAlertDialog(appContext, "Admin Reinserted!",
-                "The current admin has been added to the database with new ID: " + newAdminId,
-                "Ok", DialogId.NULL_DIALOG).show();
+            DialogFactory.createAlertDialog(
+                    appContext,
+                    "Admin Reinserted!",
+                    "The current admin has been added to the database with new ID: " + newAdminId,
+                    "Ok",
+                    DialogId.NULL_DIALOG)
+                .show();
           } catch (SQLException | DatabaseInsertException e) {
-            DialogFactory.createAlertDialog(appContext, "An issue occurred!",
-                "The current admin could not be reinserted into the database!\n"
-                    + "Upon logging out, the current admin will no longer be usable!",
-                "Ok", DialogId.NULL_DIALOG).show();
+            DialogFactory.createAlertDialog(
+                    appContext,
+                    "An issue occurred!",
+                    "The current admin could not be reinserted into the database!\n"
+                        + "Upon logging out, the current admin will no longer be usable!",
+                    "Ok",
+                    DialogId.NULL_DIALOG)
+                .show();
           }
         } else {
-          DialogFactory.createAlertDialog(appContext, "An issue occurred!",
-              "The current admin could not be reinserted into the database!\n"
-                  + "Upon logging out, the current admin will no longer be usable!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "An issue occurred!",
+                  "The current admin could not be reinserted into the database!\n"
+                      + "Upon logging out, the current admin will no longer be usable!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         }
-        DialogFactory.createAlertDialog(appContext, "Success!",
-            "Database restored!",
-            "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext, "Success!", "Database restored!", "Ok", DialogId.NULL_DIALOG)
+            .show();
 
         break;
       case R.id.promoteEmployeeButton:
-        EditText employeeIdEntry = ((Activity) appContext)
-            .findViewById(R.id.promoteEmployeeIdEntry);
+        EditText employeeIdEntry =
+            ((Activity) appContext).findViewById(R.id.promoteEmployeeIdEntry);
 
         int employeeId = 0;
         boolean isValidNum = true;
@@ -291,14 +356,18 @@ public class AdminController implements View.OnClickListener {
 
           promoteEmployee(employeeId);
         } else {
-          DialogFactory
-              .createAlertDialog(appContext, "Employee ID Format Error", "Please enter an integer!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Employee ID Format Error",
+                  "Please enter an integer!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         }
         break;
       case R.id.viewHistoricAccountsBtn:
-        EditText customerIdEntry = ((Activity) appContext)
-            .findViewById(R.id.historicAccountsCustomerIdEntry);
+        EditText customerIdEntry =
+            ((Activity) appContext).findViewById(R.id.historicAccountsCustomerIdEntry);
 
         int customerId = 0;
         boolean isValidNumber = true;
@@ -310,14 +379,18 @@ public class AdminController implements View.OnClickListener {
         if (isValidNumber) {
           viewHistoricAccounts(customerId);
         } else {
-          DialogFactory
-              .createAlertDialog(appContext, "Customer ID Format Error", "Please enter an integer!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Customer ID Format Error",
+                  "Please enter an integer!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         }
         break;
       case R.id.viewActiveAccountsBtn:
-        EditText customerIdEntryActive = ((Activity) appContext)
-            .findViewById(R.id.activeAccountsCustomerIdEntry);
+        EditText customerIdEntryActive =
+            ((Activity) appContext).findViewById(R.id.activeAccountsCustomerIdEntry);
 
         int customerIdActive = 0;
         boolean isValidNumberActive = true;
@@ -329,9 +402,13 @@ public class AdminController implements View.OnClickListener {
         if (isValidNumberActive) {
           viewActiveAccounts(customerIdActive);
         } else {
-          DialogFactory
-              .createAlertDialog(appContext, "Customer ID Format Error", "Please enter an integer!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Customer ID Format Error",
+                  "Please enter an integer!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         }
         break;
     }
@@ -344,8 +421,8 @@ public class AdminController implements View.OnClickListener {
    */
   public void viewActiveAccounts(int customerId) {
 
-    TextView historicAccountsData = ((Activity) appContext)
-        .findViewById(R.id.viewActiveAccountsText);
+    TextView historicAccountsData =
+        ((Activity) appContext).findViewById(R.id.viewActiveAccountsText);
 
     try {
       User user = DatabaseHelperAdapter.getUserDetails(customerId);
@@ -363,12 +440,22 @@ public class AdminController implements View.OnClickListener {
         }
         historicAccountsData.setText(data.toString());
       } else {
-        DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history "
-            + "only exists for valid customers!", "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext,
+                "Failure Displaying Data",
+                "Account history " + "only exists for valid customers!",
+                "Ok",
+                DialogId.NULL_DIALOG)
+            .show();
       }
     } catch (SQLException e) {
-      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
-          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Database Failure",
+              "Something went wrong" + " with database functionality!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 
@@ -379,8 +466,8 @@ public class AdminController implements View.OnClickListener {
    */
   public void viewHistoricAccounts(int customerId) {
 
-    TextView historicAccountsData = ((Activity) appContext)
-        .findViewById(R.id.viewHistoricAccountsText);
+    TextView historicAccountsData =
+        ((Activity) appContext).findViewById(R.id.viewHistoricAccountsText);
 
     try {
       User user = DatabaseHelperAdapter.getUserDetails(customerId);
@@ -398,12 +485,22 @@ public class AdminController implements View.OnClickListener {
         }
         historicAccountsData.setText(data.toString());
       } else {
-        DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history's "
-            + "only exists for valid customers!", "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext,
+                "Failure Displaying Data",
+                "Account history's " + "only exists for valid customers!",
+                "Ok",
+                DialogId.NULL_DIALOG)
+            .show();
       }
     } catch (SQLException e) {
-      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
-          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Database Failure",
+              "Something went wrong" + " with database functionality!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 
@@ -421,15 +518,30 @@ public class AdminController implements View.OnClickListener {
 
       if (toPromote instanceof Employee) {
         admin.promoteEmployee((Employee) toPromote);
-        DialogFactory.createAlertDialog(appContext, "Employee Promoted Successfully",
-            "Employee has now been promoted to an Admin!", "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext,
+                "Employee Promoted Successfully",
+                "Employee has now been promoted to an Admin!",
+                "Ok",
+                DialogId.NULL_DIALOG)
+            .show();
       } else {
-        DialogFactory.createAlertDialog(appContext, "Employee Promotion Failed",
-            "Only employees can be promoted to an admin!", "Ok", DialogId.NULL_DIALOG).show();
+        DialogFactory.createAlertDialog(
+                appContext,
+                "Employee Promotion Failed",
+                "Only employees can be promoted to an admin!",
+                "Ok",
+                DialogId.NULL_DIALOG)
+            .show();
       }
     } catch (SQLException e) {
-      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
-          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Database Failure",
+              "Something went wrong" + " with database functionality!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 }

@@ -28,8 +28,12 @@ public class AdminMenu extends AppCompatActivity {
     viewActiveAccounts.setOnClickListener(new AdminController(this, admin));
 
     Button saveAppData = findViewById(R.id.adminMenuSaveData);
-    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+    ActivityCompat.requestPermissions(
+        this,
+        new String[] {
+          Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+        },
+        2);
 
     saveAppData.setOnClickListener(new AdminController(this, admin));
 

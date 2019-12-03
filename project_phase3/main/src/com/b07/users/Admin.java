@@ -2,7 +2,6 @@ package com.b07.users;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
-
 import java.io.Serializable;
 import java.sql.SQLException;
 
@@ -16,9 +15,7 @@ import java.sql.SQLException;
  */
 public class Admin extends User implements Serializable {
 
-  /**
-   * Serial Version ID of Admin.
-   */
+  /** Serial Version ID of Admin. */
   private static final long serialVersionUID = 1L;
 
   /**
@@ -28,7 +25,7 @@ public class Admin extends User implements Serializable {
    * @param name the name of the admin to be created.
    * @param age the age of the admin to be created.
    * @param address the address of the admin to be created.
-   * @throws SQLException 
+   * @throws SQLException
    */
   public Admin(int id, String name, int age, String address) throws SQLException {
     setId(id);
@@ -46,19 +43,21 @@ public class Admin extends User implements Serializable {
    * @param age the age of the admin to be created.
    * @param address the address of the admin to be created.
    * @param authenticated whether the admin should be created authenticated or not.
-   * @throws SQLException 
+   * @throws SQLException
    */
-  public Admin(int id, String name, int age, String address, boolean authenticated) throws SQLException {
+  public Admin(int id, String name, int age, String address, boolean authenticated)
+      throws SQLException {
     setId(id);
     setName(name);
     setAge(age);
     setAddress(address);
     setRole();
   }
-  
+
   /**
-   * use the user's id to an admin id 
-   * @throws SQLException  if the role id annot be retreived
+   * use the user's id to an admin id
+   *
+   * @throws SQLException if the role id annot be retreived
    */
   private void setRole() throws SQLException {
     super.roleId = DatabaseHelperAdapter.getRoleIdByName("ADMIN");

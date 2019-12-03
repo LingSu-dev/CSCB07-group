@@ -287,7 +287,6 @@ public class DatabaseSelector {
     return preparedStatement.executeQuery();
   }
 
-
   /*
    *
    * PHASE 2 ADDED METHODS END
@@ -295,14 +294,14 @@ public class DatabaseSelector {
    */
 
   /*
-   * 
+   *
    * PHASE 3 ADDED METHODS START
-   * 
+   *
    */
 
   /**
    * Return a result set containing the active accounts for a given user.
-   * 
+   *
    * @param userId the user.
    * @param connection connection to the database.
    * @return result set of the id's of the given user's active accounts.
@@ -319,7 +318,7 @@ public class DatabaseSelector {
 
   /**
    * Get a list of the inactive accounts for a given user.
-   * 
+   *
    * @param userId the id of the user.
    * @param connection connection to the database.
    * @return result set containing the ID's of inactive accounts for the user.
@@ -335,14 +334,14 @@ public class DatabaseSelector {
   }
 
   /*
-   * 
+   *
    * PHASE 3 ADDED METHODS END
-   * 
+   *
    */
 
   /**
    * Get the discount type for a given ID.
-   * 
+   *
    * @param discountTypeId the discount type id.
    * @param connection the connection to the database
    * @return the name of the discount type
@@ -361,7 +360,7 @@ public class DatabaseSelector {
 
   /**
    * Get every discount type ID.
-   * 
+   *
    * @param connection the connection to the database.
    * @return a resultset containing every discount type id in the database.
    * @throws SQLException if something goes wrong
@@ -374,7 +373,7 @@ public class DatabaseSelector {
 
   /**
    * get the id of a coupon
-   * 
+   *
    * @param code the coupon code
    * @param connection the connection to the database.
    * @returnthe id of the coupon
@@ -392,7 +391,7 @@ public class DatabaseSelector {
 
   /**
    * get the discount amount for a coupon
-   * 
+   *
    * @param code the coupon code
    * @param connection the connection to the database.
    * @return the id of the coupon
@@ -410,7 +409,7 @@ public class DatabaseSelector {
 
   /**
    * get the item id for a coupon
-   * 
+   *
    * @param id the coupon id
    * @param connection the connection to the database
    * @returnthe id of the item
@@ -427,7 +426,8 @@ public class DatabaseSelector {
   }
 
   /**
-   *  Return a list of coupons
+   * Return a list of coupons
+   *
    * @param connection a connection to the database
    * @return a resultset of coupon ids
    * @throws SQLException if something goes wrong
@@ -440,6 +440,7 @@ public class DatabaseSelector {
 
   /**
    * Return the number of uses left for a coupon
+   *
    * @param couponId the coupon id
    * @param connection the database connection
    * @return the number of uses left
@@ -454,7 +455,7 @@ public class DatabaseSelector {
     results.close();
     return item;
   }
-  
+
   public static String getCouponCode(int couponId, Connection connection) throws SQLException {
     String sql = "SELECT CODE FROM COUPONS WHERE ID = ?";
     PreparedStatement preparedStatement = connection.prepareStatement(sql);

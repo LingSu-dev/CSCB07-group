@@ -3,16 +3,16 @@ package com.b07.store;
 import java.math.BigDecimal;
 
 public class CouponImpl implements Coupon {
-  
+
   int item;
   int uses;
   String type;
   BigDecimal discount;
   String code;
-  
+
   /**
    * constructs a coupon
-   * 
+   *
    * @param item
    * @param uses
    * @param type
@@ -29,6 +29,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * gets the item id of the coupon
+   *
    * @return item id
    */
   @Override
@@ -39,6 +40,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * sets the itemId of the coupon
+   *
    * @param item id
    */
   @Override
@@ -49,6 +51,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * get the discount amount for the coupon
+   *
    * @return the discount amount
    */
   @Override
@@ -59,6 +62,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * set the discount amount for the coupon
+   *
    * @param the discount amount
    */
   @Override
@@ -69,6 +73,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * get the code of the coupon
+   *
    * @return the code
    */
   @Override
@@ -79,6 +84,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * set the code of the coupon
+   *
    * @param the code
    */
   @Override
@@ -89,6 +95,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * get the type of the coupon
+   *
    * @return the coupon type
    */
   @Override
@@ -99,6 +106,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * set the type of the coupon
+   *
    * @param the coupon type
    */
   @Override
@@ -109,6 +117,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * get the number of uses the coupon has
+   *
    * @return the number of uses
    */
   @Override
@@ -119,6 +128,7 @@ public class CouponImpl implements Coupon {
 
   /**
    * set the number of uses the coupon has
+   *
    * @param the number of uses
    */
   @Override
@@ -126,5 +136,4 @@ public class CouponImpl implements Coupon {
     // TODO Auto-generated method stub
     this.uses = uses;
   }
-
 }

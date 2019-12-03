@@ -23,6 +23,7 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   /**
    * constructor for DialogController
+   *
    * @param context of function calling it
    * @param id of the dialog
    */
@@ -33,12 +34,12 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   /**
    * Constructor to pass in a shoppingcart object
+   *
    * @param context of the function calling it
    * @param id of the dialog
    * @param cart the existing shopping cart that needs to be passed in
    */
-  public DialogController(Context context, DialogId id, ShoppingCart cart)
-  {
+  public DialogController(Context context, DialogId id, ShoppingCart cart) {
     this.appContext = context;
     this.id = id;
     this.cart = cart;
@@ -46,12 +47,12 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   /**
    * constructor to pass in a customer object
+   *
    * @param context of the function calling it
    * @param id of the dialog
    * @param customer that needs to be passed in
    */
-  public DialogController(Context context, DialogId id, Customer customer)
-  {
+  public DialogController(Context context, DialogId id, Customer customer) {
     this.appContext = context;
     this.id = id;
     this.customer = customer;
@@ -59,6 +60,7 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   /**
    * Implements button functionality of customer
+   *
    * @param dialog a dialog to pass in
    * @param which a placeholder
    */
@@ -66,11 +68,11 @@ public class DialogController implements DialogInterface.OnClickListener {
   public void onClick(DialogInterface dialog, int which) {
     switch (id) {
       case CREATE_FIRST_ADMIN_DETAILS:
-        ((InitializationCreateFirstAdmin)appContext).finish();
+        ((InitializationCreateFirstAdmin) appContext).finish();
         appContext.startActivity(new Intent(appContext, InitializationCreateFirstEmployee.class));
         break;
       case CREATE_FIRST_EMPLOYEE_DETAILS:
-        ((InitializationCreateFirstEmployee)appContext).finish();
+        ((InitializationCreateFirstEmployee) appContext).finish();
         appContext.startActivity(new Intent(appContext, LoginMenu.class));
         break;
       case LOGIN_INCORRECT_CREDENTIALS:
@@ -86,34 +88,31 @@ public class DialogController implements DialogInterface.OnClickListener {
       case NULL_DIALOG:
         break;
       case CHECKOUT_CART:
-        ((CustomerCheckout)appContext).recreate();
+        ((CustomerCheckout) appContext).recreate();
         break;
       case SAVE_SHOPPING_CART:
-        ((CustomerCheckout)appContext).finish();
-        if (which == Dialog.BUTTON_POSITIVE)
-        {
+        ((CustomerCheckout) appContext).finish();
+        if (which == Dialog.BUTTON_POSITIVE) {
           Intent intent = new Intent(appContext, CustomerSaveShoppingCart.class);
           intent.putExtra("cart", cart);
           appContext.startActivity(intent);
-        }
-        else
-        {
+        } else {
           appContext.startActivity(new Intent(appContext, LoginMenu.class));
         }
-       break;
+        break;
       case SAVED_SHOPPING_CART:
-        ((CustomerSaveShoppingCart)appContext).finish();
-        appContext.startActivity(new Intent(appContext,LoginMenu.class));
+        ((CustomerSaveShoppingCart) appContext).finish();
+        appContext.startActivity(new Intent(appContext, LoginMenu.class));
         break;
       case LOAD_CART_FAILED:
-        ((CustomerLoadShoppingCart)appContext).finish();
-        Intent intent = new Intent (appContext, CustomerCheckout.class);
+        ((CustomerLoadShoppingCart) appContext).finish();
+        Intent intent = new Intent(appContext, CustomerCheckout.class);
         intent.putExtra("customer", customer);
         appContext.startActivity(intent);
         break;
       case CHECKOUT_LOADED_CART:
-        ((CustomerLoadShoppingCart)appContext).finish();
-        Intent intent2 = new Intent (appContext, CustomerCheckout.class);
+        ((CustomerLoadShoppingCart) appContext).finish();
+        Intent intent2 = new Intent(appContext, CustomerCheckout.class);
         intent2.putExtra("customer", customer);
         appContext.startActivity(intent2);
         break;

@@ -3,26 +3,21 @@ package com.b07.serialize;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
 import com.b07.exceptions.DatabaseInsertException;
+import java.sql.SQLException;
 
 /**
- * A quick hack to allow for insertion of unhashed passwords.
- * THIS IS NOT CROSSPLATFORM, SHOULD BE DIFFERENT ON ANDROID
- * @author aidan
+ * A quick hack to allow for insertion of unhashed passwords. THIS IS NOT CROSSPLATFORM, SHOULD BE
+ * DIFFERENT ON ANDROID
  *
+ * @author aidan
  */
 public class SerializationPasswordHelper {
-  
-  public static int insertUserNoHash(String name, int age, String address, String password, Context context) throws DatabaseInsertException, SQLException {
+
+  public static int insertUserNoHash(
+      String name, int age, String address, String password, Context context)
+      throws DatabaseInsertException, SQLException {
 
     DatabaseMethodHelper databaseMethodHelper = new DatabaseMethodHelper(context);
     long userId = -1;

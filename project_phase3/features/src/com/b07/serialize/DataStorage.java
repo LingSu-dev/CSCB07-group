@@ -1,20 +1,18 @@
 package com.b07.serialize;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.store.Coupon;
 import com.b07.store.SalesLog;
 import com.b07.users.Account;
 import com.b07.users.User;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DataStorage implements Serializable {
 
-  /**
-   * Generated SerialID
-   */
+  /** Generated SerialID */
   private static final long serialVersionUID = -2513398115449642993L;
 
   private HashMap<Integer, String> roleIdToRoleNames;
@@ -31,6 +29,7 @@ public class DataStorage implements Serializable {
 
   /**
    * Makes a object that stores the whole database
+   *
    * @param roleIdToRoleNames
    * @param users
    * @param userToRole
@@ -43,10 +42,17 @@ public class DataStorage implements Serializable {
    * @param discountTypes
    * @param couponIdsToCoupons
    */
-  public DataStorage(HashMap<Integer, String> roleIdToRoleNames, ArrayList<User> users,
-      HashMap<Integer, Integer> userToRole, ArrayList<Item> items, Inventory inventory,
-      SalesLog sales, SalesLog itemizedSales, ArrayList<Account> accounts,
-      HashMap<Integer, String> userToHashedPWs, HashMap<Integer, String> discountTypes,
+  public DataStorage(
+      HashMap<Integer, String> roleIdToRoleNames,
+      ArrayList<User> users,
+      HashMap<Integer, Integer> userToRole,
+      ArrayList<Item> items,
+      Inventory inventory,
+      SalesLog sales,
+      SalesLog itemizedSales,
+      ArrayList<Account> accounts,
+      HashMap<Integer, String> userToHashedPWs,
+      HashMap<Integer, String> discountTypes,
       HashMap<Integer, Coupon> couponIdsToCoupons) {
     this.roleIdToRoleNames = roleIdToRoleNames;
     this.users = users;
@@ -61,92 +67,63 @@ public class DataStorage implements Serializable {
     this.couponIdsToCoupons = couponIdsToCoupons;
   }
 
-  /**
-   * @return the serialversionuid
-   */
+  /** @return the serialversionuid */
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
 
-  /**
-   * @return the roleIdToRoleNames
-   */
+  /** @return the roleIdToRoleNames */
   public HashMap<Integer, String> getRoleIdToRoleNames() {
     return roleIdToRoleNames;
   }
 
-  /**
-   * @return the users
-   */
+  /** @return the users */
   public ArrayList<User> getUsers() {
     return users;
   }
 
-  /**
-   * @return the userToRole
-   */
+  /** @return the userToRole */
   public HashMap<Integer, Integer> getUserToRole() {
     return userToRole;
   }
 
-  /**
-   * @return the items
-   */
+  /** @return the items */
   public ArrayList<Item> getItems() {
     return items;
   }
 
-  /**
-   * @return the inventory
-   */
+  /** @return the inventory */
   public Inventory getInventory() {
     return inventory;
   }
 
-  /**
-   * @return the sales
-   */
+  /** @return the sales */
   public SalesLog getSales() {
     return sales;
   }
 
-  /**
-   * @return the itemizedSales
-   */
+  /** @return the itemizedSales */
   public SalesLog getItemizedSales() {
     return itemizedSales;
   }
 
-  /**
-   * @return the accounts
-   */
+  /** @return the accounts */
   public ArrayList<Account> getAccounts() {
     return accounts;
   }
 
-  /**
-   * @return the userToHashedPWs
-   */
+  /** @return the userToHashedPWs */
   public HashMap<Integer, String> getUserToHashedPWs() {
     return userToHashedPWs;
   }
 
-  /**
-   * @return the discountTypes
-   */
+  /** @return the discountTypes */
   public HashMap<Integer, String> getDiscountTypes() {
     return discountTypes;
   }
 
-  /**
-   * @return the couponIdsToCoupons
-   */
+  /** @return the couponIdsToCoupons */
   public HashMap<Integer, Coupon> getCouponIdsToCoupons() {
     return couponIdsToCoupons;
   }
-  
-  
-
-
-
 }

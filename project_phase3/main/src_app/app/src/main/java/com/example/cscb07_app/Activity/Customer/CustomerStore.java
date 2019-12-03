@@ -27,7 +27,7 @@ public class CustomerStore extends AppCompatActivity {
 
     addItemNames();
 
-    Customer customer  = (Customer)getIntent().getSerializableExtra("customer");
+    Customer customer = (Customer) getIntent().getSerializableExtra("customer");
 
     ImageButton logoutBtn = findViewById(R.id.customerStoreLogoutBtn);
     logoutBtn.setOnClickListener(new CustomerController(this, customer));
@@ -36,11 +36,8 @@ public class CustomerStore extends AppCompatActivity {
     viewCartBtn.setOnClickListener(new CustomerController(this, customer));
   }
 
-  /**
-   * Add item names based on their ids in the database.
-   */
-  public void addItemNames()
-  {
+  /** Add item names based on their ids in the database. */
+  public void addItemNames() {
     String[] itemNames = new String[5];
 
     try {

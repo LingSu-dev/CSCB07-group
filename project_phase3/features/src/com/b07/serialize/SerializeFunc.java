@@ -9,13 +9,14 @@ import java.io.Serializable;
 
 /**
  * A class that handles serialization of an object without checks
- * @author lingf
  *
+ * @author lingf
  */
 public class SerializeFunc {
 
   /**
    * serialize an serializable object to a file to a path
+   *
    * @param x the object to be serialized
    * @param location the path of the new file
    * @throws IOException
@@ -30,12 +31,14 @@ public class SerializeFunc {
 
   /**
    * deserialize an object from a file with given path
+   *
    * @param location the path of the file
    * @return deserialized object
    * @throws IOException
    * @throws ClassNotFoundException
    */
-  public static DataStorage deserialize(String location) throws IOException, ClassNotFoundException {
+  public static DataStorage deserialize(String location)
+      throws IOException, ClassNotFoundException {
     FileInputStream fileIn = new FileInputStream(location);
     ObjectInputStream in = new ObjectInputStream(fileIn);
     Object z = in.readObject();
@@ -43,7 +46,4 @@ public class SerializeFunc {
     fileIn.close();
     return (DataStorage) z;
   }
-
 }
-
-

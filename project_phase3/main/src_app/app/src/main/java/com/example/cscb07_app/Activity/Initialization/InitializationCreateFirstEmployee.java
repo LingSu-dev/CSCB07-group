@@ -3,11 +3,11 @@ package com.example.cscb07_app.Activity.Initialization;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.cscb07_app.Controller.InitializationController;
-import com.example.cscb07_app.R;
 import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
+import com.example.cscb07_app.Controller.InitializationController;
+import com.example.cscb07_app.R;
 
 public class InitializationCreateFirstEmployee extends AppCompatActivity {
 

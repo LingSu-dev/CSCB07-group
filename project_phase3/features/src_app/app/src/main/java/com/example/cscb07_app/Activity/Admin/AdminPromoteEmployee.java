@@ -14,7 +14,7 @@ public class AdminPromoteEmployee extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin_promote_employee);
 
-    Admin admin = (Admin)getIntent().getSerializableExtra("adminObject");
+    Admin admin = (Admin) getIntent().getSerializableExtra("adminObject");
 
     Button promoteEmployeeBtn = findViewById(R.id.promoteEmployeeButton);
     promoteEmployeeBtn.setOnClickListener(new AdminController(this, admin));

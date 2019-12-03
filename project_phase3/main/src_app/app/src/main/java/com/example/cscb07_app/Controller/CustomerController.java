@@ -22,9 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Controller for customer activities.
- */
+/** Controller for customer activities. */
 public class CustomerController implements View.OnClickListener {
 
   private Context appContext;
@@ -82,7 +80,8 @@ public class CustomerController implements View.OnClickListener {
     String item4Name = null;
     String item5Name = null;
 
-    if (view.getId() != R.id.saveShoppingCartBtn && view.getId() != R.id.loadShoppingCartBtn
+    if (view.getId() != R.id.saveShoppingCartBtn
+        && view.getId() != R.id.loadShoppingCartBtn
         && view.getId() != R.id.skipCartLoading) {
       amount1 = ((Activity) appContext).findViewById(R.id.amount1);
       amount2 = ((Activity) appContext).findViewById(R.id.amount2);
@@ -103,11 +102,11 @@ public class CustomerController implements View.OnClickListener {
       item5Name = item5.getText().toString();
     }
 
-    Toast toastAdd = Toast
-        .makeText(appContext, "There are no more items in stock", Toast.LENGTH_SHORT);
+    Toast toastAdd =
+        Toast.makeText(appContext, "There are no more items in stock", Toast.LENGTH_SHORT);
 
-    Toast toastRemove = Toast
-        .makeText(appContext, "Cannot remove any more items", Toast.LENGTH_SHORT);
+    Toast toastRemove =
+        Toast.makeText(appContext, "Cannot remove any more items", Toast.LENGTH_SHORT);
 
     switch (view.getId()) {
       case R.id.plus1:
@@ -202,9 +201,13 @@ public class CustomerController implements View.OnClickListener {
         break;
       case R.id.checkOutButton:
         if (cartIsEmpty()) {
-          DialogFactory
-              .createAlertDialog(appContext, "Purchase Failed", "Please add items to your cart!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Purchase Failed",
+                  "Please add items to your cart!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else {
           checkoutCart();
         }
@@ -214,9 +217,15 @@ public class CustomerController implements View.OnClickListener {
           ((CustomerCheckout) appContext).finish();
           appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         } else if (!cartIsEmpty() && customerHasActiveAccounts()) {
-          DialogFactory
-              .createAlertDialogYesNoCart(appContext, "Save Shopping Cart", "Would you like to save"
-                  + " your shopping cart?", "Yes", "No", DialogId.SAVE_SHOPPING_CART, cart).show();
+          DialogFactory.createAlertDialogYesNoCart(
+                  appContext,
+                  "Save Shopping Cart",
+                  "Would you like to save" + " your shopping cart?",
+                  "Yes",
+                  "No",
+                  DialogId.SAVE_SHOPPING_CART,
+                  cart)
+              .show();
         }
         break;
       case R.id.saveShoppingCartBtn:
@@ -231,9 +240,13 @@ public class CustomerController implements View.OnClickListener {
         }
 
         if (!isValidAccountId) {
-          DialogFactory.createAlertDialog(appContext, "Account ID Format Error",
-              "Account ID can't be empty!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Account ID Format Error",
+                  "Account ID can't be empty!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else {
           saveShoppingCart(accountId);
         }
@@ -248,9 +261,13 @@ public class CustomerController implements View.OnClickListener {
           isValidLoadAccountId = false;
         }
         if (!isValidLoadAccountId) {
-          DialogFactory.createAlertDialog(appContext, "Account ID Format Error",
-              "Account ID can't be empty!",
-              "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Account ID Format Error",
+                  "Account ID can't be empty!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         } else {
           loadShoppingCart(loadAccountId);
         }
@@ -267,9 +284,13 @@ public class CustomerController implements View.OnClickListener {
         if (isValidCouponName(couponText)) {
           applyCoupon(couponText);
         } else {
-          DialogFactory
-              .createAlertDialog(appContext, "Invalid Coupon", "Please Enter a Valid Coupon Code!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(
+                  appContext,
+                  "Invalid Coupon",
+                  "Please Enter a Valid Coupon Code!",
+                  "Ok",
+                  DialogId.NULL_DIALOG)
+              .show();
         }
         break;
     }
@@ -306,15 +327,23 @@ public class CustomerController implements View.OnClickListener {
     int result = cart.applyCoupon(couponText);
 
     if (result == -1) {
-      DialogFactory
-          .createAlertDialog(appContext, "Coupon Code Failed", "Make sure it's a valid coupon code"
-              + " or the max redemption limit has been exceeded!", "Ok", DialogId.NULL_DIALOG)
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Coupon Code Failed",
+              "Make sure it's a valid coupon code"
+                  + " or the max redemption limit has been exceeded!",
+              "Ok",
+              DialogId.NULL_DIALOG)
           .show();
     } else {
       updatePrice();
-      DialogFactory.createAlertDialog(appContext, "Coupon Successful",
-          "The discount was applied successfully!",
-          "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Coupon Successful",
+              "The discount was applied successfully!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 
@@ -332,9 +361,13 @@ public class CustomerController implements View.OnClickListener {
     }
 
     if (!accts.contains(accountId)) {
-      DialogFactory
-          .createAlertDialog(appContext, "Invalid Account Id", "Please input a valid account id!"
-              , "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Invalid Account Id",
+              "Please input a valid account id!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     } else {
 
       Account account = new Account(customer.getId(), accountId, true);
@@ -342,9 +375,13 @@ public class CustomerController implements View.OnClickListener {
 
       try {
         if (!account.retrieveCustomerCart()) {
-          DialogFactory
-              .createAlertDialogFailedCart(appContext, "Failure", "Something went wrong with"
-                  + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer);
+          DialogFactory.createAlertDialogFailedCart(
+              appContext,
+              "Failure",
+              "Something went wrong with" + " retrieving your cart",
+              "Continue",
+              DialogId.LOAD_CART_FAILED,
+              customer);
           failed = true;
         }
       } catch (SQLException e) {
@@ -356,28 +393,41 @@ public class CustomerController implements View.OnClickListener {
         loadCart = account.getCart();
         if (loadCart != null && !loadCart.getItems().isEmpty()) {
 
-
-          BigDecimal price = (loadCart.getTotal().multiply(loadCart.getTaxRate()))
-              .setScale(2, RoundingMode.CEILING);
+          BigDecimal price =
+              (loadCart.getTotal().multiply(loadCart.getTaxRate()))
+                  .setScale(2, RoundingMode.CEILING);
           try {
             account.deactivate();
           } catch (SQLException e) {
           }
           loadCart.checkOutCart();
-          DialogFactory.createAlertDialogFailedCart(appContext, "Check Out",
-              "The total price with tax is $" + price.toString(), "Check out"
-              , DialogId.CHECKOUT_LOADED_CART, customer).show();
+          DialogFactory.createAlertDialogFailedCart(
+                  appContext,
+                  "Check Out",
+                  "The total price with tax is $" + price.toString(),
+                  "Check out",
+                  DialogId.CHECKOUT_LOADED_CART,
+                  customer)
+              .show();
         } else {
-          DialogFactory
-              .createAlertDialogFailedCart(appContext, "Empty Account",
-                  "This account has no items, you will"
-                      + " be taken to the store!", "Continue", DialogId.LOAD_CART_FAILED, customer)
+          DialogFactory.createAlertDialogFailedCart(
+                  appContext,
+                  "Empty Account",
+                  "This account has no items, you will" + " be taken to the store!",
+                  "Continue",
+                  DialogId.LOAD_CART_FAILED,
+                  customer)
               .show();
         }
       } else {
-        DialogFactory
-            .createAlertDialogFailedCart(appContext, "Failure", "Something went wrong with"
-                + " retrieving your cart", "Continue", DialogId.LOAD_CART_FAILED, customer).show();
+        DialogFactory.createAlertDialogFailedCart(
+                appContext,
+                "Failure",
+                "Something went wrong with" + " retrieving your cart",
+                "Continue",
+                DialogId.LOAD_CART_FAILED,
+                customer)
+            .show();
       }
     }
   }
@@ -396,9 +446,13 @@ public class CustomerController implements View.OnClickListener {
     }
 
     if (!accts.contains(accountId)) {
-      DialogFactory
-          .createAlertDialog(appContext, "Invalid Account Id", "Please input a valid account id!"
-              , "Ok", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Invalid Account Id",
+              "Please input a valid account id!",
+              "Ok",
+              DialogId.NULL_DIALOG)
+          .show();
     } else {
       Account account = new Account(cart.getCustomer().getId(), accountId, true);
       try {
@@ -406,8 +460,13 @@ public class CustomerController implements View.OnClickListener {
       } catch (SQLException e) {
         e.printStackTrace();
       }
-      DialogFactory.createAlertDialog(appContext, "Success", "Cart has been successfully "
-          + "saved!", "Ok", DialogId.SAVED_SHOPPING_CART).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Success",
+              "Cart has been successfully " + "saved!",
+              "Ok",
+              DialogId.SAVED_SHOPPING_CART)
+          .show();
     }
   }
 
@@ -463,28 +522,28 @@ public class CustomerController implements View.OnClickListener {
     updatePrice();
   }
 
-  /**
-   * Updates the price in the cart.
-   */
+  /** Updates the price in the cart. */
   public void updatePrice() {
-    BigDecimal price = (cart.getTotal().multiply(cart.getTaxRate()))
-        .setScale(2, RoundingMode.CEILING);
+    BigDecimal price =
+        (cart.getTotal().multiply(cart.getTaxRate())).setScale(2, RoundingMode.CEILING);
 
     TextView priceText = ((Activity) appContext).findViewById(R.id.priceTotal);
     priceText.setText("Total Price (with tax): $" + price.toString());
   }
 
-  /**
-   * Checks out customer's cart.
-   */
+  /** Checks out customer's cart. */
   public void checkoutCart() {
-    BigDecimal price = (cart.getTotal().multiply(cart.getTaxRate()))
-        .setScale(2, RoundingMode.CEILING);
+    BigDecimal price =
+        (cart.getTotal().multiply(cart.getTaxRate())).setScale(2, RoundingMode.CEILING);
     cart.checkOutCart();
 
-    DialogFactory
-        .createAlertDialog(appContext, "Checkout", "You have successfully checked out with "
-            + "total $" + price.toString(), "Ok", DialogId.CHECKOUT_CART).show();
+    DialogFactory.createAlertDialog(
+            appContext,
+            "Checkout",
+            "You have successfully checked out with " + "total $" + price.toString(),
+            "Ok",
+            DialogId.CHECKOUT_CART)
+        .show();
   }
 
   /**

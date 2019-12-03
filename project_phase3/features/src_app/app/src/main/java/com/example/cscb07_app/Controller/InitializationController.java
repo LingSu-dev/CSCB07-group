@@ -10,9 +10,7 @@ import com.b07.users.Roles;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
-/**
- * Class that controls all actions for events on initialization activities.
- */
+/** Class that controls all actions for events on initialization activities. */
 public class InitializationController implements View.OnClickListener {
 
   private Context appContext;
@@ -52,9 +50,7 @@ public class InitializationController implements View.OnClickListener {
     }
   }
 
-  /**
-   * Creates first admin.
-   */
+  /** Creates first admin. */
   public void createFirstAdmin() {
     boolean adminAgeValid = true;
     boolean adminNameValid = true;
@@ -62,23 +58,20 @@ public class InitializationController implements View.OnClickListener {
     boolean adminPasswordValid = true;
 
     ageEntry = ((Activity) appContext).findViewById(R.id.initializationAdminAgeEntry);
-    nameEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationAdminNameEntry);
+    nameEntry = ((Activity) appContext).findViewById(R.id.initializationAdminNameEntry);
     name = nameEntry.getText().toString();
-    addressEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationAdminAddressEntry);
+    addressEntry = ((Activity) appContext).findViewById(R.id.initializationAdminAddressEntry);
     address = addressEntry.getText().toString();
-    passwordEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationAdminPassword);
+    passwordEntry = ((Activity) appContext).findViewById(R.id.initializationAdminPassword);
     password = passwordEntry.getText().toString();
 
-    if (name.isEmpty()){
+    if (name.isEmpty()) {
       adminNameValid = false;
     }
-    if (address.isEmpty()){
+    if (address.isEmpty()) {
       adminAddressValid = false;
     }
-    if (password.isEmpty()){
+    if (password.isEmpty()) {
       adminPasswordValid = false;
     }
 
@@ -91,18 +84,25 @@ public class InitializationController implements View.OnClickListener {
     if (adminAgeValid && adminNameValid && adminAddressValid && adminPasswordValid) {
       int adminId = insertAdmin(name, age, address, password);
 
-      DialogFactory.createAlertDialog(appContext, "Admin Details",
-          "Admin Id: " + adminId, "Continue",
-          DialogId.CREATE_FIRST_ADMIN_DETAILS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Admin Details",
+              "Admin Id: " + adminId,
+              "Continue",
+              DialogId.CREATE_FIRST_ADMIN_DETAILS)
+          .show();
     } else {
-      DialogFactory.createAlertDialog(appContext, "Fields Format Error",
-          "Fields cannot be empty", "Continue", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Fields Format Error",
+              "Fields cannot be empty",
+              "Continue",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 
-  /**
-   * Creates first employee.
-   */
+  /** Creates first employee. */
   public void createFirstEmployee() {
     boolean employeeAgeValid = true;
     boolean employeeNameValid = true;
@@ -110,25 +110,22 @@ public class InitializationController implements View.OnClickListener {
     boolean employeePasswordValid = true;
 
     ageEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeeAgeEntry);
-    nameEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationEmployeeNameEntry);
+    nameEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeeNameEntry);
     name = nameEntry.getText().toString();
 
-    addressEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationEmployeeAddressEntry);
+    addressEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeeAddressEntry);
     address = addressEntry.getText().toString();
 
-    passwordEntry = ((Activity) appContext)
-            .findViewById(R.id.initializationEmployeePassword);
+    passwordEntry = ((Activity) appContext).findViewById(R.id.initializationEmployeePassword);
     password = passwordEntry.getText().toString();
 
-    if (name.isEmpty()){
+    if (name.isEmpty()) {
       employeeNameValid = false;
     }
-    if (address.isEmpty()){
+    if (address.isEmpty()) {
       employeeAddressValid = false;
     }
-    if (password.isEmpty()){
+    if (password.isEmpty()) {
       employeePasswordValid = false;
     }
 
@@ -141,13 +138,22 @@ public class InitializationController implements View.OnClickListener {
     if (employeeAgeValid && employeeAddressValid && employeeNameValid && employeePasswordValid) {
       int employeeId = insertEmployee(name, age, address, password);
 
-      DialogFactory.createAlertDialog(appContext, "Employee Details",
-          "Employee Id: " + employeeId, "Continue",
-          DialogId.CREATE_FIRST_EMPLOYEE_DETAILS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Employee Details",
+              "Employee Id: " + employeeId,
+              "Continue",
+              DialogId.CREATE_FIRST_EMPLOYEE_DETAILS)
+          .show();
 
     } else {
-      DialogFactory.createAlertDialog(appContext, "Fields Format Error",
-          "Fields cannot be empty", "Continue", DialogId.NULL_DIALOG).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Fields Format Error",
+              "Fields cannot be empty",
+              "Continue",
+              DialogId.NULL_DIALOG)
+          .show();
     }
   }
 
@@ -170,7 +176,7 @@ public class InitializationController implements View.OnClickListener {
       adminRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name());
       DatabaseHelperAdapter.insertUserRole(adminId, adminRoleId);
     } catch (DatabaseInsertException e) {
-      //TODO: catch it later
+      // TODO: catch it later
     } catch (SQLException e) {
     }
 
@@ -196,7 +202,7 @@ public class InitializationController implements View.OnClickListener {
       employeeRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.EMPLOYEE.name());
       DatabaseHelperAdapter.insertUserRole(employeeId, employeeRoleId);
     } catch (DatabaseInsertException e) {
-      //TODO: catch it later
+      // TODO: catch it later
     } catch (SQLException e) {
     }
     return employeeId;

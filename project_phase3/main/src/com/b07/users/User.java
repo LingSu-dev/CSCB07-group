@@ -2,7 +2,6 @@ package com.b07.users;
 
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.security.PasswordHelpers;
-
 import java.io.Serializable;
 import java.sql.SQLException;
 
@@ -16,10 +15,9 @@ import java.sql.SQLException;
  */
 public abstract class User implements Serializable {
 
-  /**
-   * Serial Version ID of User class.
-   */
+  /** Serial Version ID of User class. */
   private static final long serialVersionUID = 1L;
+
   private int id;
   private String name;
   private int age;

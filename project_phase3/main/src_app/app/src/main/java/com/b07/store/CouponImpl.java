@@ -67,5 +67,4 @@ public class CouponImpl implements Coupon {
   public void setUses(int uses) {
     this.uses = uses;
   }
-
 }

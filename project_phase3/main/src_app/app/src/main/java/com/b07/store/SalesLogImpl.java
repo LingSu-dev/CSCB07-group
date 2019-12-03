@@ -2,7 +2,6 @@ package com.b07.store;
 
 import com.b07.inventory.Item;
 import com.b07.users.User;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,10 +22,9 @@ import java.util.Set;
  */
 public class SalesLogImpl implements SalesLog, Serializable {
 
-  /**
-   * Serial Version ID of SalesLogImpl.
-   */
+  /** Serial Version ID of SalesLogImpl. */
   private static final long serialVersionUID = 1L;
+
   private ArrayList<Sale> sales = new ArrayList<Sale>();
 
   /**

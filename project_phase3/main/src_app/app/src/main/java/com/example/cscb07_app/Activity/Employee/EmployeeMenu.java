@@ -3,13 +3,11 @@ package com.example.cscb07_app.Activity.Employee;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.store.EmployeeInterface;
 import com.b07.users.Employee;
 import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
-
 import java.sql.SQLException;
 
 public class EmployeeMenu extends AppCompatActivity {
@@ -19,12 +17,13 @@ public class EmployeeMenu extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_employee_menu);
 
-    Employee currentEmployee = (Employee)getIntent().getSerializableExtra("employee");
+    Employee currentEmployee = (Employee) getIntent().getSerializableExtra("employee");
     EmployeeInterface employeeInterface = null;
     try {
-       employeeInterface  = new EmployeeInterface(currentEmployee, DatabaseHelperAdapter.getInventory());
+      employeeInterface =
+          new EmployeeInterface(currentEmployee, DatabaseHelperAdapter.getInventory());
     } catch (SQLException e) {
-      //Should never occur, holdover from cross platform adapter pattern.
+      // Should never occur, holdover from cross platform adapter pattern.
     }
 
     Button authenticateEmployee = findViewById(R.id.menuAuthenticateEmployeeBtn);

@@ -2,16 +2,6 @@ package com.b07.serialize;
 
 import android.content.Context;
 import android.util.Log;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
 import com.b07.exceptions.ConnectionFailedException;
@@ -20,8 +10,6 @@ import com.b07.exceptions.DifferentEnumException;
 import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.inventory.ItemTypes;
-import com.b07.serialize.DataStorage;
-import com.b07.serialize.SerializeFunc;
 import com.b07.store.Coupon;
 import com.b07.store.CouponImpl;
 import com.b07.store.DiscountTypes;
@@ -31,9 +19,13 @@ import com.b07.store.ShoppingCart;
 import com.b07.users.Account;
 import com.b07.users.Roles;
 import com.b07.users.User;
-import java.util.Arrays;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.HashMap;
+import java.util.List;
 
 public class SerializeDatabase {
 
@@ -112,13 +104,24 @@ public class SerializeDatabase {
       uses = DatabaseHelperAdapter.getCouponUses(couponId);
       type = DatabaseHelperAdapter.getDiscountTypeName(couponId);
       discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
-      //TODO: Get the code from Database
+      // TODO: Get the code from Database
       code = DatabaseHelperAdapter.getCouponCode(couponId);
       coupons.put(couponId, new CouponImpl(itemId, uses, type, discount, code));
     }
 
-    DataStorage data = new DataStorage(roleIdToRoleNames, users, userToRole, items, inventory,
-        sales, itemizedSales, accounts, userToHashedPWs, discountTypes, coupons);
+    DataStorage data =
+        new DataStorage(
+            roleIdToRoleNames,
+            users,
+            userToRole,
+            items,
+            inventory,
+            sales,
+            itemizedSales,
+            accounts,
+            userToHashedPWs,
+            discountTypes,
+            coupons);
 
     return data;
   }
@@ -135,39 +138,40 @@ public class SerializeDatabase {
     for (Roles role : Roles.values()) {
       rolesEnum.add(role.toString());
     }
-    
+
     List<String> discountTypesEnum = new ArrayList<String>();
     for (DiscountTypes discountType : DiscountTypes.values()) {
       discountTypesEnum.add(discountType.toString());
     }
-    
+
     List<String> itemTypesEnum = new ArrayList<String>();
     for (ItemTypes itemType : ItemTypes.values()) {
       itemTypesEnum.add(itemType.toString());
     }
-    
-    for (String roleDatabase: database.getRoleIdToRoleNames().values()) {
+
+    for (String roleDatabase : database.getRoleIdToRoleNames().values()) {
       if (!rolesEnum.contains(roleDatabase)) {
         return false;
       }
     }
-    
+
     for (String discountDatabase : database.getDiscountTypes().values()) {
       if (!discountTypesEnum.contains(discountDatabase)) {
         return false;
       }
     }
-    
+
     for (Item itemDatabase : database.getItems()) {
-      if (!itemTypesEnum.contains(itemDatabase.getName())){
+      if (!itemTypesEnum.contains(itemDatabase.getName())) {
         return false;
       }
     }
-    
+
     return true;
   }
-  
-  private static void insertDataStorage(DataStorage database, Context context) throws SQLException, DatabaseInsertException {
+
+  private static void insertDataStorage(DataStorage database, Context context)
+      throws SQLException, DatabaseInsertException {
     HashMap<Integer, String> roleIdToRoleNames = database.getRoleIdToRoleNames();
     ArrayList<User> users = database.getUsers();
     HashMap<Integer, Integer> userToRole = database.getUserToRole();
@@ -179,8 +183,8 @@ public class SerializeDatabase {
     HashMap<Integer, String> userToHashedPWs = database.getUserToHashedPWs();
     HashMap<Integer, String> discountTypes = database.getDiscountTypes();
     HashMap<Integer, Coupon> couponIdsToCoupons = database.getCouponIdsToCoupons();
-    
-    //Roles
+
+    // Roles
     ArrayList<Integer> roleIds = new ArrayList<Integer>();
     for (Integer roleId : roleIdToRoleNames.keySet()) {
       roleIds.add(roleId);
@@ -189,29 +193,34 @@ public class SerializeDatabase {
     for (Integer roleId : roleIds) {
       DatabaseHelperAdapter.insertRole(roleIdToRoleNames.get(roleId));
     }
-    
-    //Users + UserPW
+
+    // Users + UserPW
     HashMap<Integer, User> idToUser = new HashMap<Integer, User>();
     ArrayList<Integer> userIds = new ArrayList<Integer>();
     for (User user : users) {
       idToUser.put(user.getId(), user);
       userIds.add(user.getId());
     }
-    Collections.sort(userIds); 
+    Collections.sort(userIds);
     User currentUser;
     for (Integer userId : userIds) {
       currentUser = idToUser.get(userId);
-      //DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(), currentUser.getAddress(), "temp");
-      SerializationPasswordHelper.insertUserNoHash(currentUser.getName(), currentUser.getAge(),
-          currentUser.getAddress(), database.getUserToHashedPWs().get(currentUser.getId()), context);
+      // DatabaseHelperAdapter.insertNewUser(currentUser.getName(), currentUser.getAge(),
+      // currentUser.getAddress(), "temp");
+      SerializationPasswordHelper.insertUserNoHash(
+          currentUser.getName(),
+          currentUser.getAge(),
+          currentUser.getAddress(),
+          database.getUserToHashedPWs().get(currentUser.getId()),
+          context);
     }
-    
-    //Userrole
-    for (Integer  userId: userToRole.keySet()) {
+
+    // Userrole
+    for (Integer userId : userToRole.keySet()) {
       DatabaseHelperAdapter.insertUserRole(userId, userToRole.get(userId));
     }
-    
-    //Items
+
+    // Items
     HashMap<Integer, Item> idToItems = new HashMap<Integer, Item>();
     ArrayList<Integer> itemIds = new ArrayList<Integer>();
     for (Item item : items) {
@@ -224,13 +233,13 @@ public class SerializeDatabase {
       currentItem = idToItems.get(itemId);
       DatabaseHelperAdapter.insertItem(currentItem.getName(), currentItem.getPrice());
     }
-    
-    //inventory
+
+    // inventory
     for (Item currItem : inventory.getItemMap().keySet()) {
       DatabaseHelperAdapter.insertInventory(currItem.getId(), inventory.getItemMap().get(currItem));
     }
-    
-    //Sales
+
+    // Sales
     ArrayList<Sale> allSales = (ArrayList<Sale>) sales.getSales();
     HashMap<Integer, Sale> idToSales = new HashMap<Integer, Sale>();
     ArrayList<Integer> saleIds = new ArrayList<Integer>();
@@ -244,16 +253,17 @@ public class SerializeDatabase {
       currentSale = idToSales.get(saleId);
       DatabaseHelperAdapter.insertSale(currentSale.getUser().getId(), currentSale.getTotalPrice());
     }
-    
-    //ItemizedSales
+
+    // ItemizedSales
     for (Sale currSale : itemizedSales.getSales()) {
       HashMap<Item, Integer> itemToQuantity = currSale.getItemMap();
       for (Item currItem : itemToQuantity.keySet()) {
-        DatabaseHelperAdapter.insertItemizedSale(currSale.getId(), currItem.getId(), itemToQuantity.get(currItem));
+        DatabaseHelperAdapter.insertItemizedSale(
+            currSale.getId(), currItem.getId(), itemToQuantity.get(currItem));
       }
     }
-    
-    //Account
+
+    // Account
     HashMap<Integer, Account> accountIdToAccount = new HashMap<Integer, Account>();
     ArrayList<Integer> accountIds = new ArrayList<Integer>();
     for (Account currAccount : accounts) {
@@ -264,16 +274,17 @@ public class SerializeDatabase {
     Account currentAccount;
     for (Integer accountId : accountIds) {
       currentAccount = accountIdToAccount.get(accountId);
-      DatabaseHelperAdapter.insertAccount(currentAccount.getUserId(), currentAccount.getActiveStatus());
-      //AccountSummary
+      DatabaseHelperAdapter.insertAccount(
+          currentAccount.getUserId(), currentAccount.getActiveStatus());
+      // AccountSummary
       ShoppingCart currentCart = currentAccount.getCart();
       HashMap<Item, Integer> itemToQuantity = currentCart.getItemsWithQuantity();
       for (Item item : currentCart.getItems()) {
         DatabaseHelperAdapter.insertAccountLine(accountId, item.getId(), itemToQuantity.get(item));
       }
     }
-    
-    //Discounttypes
+
+    // Discounttypes
     ArrayList<Integer> discountIds = new ArrayList<Integer>();
     for (Integer discountId : discountTypes.keySet()) {
       discountIds.add(discountId);
@@ -282,8 +293,8 @@ public class SerializeDatabase {
     for (Integer discountId : discountIds) {
       DatabaseHelperAdapter.insertDiscountType(discountTypes.get(discountId));
     }
-    
-    //Coupons
+
+    // Coupons
     ArrayList<Integer> couponIds = new ArrayList<Integer>();
     for (Integer couponId : couponIdsToCoupons.keySet()) {
       couponIds.add(couponId);
@@ -292,19 +303,24 @@ public class SerializeDatabase {
     Coupon currCoupon;
     for (Integer couponId : couponIds) {
       currCoupon = couponIdsToCoupons.get(couponId);
-      DatabaseHelperAdapter.insertCoupon(currCoupon.getItemId(), currCoupon.getUses(), currCoupon.getType(), currCoupon.getDiscount(), currCoupon.getCode());
+      DatabaseHelperAdapter.insertCoupon(
+          currCoupon.getItemId(),
+          currCoupon.getUses(),
+          currCoupon.getType(),
+          currCoupon.getDiscount(),
+          currCoupon.getCode());
     }
-    
   }
-  
-  public static void populateFromFile(String location, Context context) throws SQLException, IOException, ClassNotFoundException, DifferentEnumException{
+
+  public static void populateFromFile(String location, Context context)
+      throws SQLException, IOException, ClassNotFoundException, DifferentEnumException {
     DataStorage database = SerializeFunc.deserialize(location + "/database_copy.ser");
     if (!checkEnums(database)) {
       throw new DifferentEnumException();
     }
-    //This is a gross violation of SOLID design
-    //Please lord Mo forgive my transgression
-    //For I know not what I do
+    // This is a gross violation of SOLID design
+    // Please lord Mo forgive my transgression
+    // For I know not what I do
     SerializeFunc.serialize(getDatabaseObject(), location + "/database_backup.ser");
     DatabaseMethodHelper h = new DatabaseMethodHelper(context);
     h.deleteDatabase();
@@ -312,25 +328,19 @@ public class SerializeDatabase {
     try {
       DatabaseHelperAdapter.reInitialize();
       insertDataStorage(database, context);
-    } catch (Exception i){
+    } catch (Exception i) {
       Log.e("Deserialiaze", "Need to revert", i);
       database = SerializeFunc.deserialize(location + "/database_backup.ser");
       System.out.println("Encourtered an error, reverting...");
-        try {
-          DatabaseHelperAdapter.reInitialize();
-          insertDataStorage(database, context);
-          System.out.println("Revert Successful");
-        } catch (ConnectionFailedException | DatabaseInsertException e) {
-          e.printStackTrace();
-          System.out.println("Failed to revert, please manually revert Database File");
-          throw new SQLException();
-        }
-          
+      try {
+        DatabaseHelperAdapter.reInitialize();
+        insertDataStorage(database, context);
+        System.out.println("Revert Successful");
+      } catch (ConnectionFailedException | DatabaseInsertException e) {
+        e.printStackTrace();
+        System.out.println("Failed to revert, please manually revert Database File");
+        throw new SQLException();
+      }
     }
-    
-    
   }
-
-
-
 }

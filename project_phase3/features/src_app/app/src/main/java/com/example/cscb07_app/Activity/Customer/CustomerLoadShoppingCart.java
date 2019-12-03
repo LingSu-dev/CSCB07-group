@@ -11,9 +11,7 @@ import com.example.cscb07_app.R;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Activity to load customer shopping cart.
- */
+/** Activity to load customer shopping cart. */
 public class CustomerLoadShoppingCart extends AppCompatActivity {
 
   /**
@@ -41,8 +39,7 @@ public class CustomerLoadShoppingCart extends AppCompatActivity {
    *
    * @param customer the customer of interest
    */
-  public void loadAccountIds(Customer customer)
-  {
+  public void loadAccountIds(Customer customer) {
     List<Integer> accounts = null;
 
     try {
@@ -56,9 +53,8 @@ public class CustomerLoadShoppingCart extends AppCompatActivity {
     data.append("Active Account IDs\n");
     data.append("------------------------------\n");
 
-    for (Integer acct: accounts)
-    {
-      data.append("Account ID: " + acct+"\n");
+    for (Integer acct : accounts) {
+      data.append("Account ID: " + acct + "\n");
     }
 
     loadAccountIds.setText(data.toString());
