@@ -2,6 +2,11 @@ package com.b07.store;
 
 import java.math.BigDecimal;
 
+/**
+ * A class that implements coupon interface
+ * @author lingf
+ *
+ */
 public class CouponImpl implements Coupon {
 
   int item;
@@ -52,7 +57,7 @@ public class CouponImpl implements Coupon {
   /**
    * get the discount amount for the coupon
    *
-   * @return the discount amount
+   * @return discount amount
    */
   @Override
   public BigDecimal getDiscount() {
@@ -63,7 +68,7 @@ public class CouponImpl implements Coupon {
   /**
    * set the discount amount for the coupon
    *
-   * @param the discount amount
+   * @param discount amount
    */
   @Override
   public void setDiscount(BigDecimal discount) {
@@ -74,7 +79,7 @@ public class CouponImpl implements Coupon {
   /**
    * get the code of the coupon
    *
-   * @return the code
+   * @return code of the coupon
    */
   @Override
   public String getCode() {
@@ -85,7 +90,7 @@ public class CouponImpl implements Coupon {
   /**
    * set the code of the coupon
    *
-   * @param the code
+   * @param code of the coupon
    */
   @Override
   public void setCode(String code) {
@@ -96,7 +101,7 @@ public class CouponImpl implements Coupon {
   /**
    * get the type of the coupon
    *
-   * @return the coupon type
+   * @return coupon type
    */
   @Override
   public String getType() {
@@ -107,7 +112,7 @@ public class CouponImpl implements Coupon {
   /**
    * set the type of the coupon
    *
-   * @param the coupon type
+   * @param type of coupon
    */
   @Override
   public void setType(String type) {
@@ -129,7 +134,7 @@ public class CouponImpl implements Coupon {
   /**
    * set the number of uses the coupon has
    *
-   * @param the number of uses
+   * @param uses the coupon has
    */
   @Override
   public void setUses(int uses) {
