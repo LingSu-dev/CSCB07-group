@@ -10,6 +10,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A class to store the database info
+ * @author lingf
+ *
+ */
 public class DataStorage implements Serializable {
 
   /** Generated SerialID */
