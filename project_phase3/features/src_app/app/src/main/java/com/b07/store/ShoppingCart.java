@@ -179,6 +179,7 @@ public class ShoppingCart implements Serializable {
         price =
             price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
+      Log.d("price", price.toPlainString());
       discountCodes.add(code);
 
       BigDecimal priceChange = item.getPrice().subtract(price);
@@ -244,6 +245,7 @@ public class ShoppingCart implements Serializable {
         }
 
         // Calculate and submit price after tax
+        total = calculateCost();
         BigDecimal totalPrice = total.multiply(taxRate).setScale(2, RoundingMode.CEILING);
         int saleId;
         saleId = DatabaseHelperAdapter.insertSale(customer.getId(), totalPrice);
@@ -264,9 +266,11 @@ public class ShoppingCart implements Serializable {
           DatabaseHelperAdapter.insertItemizedSale(saleId, item.getId(), items.get(item));
         }
         clearCart();
+        Log.d("checkout", totalPrice.toPlainString());
       } catch (Exception e) {
         return false;
       }
+
       return true;
     }
   }
@@ -315,6 +319,9 @@ public class ShoppingCart implements Serializable {
       Item item = entry.getKey();
       BigDecimal discount = itemDiscounts.getOrDefault(item, BigDecimal.ZERO);
       cost = cost.add(item.getPrice().subtract(discount).multiply(quantity));
+      Log.d("itemdiscount", discount.toPlainString());
+      Log.d("itemdiscount", item.toString() + item.getPrice().subtract(discount).toPlainString());
+      Log.d("discounts", itemDiscounts.entrySet().toString() + itemDiscounts.values().toString());
     }
     Log.d("cost", cost.toPlainString());
     return cost;
