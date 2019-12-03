@@ -17,6 +17,8 @@ import java.util.List;
 /**
  * The adapter which allows all database objects to be platform independent. Contains either the
  * desktop or android implementation of DatabasePlatformHelper, depending on the platform
+ *
+ * Javadoc present in DatabaseAndroidHelper
  */
 public class DatabaseHelperAdapter {
   private static DatabasePlatformHelper platformHelper;
