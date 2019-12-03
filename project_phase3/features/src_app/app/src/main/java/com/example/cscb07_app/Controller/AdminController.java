@@ -33,20 +33,36 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * controls the buttons in admin package
+ */
 public class AdminController implements View.OnClickListener {
 
   private static Admin admin;
   private Context appContext;
 
+  /**
+   * Constructor for AdminController
+   * @param context of the function calling it
+   */
   public AdminController(Context context) {
     this.appContext = context;
   }
 
+  /**
+   * Constructor for AdminController to pass in an currently logged in admin
+   * @param context of the function calling it
+   * @param a the currently logged in admin object
+   */
   public AdminController(Context context, Admin a) {
     this.appContext = context;
     admin = a;
   }
 
+  /**
+   * Implements functionality of buttons in admin
+   * @param view the button
+   */
   @Override
   public void onClick(View view) {
     Intent intent;

@@ -21,11 +21,22 @@ public class DialogController implements DialogInterface.OnClickListener {
   private ShoppingCart cart;
   private Customer customer;
 
+  /**
+   * constructor for DialogController
+   * @param context of function calling it
+   * @param id of the dialog
+   */
   public DialogController(Context context, DialogId id) {
     this.appContext = context;
     this.id = id;
   }
 
+  /**
+   * Constructor to pass in a shoppingcart object
+   * @param context of the function calling it
+   * @param id of the dialog
+   * @param cart the existing shopping cart that needs to be passed in
+   */
   public DialogController(Context context, DialogId id, ShoppingCart cart)
   {
     this.appContext = context;
@@ -33,6 +44,12 @@ public class DialogController implements DialogInterface.OnClickListener {
     this.cart = cart;
   }
 
+  /**
+   * constructor to pass in a customer object
+   * @param context of the function calling it
+   * @param id of the dialog
+   * @param customer that needs to be passed in
+   */
   public DialogController(Context context, DialogId id, Customer customer)
   {
     this.appContext = context;
@@ -40,6 +57,11 @@ public class DialogController implements DialogInterface.OnClickListener {
     this.customer = customer;
   }
 
+  /**
+   * Implements button functionality of customer
+   * @param dialog 
+   * @param which
+   */
   @Override
   public void onClick(DialogInterface dialog, int which) {
     switch (id) {
