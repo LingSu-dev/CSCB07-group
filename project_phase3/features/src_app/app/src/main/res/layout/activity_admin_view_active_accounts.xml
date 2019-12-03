@@ -37,12 +37,24 @@
     android:text="@string/viewActiveAccountsBtn"
     app:icon="@drawable/ic_account_balance_black_24dp" />
 
-  <TextView
-    android:layout_marginTop="70dp"
-    android:layout_below="@id/viewActiveAccountsBtn"
+
+
+  <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textSize="@dimen/textViewTextSize"
-    android:id="@+id/viewActiveAccountsText"
-    android:scrollbars="vertical" />
+    android:layout_height="440dp"
+    android:layout_below="@id/viewActiveAccountsBtn"
+    android:layout_marginTop="80dp">
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <TextView
+        android:layout_below="@id/viewActiveAccountsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/textViewTextSize"
+        android:id="@+id/viewActiveAccountsText"
+        android:scrollbars="vertical" />
+    </ScrollView>
+  </RelativeLayout>
+
 </RelativeLayout>
