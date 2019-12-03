@@ -1,6 +1,5 @@
 package com.b07.store;
 
-import android.util.Log;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
@@ -60,6 +59,16 @@ public class ShoppingCart implements Serializable {
       items.put(item, quantity);
     }
     total = calculateCost();
+  }
+
+  /**
+   * Return discount codes.
+   *
+   * @return list of discount codes.
+   */
+  public ArrayList<String> getDiscountCodes()
+  {
+    return discountCodes;
   }
 
   /**
@@ -149,47 +158,33 @@ public class ShoppingCart implements Serializable {
     // TODO: add check for whether a given coupon code already exists when adding
     // new code
     try {
-      Log.d("monmon", "Error 0");
-      int couponId = DatabaseHelperAdapter.getCouponId(code);
-      Log.d("monmon", "Error 1 with couponId = " + couponId);
-      int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
-      Log.d("monmon", "Error 2 with itemId = " + itemId );
-      Item item = DatabaseHelperAdapter.getItem(itemId);
-      Log.d("bigmon", "Error 3 with item = " + item.getName());
-      BigDecimal price = item.getPrice();
-      Log.d("bigmon", "Error 4 with price = " + price.toString());
 
-      //Fix something here
-      //DatabaseHelperAdapter.getDiscountType()
+      int couponId = DatabaseHelperAdapter.getCouponId(code);
+      int itemId = DatabaseHelperAdapter.getCouponItem(couponId);
+      Item item = DatabaseHelperAdapter.getItem(itemId);
+      BigDecimal price = item.getPrice();
 
       DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
-      Log.d("bigmon", "Error 5 with type = " + type.name() + " couponId = " + couponId);
       BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
-      Log.d("monmon", "Error 6 with discount = " + discount.toString());
+
       if (!couponCanBeApplied(code, 1)) {
         return -1;
       }
       if (discountCodes.contains(code)) {
-        System.out.println("This coupon has already been applied");
         return -1;
       }
       if (type.equals(DiscountTypes.FLAT_RATE)) {
         price = price.subtract(discount);
       } else if (type.equals(DiscountTypes.PERCENTAGE)) {
-        Log.d("monmon", "This code is being run");
         price = price.multiply(new BigDecimal("100").subtract(discount)).divide(new BigDecimal("100"));
       }
       discountCodes.add(code);
 
-      System.out.println(String.format("Original price of item %s: %s%nNew Price: %s", item.getName(), item.getPrice(),
-          price.toPlainString()));
       BigDecimal priceChange = item.getPrice().subtract(price);
       itemDiscounts.put(item, priceChange);
       total = calculateCost();
-      System.out.println(String.format("Your new total is %s", total.toPlainString()));
       return 1;
     } catch (SQLException e) {
-      System.out.println("Unable to find a coupon with this code");
       return -1;
     }
   }

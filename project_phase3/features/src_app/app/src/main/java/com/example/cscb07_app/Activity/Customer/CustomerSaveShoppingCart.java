@@ -23,7 +23,6 @@ public class CustomerSaveShoppingCart extends AppCompatActivity {
 
     Button saveCart = findViewById(R.id.saveShoppingCartBtn);
     saveCart.setOnClickListener(new CustomerController(this, cart));
-
   }
 
   public void loadAccountIds(ShoppingCart cart) {
