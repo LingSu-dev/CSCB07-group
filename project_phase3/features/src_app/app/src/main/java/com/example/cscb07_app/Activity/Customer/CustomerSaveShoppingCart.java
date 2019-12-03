@@ -11,6 +11,9 @@ import com.example.cscb07_app.R;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Class of the save shopping cart activity
+ */
 public class CustomerSaveShoppingCart extends AppCompatActivity {
 
   @Override
@@ -25,6 +28,10 @@ public class CustomerSaveShoppingCart extends AppCompatActivity {
     saveCart.setOnClickListener(new CustomerController(this, cart));
   }
 
+  /**
+   * Loads all account ads in a shoppingcart
+   * @param cart the shopping cart
+   */
   public void loadAccountIds(ShoppingCart cart) {
     List<Integer> accounts = null;
 
@@ -46,6 +53,9 @@ public class CustomerSaveShoppingCart extends AppCompatActivity {
     saveAccountIds.setText(data.toString());
   }
 
+  /**
+   * overrides the back button to do nothing
+   */
   @Override
   public void onBackPressed() {
     return;

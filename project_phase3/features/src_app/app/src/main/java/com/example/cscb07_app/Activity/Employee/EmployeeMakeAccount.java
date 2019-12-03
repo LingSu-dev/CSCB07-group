@@ -9,6 +9,9 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 
+/**
+ * Class of the make account activity
+ */
 public class EmployeeMakeAccount extends AppCompatActivity {
 
   @Override

@@ -7,6 +7,9 @@ import com.b07.users.Admin;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
+/**
+ * activity to promote an employee
+ */
 public class AdminPromoteEmployee extends AppCompatActivity {
 
   @Override

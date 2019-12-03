@@ -13,6 +13,9 @@ import com.example.cscb07_app.Controller.CustomerController;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
+/**
+ * class of the customer store activity
+ */
 public class CustomerStore extends AppCompatActivity {
 
   @Override

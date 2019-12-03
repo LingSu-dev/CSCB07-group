@@ -9,6 +9,9 @@ import com.b07.users.Admin;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
+/**
+ * activity to view a log of all sales
+ */
 public class AdminViewBooks extends AppCompatActivity {
 
   @Override

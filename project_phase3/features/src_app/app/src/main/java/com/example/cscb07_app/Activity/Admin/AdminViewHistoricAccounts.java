@@ -7,6 +7,9 @@ import com.b07.users.Admin;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
+/**
+ * Activity to view historic accounts
+ */
 public class AdminViewHistoricAccounts extends AppCompatActivity {
 
   @Override

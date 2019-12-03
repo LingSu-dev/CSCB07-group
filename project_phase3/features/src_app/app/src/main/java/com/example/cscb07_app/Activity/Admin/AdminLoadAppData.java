@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
+/**
+ * Activity to deserialize a database from a file
+ */
 public class AdminLoadAppData extends AppCompatActivity {
 
   @Override

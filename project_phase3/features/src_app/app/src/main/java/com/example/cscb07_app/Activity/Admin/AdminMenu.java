@@ -9,6 +9,9 @@ import com.b07.users.Admin;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
+/**
+ * activity to show the admin menu
+ */
 public class AdminMenu extends AppCompatActivity {
 
   @Override
@@ -50,6 +53,9 @@ public class AdminMenu extends AppCompatActivity {
     createCoupon.setOnClickListener(new AdminController(this, admin));
   }
 
+  /**
+   * overrides the back button to do nothing
+   */
   @Override
   public void onBackPressed() {
     return;
