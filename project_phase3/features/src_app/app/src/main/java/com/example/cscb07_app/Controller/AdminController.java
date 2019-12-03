@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.content.res.Resources;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.exceptions.DifferentEnumException;
@@ -76,12 +77,21 @@ public class AdminController implements View.OnClickListener {
         Spinner couponTypeEntry = context.findViewById(R.id.couponTypeEntry);
         String couponType = couponTypeEntry.getSelectedItem().toString();
 
-
         EditText couponDiscountEntry = context.findViewById(R.id.couponDiscountEntry);
         String couponDiscount = couponDiscountEntry.getText().toString();
 
         EditText couponItemIdEntry = context.findViewById(R.id.couponItemIdEntry);
         EditText couponQuantityEntry = context.findViewById(R.id.couponQuantityEntry);
+
+        Resources res = context.getResources();
+        String[] types = res.getStringArray(R.array.couponTypeArray);
+
+        if(couponType.equals(types[0])){
+          couponType = "PERCENTAGE";
+        } else if (couponType.equals(types[1])) {
+          couponType = "FLAT_RATE";
+        }
+        Log.d("coupon type", couponType);
 
         int couponItemId = -1;
         int quantity = -1;
