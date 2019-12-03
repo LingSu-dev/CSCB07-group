@@ -143,7 +143,6 @@ public class AdminController implements View.OnClickListener {
             }
           }
         }
-
         if (!isNumber) {
           DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
               , "Ok", DialogId.NULL_DIALOG).show();
@@ -154,7 +153,7 @@ public class AdminController implements View.OnClickListener {
         } else if (!isValidData) {
           DialogFactory
               .createAlertDialog(appContext, "Invalid Coupon", "Please makre sure discounts"
-                  + " dont exceed 100% or the item's price!", "Ok", DialogId.NULL_DIALOG).show();
+                  + " don't exceed 100% or the item's price!", "Ok", DialogId.NULL_DIALOG).show();
         } else {
           int id = -1;
           try {
