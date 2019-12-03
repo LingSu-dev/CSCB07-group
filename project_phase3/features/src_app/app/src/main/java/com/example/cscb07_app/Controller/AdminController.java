@@ -3,11 +3,11 @@ package com.example.cscb07_app.Controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.content.res.Resources;
 import android.widget.TextView;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
@@ -99,12 +99,11 @@ public class AdminController implements View.OnClickListener {
         Resources res = context.getResources();
         String[] types = res.getStringArray(R.array.couponTypeArray);
 
-        if(couponType.equals(types[0])){
+        if (couponType.equals(types[0])) {
           couponType = "PERCENTAGE";
         } else if (couponType.equals(types[1])) {
           couponType = "FLAT_RATE";
         }
-        Log.d("coupon type", couponType);
 
         int couponItemId = -1;
         int quantity = -1;
@@ -124,12 +123,38 @@ public class AdminController implements View.OnClickListener {
           validCouponType = false;
         }
 
+        boolean isValidData = true;
+
+        if (isNumber && validCouponType) {
+          if (couponType.equals("PERCENTAGE")) {
+            if (couponDiscountDecimal.compareTo(BigDecimal.ZERO) == -1 || couponDiscountDecimal
+                .compareTo(new BigDecimal("100")) == 1) {
+              isValidData = false;
+            }
+          } else {
+            BigDecimal itemPrice = BigDecimal.ZERO;
+            try {
+              itemPrice = DatabaseHelperAdapter.getItem(couponItemId).getPrice();
+            } catch (SQLException e) {
+            }
+
+            if (itemPrice.compareTo(couponDiscountDecimal) == -1) {
+              isValidData = false;
+            }
+          }
+        }
+
         if (!isNumber) {
           DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
               , "Ok", DialogId.NULL_DIALOG).show();
         } else if (!validCouponType) {
-          DialogFactory.createAlertDialog(appContext, "Invalid Discount Type", "This discount type is not valid"
-                  , "Ok", DialogId.NULL_DIALOG).show();
+          DialogFactory.createAlertDialog(appContext, "Invalid Discount Type",
+              "This discount type is not valid"
+              , "Ok", DialogId.NULL_DIALOG).show();
+        } else if (!isValidData) {
+          DialogFactory
+              .createAlertDialog(appContext, "Invalid Coupon", "Please makre sure discounts"
+                  + " dont exceed 100% or the item's price!", "Ok", DialogId.NULL_DIALOG).show();
         } else {
           int id = -1;
           try {
@@ -330,15 +355,13 @@ public class AdminController implements View.OnClickListener {
         data.append("Active Accounts\n");
         data.append("--------------------------\n");
 
-        for (Integer accountId: accounts){
+        for (Integer accountId : accounts) {
           data.append("Account ID: " + accountId + "\n");
         }
         historicAccountsData.setText(data.toString());
-      }
-      else
-      {
+      } else {
         DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history "
-            + "only exists for valid customers!", "Ok",  DialogId.NULL_DIALOG).show();
+            + "only exists for valid customers!", "Ok", DialogId.NULL_DIALOG).show();
       }
     } catch (SQLException e) {
       DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
@@ -367,15 +390,13 @@ public class AdminController implements View.OnClickListener {
         data.append("Historic Accounts\n");
         data.append("--------------------------\n");
 
-        for (Integer accountId: accounts){
+        for (Integer accountId : accounts) {
           data.append("Account ID: " + accountId + "\n");
         }
-      historicAccountsData.setText(data.toString());
-      }
-      else
-      {
+        historicAccountsData.setText(data.toString());
+      } else {
         DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history's "
-            + "only exists for valid customers!", "Ok",  DialogId.NULL_DIALOG).show();
+            + "only exists for valid customers!", "Ok", DialogId.NULL_DIALOG).show();
       }
     } catch (SQLException e) {
       DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
