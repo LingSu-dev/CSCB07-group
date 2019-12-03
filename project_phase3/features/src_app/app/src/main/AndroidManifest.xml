@@ -29,7 +29,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".Activity.Customer.CustomerStore" />
     <activity android:name=".Activity.Customer.CustomerCheckout" />
     <activity android:name=".Activity.Initialization.InitializationPopUp" />
     <activity android:name=".Activity.Initialization.InitializationCreateFirstAdmin" />
