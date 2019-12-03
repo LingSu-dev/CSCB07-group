@@ -10,6 +10,10 @@ import com.b07.security.PasswordHelpers;
 
 import java.math.BigDecimal;
 
+/**
+ * An extension of the android databaseDriver which allows
+ * public access to it's protected methods.
+ */
 public class DatabaseMethodHelper extends DatabaseDriverAndroid {
 
   public DatabaseMethodHelper(Context context) {
