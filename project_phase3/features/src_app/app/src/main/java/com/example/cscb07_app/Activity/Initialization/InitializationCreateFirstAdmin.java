@@ -13,9 +13,7 @@ import com.example.cscb07_app.R;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
-/**
- * Class of the create first admin activity
- */
+/** Class of the create first admin activity */
 public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
   @Override
@@ -36,9 +34,7 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     createAdmin.setOnClickListener(new InitializationController(this));
   }
 
-  /**
-   * Overrides back button to not do anything
-   */
+  /** Overrides back button to not do anything */
   @Override
   public void onBackPressed() {
     return;
@@ -46,6 +42,7 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
   /**
    * Sets up the database
+   *
    * @throws DatabaseInsertException
    * @throws SQLException
    */

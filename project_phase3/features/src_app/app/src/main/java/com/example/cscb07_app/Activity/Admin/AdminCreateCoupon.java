@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
-/**
- * Activity for an admin to create a coupon
- */
+/** Activity for an admin to create a coupon */
 public class AdminCreateCoupon extends AppCompatActivity {
 
   @Override

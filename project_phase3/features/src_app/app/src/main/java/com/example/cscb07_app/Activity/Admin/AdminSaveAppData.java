@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
-/**
- * Activity to serialize the database to a file
- */
+/** Activity to serialize the database to a file */
 public class AdminSaveAppData extends AppCompatActivity {
 
   @Override

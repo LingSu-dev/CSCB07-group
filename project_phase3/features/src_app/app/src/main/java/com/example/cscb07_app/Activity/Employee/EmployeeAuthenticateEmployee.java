@@ -9,9 +9,7 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 
-/**
- * class of the authenticate employee interface
- */
+/** class of the authenticate employee interface */
 public class EmployeeAuthenticateEmployee extends AppCompatActivity {
 
   @Override
