@@ -13,6 +13,9 @@ import com.example.cscb07_app.R;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 
+/**
+ * A class to show the view for creating the first admin
+ */
 public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
   @Override
@@ -33,12 +36,28 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     createAdmin.setOnClickListener(new InitializationController(this));
   }
 
+  /**
+   * Overrides back button to not do anything
+   */
   @Override
   public void onBackPressed() {
     return;
   }
 
+<<<<<<< .mine
+  /**
+   * Sets up the database
+   * @throws DatabaseInsertException
+   * @throws SQLException
+   */
+  public void setUpDatabase()
+      throws DatabaseInsertException, SQLException {
+||||||| .r385
+  public void setUpDatabase()
+      throws DatabaseInsertException, SQLException {
+=======
   public void setUpDatabase() throws DatabaseInsertException, SQLException {
+>>>>>>> .r388
 
     for (DiscountTypes type : DiscountTypes.values()) {
       DatabaseHelperAdapter.insertDiscountType(type.name());

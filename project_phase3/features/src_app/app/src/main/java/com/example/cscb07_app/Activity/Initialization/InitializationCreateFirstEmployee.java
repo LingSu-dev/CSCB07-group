@@ -9,6 +9,9 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
 
+/**
+ * A class to show the views for creating the first employee
+ */
 public class InitializationCreateFirstEmployee extends AppCompatActivity {
 
   @Override
@@ -25,6 +28,9 @@ public class InitializationCreateFirstEmployee extends AppCompatActivity {
     createEmployee.setOnClickListener(new InitializationController(this));
   }
 
+  /**
+   * overriding backpress to not do anything
+   */
   @Override
   public void onBackPressed() {
     return;

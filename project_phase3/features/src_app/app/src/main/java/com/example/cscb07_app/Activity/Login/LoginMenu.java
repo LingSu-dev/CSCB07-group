@@ -9,6 +9,9 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.LoginController;
 import com.example.cscb07_app.R;
 
+/**
+ * activity of the login menu
+ */
 public class LoginMenu extends AppCompatActivity {
 
   @Override
@@ -25,6 +28,9 @@ public class LoginMenu extends AppCompatActivity {
     loginBtn.setOnClickListener(new LoginController(this));
   }
 
+  /**
+   * Over rides the back button to not do anything
+   */
   @Override
   public void onBackPressed() {
     return;
