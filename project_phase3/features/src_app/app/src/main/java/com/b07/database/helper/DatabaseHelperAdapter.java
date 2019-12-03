@@ -14,6 +14,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The adapter which allows all database objects to be platform independent.
+ * Contains either the desktop or android implementation of DatabasePlatformHelper,
+ * depending on the platform
+ */
 public class DatabaseHelperAdapter {
   private static DatabasePlatformHelper platformHelper;
 
