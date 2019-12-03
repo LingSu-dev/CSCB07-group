@@ -126,7 +126,9 @@ public class AdminController implements View.OnClickListener {
         boolean isValidData = true;
 
         if (isNumber && validCouponType) {
-          if (couponType.equals("PERCENTAGE")) {
+          if (couponCode.isEmpty()) {
+            isValidData = false;
+          } else if (couponType.equals("PERCENTAGE")) {
             if (couponDiscountDecimal.compareTo(BigDecimal.ZERO) == -1 || couponDiscountDecimal
                 .compareTo(new BigDecimal("100")) == 1) {
               isValidData = false;
@@ -144,7 +146,8 @@ public class AdminController implements View.OnClickListener {
           }
         }
         if (!isNumber) {
-          DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input a number!"
+          DialogFactory.createAlertDialog(appContext, "Incorrect Input", "Please input numbers"
+                  + " for all numeric entries!"
               , "Ok", DialogId.NULL_DIALOG).show();
         } else if (!validCouponType) {
           DialogFactory.createAlertDialog(appContext, "Invalid Discount Type",
@@ -152,8 +155,9 @@ public class AdminController implements View.OnClickListener {
               , "Ok", DialogId.NULL_DIALOG).show();
         } else if (!isValidData) {
           DialogFactory
-              .createAlertDialog(appContext, "Invalid Coupon", "Please makre sure discounts"
-                  + " don't exceed 100% or the item's price!", "Ok", DialogId.NULL_DIALOG).show();
+              .createAlertDialog(appContext, "Invalid Coupon", "Please make sure discounts"
+                      + " don't exceed 100% or the item's price! Coupon code also can't be empty! ",
+                  "Ok", DialogId.NULL_DIALOG).show();
         } else {
           int id = -1;
           try {
@@ -201,10 +205,10 @@ public class AdminController implements View.OnClickListener {
         boolean hashedPassSaved = false;
         try {
           hashedPassword = DatabaseHelperAdapter.getPassword(admin.getId());
-          if(hashedPassword != null) {
+          if (hashedPassword != null) {
             hashedPassSaved = true;
           }
-        } catch (SQLException e){
+        } catch (SQLException e) {
           hashedPassSaved = false;
         }
 
@@ -217,58 +221,58 @@ public class AdminController implements View.OnClickListener {
         } catch (IOException e) {
           Log.e("myApp", "exception", e);
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "Could not restore from this location!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "Could not restore from this location!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         } catch (SQLException e) {
           Log.e("myApp", "exception", e);
 
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "There was an issue with the SQL database!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "There was an issue with the SQL database!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         } catch (DifferentEnumException e) {
           Log.e("myApp", "exception", e);
 
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "The data on this device does not match the data in the stored db!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "The data on this device does not match the data in the stored db!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         } catch (ClassNotFoundException e) {
           Log.e("myApp", "exception", e);
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "One or more classes not found!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "One or more classes not found!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         }
-
 
         int newAdminId;
         if (hashedPassSaved) {
           try {
-            newAdminId = SerializationPasswordHelper.insertUserNoHash(admin.getName(), admin.getAge(),
+            newAdminId = SerializationPasswordHelper
+                .insertUserNoHash(admin.getName(), admin.getAge(),
                     admin.getAddress(), hashedPassword, appContext);
             int adminRoleId = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name());
             DatabaseHelperAdapter.insertUserRole(newAdminId, adminRoleId);
             admin.setId(newAdminId);
             DialogFactory.createAlertDialog(appContext, "Admin Reinserted!",
-                    "The current admin has been added to the database with new ID: " + newAdminId,
-                    "Ok", DialogId.NULL_DIALOG).show();
-          } catch (SQLException | DatabaseInsertException e){
+                "The current admin has been added to the database with new ID: " + newAdminId,
+                "Ok", DialogId.NULL_DIALOG).show();
+          } catch (SQLException | DatabaseInsertException e) {
             DialogFactory.createAlertDialog(appContext, "An issue occurred!",
-                    "The current admin could not be reinserted into the database!\n"
-                            + "Upon logging out, the current admin will no longer be usable!",
-                    "Ok", DialogId.NULL_DIALOG).show();
+                "The current admin could not be reinserted into the database!\n"
+                    + "Upon logging out, the current admin will no longer be usable!",
+                "Ok", DialogId.NULL_DIALOG).show();
           }
-        } else{
+        } else {
           DialogFactory.createAlertDialog(appContext, "An issue occurred!",
-                  "The current admin could not be reinserted into the database!\n"
-                          + "Upon logging out, the current admin will no longer be usable!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "The current admin could not be reinserted into the database!\n"
+                  + "Upon logging out, the current admin will no longer be usable!",
+              "Ok", DialogId.NULL_DIALOG).show();
         }
         DialogFactory.createAlertDialog(appContext, "Success!",
-                "Database restored!",
-                "Ok", DialogId.NULL_DIALOG).show();
+            "Database restored!",
+            "Ok", DialogId.NULL_DIALOG).show();
 
         break;
       case R.id.promoteEmployeeButton:
