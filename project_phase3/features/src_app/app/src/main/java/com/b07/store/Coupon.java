@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 
 /**
  * Interface for object representation of a coupon
- * @author lingf
  *
+ * @author lingf
  */
 public interface Coupon extends Serializable {
 
