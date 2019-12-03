@@ -235,7 +235,6 @@ public class AdminController implements View.OnClickListener {
 
         int customerId = 0;
         boolean isValidNumber = true;
-
         try {
           customerId = Integer.parseInt(customerIdEntry.getText().toString());
         } catch (NumberFormatException e) {
@@ -249,6 +248,62 @@ public class AdminController implements View.OnClickListener {
                   "Ok", DialogId.NULL_DIALOG).show();
         }
         break;
+      case R.id.viewActiveAccountsBtn:
+        EditText customerIdEntryActive = ((Activity) appContext)
+            .findViewById(R.id.activeAccountsCustomerIdEntry);
+
+        int customerIdActive = 0;
+        boolean isValidNumberActive = true;
+        try {
+          customerIdActive = Integer.parseInt(customerIdEntryActive.getText().toString());
+        } catch (NumberFormatException e) {
+          isValidNumberActive = false;
+        }
+        if (isValidNumberActive) {
+          viewActiveAccounts(customerIdActive);
+        } else {
+          DialogFactory
+              .createAlertDialog(appContext, "Customer ID Format Error", "Please enter an integer!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        }
+        break;
+    }
+  }
+
+  /**
+   * View the historic accounts of a customer.
+   *
+   * @param customerId the customer of interst
+   */
+  public void viewActiveAccounts(int customerId) {
+
+    TextView historicAccountsData = ((Activity) appContext)
+        .findViewById(R.id.viewActiveAccountsText);
+
+    try {
+      User user = DatabaseHelperAdapter.getUserDetails(customerId);
+
+      if (user instanceof Customer) {
+
+        List<Integer> accounts = DatabaseHelperAdapter.getUserActiveAccounts(customerId);
+        StringBuilder data = new StringBuilder();
+
+        data.append("Active Accounts\n");
+        data.append("--------------------------\n");
+
+        for (Integer accountId: accounts){
+          data.append("Account ID: " + accountId + "\n");
+        }
+        historicAccountsData.setText(data.toString());
+      }
+      else
+      {
+        DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history "
+            + "only exists for valid customers!", "Ok",  DialogId.NULL_DIALOG).show();
+      }
+    } catch (SQLException e) {
+      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
+          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
     }
   }
 
