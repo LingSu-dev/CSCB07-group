@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import com.example.cscb07_app.Controller.AdminController;
 import com.b07.users.Admin;
+import com.example.cscb07_app.Controller.AdminController;
 import com.example.cscb07_app.R;
 
 public class AdminMenu extends AppCompatActivity {
@@ -17,7 +16,7 @@ public class AdminMenu extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin_menu);
 
-    Admin admin = (Admin)getIntent().getSerializableExtra("adminObject");
+    Admin admin = (Admin) getIntent().getSerializableExtra("adminObject");
 
     Button promoteEmployee = findViewById(R.id.adminMenuPromoteEmployee);
     promoteEmployee.setOnClickListener(new AdminController(this, admin));
@@ -29,7 +28,8 @@ public class AdminMenu extends AppCompatActivity {
     viewActiveAccounts.setOnClickListener(new AdminController(this, admin));
 
     Button saveAppData = findViewById(R.id.adminMenuSaveData);
-    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
 
     saveAppData.setOnClickListener(new AdminController(this, admin));
 

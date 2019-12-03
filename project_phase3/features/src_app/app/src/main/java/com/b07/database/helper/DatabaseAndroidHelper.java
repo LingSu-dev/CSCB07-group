@@ -1,10 +1,7 @@
 package com.b07.database.helper;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.util.Log;
-
 import com.b07.exceptions.ConnectionFailedException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Inventory;
@@ -22,12 +19,7 @@ import com.b07.users.Customer;
 import com.b07.users.Roles;
 import com.b07.users.User;
 import com.b07.users.UserFactory;
-
-import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -1266,7 +1258,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     List<Integer> accounts = new ArrayList<>();
 
     while (results.moveToNext()) {
-      accounts.add(results.getInt(results.getColumnIndex("id")));
+      accounts.add(results.getInt(results.getColumnIndex("ID")));
     }
     results.close();
     return accounts;

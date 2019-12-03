@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.res.Resources;
+import android.widget.TextView;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.exceptions.DifferentEnumException;
 import com.b07.serialize.SerializeDatabase;
 import com.b07.users.Admin;
+import com.b07.users.Customer;
+import com.b07.users.Employee;
+import com.b07.users.User;
 import com.example.cscb07_app.Activity.Admin.AdminCreateCoupon;
 import com.example.cscb07_app.Activity.Admin.AdminLoadAppData;
 import com.example.cscb07_app.Activity.Admin.AdminPromoteEmployee;
@@ -25,6 +29,7 @@ import com.example.cscb07_app.R;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AdminController implements View.OnClickListener {
 
@@ -42,20 +47,26 @@ public class AdminController implements View.OnClickListener {
 
   @Override
   public void onClick(View view) {
+    Intent intent;
+
     switch (view.getId()) {
       case R.id.adminMenuExitBtn:
         appContext.startActivity(new Intent(this.appContext, LoginMenu.class));
         break;
       case R.id.adminMenuViewBooks:
-        Intent intent = new Intent(this.appContext, AdminViewBooks.class);
+        intent = new Intent(this.appContext, AdminViewBooks.class);
         intent.putExtra("adminObject", admin);
         appContext.startActivity(intent);
         break;
       case R.id.adminMenuPromoteEmployee:
-        appContext.startActivity(new Intent(this.appContext, AdminPromoteEmployee.class));
+        intent = new Intent(this.appContext, AdminPromoteEmployee.class);
+        intent.putExtra("adminObject", admin);
+        appContext.startActivity(intent);
         break;
       case R.id.adminMenuHistoricAccounts:
-        appContext.startActivity(new Intent(this.appContext, AdminViewHistoricAccounts.class));
+        intent = new Intent(this.appContext, AdminViewHistoricAccounts.class);
+        intent.putExtra("adminObject", admin);
+        appContext.startActivity(intent);
         break;
       case R.id.adminMenuActiveAccounts:
         appContext.startActivity(new Intent(this.appContext, AdminViewActiveAccounts.class));
@@ -155,8 +166,8 @@ public class AdminController implements View.OnClickListener {
           break;
         }
         DialogFactory.createAlertDialog(appContext, "Success!",
-                "Serialized to " + saveLocString + "/database_copy.ser",
-                "Ok", DialogId.NULL_DIALOG).show();
+            "Serialized to " + saveLocString + "/database_copy.ser",
+            "Ok", DialogId.NULL_DIALOG).show();
 
         break;
       case R.id.loadDataBtn:
@@ -164,39 +175,143 @@ public class AdminController implements View.OnClickListener {
         String restoreLocString = restoreLoc.getText().toString();
         try {
 
-            SerializeDatabase.populateFromFile(restoreLocString, appContext);
+          SerializeDatabase.populateFromFile(restoreLocString, appContext);
 
         } catch (IOException e) {
           Log.e("myApp", "exception", e);
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "Could not restore from this location!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "Could not restore from this location!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         } catch (SQLException e) {
           Log.e("myApp", "exception", e);
 
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "There was an issue with the SQL database!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "There was an issue with the SQL database!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
-        } catch (DifferentEnumException e){
+        } catch (DifferentEnumException e) {
           Log.e("myApp", "exception", e);
 
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "The data on this device does not match the data in the stored db!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "The data on this device does not match the data in the stored db!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         } catch (ClassNotFoundException e) {
           Log.e("myApp", "exception", e);
           DialogFactory.createAlertDialog(appContext, "Error!",
-                  "One or more classes not found!",
-                  "Ok", DialogId.NULL_DIALOG).show();
+              "One or more classes not found!",
+              "Ok", DialogId.NULL_DIALOG).show();
           break;
         }
         DialogFactory.createAlertDialog(appContext, "Success!",
-                "Database restored!",
-                "Ok", DialogId.NULL_DIALOG).show();
+            "Database restored!",
+            "Ok", DialogId.NULL_DIALOG).show();
         break;
+      case R.id.promoteEmployeeButton:
+        EditText employeeIdEntry = ((Activity) appContext)
+            .findViewById(R.id.promoteEmployeeIdEntry);
+
+        int employeeId = 0;
+        boolean isValidNum = true;
+
+        try {
+          employeeId = Integer.parseInt(employeeIdEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          isValidNum = false;
+        }
+        if (isValidNum) {
+
+          promoteEmployee(employeeId);
+        } else {
+          DialogFactory
+              .createAlertDialog(appContext, "Employee ID Format Error", "Please enter an integer!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        }
+        break;
+      case R.id.viewHistoricAccountsBtn:
+        EditText customerIdEntry = ((Activity) appContext)
+            .findViewById(R.id.historicAccountsCustomerIdEntry);
+
+        int customerId = 0;
+        boolean isValidNumber = true;
+
+        try {
+          customerId = Integer.parseInt(customerIdEntry.getText().toString());
+        } catch (NumberFormatException e) {
+          isValidNumber = false;
+        }
+        if (isValidNumber) {
+          viewHistoricAccounts(customerId);
+        } else {
+          DialogFactory
+              .createAlertDialog(appContext, "Customer ID Format Error", "Please enter an integer!",
+                  "Ok", DialogId.NULL_DIALOG).show();
+        }
+        break;
+    }
+  }
+
+  /**
+   * View the historic accounts of a customer.
+   *
+   * @param customerId the customer of interst
+   */
+  public void viewHistoricAccounts(int customerId) {
+
+    TextView historicAccountsData = ((Activity) appContext)
+        .findViewById(R.id.viewHistoricAccountsText);
+
+    try {
+      User user = DatabaseHelperAdapter.getUserDetails(customerId);
+
+      if (user instanceof Customer) {
+
+        List<Integer> accounts = DatabaseHelperAdapter.getUserInactiveAccounts(customerId);
+        StringBuilder data = new StringBuilder();
+
+        data.append("Historic Accounts\n");
+        data.append("--------------------------\n");
+
+        for (Integer accountId: accounts){
+          data.append("Account ID: " + accountId + "\n");
+        }
+      historicAccountsData.setText(data.toString());
+      }
+      else
+      {
+        DialogFactory.createAlertDialog(appContext, "Failure Displaying Data", "Account history's "
+            + "only exists for valid customers!", "Ok",  DialogId.NULL_DIALOG).show();
+      }
+    } catch (SQLException e) {
+      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
+          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
+    }
+  }
+
+  /**
+   * Promotes a customer to an admin.
+   *
+   * @param employeeId the user of interest.
+   */
+  public void promoteEmployee(int employeeId) {
+
+    User toPromote = null;
+
+    try {
+      toPromote = DatabaseHelperAdapter.getUserDetails(employeeId);
+
+      if (toPromote instanceof Employee) {
+        admin.promoteEmployee((Employee) toPromote);
+        DialogFactory.createAlertDialog(appContext, "Employee Promoted Successfully",
+            "Employee has now been promoted to an Admin!", "Ok", DialogId.NULL_DIALOG).show();
+      } else {
+        DialogFactory.createAlertDialog(appContext, "Employee Promotion Failed",
+            "Only employees can be promoted to an admin!", "Ok", DialogId.NULL_DIALOG).show();
+      }
+    } catch (SQLException e) {
+      DialogFactory.createAlertDialog(appContext, "Database Failure", "Something went wrong"
+          + " with database functionality!", "Ok", DialogId.NULL_DIALOG).show();
     }
   }
 }
