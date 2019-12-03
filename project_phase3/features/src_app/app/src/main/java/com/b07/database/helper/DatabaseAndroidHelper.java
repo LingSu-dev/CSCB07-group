@@ -980,11 +980,22 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return validUserIds.contains(userID);
   }
 
+  /**
+   * Check if a couponId exits.
+   * @param userID the coupon ID.
+   * @return true if the coupon exists, false otherwise
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public boolean couponIdExists(int userID) throws SQLException {
     List<Integer> validCouponIds = getCouponIds();
     return validCouponIds.contains(userID);
   }
 
+  /**
+   * Get a list of all coupon Ids
+   * @return a list of coupon Ids
+   * @throws SQLException f there is an issue communicating with the database
+   */
   public List<Integer> getCouponIds() throws SQLException {
     List<Integer> ids = new ArrayList<Integer>();
     Cursor results = driver.getCoupons();
@@ -1130,7 +1141,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return allAccountIds;
   }
 
-  /*
+  /**
    * Get the discount type ID from its name
    *
    * @param type the name of the discount type
@@ -1165,7 +1176,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   }
 
   /**
-   * Get the name of the discount type from its ID
+   * Get the name of the discount type from its ID.
    *
    * @param discountTypeId the discount type ID
    * @return the name of the discount type
@@ -1178,11 +1189,22 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return driver.getDiscountType(discountTypeId);
   }
 
+  /**
+   * Check if a discount type exists.
+   * @param discountTypeId the id of the discount type
+   * @return true if the discount type exists
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public boolean discountTypeIdExists(int discountTypeId) throws SQLException {
     List<Integer> validDisCountTypeIds = getDiscountTypeIds();
     return validDisCountTypeIds.contains(discountTypeId);
   }
 
+  /**
+   * Get a list of discount type IDs.
+   * @return a list of dicount type IDS
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public List<Integer> getDiscountTypeIds() throws SQLException {
     Cursor results = driver.getDiscountTypeIds();
     List<Integer> ids = new ArrayList<Integer>();
@@ -1193,32 +1215,67 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return ids;
   }
 
-
+  /**
+   * Get a coupon's ID by name.
+   * @param code the coupon's name
+   * @return the coupon's ID
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public int getCouponId(String code) throws SQLException {
     int id = driver.getCouponId(code);
     return id;
   }
 
+  /**
+   * Get the type of a discount.
+   * @param couponId the coupon's ID
+   * @return the coupon's discount type
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public DiscountTypes getDiscountType(int couponId) throws SQLException {
     String type = driver.getDiscountType(couponId);
     DiscountTypes discountType = DiscountTypes.valueOf(type);
     return discountType;
   }
 
+  /**
+   * Get the amount of a discount.
+   * @param couponId the coupon's id
+   * @return the coupon's amount
+   * @throws SQLException
+   */
   public BigDecimal getDiscountAmount(int couponId) throws SQLException {
     String discountString = driver.getCouponDiscountAmount(couponId);
     BigDecimal discount = new BigDecimal(discountString);
     return discount;
   }
 
+  /**
+   * Get a coupon item by id.
+   * @param couponId the coupon's id
+   * @return an item corresponding to the coupon
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public int getCouponItem(int couponId) throws SQLException {
     return driver.getCouponItemId(couponId);
   }
 
+  /**
+   * Get the remaining uses of a coupon by id.
+   * @param couponId the coupon's id
+   * @return the remaining uses
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public int getCouponUses(int couponId) throws SQLException {
     return driver.getCouponUses(couponId);
   }
 
+  /**
+   * Get a coupon's code by Id.
+   * @param couponId the coupon's id
+   * @return the coupon's code
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public String getCouponCode(int couponId) throws SQLException {
     return driver.getCouponCode(couponId);
   }
