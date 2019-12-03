@@ -18,7 +18,7 @@ import java.util.List;
  * Platform independent interaface which allows the adapter to easily use database methods without
  * knowing which platform it is on.
  *
- * Javadoc present in DatabaseAndroidHelper
+ * Javadoc omitted as all internal behaviour is specified in DatabaseAndroidHelper
  */
 public interface DatabasePlatformHelper {
   // Driver Helper

@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 
 /**
  * An extension of the android databaseDriver which allows public access to it's protected methods.
- * Javadoc present in DatabaseAndroidHelper
+ *
+ * Javadoc omitted as all internal behaviour is specified in DatabaseAndroidHelper
  */
 public class DatabaseMethodHelper extends DatabaseDriverAndroid {
 
