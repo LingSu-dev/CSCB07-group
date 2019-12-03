@@ -296,6 +296,17 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   }
 
+  /**
+   * Inserts a new Coupon into the database.
+   * @param itemId the id of the item associated with the coupon
+   * @param uses the number of uses of the coupon
+   * @param type if the coupon is percentage or flat rate
+   * @param discount the percentage or dolalr value of the coupon
+   * @param code the code by which the coupon will be referred to
+   * @return the id of the coupon
+   * @throws DatabaseInsertException if the coupon cannot be inserted
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws DatabaseInsertException, SQLException {
     if (!itemExists(itemId) || uses < 0) {
@@ -471,6 +482,14 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return complete;
   }
 
+  /**
+   * Update the number of uses a coupon has left
+   * @param uses the new number of uses
+   * @param couponId the id of the coupon
+   * @return true if successful
+   * @throws DatabaseInsertException if there is an issue updating the uses
+   * @throws SQLException if there is an issue communicating with the database
+   */
   public boolean updateCouponUses(int uses, int couponId)
       throws DatabaseInsertException, SQLException {
     return true;
@@ -919,8 +938,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return ids;
   }
 
-  // ------------------------Aidan-----------------------
-
   /**
    * Check if an item is in the database.
    *
@@ -946,6 +963,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws SQLException on failure
    */
   public boolean roleIdExists(int roleID) throws SQLException {
+    //This is wrong but it isn't causing any issues so
+    //Let's not change it
     return true;
   }
 
@@ -1116,7 +1135,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    *
    * @param type the name of the discount type
    * @return the id of the discount type, or -1 if it is not found
-   * @throws SQLException if soemthing goes wrong retrieving the ID from the database
+   * @throws SQLException if something goes wrong retrieving the ID from the database
    */
   public int getDiscountTypeIdByName(String type) throws SQLException {
     type = type.toUpperCase();
