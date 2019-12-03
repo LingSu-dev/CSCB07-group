@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 /**
- * A class to show the view for creating the first admin
+ * Class of the create first admin activity
  */
 public class InitializationCreateFirstAdmin extends AppCompatActivity {
 

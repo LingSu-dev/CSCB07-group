@@ -10,7 +10,7 @@ import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
 
 /**
- * A class to show the views for creating the first employee
+ * Class of the create first employee activity
  */
 public class InitializationCreateFirstEmployee extends AppCompatActivity {
 

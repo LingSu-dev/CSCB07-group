@@ -10,6 +10,9 @@ import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 import java.sql.SQLException;
 
+/**
+ * Class of the employeemenu activity
+ */
 public class EmployeeMenu extends AppCompatActivity {
 
   @Override
@@ -45,6 +48,9 @@ public class EmployeeMenu extends AppCompatActivity {
     exitButton.setOnClickListener(new EmployeeController(this, employeeInterface));
   }
 
+  /**
+   * overrides the back button to do nothing
+   */
   @Override
   public void onBackPressed() {
     return;
