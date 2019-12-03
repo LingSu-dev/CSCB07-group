@@ -126,6 +126,9 @@ public class DatabaseMethodHelper extends DatabaseDriverAndroid {
   public String getDiscountType(int discountTypeId) {
     return super.getDiscountType(discountTypeId);
   }
+  public int getCouponDiscountType(int couponId) {
+    return super.getCouponDiscountType(couponId);
+  }
   public Cursor getDiscountTypeIds(){
     return super.getDiscountTypeIds();
   }

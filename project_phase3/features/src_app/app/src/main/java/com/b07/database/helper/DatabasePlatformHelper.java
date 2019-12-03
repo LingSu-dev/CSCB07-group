@@ -148,7 +148,9 @@ public interface DatabasePlatformHelper {
 
   public int getCouponId(String code) throws SQLException;
 
-  public DiscountTypes getDiscountType(int couponId) throws SQLException;
+  public DiscountTypes getDiscountType(int discountId) throws SQLException;
+
+  public DiscountTypes getCouponDiscountType(int couponId) throws SQLException;
 
   public BigDecimal getDiscountAmount(int couponId) throws SQLException;
 

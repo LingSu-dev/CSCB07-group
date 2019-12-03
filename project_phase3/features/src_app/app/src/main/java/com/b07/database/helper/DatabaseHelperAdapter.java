@@ -324,9 +324,14 @@ public class DatabaseHelperAdapter {
   }
 
 
-  public static DiscountTypes getDiscountType(int couponId) throws SQLException {
-    return platformHelper.getDiscountType(couponId);
+  public static DiscountTypes getDiscountType(int discountId) throws SQLException {
+    return platformHelper.getDiscountType(discountId);
   }
+
+  public static DiscountTypes getCouponDiscountType(int couponId) throws SQLException {
+    return platformHelper.getCouponDiscountType(couponId);
+  }
+
 
 
   public static BigDecimal getDiscountAmount(int couponId) throws SQLException {
