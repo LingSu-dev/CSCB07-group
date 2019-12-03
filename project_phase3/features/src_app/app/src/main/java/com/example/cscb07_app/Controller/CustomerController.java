@@ -242,13 +242,11 @@ public class CustomerController implements View.OnClickListener {
         EditText loadAccountIdEntry = ((Activity) appContext).findViewById(R.id.loadAccountIdEntry);
         int loadAccountId = 0;
         boolean isValidLoadAccountId = true;
-
         try {
           loadAccountId = Integer.parseInt(loadAccountIdEntry.getText().toString());
         } catch (NumberFormatException e) {
           isValidLoadAccountId = false;
         }
-
         if (!isValidLoadAccountId) {
           DialogFactory.createAlertDialog(appContext, "Account ID Format Error",
               "Account ID can't be empty!",
@@ -298,7 +296,6 @@ public class CustomerController implements View.OnClickListener {
     }
     return false;
   }
-
 
   /**
    * Apply coupon to the cart.
@@ -358,6 +355,8 @@ public class CustomerController implements View.OnClickListener {
       if (!failed) {
         loadCart = account.getCart();
         if (loadCart != null && !loadCart.getItems().isEmpty()) {
+
+
           BigDecimal price = (loadCart.getTotal().multiply(loadCart.getTaxRate()))
               .setScale(2, RoundingMode.CEILING);
           try {
@@ -408,7 +407,7 @@ public class CustomerController implements View.OnClickListener {
         e.printStackTrace();
       }
       DialogFactory.createAlertDialog(appContext, "Success", "Cart has been successfully "
-          + "saved", "Ok", DialogId.SAVED_SHOPPING_CART).show();
+          + "saved!", "Ok", DialogId.SAVED_SHOPPING_CART).show();
     }
   }
 
