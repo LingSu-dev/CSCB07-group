@@ -1,5 +1,6 @@
 package com.b07.store;
 
+import android.util.Log;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.inventory.Item;
@@ -315,6 +316,7 @@ public class ShoppingCart implements Serializable {
       BigDecimal discount = itemDiscounts.getOrDefault(item, BigDecimal.ZERO);
       cost = cost.add(item.getPrice().subtract(discount).multiply(quantity));
     }
+    Log.d("cost", cost.toPlainString());
     return cost;
   }
 }

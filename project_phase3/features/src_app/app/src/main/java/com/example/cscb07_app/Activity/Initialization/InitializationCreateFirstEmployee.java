@@ -9,9 +9,7 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.InitializationController;
 import com.example.cscb07_app.R;
 
-/**
- * Class of the create first employee activity
- */
+/** Class of the create first employee activity */
 public class InitializationCreateFirstEmployee extends AppCompatActivity {
 
   @Override
@@ -28,9 +26,7 @@ public class InitializationCreateFirstEmployee extends AppCompatActivity {
     createEmployee.setOnClickListener(new InitializationController(this));
   }
 
-  /**
-   * overriding backpress to not do anything
-   */
+  /** overriding backpress to not do anything */
   @Override
   public void onBackPressed() {
     return;

@@ -9,9 +9,7 @@ import com.b07.database.helper.DatabaseMethodHelper;
 import com.example.cscb07_app.Controller.EmployeeController;
 import com.example.cscb07_app.R;
 
-/**
- * class  of the make employee activity
- */
+/** class of the make employee activity */
 public class EmployeeMakeEmployee extends AppCompatActivity {
 
   @Override
