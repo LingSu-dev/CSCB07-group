@@ -14,7 +14,7 @@ public class AdminViewHistoricAccounts extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_admin_view_historic_accounts);
 
-    Admin admin = (Admin)getIntent().getSerializableExtra("adminObject");
+    Admin admin = (Admin) getIntent().getSerializableExtra("adminObject");
 
     Button viewHistoricAccounts = findViewById(R.id.viewHistoricAccountsBtn);
     viewHistoricAccounts.setOnClickListener(new AdminController(this, admin));

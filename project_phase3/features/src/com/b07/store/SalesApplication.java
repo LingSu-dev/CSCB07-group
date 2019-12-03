@@ -60,8 +60,9 @@ public class SalesApplication {
         // Customer/Employee mode
         System.out.println("Welcome to Sales Application");
         System.out.println("----------------------------");
-        String[] loginOptions =
-            {"1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"};
+        String[] loginOptions = {
+          "1 - Employee Login", "2 - Customer Login", "0 - Exit", "Enter Selection:"
+        };
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         // input will contain the first line of input from the user
         int input = StoreHelpers.choicePrompt(loginOptions, reader);
@@ -249,8 +250,15 @@ public class SalesApplication {
       return;
     }
 
-    String[] adminOptions = {"1. Promote employee to admin", "2. View Books", "3. Generate Coupons",
-        "4. View Customer Accounts", "5. Backup database", "6. Restore database", "0. Exit"};
+    String[] adminOptions = {
+      "1. Promote employee to admin",
+      "2. View Books",
+      "3. Generate Coupons",
+      "4. View Customer Accounts",
+      "5. Backup database",
+      "6. Restore database",
+      "0. Exit"
+    };
     int input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     while (input != 0) {
       if (input == 1) {
@@ -328,10 +336,12 @@ public class SalesApplication {
         } catch (SQLException e) {
           System.out.println("Something went wrong while retreiving data");
         }
-        
+
       } else if (input == 6) {
-        System.out.println("Please manually make a backup of the database file before proceeding incase reverting fails");
-        System.out.println("Enter a directory to retreive the backup from, do not add a trailing slash");
+        System.out.println(
+            "Please manually make a backup of the database file before proceeding incase reverting fails");
+        System.out.println(
+            "Enter a directory to retreive the backup from, do not add a trailing slash");
         String location = bufferedReader.readLine();
         String adminHashedPassword = DatabaseHelperAdapter.getPassword(admin.getId());
         try {
@@ -345,14 +355,17 @@ public class SalesApplication {
           }
           boolean reinsert = true;
           for (Admin currAdmin : adminUsers) {
-            if (currAdmin.getName() == admin.getName() && currAdmin.getAge() == admin.getAge() && currAdmin.getAddress() == admin.getAddress()) {
+            if (currAdmin.getName() == admin.getName()
+                && currAdmin.getAge() == admin.getAge()
+                && currAdmin.getAddress() == admin.getAddress()) {
               if (DatabaseHelperAdapter.getPassword(currAdmin.getId()) == adminHashedPassword) {
                 reinsert = false;
               }
             }
           }
           if (reinsert) {
-            System.out.println("You are not currently part of the database, do you wish to reinsert yourself? Y/n");
+            System.out.println(
+                "You are not currently part of the database, do you wish to reinsert yourself? Y/n");
             String reinsertChoice = bufferedReader.readLine();
             while (!(reinsertChoice.equals("Y") || reinsertChoice.equals("n"))) {
               System.out.println("Please input a valid choice");
@@ -361,35 +374,38 @@ public class SalesApplication {
             if (reinsertChoice.equals("Y")) {
               // TODO: temp password
               int adminId = 0;
-              adminId = SerializationPasswordHelper.insertUserNoHash(admin.getName(), admin.getAge(), admin.getAddress(), adminHashedPassword);
-              DatabaseHelperAdapter.insertUserRole(adminId, DatabaseHelperAdapter.getRoleIdByName("ADMIN"));
+              adminId =
+                  SerializationPasswordHelper.insertUserNoHash(
+                      admin.getName(), admin.getAge(), admin.getAddress(), adminHashedPassword);
+              DatabaseHelperAdapter.insertUserRole(
+                  adminId, DatabaseHelperAdapter.getRoleIdByName("ADMIN"));
               System.out.println("Your new ID is: " + adminId);
-            } else if (reinsertChoice.equals("n")){
+            } else if (reinsertChoice.equals("n")) {
               System.out.println("Exiting");
               return;
-            } 
-          } 
+            }
+          }
         } catch (IOException e) {
           System.out.println("Unable to read data from file");
           e.printStackTrace();
         } catch (SQLException e) {
           System.out.println("Something went wrong while setting data in the database");
-          //e.printStackTrace();
+          // e.printStackTrace();
         } catch (ClassNotFoundException e) {
           System.out.println("Unable to find a necessary part of the application");
-          //e.printStackTrace();
+          // e.printStackTrace();
         } catch (DifferentEnumException e) {
           System.out.println("This application does not support the given data");
-          //e.printStackTrace();
+          // e.printStackTrace();
         } catch (DatabaseInsertException e) {
           // TODO Auto-generated catch block
           System.out.println("Failed to reinsert admin");
-          //e.printStackTrace();
+          // e.printStackTrace();
         }
       } else if (input == 0) {
         System.out.println("Exiting");
         return;
-      } 
+      }
       input = StoreHelpers.choicePrompt(adminOptions, bufferedReader);
     }
     System.out.println("Exiting");
@@ -418,9 +434,15 @@ public class SalesApplication {
     EmployeeInterface employeeInterface = new EmployeeInterface(employee, inventory);
     System.out.println("Employee options:");
 
-    String[] employeeOptions =
-        {"1 - authenticate new employee", "2 - Make new User", "3 - Make new account",
-            "4 - Make new Employee", "5 - Restock Inventory", "0- Exit", "Enter Selection:"};
+    String[] employeeOptions = {
+      "1 - authenticate new employee",
+      "2 - Make new User",
+      "3 - Make new account",
+      "4 - Make new Employee",
+      "5 - Restock Inventory",
+      "0- Exit",
+      "Enter Selection:"
+    };
     int input = StoreHelpers.choicePrompt(employeeOptions, reader);
     while (input != 0) {
       if (input == 1) {
@@ -452,7 +474,8 @@ public class SalesApplication {
         String password = reader.readLine();
         // Here, an employee is being created and then having it's role changed
         // to a a customer. this is bad, it must be changed.
-        insertUser: try {
+        insertUser:
+        try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             break insertUser;
@@ -504,7 +527,8 @@ public class SalesApplication {
         String address = reader.readLine();
         System.out.println("Enter a password");
         String password = reader.readLine();
-        insertUser: try {
+        insertUser:
+        try {
           int userId = employeeInterface.createEmployee(name, age, address, password);
           if (userId == -1) {
             // should never run: included here due to UML-unstable EmployeeInterface change
@@ -603,8 +627,11 @@ public class SalesApplication {
                 System.out.println("Your total is:");
                 System.out.println("$" + shoppingCart.getTotal());
                 System.out.println("You will also pay taxes to the order of:");
-                System.out.println("$" + shoppingCart.getTotal()
-                    .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+                System.out.println(
+                    "$"
+                        + shoppingCart
+                            .getTotal()
+                            .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
                 boolean checkedOut = false;
                 checkedOut = shoppingCart.checkOutCart();
                 if (checkedOut) {
@@ -624,15 +651,21 @@ public class SalesApplication {
           }
         } catch (NumberFormatException e) {
           System.out.println("Not a number! Continuing to shopping");
-
         }
       }
 
       shoppingCart = new ShoppingCart(customer);
       System.out.println("Customer options:");
-      String[] customerOptions = {"1 - List items in cart", "2 - Add item to cart",
-          "3 - Check price", "4 - Remove item from cart", "5 - Check out", "6 - Apply coupon",
-          "0 - Exit", "Enter Selection:"};
+      String[] customerOptions = {
+        "1 - List items in cart",
+        "2 - Add item to cart",
+        "3 - Check price",
+        "4 - Remove item from cart",
+        "5 - Check out",
+        "6 - Apply coupon",
+        "0 - Exit",
+        "Enter Selection:"
+      };
       int input = StoreHelpers.choicePrompt(customerOptions, reader);
       while (input != 0) {
         if (input == 1) {
@@ -704,8 +737,11 @@ public class SalesApplication {
             System.out.println("Your total is:");
             System.out.println("$" + shoppingCart.getTotal());
             System.out.println("You will also pay taxes to the order of:");
-            System.out.println("$" + shoppingCart.getTotal()
-                .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
+            System.out.println(
+                "$"
+                    + shoppingCart
+                        .getTotal()
+                        .multiply(shoppingCart.getTaxRate().setScale(2, RoundingMode.CEILING)));
             boolean checkedOut = false;
             checkedOut = shoppingCart.checkOutCart();
             if (checkedOut) {
@@ -762,7 +798,6 @@ public class SalesApplication {
         } catch (NumberFormatException e) {
           System.out.println("Exiting!");
         }
-
       }
 
     } catch (IOException e) {

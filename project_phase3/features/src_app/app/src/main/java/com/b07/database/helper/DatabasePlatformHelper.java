@@ -15,20 +15,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * Platform independent interaface which allows the adapter to
- * easily use database methods without knowing which platform it is on.
+ * Platform independent interaface which allows the adapter to easily use database methods without
+ * knowing which platform it is on.
  */
 public interface DatabasePlatformHelper {
-  //Driver Helper
+  // Driver Helper
   public Connection connectOrCreateDataBase();
 
   public Connection reInitialize() throws ConnectionFailedException;
 
-  //InsertHelper
+  // InsertHelper
   public int insertRole(String name) throws DatabaseInsertException, SQLException;
 
   public int insertNewUser(String name, int age, String address, String password)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public int insertUserRole(int userId, int roleId) throws DatabaseInsertException, SQLException;
 
@@ -37,51 +37,51 @@ public interface DatabasePlatformHelper {
   public int insertInventory(int itemId, int quantity) throws DatabaseInsertException, SQLException;
 
   public int insertSale(int userId, BigDecimal totalPrice)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public int insertItemizedSale(int saleId, int itemId, int quantity)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public int insertAccount(int userId, boolean active) throws DatabaseInsertException, SQLException;
 
   public int insertAccountLine(int accountId, int itemId, int quantity)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public int insertDiscountType(String name) throws DatabaseInsertException, SQLException;
 
   public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
-  //UpdateHelper
+  // UpdateHelper
   public boolean updateRoleName(String name, int id) throws DatabaseInsertException, SQLException;
 
   public boolean updateUserName(String name, int userId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateUserAge(int age, int userId) throws DatabaseInsertException, SQLException;
 
   public boolean updateUserAddress(String address, int userId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateUserRole(int roleId, int userId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateItemName(String name, int itemId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateItemPrice(BigDecimal price, int itemId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateInventoryQuantity(int quantity, int itemId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateCouponUses(int uses, int couponId)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
   public boolean updateAccountStatus(int userId, int accountId, boolean active)
-          throws DatabaseInsertException, SQLException;
+      throws DatabaseInsertException, SQLException;
 
-  //SelectHelper
+  // SelectHelper
   public List<Integer> getRoleIds() throws SQLException;
 
   public String getRoleName(int roleId) throws SQLException;

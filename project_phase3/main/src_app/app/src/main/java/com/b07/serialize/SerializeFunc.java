@@ -17,8 +17,8 @@ public class SerializeFunc {
     fileOut.close();
   }
 
-
-  public static DataStorage deserialize(String location) throws IOException, ClassNotFoundException {
+  public static DataStorage deserialize(String location)
+      throws IOException, ClassNotFoundException {
     FileInputStream fileIn = new FileInputStream(location);
     ObjectInputStream in = new ObjectInputStream(fileIn);
     Object z = in.readObject();
@@ -26,7 +26,4 @@ public class SerializeFunc {
     fileIn.close();
     return (DataStorage) z;
   }
-
 }
-
-

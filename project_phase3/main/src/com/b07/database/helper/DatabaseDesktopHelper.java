@@ -20,7 +20,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   public Connection connectOrCreateDataBase() {
     return DatabaseDriverHelper.connectOrCreateDataBase();
   }
-  
+
   @Override
   public Connection reInitialize() throws ConnectionFailedException {
     return DatabaseDriverHelper.reInitialize();
@@ -32,7 +32,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public int insertNewUser(String name, int age, String address, String password) 
+  public int insertNewUser(String name, int age, String address, String password)
       throws DatabaseInsertException, SQLException {
     return DatabaseInsertHelper.insertNewUser(name, age, address, password);
   }
@@ -43,37 +43,37 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public int insertItem(String name, BigDecimal price) 
+  public int insertItem(String name, BigDecimal price)
       throws DatabaseInsertException, SQLException {
     return DatabaseInsertHelper.insertItem(name, price);
   }
 
   @Override
-  public int insertInventory(int itemId, int quantity) 
+  public int insertInventory(int itemId, int quantity)
       throws SQLException, DatabaseInsertException {
     return DatabaseInsertHelper.insertInventory(itemId, quantity);
   }
 
   @Override
-  public int insertSale(int userId, BigDecimal totalPrice) 
+  public int insertSale(int userId, BigDecimal totalPrice)
       throws SQLException, DatabaseInsertException {
     return DatabaseInsertHelper.insertSale(userId, totalPrice);
   }
 
   @Override
-  public int insertItemizedSale(int saleId, int itemId, int quantity) 
+  public int insertItemizedSale(int saleId, int itemId, int quantity)
       throws SQLException, DatabaseInsertException {
     return DatabaseInsertHelper.insertItemizedSale(saleId, itemId, quantity);
   }
 
   @Override
-  public int insertAccount(int userId, boolean active) 
+  public int insertAccount(int userId, boolean active)
       throws DatabaseInsertException, SQLException {
     return DatabaseInsertHelper.insertAccount(userId, active);
   }
 
   @Override
-  public int insertAccountLine(int accountId, int itemId, int quantity) 
+  public int insertAccountLine(int accountId, int itemId, int quantity)
       throws DatabaseInsertException, SQLException {
     return DatabaseInsertHelper.insertAccountLine(accountId, itemId, quantity);
   }
@@ -84,7 +84,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code) 
+  public int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
       throws SQLException, DatabaseInsertException {
     return DatabaseInsertHelper.insertCoupon(itemId, uses, type, discount, code);
   }
@@ -95,7 +95,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public boolean updateUserName(String name, int userId) 
+  public boolean updateUserName(String name, int userId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateUserName(name, userId);
   }
@@ -106,43 +106,43 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public boolean updateUserAddress(String address, int userId) 
+  public boolean updateUserAddress(String address, int userId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateUserAddress(address, userId);
   }
 
   @Override
-  public boolean updateUserRole(int roleId, int userId) 
+  public boolean updateUserRole(int roleId, int userId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateUserRole(roleId, userId);
   }
 
   @Override
-  public boolean updateItemName(String name, int itemId) 
+  public boolean updateItemName(String name, int itemId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateItemName(name, itemId);
   }
 
   @Override
-  public boolean updateItemPrice(BigDecimal price, int itemId) 
+  public boolean updateItemPrice(BigDecimal price, int itemId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateItemPrice(price, itemId);
   }
 
   @Override
-  public boolean updateInventoryQuantity(int quantity, int itemId) 
+  public boolean updateInventoryQuantity(int quantity, int itemId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateInventoryQuantity(quantity, itemId);
   }
 
   @Override
-  public boolean updateCouponUses(int uses, int couponId) 
+  public boolean updateCouponUses(int uses, int couponId)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateCouponUses(uses, couponId);
   }
 
   @Override
-  public boolean updateAccountStatus(int userId, int accountId, boolean active) 
+  public boolean updateAccountStatus(int userId, int accountId, boolean active)
       throws SQLException, DatabaseInsertException {
     return DatabaseUpdateHelper.updateAccountStatus(userId, accountId, active);
   }
@@ -168,7 +168,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   }
 
   @Override
-  public List<User> getUsersDetails() throws SQLException  {
+  public List<User> getUsersDetails() throws SQLException {
     return DatabaseSelectHelper.getUsersDetails();
   }
 
@@ -331,7 +331,7 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   public int getCouponUses(int couponId) throws SQLException {
     return DatabaseSelectHelper.getCouponUses(couponId);
   }
-  
+
   @Override
   public String getCouponCode(int couponId) throws SQLException {
     return DatabaseSelectHelper.getCouponCode(couponId);
@@ -351,8 +351,4 @@ public class DatabaseDesktopHelper implements DatabasePlatformHelper {
   public List<Integer> getUserInactiveAccounts(int userId) throws SQLException {
     return DatabaseSelectHelper.getUserInactiveAccounts(userId);
   }
-
-  
-
-
 }

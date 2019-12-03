@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
     boolean firstBoot = false;
     try {
       firstBoot = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name()) == -1;
-    }catch (SQLException e)
-    {
+    } catch (SQLException e) {
     }
 
     if (firstBoot) {

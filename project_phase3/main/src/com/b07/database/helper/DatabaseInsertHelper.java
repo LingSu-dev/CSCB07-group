@@ -46,7 +46,7 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     int roleId = DatabaseInserter.insertRole(name, connection);
     connection.close();
     return roleId;
-  }  
+  }
 
   /**
    * Add a new user to the database.
@@ -208,7 +208,8 @@ public class DatabaseInsertHelper extends DatabaseInserter {
    * @throws DatabaseInsertException if something goes wrong.
    * @throws SQLException on failure.
    */
-  public static int insertAccount(int userId, boolean active) throws DatabaseInsertException, SQLException {
+  public static int insertAccount(int userId, boolean active)
+      throws DatabaseInsertException, SQLException {
 
     List<Integer> validUserIds = DatabaseSelectHelper.getUserIds();
     if (!validUserIds.contains(userId)) {
@@ -273,23 +274,19 @@ public class DatabaseInsertHelper extends DatabaseInserter {
     connection.close();
     return roleId;
   }
-  
-  public static int insertCoupon(int itemId, int uses, String type, BigDecimal discount, String code)
+
+  public static int insertCoupon(
+      int itemId, int uses, String type, BigDecimal discount, String code)
       throws SQLException, DatabaseInsertException {
 
     if (!DatabaseSelectHelper.itemExists(itemId) || uses < 0) {
       throw new DatabaseInsertException();
     }
-    
-    int typeId = DatabaseSelectHelper.getDiscountTypeIdByName(type); 
+
+    int typeId = DatabaseSelectHelper.getDiscountTypeIdByName(type);
     Connection connection = DatabaseDriverHelper.connectOrCreateDataBase();
     int couponId = DatabaseInserter.insertCoupon(uses, typeId, itemId, discount, code, connection);
     connection.close();
     return couponId;
   }
-
-  
-  
-  
-  
 }

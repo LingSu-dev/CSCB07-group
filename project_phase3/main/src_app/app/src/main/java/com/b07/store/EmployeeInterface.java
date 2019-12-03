@@ -6,7 +6,6 @@ import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.users.Employee;
 import com.b07.users.Roles;
-
 import java.io.Serializable;
 import java.sql.SQLException;
 
@@ -20,10 +19,9 @@ import java.sql.SQLException;
  */
 public class EmployeeInterface implements Serializable {
 
-  /**
-   * Serial Version ID of employeeInterface.
-   */
+  /** Serial Version ID of employeeInterface. */
   private static final long serialVersionUID = 1L;
+
   private Employee currentEmployee = null;
   private Inventory inventory;
 

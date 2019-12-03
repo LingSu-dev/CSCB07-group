@@ -21,7 +21,7 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     setContentView(R.layout.activity_initialization_create_first_admin);
 
     try {
-      //To avoid duplicate initialization
+      // To avoid duplicate initialization
       if (DatabaseHelperAdapter.getUserDetails(1) == null) {
         setUpDatabase();
       }
@@ -38,8 +38,7 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
     return;
   }
 
-  public void setUpDatabase()
-      throws DatabaseInsertException, SQLException {
+  public void setUpDatabase() throws DatabaseInsertException, SQLException {
 
     for (DiscountTypes type : DiscountTypes.values()) {
       DatabaseHelperAdapter.insertDiscountType(type.name());

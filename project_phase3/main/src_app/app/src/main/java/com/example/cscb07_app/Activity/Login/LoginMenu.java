@@ -23,12 +23,10 @@ public class LoginMenu extends AppCompatActivity {
 
     Button loginBtn = findViewById(R.id.loginButton);
     loginBtn.setOnClickListener(new LoginController(this));
-
   }
 
   @Override
   public void onBackPressed() {
     return;
   }
-
 }

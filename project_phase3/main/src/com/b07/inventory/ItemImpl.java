@@ -13,11 +13,9 @@ import java.math.BigDecimal;
  */
 public class ItemImpl implements Item, Serializable {
 
-  /**
-   * Serial Version ID of ItemImpl.
-   */
+  /** Serial Version ID of ItemImpl. */
   private static final long serialVersionUID = 1L;
-  
+
   private String name;
   private int id;
   private BigDecimal price;

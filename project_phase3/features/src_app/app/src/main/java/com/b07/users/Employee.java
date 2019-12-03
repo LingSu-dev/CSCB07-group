@@ -1,8 +1,8 @@
 package com.b07.users;
 
+import com.b07.database.helper.DatabaseHelperAdapter;
 import java.io.Serializable;
 import java.sql.SQLException;
-import com.b07.database.helper.DatabaseHelperAdapter;
 
 /**
  * A class representing an employee within the sales application system.
@@ -12,10 +12,8 @@ import com.b07.database.helper.DatabaseHelperAdapter;
  * @author Lingfeng Su
  * @author Payam Yektamaram
  */
-public class Employee extends User implements Serializable{
-  /**
-   * Serial Version ID of Employee.
-   */
+public class Employee extends User implements Serializable {
+  /** Serial Version ID of Employee. */
   private static final long serialVersionUID = 1L;
 
   /**
@@ -45,16 +43,18 @@ public class Employee extends User implements Serializable{
    * @param authenticated whether the employee should be created authenticated or not.
    * @throws SQLException if the role id cannot be retreived
    */
-  public Employee(int id, String name, int age, String address, boolean authenticated) throws SQLException {
+  public Employee(int id, String name, int age, String address, boolean authenticated)
+      throws SQLException {
     setId(id);
     setName(name);
     setAge(age);
     setAddress(address);
     setRole();
   }
-  
+
   /**
    * set the user role
+   *
    * @throws SQLException
    */
   private void setRole() throws SQLException {

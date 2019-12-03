@@ -8,11 +8,8 @@ import com.b07.users.Customer;
 import com.example.cscb07_app.Controller.CustomerController;
 import com.example.cscb07_app.R;
 
-/**
- * Customer checkout.
- */
+/** Customer checkout. */
 public class CustomerCheckout extends AppCompatActivity {
-
 
   /**
    * Creation of activity.

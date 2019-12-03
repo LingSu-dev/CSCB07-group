@@ -21,9 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Class that controls all actions for events on login activity
- */
+/** Class that controls all actions for events on login activity */
 public class LoginController implements View.OnClickListener {
 
   private Context appContext;
@@ -69,9 +67,13 @@ public class LoginController implements View.OnClickListener {
         customerLogin(userId, password);
       }
     } else {
-      DialogFactory
-          .createAlertDialog(appContext, "User ID Format Error", "User ID cannot be empty!",
-              "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "User ID Format Error",
+              "User ID cannot be empty!",
+              "Ok",
+              DialogId.LOGIN_INCORRECT_CREDENTIALS)
+          .show();
     }
   }
 
@@ -102,12 +104,16 @@ public class LoginController implements View.OnClickListener {
     if (authenticated) {
       Intent intent = new Intent(this.appContext, AdminMenu.class);
       intent.putExtra("adminObject", admin);
-      ((LoginMenu)appContext).finish();
+      ((LoginMenu) appContext).finish();
       appContext.startActivity(intent);
     } else {
-      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
-          "Double check your id and password and make sure its an admin account!",
-          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Incorrect Credentials",
+              "Double check your id and password and make sure its an admin account!",
+              "Ok",
+              DialogId.LOGIN_INCORRECT_CREDENTIALS)
+          .show();
     }
   }
 
@@ -147,18 +153,22 @@ public class LoginController implements View.OnClickListener {
       if (accts == null || accts.isEmpty()) {
         Intent customerIntent = new Intent(this.appContext, CustomerCheckout.class);
         customerIntent.putExtra("customer", customer);
-        ((LoginMenu)appContext).finish();
+        ((LoginMenu) appContext).finish();
         appContext.startActivity(customerIntent);
       } else if (accts != null && !accts.isEmpty()) {
         Intent loadCartIntent = new Intent(this.appContext, CustomerLoadShoppingCart.class);
         loadCartIntent.putExtra("customer", customer);
-        ((LoginMenu)appContext).finish();
+        ((LoginMenu) appContext).finish();
         appContext.startActivity(loadCartIntent);
       }
     } else {
-      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
-          "Double check your id and password and make sure its a customer account!",
-          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Incorrect Credentials",
+              "Double check your id and password and make sure its a customer account!",
+              "Ok",
+              DialogId.LOGIN_INCORRECT_CREDENTIALS)
+          .show();
     }
   }
 
@@ -190,12 +200,16 @@ public class LoginController implements View.OnClickListener {
 
     if (authenticated) {
       employeeIntent.putExtra("employee", currentEmployee);
-      ((LoginMenu)appContext).finish();
+      ((LoginMenu) appContext).finish();
       appContext.startActivity(employeeIntent);
     } else {
-      DialogFactory.createAlertDialog(appContext, "Incorrect Credentials",
-          "Double check your id and password and make sure its an employee account!",
-          "Ok", DialogId.LOGIN_INCORRECT_CREDENTIALS).show();
+      DialogFactory.createAlertDialog(
+              appContext,
+              "Incorrect Credentials",
+              "Double check your id and password and make sure its an employee account!",
+              "Ok",
+              DialogId.LOGIN_INCORRECT_CREDENTIALS)
+          .show();
     }
   }
 }

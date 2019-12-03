@@ -27,9 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Contains the implementation of database helper methods on android
- * Implements databasePlatformHelper in order to be used by the
- * database adapter.
+ * Contains the implementation of database helper methods on android Implements
+ * databasePlatformHelper in order to be used by the database adapter.
  */
 public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
@@ -37,16 +36,18 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Sets the current databaseMethodHelper to use.
+   *
    * @param driver the databaseMethodHelper
    */
   public void setDriver(DatabaseMethodHelper driver) {
     this.driver = driver;
   }
 
-  //Driver Helper
+  // Driver Helper
 
   /**
    * Does nothing on android.
+   *
    * @return null
    */
   public Connection connectOrCreateDataBase() {
@@ -55,6 +56,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Does nothing on android.
+   *
    * @return nothing
    * @throws ConnectionFailedException never
    */
@@ -72,9 +74,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    */
   public int insertRole(String name) throws DatabaseInsertException, SQLException {
 
-    //TODO: added this code to avoid duplicate roles
-    if (getRoleIdByName(name) != -1)
-    {
+    // TODO: added this code to avoid duplicate roles
+    if (getRoleIdByName(name) != -1) {
       return getRoleIdByName(name);
     }
 
@@ -93,7 +94,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     long roleId = driver.insertRole(name);
     return Math.toIntExact(roleId);
   }
-
 
   /**
    * Add a new user to the database.
@@ -119,7 +119,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return Math.toIntExact(userId);
   }
 
-
   /**
    * Set a user's role in the database.
    *
@@ -128,7 +127,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @return the unique user role relationship id.
    * @throws SQLException if there is an issue communicating with the database.
    * @throws DatabaseInsertException if the user/role combination cannot be inserted into the
-   * database.
+   *     database.
    */
   public int insertUserRole(int userId, int roleId) throws DatabaseInsertException, SQLException {
     List<Integer> validRoleIds = getRoleIds();
@@ -154,12 +153,10 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   public int insertItem(String name, BigDecimal price)
       throws DatabaseInsertException, SQLException {
 
-    //TODO: Avoid duplicated items in ITEMS table
-    for (Item item: getAllItems())
-    {
-      if (item.getName().equals(name))
-      {
-        Log.d("happybanana", "Item Id:"+item.getId());
+    // TODO: Avoid duplicated items in ITEMS table
+    for (Item item : getAllItems()) {
+      if (item.getName().equals(name)) {
+        Log.d("happybanana", "Item Id:" + item.getId());
         return item.getId();
       }
     }
@@ -183,7 +180,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     long itemId = driver.insertItem(name, price);
     return Math.toIntExact(itemId);
   }
-
 
   /**
    * Insert a quantity of item into the inventory of the database.
@@ -237,9 +233,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    */
   public int insertItemizedSale(int saleId, int itemId, int quantity)
       throws DatabaseInsertException, SQLException {
-    if (!itemExists(itemId)
-        || !saleExists(saleId)
-        || quantity < 0) {
+    if (!itemExists(itemId) || !saleExists(saleId) || quantity < 0) {
       throw new DatabaseInsertException();
     }
 
@@ -312,11 +306,11 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     }
     long roleId = driver.insertDiscountType(name);
     return Math.toIntExact(roleId);
-
   }
 
   /**
    * Inserts a new Coupon into the database.
+   *
    * @param itemId the id of the item associated with the coupon
    * @param uses the number of uses of the coupon
    * @param type if the coupon is percentage or flat rate
@@ -336,7 +330,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
     int typeId = getDiscountTypeIdByName(type);
     Log.d("big bruh", "type id" + typeId);
-    if(typeId == -1){
+    if (typeId == -1) {
       return -1;
     }
     long couponId = driver.insertCoupon(uses, typeId, itemId, discount, code);
@@ -361,7 +355,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     boolean complete = driver.updateRoleName(name, id);
     return complete;
   }
-
 
   /**
    * Update the name of a user in the database.
@@ -460,7 +453,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return complete;
   }
 
-
   /**
    * Update an item's price in the database.
    *
@@ -473,7 +465,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
   public boolean updateItemPrice(BigDecimal price, int itemId)
       throws DatabaseInsertException, SQLException {
 
-    if (Math.max(0, price.scale()) != 2 || !itemExists(itemId)
+    if (Math.max(0, price.scale()) != 2
+        || !itemExists(itemId)
         || price.compareTo(BigDecimal.ZERO) < 0) {
       throw new DatabaseInsertException();
     }
@@ -503,6 +496,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Update the number of uses a coupon has left
+   *
    * @param uses the new number of uses
    * @param couponId the id of the coupon
    * @return true if successful
@@ -877,7 +871,6 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return sales;
   }
 
-
   /**
    * Return an itemized sale from the database.
    *
@@ -982,8 +975,8 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
    * @throws SQLException on failure
    */
   public boolean roleIdExists(int roleID) throws SQLException {
-    //This is wrong but it isn't causing any issues so
-    //Let's not change it
+    // This is wrong but it isn't causing any issues so
+    // Let's not change it
     return true;
   }
 
@@ -1001,6 +994,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Check if a couponId exits.
+   *
    * @param userID the coupon ID.
    * @return true if the coupon exists, false otherwise
    * @throws SQLException if there is an issue communicating with the database
@@ -1012,6 +1006,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get a list of all coupon Ids
+   *
    * @return a list of coupon Ids
    * @throws SQLException f there is an issue communicating with the database
    */
@@ -1121,7 +1116,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     }
 
     User user = getUserDetails(userId);
-    if(user == null || !(user instanceof Customer)) {
+    if (user == null || !(user instanceof Customer)) {
       return null;
     }
     Customer customer = (Customer) user;
@@ -1171,13 +1166,11 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     type = type.toUpperCase();
     List<Integer> ids = getDiscountTypeIds();
 
-    for (Integer id : getDiscountTypeIds())
-    {
+    for (Integer id : getDiscountTypeIds()) {
       String discountName = getDiscountTypeName(id);
       Log.d("bigmon", discountName);
 
-      if (discountName != null && discountName.equals(type))
-      {
+      if (discountName != null && discountName.equals(type)) {
         return id;
       }
     }
@@ -1185,13 +1178,10 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return -1;
 
     /**
-    for (int i = 0; i < ids.size(); i++) {
-      Log.d("bigmon", getDiscountTypeName(ids.get(0)))
-      if (getDiscountTypeName(ids.get(i)) != null && getDiscountTypeName(ids.get(i)).equals(type)) {
-        return ids.get(i);
-      }
-    }
-    return -1;*/
+     * for (int i = 0; i < ids.size(); i++) { Log.d("bigmon", getDiscountTypeName(ids.get(0))) if
+     * (getDiscountTypeName(ids.get(i)) != null && getDiscountTypeName(ids.get(i)).equals(type)) {
+     * return ids.get(i); } } return -1;
+     */
   }
 
   /**
@@ -1210,6 +1200,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Check if a discount type exists.
+   *
    * @param discountTypeId the id of the discount type
    * @return true if the discount type exists
    * @throws SQLException if there is an issue communicating with the database
@@ -1221,6 +1212,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get a list of discount type IDs.
+   *
    * @return a list of dicount type IDS
    * @throws SQLException if there is an issue communicating with the database
    */
@@ -1236,6 +1228,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get a coupon's ID by name.
+   *
    * @param code the coupon's name
    * @return the coupon's ID
    * @throws SQLException if there is an issue communicating with the database
@@ -1247,6 +1240,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get the type of a discount.
+   *
    * @param couponId the coupon's ID
    * @return the coupon's discount type
    * @throws SQLException if there is an issue communicating with the database
@@ -1264,6 +1258,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get the amount of a discount.
+   *
    * @param couponId the coupon's id
    * @return the coupon's amount
    * @throws SQLException
@@ -1276,6 +1271,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get a coupon item by id.
+   *
    * @param couponId the coupon's id
    * @return an item corresponding to the coupon
    * @throws SQLException if there is an issue communicating with the database
@@ -1286,6 +1282,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get the remaining uses of a coupon by id.
+   *
    * @param couponId the coupon's id
    * @return the remaining uses
    * @throws SQLException if there is an issue communicating with the database
@@ -1296,6 +1293,7 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   /**
    * Get a coupon's code by Id.
+   *
    * @param couponId the coupon's id
    * @return the coupon's code
    * @throws SQLException if there is an issue communicating with the database

@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
     boolean firstBoot = false;
     try {
       firstBoot = DatabaseHelperAdapter.getUserDetails(1) == null;
-    }catch (SQLException e)
-    {
+    } catch (SQLException e) {
     }
 
     if (firstBoot) {
