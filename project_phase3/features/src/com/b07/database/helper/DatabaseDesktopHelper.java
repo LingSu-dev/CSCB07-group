@@ -14,6 +14,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Contains the implementation of database helper methods on desktop
+ * Implements databasePlatformHelper in order to be used by the
+ * database adapter.
+ */
 public class DatabaseDesktopHelper implements DatabasePlatformHelper {
 
   @Override
