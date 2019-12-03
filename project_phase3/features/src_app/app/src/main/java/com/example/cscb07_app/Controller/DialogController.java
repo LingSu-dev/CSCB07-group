@@ -59,8 +59,8 @@ public class DialogController implements DialogInterface.OnClickListener {
 
   /**
    * Implements button functionality of customer
-   * @param dialog 
-   * @param which
+   * @param dialog a dialog to pass in
+   * @param which a placeholder
    */
   @Override
   public void onClick(DialogInterface dialog, int which) {
