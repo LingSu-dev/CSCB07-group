@@ -1257,6 +1257,11 @@ public class DatabaseAndroidHelper implements DatabasePlatformHelper {
     return discountType;
   }
 
+  public DiscountTypes getCouponDiscountType(int couponId) throws SQLException {
+    int discountTypeId = driver.getCouponDiscountType(couponId);
+    return getDiscountType(discountTypeId);
+  }
+
   /**
    * Get the amount of a discount.
    * @param couponId the coupon's id

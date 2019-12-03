@@ -431,6 +431,17 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     return results;
   }
 
+  protected int getCouponDiscountType(int couponId) {
+    Log.d("bruh22", " " + couponId);
+    String sql = "SELECT TYPEID FROM COUPONS WHERE ID = ?";
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    Cursor cursor = sqLiteDatabase.rawQuery(sql, new String[] {String.valueOf(couponId)});
+    cursor.moveToFirst();
+    int results = cursor.getInt(cursor.getColumnIndex("TYPEID"));
+    cursor.close();
+    return results;
+  }
+
   /**
    * Get every discount type ID.
    *
@@ -649,4 +660,5 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     sqLiteDatabase.close();
     return result;
   }
+
 }

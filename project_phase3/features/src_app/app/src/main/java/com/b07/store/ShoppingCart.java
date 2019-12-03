@@ -164,7 +164,8 @@ public class ShoppingCart implements Serializable {
       Item item = DatabaseHelperAdapter.getItem(itemId);
       BigDecimal price = item.getPrice();
 
-      DiscountTypes type = DatabaseHelperAdapter.getDiscountType(couponId);
+
+      DiscountTypes type = DatabaseHelperAdapter.getCouponDiscountType(couponId);
       BigDecimal discount = DatabaseHelperAdapter.getDiscountAmount(couponId);
 
       if (!couponCanBeApplied(code, 1)) {
