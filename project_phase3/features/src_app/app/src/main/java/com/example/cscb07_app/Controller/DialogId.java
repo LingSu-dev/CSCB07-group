@@ -1,5 +1,8 @@
 package com.example.cscb07_app.Controller;
 
+/**
+ * A enum file containing all the dialog Ids
+ */
 public enum DialogId {
   CREATE_FIRST_ADMIN_DETAILS, CREATE_FIRST_EMPLOYEE_DETAILS, LOGIN_INCORRECT_CREDENTIALS,
   AGE_EMPTY_DIALOG, CREATE_COUPON_DIALOG, CREATE__NEW_USER_DETAILS, NULL_DIALOG, CHECKOUT_CART

@@ -25,6 +25,9 @@ import com.example.cscb07_app.R;
 
 import java.sql.SQLException;
 
+/**
+ * Controls the buttons in Employee package
+ */
 public class EmployeeController implements View.OnClickListener {
 
   private Context appContext;
@@ -33,10 +36,19 @@ public class EmployeeController implements View.OnClickListener {
     this.appContext = context;
     employeeInterface = e;
   }
+
+  /**
+   * A constructor for EmployeeController
+   * @param context of the function calling it
+   */
   public EmployeeController(Context context) {
     this.appContext = context;
   }
 
+  /**
+   * Implements functionality of buttons in Employee package
+   * @param view the button
+   */
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
