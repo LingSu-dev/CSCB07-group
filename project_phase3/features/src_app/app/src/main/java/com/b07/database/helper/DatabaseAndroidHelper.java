@@ -30,7 +30,7 @@ import java.util.List;
  * Contains the implementation of database helper methods on android Implements
  * databasePlatformHelper in order to be used by the database adapter.
  *
- * All helper Javadoc are in this file
+ * <p>All helper Javadoc are in this file
  */
 public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 

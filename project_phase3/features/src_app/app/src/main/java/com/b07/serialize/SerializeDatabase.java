@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * This class serializes the database to a location
+ *
  * @author lingf
  */
 public class SerializeDatabase {
@@ -132,7 +133,6 @@ public class SerializeDatabase {
 
   /**
    * Serialize the database to a location, using a DataStorage object, named database_copy.ser
-   *
    *
    * @param location without trailing slash
    * @throws SQLException
@@ -326,14 +326,16 @@ public class SerializeDatabase {
 
   /**
    * Populates the current database with an serialized database object, named database_copy.ser,
-   * erases the current database and creates a serialized database object, named database_backup.ser in the same folder
-   * attempts to repopulate with database_backup.ser upon error on populating with dabase_copy.ser
+   * erases the current database and creates a serialized database object, named database_backup.ser
+   * in the same folder attempts to repopulate with database_backup.ser upon error on populating
+   * with dabase_copy.ser
    *
    * @param location of the database_copy.ser without a trailing slash
    * @throws SQLException
    * @throws IOException
    * @throws ClassNotFoundException
-   * @throws DifferentEnumException if the enum of the new database do not match up with the enums of the current database
+   * @throws DifferentEnumException if the enum of the new database do not match up with the enums
+   *     of the current database
    */
   public static void populateFromFile(String location, Context context)
       throws SQLException, IOException, ClassNotFoundException, DifferentEnumException {

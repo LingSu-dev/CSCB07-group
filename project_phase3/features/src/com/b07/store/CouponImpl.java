@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 /**
  * A class that implements coupon interface
- * @author lingf
  *
+ * @author lingf
  */
 public class CouponImpl implements Coupon {
 

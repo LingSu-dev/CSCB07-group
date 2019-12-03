@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 /**
  * A class to store the database info
- * @author lingf
  *
+ * @author lingf
  */
 public class DataStorage implements Serializable {
 
