@@ -22,25 +22,46 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for customer activities.
+ */
 public class CustomerController implements View.OnClickListener {
 
   private Context appContext;
   private Customer customer;
   private ShoppingCart cart;
 
+  /**
+   * Constructor for CustomerController
+   *
+   * @param context the context of interest
+   * @param customer the customer
+   */
   public CustomerController(Context context, Customer customer) {
     this.appContext = context;
     this.customer = customer;
   }
 
+  /**
+   * Constructor for CustomerController.
+   *
+   * @param context the context of interest
+   * @param cart the cart of interest
+   */
   public CustomerController(Context context, ShoppingCart cart) {
     this.appContext = context;
     this.customer = cart.getCustomer();
     this.cart = cart;
   }
 
+  /**
+   * Controller functionality.
+   *
+   * @param view the view that was clicked
+   */
   @Override
   public void onClick(View view) {
+
     int temp = 0;
 
     TextView amount1 = null;
@@ -241,6 +262,7 @@ public class CustomerController implements View.OnClickListener {
         intent.putExtra("customer", customer);
         ((CustomerLoadShoppingCart) appContext).finish();
         appContext.startActivity(intent);
+        break;
       case R.id.applyCouponBtn:
         EditText couponCode = ((Activity) appContext).findViewById(R.id.couponCodeEntry);
         String couponText = couponCode.getText().toString();
@@ -255,6 +277,12 @@ public class CustomerController implements View.OnClickListener {
     }
   }
 
+  /**
+   * Checks if a coupon name is valid.
+   *
+   * @param name the coupon name of interest
+   * @return true if yes, false otherwise
+   */
   public boolean isValidCouponName(String name) {
     List<Integer> couponIds = null;
     try {
@@ -271,6 +299,12 @@ public class CustomerController implements View.OnClickListener {
     return false;
   }
 
+
+  /**
+   * Apply coupon to the cart.
+   *
+   * @param couponText the coupon's name
+   */
   public void applyCoupon(String couponText) {
     int result = cart.applyCoupon(couponText);
 
@@ -287,6 +321,11 @@ public class CustomerController implements View.OnClickListener {
     }
   }
 
+  /**
+   * Load shopping cart.
+   *
+   * @param accountId the account associated with the shopping cart.
+   */
   public void loadShoppingCart(int accountId) {
     List<Integer> accts = new ArrayList<>();
     try {

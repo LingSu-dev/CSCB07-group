@@ -4,8 +4,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".Activity.Admin.AdminViewHistoricAccounts"
-  android:padding="@dimen/activityPadding">
+  android:padding="@dimen/activityPadding"
+  tools:context=".Activity.Admin.AdminViewHistoricAccounts">
 
   <TextView
     android:id="@+id/historicAccountsPrompt"
@@ -24,7 +24,7 @@
     android:layout_marginLeft="15dp"
     android:layout_toRightOf="@id/historicAccountsPrompt"
     android:hint="@string/userIdHint"
-    android:inputType="text"
+    android:inputType="number"
     android:textSize="20dp" />
 
   <Button
@@ -37,13 +37,24 @@
     android:text="@string/viewHistoricAccountsBtn"
     app:icon="@drawable/ic_account_balance_black_24dp" />
 
-  <TextView
-    android:layout_marginTop="70dp"
-    android:layout_below="@id/viewHistoricAccountsBtn"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:textSize="@dimen/textViewTextSize"
-    android:id="@+id/viewHistoricAccountsText"
-    android:scrollbars="vertical" />
 
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="440dp"
+    android:layout_below="@id/viewHistoricAccountsBtn"
+    android:layout_marginTop="80dp">
+
+    <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <TextView
+        android:id="@+id/viewHistoricAccountsText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/viewHistoricAccountsBtn"
+        android:scrollbars="vertical"
+        android:textSize="@dimen/textViewTextSize" />
+    </ScrollView>
+
+  </RelativeLayout>
 </RelativeLayout>
