@@ -22,7 +22,7 @@ public class InitializationCreateFirstAdmin extends AppCompatActivity {
 
     try {
       //To avoid duplicate initialization
-      if (DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name()) == -1) {
+      if (DatabaseHelperAdapter.getUserDetails(1) == null) {
         setUpDatabase();
       }
     } catch (DatabaseInsertException e) {
