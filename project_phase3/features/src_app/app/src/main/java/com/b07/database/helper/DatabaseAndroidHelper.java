@@ -26,19 +26,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Contains the implementation of database helper methods on android
+ * Implements databasePlatformHelper in order to be used by the
+ * database adapter.
+ */
 public class DatabaseAndroidHelper implements DatabasePlatformHelper {
 
   private DatabaseMethodHelper driver;
 
+  /**
+   * Sets the current databaseMethodHelper to use.
+   * @param driver the databaseMethodHelper
+   */
   public void setDriver(DatabaseMethodHelper driver) {
     this.driver = driver;
   }
 
   //Driver Helper
+
+  /**
+   * Does nothing on android.
+   * @return null
+   */
   public Connection connectOrCreateDataBase() {
     return null;
   }
 
+  /**
+   * Does nothing on android.
+   * @return nothing
+   * @throws ConnectionFailedException never
+   */
   public Connection reInitialize() throws ConnectionFailedException {
     return null;
   }
