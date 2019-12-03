@@ -10,6 +10,9 @@ import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstA
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import java.sql.SQLException;
 
+/**
+ * Main activity of the application
+ */
 public class MainActivity extends AppCompatActivity {
 
   @Override
