@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.b07.database.helper.DatabaseAndroidHelper;
 import com.b07.database.helper.DatabaseHelperAdapter;
 import com.b07.database.helper.DatabaseMethodHelper;
-import com.b07.users.Roles;
 import com.example.cscb07_app.Activity.Initialization.InitializationCreateFirstAdmin;
 import com.example.cscb07_app.Activity.Login.LoginMenu;
 import java.sql.SQLException;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     boolean firstBoot = false;
     try {
-      firstBoot = DatabaseHelperAdapter.getRoleIdByName(Roles.ADMIN.name()) == -1;
+      firstBoot = DatabaseHelperAdapter.getUserDetails(1) == null;
     }catch (SQLException e)
     {
     }
