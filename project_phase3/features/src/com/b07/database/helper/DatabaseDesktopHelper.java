@@ -17,6 +17,8 @@ import java.util.List;
 /**
  * Contains the implementation of database helper methods on desktop Implements
  * databasePlatformHelper in order to be used by the database adapter.
+ * 
+ * Javadoc omitted as all internal behaviour is specified in DatabaseUpdate/Insert/SelectHelper
  */
 public class DatabaseDesktopHelper implements DatabasePlatformHelper {
 
